@@ -10,14 +10,34 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
-    var window: UIWindow?
-
+    var window: UIWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
+    
+    var splitVC: UISplitViewController?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        APIManger.requestNewData(self.managedObjectContext!);
+        
+        let mainVC: ViewController = ViewController()
+        let navController: UINavigationController = UINavigationController(rootViewController: mainVC)
+        let detailVC: DetailViewController = DetailViewController()
+        self.splitVC = UISplitViewController();
+        self.splitVC?.viewControllers = [navController, detailVC]
+        self.splitVC?.delegate = self
+        
+        window.rootViewController = splitVC;
+        
         return true
+    }
+    
+    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {
+        return true
+    }
+    
+    func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {
