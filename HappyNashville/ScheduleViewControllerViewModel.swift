@@ -48,7 +48,7 @@ class ScheduleViewControllerViewModel: NSObject {
         
         var notification = UILocalNotification()
         notification.fireDate = date
-        notification.alertBody = "\(deal.dealDescription) at \(deal.location.name)"
+        notification.alertBody = "\(deal.location.name)" // TODO: Add in special descriptions
 
         if isRecurring {
             notification.repeatInterval = NSCalendarUnit.WeekCalendarUnit

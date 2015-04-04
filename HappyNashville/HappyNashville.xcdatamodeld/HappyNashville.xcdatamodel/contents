@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6751" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Deal" representedClassName="Deal" syncable="YES">
-        <attribute name="allDay" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="dealDescription" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timeEnd" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="timeStart" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="deals" inverseEntity="Location" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="deal" inverseEntity="Location" syncable="YES"/>
+        <relationship name="specials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Special" inverseName="deal" inverseEntity="Special" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="deals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Deal" inverseName="location" inverseEntity="Deal" syncable="YES"/>
+        <relationship name="deal" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Deal" inverseName="location" inverseEntity="Deal" syncable="YES"/>
     </entity>
     <entity name="MetaData" representedClassName="MetaData" syncable="YES">
         <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -23,10 +21,20 @@
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Special" representedClassName="Special" syncable="YES">
+        <attribute name="allDay" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="hourEnd" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="hourStart" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="minuteEnd" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="minuteStart" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="specialDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="deal" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Deal" inverseName="specials" inverseEntity="Deal" syncable="YES"/>
+    </entity>
     <elements>
-        <element name="Deal" positionX="-54" positionY="27" width="128" height="148"/>
-        <element name="Location" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="Deal" positionX="-54" positionY="27" width="128" height="103"/>
+        <element name="Location" positionX="-63" positionY="-18" width="128" height="133"/>
         <element name="MetaData" positionX="-63" positionY="63" width="128" height="60"/>
         <element name="Notification" positionX="-63" positionY="63" width="128" height="73"/>
+        <element name="Special" positionX="-54" positionY="72" width="128" height="148"/>
     </elements>
 </model>

@@ -16,9 +16,9 @@ class LocationTableViewCell: UITableViewCell {
     
     var scheduleButton: UIButton = UIButton()
     
-    var delegate:ScheduleReminder?
+    var titleLable: UILabel = UILabel()
     
-    var cellImageView: UIImageView = UIImageView()
+    var delegate:ScheduleReminder?
     
     let cellHeight: CGFloat = 150
     
@@ -29,7 +29,12 @@ class LocationTableViewCell: UITableViewCell {
         
         let buttonWidth: CGFloat = 100
         
-        self.scheduleButton.frame = CGRectMake(0, 0, buttonWidth, self.frame.size.height);
+        let buttonHeight: CGFloat = 30
+        
+        
+        self.layoutMargins = UIEdgeInsetsZero
+        
+        self.scheduleButton.frame = CGRectMake(self.width - buttonWidth, self.height - buttonHeight, buttonWidth, buttonHeight);
         
         scheduleButton.backgroundColor = UIColor.redColor()
         
@@ -37,10 +42,11 @@ class LocationTableViewCell: UITableViewCell {
         
         scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
         
-        self.cellImageView.frame = CGRectMake(0, 0, 144, 102)
+        self.titleLable.frame = CGRectMake(10, 10, self.width, self.height * 0.1)
+        self.titleLable.numberOfLines = 0
+        self.titleLable.textAlignment = NSTextAlignment.Left
+        self.addSubview(self.titleLable)
         
-        self.addSubview(self.cellImageView)
-                
         self.addSubview(scheduleButton)
     }
   

@@ -48,9 +48,9 @@ class APIManger: NSObject {
         
         for key in locationDict.allKeys as [String] {
             
-            if key == "deals" {
+            if key == "deal" {
                 
-                location.addDeals(self.setDeals(locationDict["deals"]! as NSArray,  moc: moc) as NSSet)
+                location.deal = self.addDeal(locationDict[key] as NSDictionary, moc: moc)
             } else {
                 
                 location.setValue(locationDict[key], forKey: key)
@@ -58,23 +58,42 @@ class APIManger: NSObject {
         }
     }
     
-    class func setDeals(deals: NSArray, moc: NSManagedObjectContext) -> NSSet {
+    class func addDeal(dealDict: NSDictionary, moc: NSManagedObjectContext) -> Deal {
         
-        var dealsMutableArray: NSMutableArray = NSMutableArray()
+         var deal: Deal = NSEntityDescription.insertNewObjectForEntityForName("Deal", inManagedObjectContext: moc) as Deal
         
-        for  dealDict in deals as [NSDictionary] {
+        for  dealAttr in dealDict.allKeys as [String] {
             
-            var deal: Deal = NSEntityDescription.insertNewObjectForEntityForName("Deal", inManagedObjectContext: moc) as Deal
-            
-            for key in dealDict.allKeys as [String] {
-    
-                deal.setValue(dealDict[key], forKey: key)
+            if dealAttr == "specials" {
+                
+                deal.addSpecials(self.setSpecials(dealDict["specials"] as NSArray, moc: moc))
+            } else {
+                
+                deal.setValue(dealDict[dealAttr], forKey: dealAttr)
             }
             
-            dealsMutableArray.addObject(deal)
         }
         
-        return NSSet().setByAddingObjectsFromArray(dealsMutableArray)
+        return deal
+    }
+    
+    class func setSpecials(specials: NSArray, moc: NSManagedObjectContext) -> NSSet {
+        
+        var specialMutable: NSMutableArray = NSMutableArray()
+        
+        for  specialDict in specials as [NSDictionary] {
+            
+            var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as Special
+            
+            for key in specialDict.allKeys as [String] {
+    
+                special.setValue(specialDict[key], forKey: key)
+            }
+            
+            specialMutable.addObject(special)
+        }
+        
+        return NSSet().setByAddingObjectsFromArray(specialMutable)
     }
     
     class func updateOrAdd(locationDict: NSDictionary, moc: NSManagedObjectContext) {

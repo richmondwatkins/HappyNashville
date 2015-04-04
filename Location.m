@@ -2,7 +2,7 @@
 //  Location.m
 //  HappyNashville
 //
-//  Created by Richmond Watkins on 4/1/15.
+//  Created by Richmond Watkins on 4/4/15.
 //  Copyright (c) 2015 Richmond Watkins. All rights reserved.
 //
 
@@ -16,6 +16,7 @@
 @dynamic name;
 @dynamic phoneNumber;
 @dynamic website;
-@dynamic deals;
-@dynamic image;
+@dynamic slug;
+@dynamic deal;
+
 @end

@@ -49,7 +49,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         
         for deal in fetchResult as [Deal] {
             
-            switch deal.type.integerValue {
+            switch deal.day.integerValue {
                 
             case 0:
                 sundayArray.addObject(deal)

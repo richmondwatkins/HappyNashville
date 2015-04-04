@@ -14,7 +14,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
-    var imageCache: NSCache = NSCache()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +28,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
         self.viewModel.delegate = self
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.separatorInset = UIEdgeInsetsZero
     }
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,38 +74,32 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func configureCell(cell: LocationTableViewCell, indexPath: NSIndexPath) {
-        
-        cell.scheduleButton.frame = CGRectMake(self.view.frame.size.width - cell.scheduleButton.frame.size.width, 0,  cell.scheduleButton.frame.size.width, cell.frame.size.height)
-        
+                
         let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as String
         
         let deals = self.viewModel.tableDataSource[dataSourceKey] as NSArray
         
         var deal: Deal = deals[indexPath.row] as Deal
         
+        cell.titleLable.text = deal.location.name
+        
         cell.delegate = self
         
-        cell.cellImageView.image = UIImage(named: "placeholder")
+        var top: CGFloat = cell.titleLable.bottom + 5
         
-        let imageUrl = NSURL(string: "https://s3-us-west-2.amazonaws.com/nashvilledeals/eastlandcafe.png")
-        
-        if self.imageCache.objectForKey(deal.location.name) == nil {
-            SDWebImageDownloader.sharedDownloader().downloadImageWithURL(imageUrl, options: nil, progress: nil, completed: {[weak self] (image, data, error, finished) in
-                if let wSelf = self {
-                    self?.imageCache.setObject(image, forKey: deal.location.name)
-                    cell.cellImageView.alpha = 0
-                    UIView.animateWithDuration(NSTimeInterval(1.0), animations: { ()-> Void in
-                        cell.cellImageView.image = image
-                        cell.cellImageView.alpha = 1
-                        return
-                    })
-                }
-            })
-        } else {
-            cell.cellImageView.image = self.imageCache.objectForKey(deal.location.name) as? UIImage
+        for special in deal.specials.allObjects as [Special] {
+            
+            var specialLabel: UILabel = UILabel(frame: CGRectMake(10, 0, 0, 0))
+            specialLabel.text = special.specialDescription
+            specialLabel.sizeToFit()
+            cell.addSubview(specialLabel)
+            
+            specialLabel.top = top
+            
+            top = specialLabel.bottom + 2
         }
         
-        cell.textLabel!.text = deal.dealDescription
+        cell.textLabel!.text = deal.specials.allObjects[0].specialDescription
     }
     
     func animateImageTransition(cell: LocationTableViewCell) {

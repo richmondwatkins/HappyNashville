@@ -7,17 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1C00334600ACFF4A23B02313 /* libPods-HappyNashville.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A27D129DC2507EC1CED1784B /* libPods-HappyNashville.a */; };
-		5D2BB89E1ACD94D70049AFF9 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2BB89D1ACD94D70049AFF9 /* MetaData.m */; };
-		5D2D73711ACF3825002216CB /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73701ACF3825002216CB /* UIView+Additions.m */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
-		5D87FB741ACF80B500F23EA5 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB731ACF80B500F23EA5 /* Notification.m */; };
+		5D87FB861AD0459E00F23EA5 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB851AD0459E00F23EA5 /* Deal.m */; };
+		5D87FB891AD0459F00F23EA5 /* Special.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB881AD0459F00F23EA5 /* Special.m */; };
+		5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8B1AD0459F00F23EA5 /* MetaData.m */; };
+		5D87FB8F1AD0459F00F23EA5 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8E1AD0459F00F23EA5 /* Notification.m */; };
+		5D87FB921AD0459F00F23EA5 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB911AD0459F00F23EA5 /* Location.m */; };
+		5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
-		5DD532091ACCFF1D00AC76CE /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD532081ACCFF1D00AC76CE /* Deal.m */; };
-		5DD5320C1ACCFF1E00AC76CE /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD5320B1ACCFF1E00AC76CE /* Location.m */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
 		5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94F1ACB5A7E007E852A /* ViewController.swift */; };
@@ -41,21 +41,25 @@
 
 /* Begin PBXFileReference section */
 		58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
-		5D2BB89C1ACD94D70049AFF9 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MetaData.h; sourceTree = "<group>"; };
-		5D2BB89D1ACD94D70049AFF9 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MetaData.m; sourceTree = "<group>"; };
-		5D2D736F1ACF3825002216CB /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
-		5D2D73701ACF3825002216CB /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
-		5D87FB721ACF80B500F23EA5 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
-		5D87FB731ACF80B500F23EA5 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		5D87FB841AD0459E00F23EA5 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deal.h; path = ../Deal.h; sourceTree = "<group>"; };
+		5D87FB851AD0459E00F23EA5 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Deal.m; path = ../Deal.m; sourceTree = "<group>"; };
+		5D87FB871AD0459F00F23EA5 /* Special.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Special.h; path = ../Special.h; sourceTree = "<group>"; };
+		5D87FB881AD0459F00F23EA5 /* Special.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Special.m; path = ../Special.m; sourceTree = "<group>"; };
+		5D87FB8A1AD0459F00F23EA5 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaData.h; path = ../MetaData.h; sourceTree = "<group>"; };
+		5D87FB8B1AD0459F00F23EA5 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MetaData.m; path = ../MetaData.m; sourceTree = "<group>"; };
+		5D87FB8D1AD0459F00F23EA5 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = ../Notification.h; sourceTree = "<group>"; };
+		5D87FB8E1AD0459F00F23EA5 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = ../Notification.m; sourceTree = "<group>"; };
+		5D87FB901AD0459F00F23EA5 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = ../Location.h; sourceTree = "<group>"; };
+		5D87FB911AD0459F00F23EA5 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
+		5D87FB971AD0474500F23EA5 /* HappyNashvilleTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HappyNashvilleTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		5D87FB981AD049EE00F23EA5 /* HappyNashville-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HappyNashville-Bridging-Header.h"; sourceTree = "<group>"; };
+		5D87FB991AD04A2900F23EA5 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
+		5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
-		5DD532071ACCFF1D00AC76CE /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
-		5DD532081ACCFF1D00AC76CE /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
-		5DD5320A1ACCFF1E00AC76CE /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
-		5DD5320B1ACCFF1E00AC76CE /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,21 +72,12 @@
 		5DF6B9621ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B9631ACB5A7E007E852A /* HappyNashvilleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HappyNashvilleTests.swift; sourceTree = "<group>"; };
 		5DF6B96D1ACB5E03007E852A /* APIManger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManger.swift; sourceTree = "<group>"; };
-		5DF6B9751ACB664B007E852A /* HappyNashville-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HappyNashville-Bridging-Header.h"; sourceTree = "<group>"; };
 		5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		A27D129DC2507EC1CED1784B /* libPods-HappyNashville.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HappyNashville.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E947630BC279528DAA7554B9 /* Pods-HappyNashville.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		5DF6B9421ACB5A7E007E852A /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				1C00334600ACFF4A23B02313 /* libPods-HappyNashville.a in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		5DF6B95A1ACB5A7E007E852A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -139,9 +134,6 @@
 				5DF6B97F1ACB86F0007E852A /* ViewModels */,
 				5DF6B97E1ACB86E4007E852A /* CoreDataModels */,
 				5DF6B9481ACB5A7E007E852A /* Supporting Files */,
-				5DF6B9751ACB664B007E852A /* HappyNashville-Bridging-Header.h */,
-				5D2D736F1ACF3825002216CB /* UIView+Additions.h */,
-				5D2D73701ACF3825002216CB /* UIView+Additions.m */,
 			);
 			path = HappyNashville;
 			sourceTree = "<group>";
@@ -149,6 +141,9 @@
 		5DF6B9481ACB5A7E007E852A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D87FB991AD04A2900F23EA5 /* UIView+Additions.h */,
+				5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */,
+				5D87FB981AD049EE00F23EA5 /* HappyNashville-Bridging-Header.h */,
 				5DF6B9491ACB5A7E007E852A /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -157,6 +152,7 @@
 		5DF6B9601ACB5A7E007E852A /* HappyNashvilleTests */ = {
 			isa = PBXGroup;
 			children = (
+				5D87FB971AD0474500F23EA5 /* HappyNashvilleTests-Bridging-Header.h */,
 				5DF6B9631ACB5A7E007E852A /* HappyNashvilleTests.swift */,
 				5DF6B9611ACB5A7E007E852A /* Supporting Files */,
 			);
@@ -174,14 +170,16 @@
 		5DF6B97E1ACB86E4007E852A /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
-				5DD5320A1ACCFF1E00AC76CE /* Location.h */,
-				5DD5320B1ACCFF1E00AC76CE /* Location.m */,
-				5DD532071ACCFF1D00AC76CE /* Deal.h */,
-				5DD532081ACCFF1D00AC76CE /* Deal.m */,
-				5D2BB89C1ACD94D70049AFF9 /* MetaData.h */,
-				5D2BB89D1ACD94D70049AFF9 /* MetaData.m */,
-				5D87FB721ACF80B500F23EA5 /* Notification.h */,
-				5D87FB731ACF80B500F23EA5 /* Notification.m */,
+				5D87FB901AD0459F00F23EA5 /* Location.h */,
+				5D87FB911AD0459F00F23EA5 /* Location.m */,
+				5D87FB8D1AD0459F00F23EA5 /* Notification.h */,
+				5D87FB8E1AD0459F00F23EA5 /* Notification.m */,
+				5D87FB8A1AD0459F00F23EA5 /* MetaData.h */,
+				5D87FB8B1AD0459F00F23EA5 /* MetaData.m */,
+				5D87FB871AD0459F00F23EA5 /* Special.h */,
+				5D87FB881AD0459F00F23EA5 /* Special.m */,
+				5D87FB841AD0459E00F23EA5 /* Deal.h */,
+				5D87FB851AD0459E00F23EA5 /* Deal.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -210,11 +208,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DF6B9671ACB5A7E007E852A /* Build configuration list for PBXNativeTarget "HappyNashville" */;
 			buildPhases = (
-				8BFA53335D9737B080643147 /* Check Pods Manifest.lock */,
 				5DF6B9411ACB5A7E007E852A /* Sources */,
-				5DF6B9421ACB5A7E007E852A /* Frameworks */,
 				5DF6B9431ACB5A7E007E852A /* Resources */,
-				897EFE8F05978B208E24C680 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -300,58 +295,26 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		897EFE8F05978B208E24C680 /* Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8BFA53335D9737B080643147 /* Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		5DF6B9411ACB5A7E007E852A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D2D73711ACF3825002216CB /* UIView+Additions.m in Sources */,
+				5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */,
 				5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */,
 				5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */,
 				5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
-				5D2BB89E1ACD94D70049AFF9 /* MetaData.m in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
-				5DD5320C1ACCFF1E00AC76CE /* Location.m in Sources */,
+				5D87FB861AD0459E00F23EA5 /* Deal.m in Sources */,
+				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
 				5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */,
-				5DD532091ACCFF1D00AC76CE /* Deal.m in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
-				5D87FB741ACF80B500F23EA5 /* Notification.m in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
+				5D87FB8F1AD0459F00F23EA5 /* Notification.m in Sources */,
+				5D87FB891AD0459F00F23EA5 /* Special.m in Sources */,
+				5D87FB921AD0459F00F23EA5 /* Location.m in Sources */,
 				5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -504,6 +467,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -515,6 +479,8 @@
 				INFOPLIST_FILE = HappyNashvilleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashvilleTests/HappyNashvilleTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyNashville.app/HappyNashville";
 			};
 			name = Debug;
@@ -523,6 +489,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -530,6 +497,7 @@
 				INFOPLIST_FILE = HappyNashvilleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashvilleTests/HappyNashvilleTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyNashville.app/HappyNashville";
 			};
 			name = Release;

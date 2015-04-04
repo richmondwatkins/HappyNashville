@@ -4,7 +4,7 @@
 
 #import "Location.h"
 #import "Deal.h"
+#import "Special.h"
 #import "MetaData.h"
 #import "Notification.h"
 #import "UIView+Additions.h"
-#import <SDWebImage/UIImageView+WebCache.h>
