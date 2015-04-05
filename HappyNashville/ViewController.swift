@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
+    var subView: UIView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +23,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.view!.addSubview(self.tableView)
+        self.subView.frame = self.view!.frame
+        
+        self.subView.addSubview(self.tableView)
+        
+        self.view!.addSubview(self.subView)
+        self.view!.backgroundColor = UIColor.whiteColor()
+        
         self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
@@ -88,7 +95,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var top: CGFloat = cell.titleLable.bottom + 5
         
         for special in deal.specials.allObjects as [Special] {
-            
+        
             var specialLabel: UILabel = UILabel(frame: CGRectMake(10, 0, 0, 0))
             specialLabel.text = special.specialDescription
             specialLabel.sizeToFit()
@@ -96,10 +103,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             specialLabel.top = top
             
-            top = specialLabel.bottom + 2
+            top = specialLabel.bottom
         }
         
-        cell.textLabel!.text = deal.specials.allObjects[0].specialDescription
     }
     
     func animateImageTransition(cell: LocationTableViewCell) {
@@ -122,24 +128,22 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         if let indexPath: NSIndexPath = self.tableView.indexPathForRowAtPoint(buttonPostion) {
             
-            var navHeight: CGFloat = self.navigationController!.navigationBar.frame.size.height + UIApplication.sharedApplication().statusBarFrame.size.height
-            
-            let scheduleFrame: CGRect = CGRectMake(0, navHeight, self.view!.width, self.view!.height)
-            
             let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as String
             
             let deals = self.viewModel.tableDataSource[dataSourceKey] as NSArray
             
-            var scheduleViewController: ScheduleViewController = ScheduleViewController(deal: deals[indexPath.row] as Deal)
+            
+            var scheduleViewController: ScheduleViewController = ScheduleViewController(deal: deals[indexPath.row] as Deal, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
             
             self.addChildViewController(scheduleViewController)
             
-            self.view!.addSubview(scheduleViewController.view)
+            self.subView.transformAndAddSubview(scheduleViewController.view)
             
             scheduleViewController.didMoveToParentViewController(self)
-
+            
         }
     }
+    
     
     func reloadTable() {
         

@@ -13,10 +13,11 @@ class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, Sch
     var deal: Deal?
     var scheduleView: ScheduleView?
     var viewModel: ScheduleViewControllerViewModel = ScheduleViewControllerViewModel()
+    let navHeight: CGFloat?
     
-    init(deal: Deal) {
+    init(deal: Deal, navHeight: CGFloat) {
         self.deal = deal
-        
+        self.navHeight = navHeight
         super.init(nibName: nil, bundle: nil);
     }
     
@@ -27,14 +28,14 @@ class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, Sch
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let subViewFrame: CGRect = CGRectMake(0, 0, self.view!.width * 0.95, self.view!.height * 0.6)
+        self.view!.backgroundColor = UIColor.whiteColor()
+
+        let scheduleViewFrame = CGRectMake(0, self.navHeight!, self.view!.width, self.view!.height - self.navHeight!)
         
-        self.scheduleView = ScheduleView(frame: subViewFrame, deal: self.deal!, viewModel: self.viewModel)
+        self.scheduleView = ScheduleView(frame: scheduleViewFrame, deal: self.deal!, viewModel: self.viewModel)
         self.scheduleView!.delegate = self
 
         self.view!.addSubview(self.scheduleView!)
-        
-        self.scheduleView!.center = CGPointMake(self.view!.width/2, self.view.height/2)
         
         let tapGesture = UITapGestureRecognizer(target: self, action:Selector("dismissVC"))
         tapGesture.delegate = self
@@ -42,17 +43,19 @@ class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, Sch
         
         self.view!.addGestureRecognizer(tapGesture)
         
-        self.view!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
     }
     
     func dismissVC() {
-    
         
         self.willMoveToParentViewController(nil)
         
-        self.view!.removeFromSuperview()
+        let parentVC: ViewController = self.parentViewController! as ViewController
         
-        self.removeFromParentViewController()
+        parentVC.subView.transformAndRemoveSubview(self.view!, completed: { (result) -> Void in
+            
+            self.removeFromParentViewController()
+        })
+        
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {

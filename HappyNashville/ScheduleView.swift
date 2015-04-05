@@ -24,11 +24,12 @@ class ScheduleView: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor.whiteColor()
-        self.layer.cornerRadius = 5.0
+
         let titleLablePadding: CGFloat = 10
         
         self.viewModel = viewModel
         self.deal = deal
+        self.frame = frame
         
         var titleLabel: UILabel = UILabel(frame: CGRectMake(titleLablePadding, titleLablePadding, frame.size.width - titleLablePadding, 10));
         titleLabel.text = "Schedule a reminder for \(deal.location.name)"
@@ -86,8 +87,6 @@ class ScheduleView: UIView {
     
         self.addSubview(switchView)
         
-        self.height = titleLablePadding + titleLabel.height + self.timePicker!.height + switchPadding + switchView.height + (buttonPadding * 2) + submitButton.height
-
     }
     
     required init(coder aDecoder: NSCoder) {
