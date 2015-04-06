@@ -131,5 +131,12 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
     }
     
     
+    func sortSpecialsByTime(specials: NSSet) -> NSArray {
+        
+        var specialsArray: NSMutableArray = NSMutableArray(array: specials.allObjects)
+        
+        return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
+    }
+    
     
 }

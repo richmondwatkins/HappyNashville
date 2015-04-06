@@ -179,6 +179,6 @@ class APIManger: NSObject {
             return true
         }
     }
-        
+    
 }
 

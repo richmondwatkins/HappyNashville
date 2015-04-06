@@ -19,6 +19,7 @@
 		5D87FBA31AD103F100F23EA5 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA21AD103F100F23EA5 /* Notification.m */; };
 		5D87FBA51AD21B5B00F23EA5 /* LocationWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */; };
 		5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */; };
+		5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA91AD239F200F23EA5 /* SpecialView.swift */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
@@ -65,6 +66,7 @@
 		5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWebViewController.swift; sourceTree = "<group>"; };
 		5D87FBA61AD2250900F23EA5 /* UIColor+UIColor_Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIColor_Expanded.h"; sourceTree = "<group>"; };
 		5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIColor_Expanded.m"; sourceTree = "<group>"; };
+		5D87FBA91AD239F200F23EA5 /* SpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialView.swift; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 				5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */,
 				5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */,
 				5D2D73761ACF3E4F002216CB /* ScheduleView.swift */,
+				5D87FBA91AD239F200F23EA5 /* SpecialView.swift */,
 				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
 				5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */,
 				5DF6B9511ACB5A7E007E852A /* Main.storyboard */,
@@ -168,7 +171,7 @@
 				5DF6B9611ACB5A7E007E852A /* Supporting Files */,
 			);
 			path = HappyNashvilleTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		5DF6B9611ACB5A7E007E852A /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -320,6 +323,7 @@
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
+				5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */,
 				5D87FBA01AD103F100F23EA5 /* Deal.m in Sources */,
 				5D87FB9D1AD0F3A800F23EA5 /* UIViewExtension.swift in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,

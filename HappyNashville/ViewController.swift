@@ -20,7 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let infoButtonsHeight: CGFloat = 30
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
-    let specialHeight: CGFloat = 12
+    let specialHeight: CGFloat = 15
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,17 +105,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var top: CGFloat = cell.titleLable.bottom + self.titleBottomPadding
         
-        for special in deal.specials.allObjects as [Special] {
+        for special in self.viewModel.sortSpecialsByTime(deal.specials) as [Special] {
         
-            var specialLabel: UILabel = UILabel(frame: CGRectMake(10, 0, 0, 0))
-            specialLabel.text = special.specialDescription
-            specialLabel.font = UIFont.systemFontOfSize(10)
-            specialLabel.sizeToFit()
-            cell.addSubview(specialLabel)
-
-            specialLabel.top = top
+            let specialView: SpecialView = SpecialView(special: special, frame: CGRectMake(10, top, self.view!.width - 10, self.specialHeight))
             
-            top = specialLabel.bottom + specialBottomPadding
+            cell.addSubview(specialView)
+
+            specialView.top = top
+            
+            top = specialView.bottom + specialBottomPadding
         }
         
         let infoButtonWidth: CGFloat = 100
