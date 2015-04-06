@@ -20,34 +20,20 @@ class LocationTableViewCell: UITableViewCell {
     
     var delegate:ScheduleReminder?
     
-    let cellHeight: CGFloat = 150
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.height = cellHeight
-        
+                
         let buttonWidth: CGFloat = 100
         
         let buttonHeight: CGFloat = 30
         
-        
         self.layoutMargins = UIEdgeInsetsZero
         
-        self.scheduleButton.frame = CGRectMake(self.width - buttonWidth, self.height - buttonHeight, buttonWidth, buttonHeight);
-        
-        scheduleButton.backgroundColor = UIColor.redColor()
-        
-        scheduleButton.addTarget(self, action: "scheduleDealDelegate:", forControlEvents:.TouchUpInside)
-        
-        scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
-        
-        self.titleLable.frame = CGRectMake(10, 10, self.width, self.height * 0.1)
+        self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.numberOfLines = 0
         self.titleLable.textAlignment = NSTextAlignment.Left
+
         self.addSubview(self.titleLable)
-        
-        self.addSubview(scheduleButton)
     }
   
     required init(coder aDecoder: NSCoder) {

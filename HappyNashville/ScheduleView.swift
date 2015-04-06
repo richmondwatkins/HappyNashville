@@ -77,7 +77,7 @@ class ScheduleView: UIView {
         
         let buttonPadding: CGFloat = 10
         
-        var submitButton: UIButton = UIButton(frame: CGRectMake(buttonPadding, switchView.bottom + buttonPadding, self.width - (buttonPadding * 2), 50))
+        var submitButton: UIButton = UIButton(frame: CGRectMake(buttonPadding, self.height - 50 - buttonPadding, self.width - (buttonPadding * 2), 50))
         submitButton.layer.cornerRadius = 5.0
         submitButton.setTitle("SUBMIT", forState: UIControlState.Normal)
         submitButton.backgroundColor = UIColor.blueColor()

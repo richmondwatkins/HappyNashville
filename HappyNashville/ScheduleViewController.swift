@@ -8,16 +8,23 @@
 
 import UIKit
 
-class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, ScheduleViewProtocol {
+protocol ScheduleProtocol {
+    func updateScheduledCell(indexPath: NSIndexPath)
+}
+
+class ScheduleViewController: UIViewController, ScheduleViewProtocol {
 
     var deal: Deal?
     var scheduleView: ScheduleView?
     var viewModel: ScheduleViewControllerViewModel = ScheduleViewControllerViewModel()
     let navHeight: CGFloat?
+    let selectedIndexPath: NSIndexPath?
+    var delegate: ScheduleProtocol?
     
-    init(deal: Deal, navHeight: CGFloat) {
+    init(deal: Deal, navHeight: CGFloat, indexPath: NSIndexPath) {
         self.deal = deal
         self.navHeight = navHeight
+        self.selectedIndexPath = indexPath
         super.init(nibName: nil, bundle: nil);
     }
     
@@ -37,12 +44,6 @@ class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, Sch
 
         self.view!.addSubview(self.scheduleView!)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action:Selector("dismissVC"))
-        tapGesture.delegate = self
-        tapGesture.numberOfTapsRequired = 1
-        
-        self.view!.addGestureRecognizer(tapGesture)
-        
     }
     
     func dismissVC() {
@@ -50,22 +51,17 @@ class ScheduleViewController: UIViewController, UIGestureRecognizerDelegate, Sch
         self.willMoveToParentViewController(nil)
         
         let parentVC: ViewController = self.parentViewController! as ViewController
+      
+        if self.deal!.notification != nil {
+            
+            self.delegate!.updateScheduledCell(self.selectedIndexPath!)
+        }
         
         parentVC.subView.transformAndRemoveSubview(self.view!, completed: { (result) -> Void in
             
             self.removeFromParentViewController()
         })
         
-    }
-    
-    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        
-        if touch.view.isDescendantOfView(self.scheduleView!) {
-            
-            return false
-        } else {
-            return true
-        }
     }
 
 }

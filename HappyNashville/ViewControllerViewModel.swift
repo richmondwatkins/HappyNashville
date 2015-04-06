@@ -109,4 +109,27 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         self.tableSections = self.tableDataSource.allKeys
     }
     
+    func unscheduleNotification(deal: Deal) {
+        
+        let application: UIApplication = UIApplication.sharedApplication()
+        
+        let scheduledNotifications: NSArray = application.scheduledLocalNotifications as NSArray
+        
+        for notifcation in scheduledNotifications as [UILocalNotification] {
+            
+            if (deal.notification != nil) && (notifcation.fireDate == deal.notification.date) && deal.notification.text == notifcation.alertBody {
+                
+                 application.cancelLocalNotification(notifcation)
+                
+                let appDelegate: AppDelegate = application.delegate as AppDelegate
+                
+                appDelegate.managedObjectContext!.deleteObject(deal.notification)
+                
+                appDelegate.managedObjectContext!.save(nil)
+            }
+        }
+    }
+    
+    
+    
 }

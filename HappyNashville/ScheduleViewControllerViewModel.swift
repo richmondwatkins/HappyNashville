@@ -62,6 +62,9 @@ class ScheduleViewControllerViewModel: NSObject {
         
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate
+        notificationCD.deal = deal
+        
+        deal.notification = notificationCD
         
         appDelegate.managedObjectContext!.save(nil)
         

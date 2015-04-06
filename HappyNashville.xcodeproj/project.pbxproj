@@ -10,13 +10,15 @@
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
-		5D87FB861AD0459E00F23EA5 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB851AD0459E00F23EA5 /* Deal.m */; };
 		5D87FB891AD0459F00F23EA5 /* Special.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB881AD0459F00F23EA5 /* Special.m */; };
 		5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8B1AD0459F00F23EA5 /* MetaData.m */; };
-		5D87FB8F1AD0459F00F23EA5 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8E1AD0459F00F23EA5 /* Notification.m */; };
 		5D87FB921AD0459F00F23EA5 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB911AD0459F00F23EA5 /* Location.m */; };
 		5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */; };
 		5D87FB9D1AD0F3A800F23EA5 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9C1AD0F3A800F23EA5 /* UIViewExtension.swift */; };
+		5D87FBA01AD103F100F23EA5 /* Deal.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9F1AD103F100F23EA5 /* Deal.m */; };
+		5D87FBA31AD103F100F23EA5 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA21AD103F100F23EA5 /* Notification.m */; };
+		5D87FBA51AD21B5B00F23EA5 /* LocationWebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */; };
+		5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
@@ -45,14 +47,10 @@
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
-		5D87FB841AD0459E00F23EA5 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Deal.h; path = ../Deal.h; sourceTree = "<group>"; };
-		5D87FB851AD0459E00F23EA5 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Deal.m; path = ../Deal.m; sourceTree = "<group>"; };
 		5D87FB871AD0459F00F23EA5 /* Special.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Special.h; path = ../Special.h; sourceTree = "<group>"; };
 		5D87FB881AD0459F00F23EA5 /* Special.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Special.m; path = ../Special.m; sourceTree = "<group>"; };
 		5D87FB8A1AD0459F00F23EA5 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaData.h; path = ../MetaData.h; sourceTree = "<group>"; };
 		5D87FB8B1AD0459F00F23EA5 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MetaData.m; path = ../MetaData.m; sourceTree = "<group>"; };
-		5D87FB8D1AD0459F00F23EA5 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = ../Notification.h; sourceTree = "<group>"; };
-		5D87FB8E1AD0459F00F23EA5 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = ../Notification.m; sourceTree = "<group>"; };
 		5D87FB901AD0459F00F23EA5 /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Location.h; path = ../Location.h; sourceTree = "<group>"; };
 		5D87FB911AD0459F00F23EA5 /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Location.m; path = ../Location.m; sourceTree = "<group>"; };
 		5D87FB971AD0474500F23EA5 /* HappyNashvilleTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HappyNashvilleTests-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -60,6 +58,13 @@
 		5D87FB991AD04A2900F23EA5 /* UIView+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Additions.h"; sourceTree = "<group>"; };
 		5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Additions.m"; sourceTree = "<group>"; };
 		5D87FB9C1AD0F3A800F23EA5 /* UIViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
+		5D87FB9E1AD103F100F23EA5 /* Deal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deal.h; sourceTree = "<group>"; };
+		5D87FB9F1AD103F100F23EA5 /* Deal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deal.m; sourceTree = "<group>"; };
+		5D87FBA11AD103F100F23EA5 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Notification.h; sourceTree = "<group>"; };
+		5D87FBA21AD103F100F23EA5 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Notification.m; sourceTree = "<group>"; };
+		5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationWebViewController.swift; sourceTree = "<group>"; };
+		5D87FBA61AD2250900F23EA5 /* UIColor+UIColor_Expanded.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+UIColor_Expanded.h"; sourceTree = "<group>"; };
+		5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIColor_Expanded.m"; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +134,7 @@
 				5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */,
 				5D2D73761ACF3E4F002216CB /* ScheduleView.swift */,
 				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
+				5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */,
 				5DF6B9511ACB5A7E007E852A /* Main.storyboard */,
 				5DF6B9541ACB5A7E007E852A /* Images.xcassets */,
 				5DF6B9561ACB5A7E007E852A /* LaunchScreen.xib */,
@@ -144,6 +150,8 @@
 		5DF6B9481ACB5A7E007E852A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D87FBA61AD2250900F23EA5 /* UIColor+UIColor_Expanded.h */,
+				5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */,
 				5D87FB991AD04A2900F23EA5 /* UIView+Additions.h */,
 				5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */,
 				5D87FB981AD049EE00F23EA5 /* HappyNashville-Bridging-Header.h */,
@@ -175,14 +183,14 @@
 			children = (
 				5D87FB901AD0459F00F23EA5 /* Location.h */,
 				5D87FB911AD0459F00F23EA5 /* Location.m */,
-				5D87FB8D1AD0459F00F23EA5 /* Notification.h */,
-				5D87FB8E1AD0459F00F23EA5 /* Notification.m */,
 				5D87FB8A1AD0459F00F23EA5 /* MetaData.h */,
 				5D87FB8B1AD0459F00F23EA5 /* MetaData.m */,
 				5D87FB871AD0459F00F23EA5 /* Special.h */,
 				5D87FB881AD0459F00F23EA5 /* Special.m */,
-				5D87FB841AD0459E00F23EA5 /* Deal.h */,
-				5D87FB851AD0459E00F23EA5 /* Deal.m */,
+				5D87FBA11AD103F100F23EA5 /* Notification.h */,
+				5D87FBA21AD103F100F23EA5 /* Notification.m */,
+				5D87FB9E1AD103F100F23EA5 /* Deal.h */,
+				5D87FB9F1AD103F100F23EA5 /* Deal.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 				TargetAttributes = {
 					5DF6B9441ACB5A7E007E852A = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = TB5YKEAJ2S;
 					};
 					5DF6B95C1ACB5A7E007E852A = {
 						CreatedOnToolsVersion = 6.2;
@@ -303,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D87FBA51AD21B5B00F23EA5 /* LocationWebViewController.swift in Sources */,
 				5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */,
 				5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */,
 				5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */,
@@ -310,13 +320,14 @@
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
-				5D87FB861AD0459E00F23EA5 /* Deal.m in Sources */,
+				5D87FBA01AD103F100F23EA5 /* Deal.m in Sources */,
 				5D87FB9D1AD0F3A800F23EA5 /* UIViewExtension.swift in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
+				5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */,
 				5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */,
+				5D87FBA31AD103F100F23EA5 /* Notification.m in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
-				5D87FB8F1AD0459F00F23EA5 /* Notification.m in Sources */,
 				5D87FB891AD0459F00F23EA5 /* Special.m in Sources */,
 				5D87FB921AD0459F00F23EA5 /* Location.m in Sources */,
 				5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */,
@@ -442,10 +453,10 @@
 		};
 		5DF6B9681ACB5A7E007E852A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E947630BC279528DAA7554B9 /* Pods-HappyNashville.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -456,10 +467,10 @@
 		};
 		5DF6B9691ACB5A7E007E852A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
