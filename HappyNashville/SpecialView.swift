@@ -22,7 +22,7 @@ class SpecialView: UIView {
        
         
         var dateLabel: UILabel = UILabel()
-        dateLabel.font = UIFont.systemFontOfSize(10)
+        dateLabel.font = UIFont.boldSystemFontOfSize(10)
         dateLabel.text = configureDateString(special)
         dateLabel.sizeToFit()
         dateLabel.left = specialLabel.right + 5
@@ -55,11 +55,13 @@ class SpecialView: UIView {
         var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
         var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
-        var dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "hh:mm a"
+        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        startDateFormatter.dateFormat = "hh:mm"
         
+        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        endDateFormatter.dateFormat = "hh:mm a"
         
-        return "\(dateFormatter.stringFromDate(startTime)) - \(dateFormatter.stringFromDate(endTime))"
+        return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
     }
     
     

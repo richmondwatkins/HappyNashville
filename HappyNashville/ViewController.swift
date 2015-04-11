@@ -138,6 +138,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
         webSiteButton.setTitle("Website", forState: UIControlState.Normal)
         
+        cell.titleLable.sizeToFit()
+        var typeView: UIView = UIView();
+        
+        switch deal.type.integerValue {
+            case 0:
+                typeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
+                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                typeView.left = cell.titleLable.right + 5;
+                break;
+            case 1:
+                typeView.layer.contents = UIImage(named: "food")?.CGImage!
+                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                typeView.left = cell.titleLable.right + 5;
+                break;
+            case 2:
+                typeView.layer.contents = UIImage(named: "food")?.CGImage!
+                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                typeView.left = cell.titleLable.right + 5;
+                
+                var secondTypeView: UIView = UIView()
+                secondTypeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
+                secondTypeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                secondTypeView.left = typeView.right + 2;
+                cell.addSubview(secondTypeView)
+                break;
+            default:
+                break;
+        }
+        
+        cell.addSubview(typeView)
+        
         cell.addSubview(webSiteButton)
         cell.addSubview(scheduleButton)
     }
@@ -156,7 +187,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let deal: Deal = returnSelectedDeal(sender).deal
         
-        let webViewController: LocationWebViewController = LocationWebViewController(url: NSURL(string: deal.location.website)!, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
+        let webViewController: LocationWebViewController = LocationWebViewController(location: deal.location, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
         
         self.presentViewController(webViewController, animated: true, completion: nil)
     }

@@ -10,14 +10,14 @@ import UIKit
 
 class LocationWebViewController: UIViewController, UIWebViewDelegate {
     
-    var locationURL: NSURL?
+    var location: Location
     var webView: UIWebView = UIWebView()
     let loadingAnimator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     var navBarHeight: CGFloat = 0
     let buttonPadding: CGFloat = 10
     
-    init(url: NSURL, navBarHeight: CGFloat) {
-        self.locationURL = url
+    init(location: Location, navBarHeight: CGFloat) {
+        self.location = location
         self.navBarHeight = navBarHeight
         super.init(nibName: nil, bundle: nil)
     }
@@ -46,11 +46,18 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         
         navBar.addSubview(self.loadingAnimator)
         
+        var titleLabel: UILabel = UILabel()
+        titleLabel.text = self.location.name
+        titleLabel.sizeToFit()
+        titleLabel.center = CGPointMake(navBar.width/2, navBar.height/2)
+        
+        navBar.addSubview(titleLabel)
+        
         self.view!.addSubview(navBar)
         
         self.webView.frame = CGRectMake(0, navBar.bottom, self.view!.width, self.view!.height - navBar.height)
         
-        self.webView.loadRequest(NSURLRequest(URL: self.locationURL!))
+        self.webView.loadRequest(NSURLRequest(URL: NSURL(string:self.location.website)!))
         
         self.webView.delegate = self
         

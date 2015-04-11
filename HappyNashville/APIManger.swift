@@ -15,20 +15,23 @@ class APIManger: NSObject {
     
     class func requestNewData(moc: NSManagedObjectContext) {
         
-        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
+        let urlString = "https://frozen-hollows-3577.herokuapp.com/locations"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
+        let reachability = Reachability.reachabilityForInternetConnection()
         
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as NSDictionary
-            
-            if self.shouldUpdateData(jsonResult["version"] as NSNumber, moc: moc) {
+//        reachability.whenReachable = { reachability in
+        
+            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
                 
-                 self.updateDeals(jsonResult["locations"] as NSArray, moc: moc);
-            }
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as NSDictionary
+                
+                if self.shouldUpdateData(jsonResult["version"] as NSNumber, moc: moc) {
+                    
+                    self.updateDeals(jsonResult["locations"] as NSArray, moc: moc);
+                }
+//            }
         }
-        
     }
     
     class func updateDeals(deals: NSArray, moc: NSManagedObjectContext) {
@@ -51,6 +54,12 @@ class APIManger: NSObject {
             if key == "deal" {
                 
                 location.deal = self.addDeal(locationDict[key] as NSDictionary, moc: moc)
+            } else if key == "_id" {
+                
+                println(locationDict[key])
+            }else if key == "coordinates" {
+                
+                println(locationDict[key])
             } else {
                 
                 location.setValue(locationDict[key], forKey: key)

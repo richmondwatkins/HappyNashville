@@ -18,5 +18,9 @@
 @dynamic website;
 @dynamic slug;
 @dynamic deal;
-
+@dynamic locId;
+@dynamic coordinates;
+@dynamic rating;
+@dynamic lat;
+@dynamic lng;
 @end
