@@ -11,7 +11,7 @@ import CoreData
 
 class ScheduleViewControllerViewModel: NSObject {
    
-    func calculateDatePickerDate(deal: Deal) -> NSDate {
+    func calculateDatePickerDate(dealDay: DealDay) -> NSDate {
         
         let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let date: NSDate = NSDate()
@@ -20,12 +20,12 @@ class ScheduleViewControllerViewModel: NSObject {
         
         var daysToNextOccur = 0
         
-        if deal.day.integerValue + 1 < dateCompenents.weekday {
+        if dealDay.day.integerValue < dateCompenents.weekday {
             
-            daysToNextOccur = 7 - (dateCompenents.weekday - deal.day.integerValue + 1)
+            daysToNextOccur = 7 - (dateCompenents.weekday - dealDay.day.integerValue + 1)
         } else {
             
-            daysToNextOccur = dateCompenents.weekday - deal.day.integerValue + 1
+            daysToNextOccur = dateCompenents.weekday - dealDay.day.integerValue + 1
         }
         
         let timeToDate: Int = 60 * 60 * 24 * daysToNextOccur
@@ -40,7 +40,7 @@ class ScheduleViewControllerViewModel: NSObject {
         return gregorianCalendar.dateFromComponents(toDateComponents)!
     }
     
-    func scheduleReminder(date: NSDate, isRecurring: Bool, deal:Deal) {
+    func scheduleReminder(date: NSDate, isRecurring: Bool, dealDay:DealDay) {
         
         let notificationSetting = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Alert | UIUserNotificationType.Sound, categories: nil)
         
@@ -48,7 +48,7 @@ class ScheduleViewControllerViewModel: NSObject {
         
         var notification = UILocalNotification()
         notification.fireDate = date
-        notification.alertBody = "\(deal.location.name)" // TODO: Add in special descriptions
+        notification.alertBody = "\(dealDay.location.name)" // TODO: Add in special descriptions
 
         if isRecurring {
             notification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
@@ -62,9 +62,9 @@ class ScheduleViewControllerViewModel: NSObject {
         
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate
-        notificationCD.deal = deal
+        notificationCD.dealDay = dealDay
         
-        deal.notification = notificationCD
+        dealDay.notification = notificationCD
         
         appDelegate.managedObjectContext!.save(nil)
         

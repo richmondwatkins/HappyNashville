@@ -30,7 +30,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        if let fetchResult = APIManger.fetchAllDeals(appDelegate.managedObjectContext!) {
+        if let fetchResult = APIManger.fetchAllDealDays(appDelegate.managedObjectContext!) {
            
            sortData(fetchResult)
         }
@@ -47,29 +47,29 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         var fridayArray: NSMutableArray = []
         var saturdayArray: NSMutableArray = []
         
-        for deal in fetchResult as! [Deal] {
+        for deal in fetchResult as! [DealDay] {
             
             switch deal.day.integerValue {
                 
-            case 0:
+            case 1:
                 sundayArray.addObject(deal)
                     break
-            case 1:
+            case 2:
                 mondayArray.addObject(deal)
                 break
-            case 2:
+            case 3:
                 tuesdayArray.addObject(deal)
                 break
-            case 3:
+            case 4:
                 wednesdayArray.addObject(deal)
                 break
-            case 4:
+            case 5:
                 thursdayArray.addObject(deal)
                 break
-            case 5:
+            case 6:
                 fridayArray.addObject(deal)
                 break
-            case 6:
+            case 7:
                 saturdayArray.addObject(deal)
                 break
             default:
@@ -109,7 +109,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         self.tableSections = self.tableDataSource.allKeys
     }
     
-    func unscheduleNotification(deal: Deal) {
+    func unscheduleNotification(dealDay: DealDay) {
         
         let application: UIApplication = UIApplication.sharedApplication()
         
@@ -117,13 +117,13 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         
         for notifcation in scheduledNotifications as! [UILocalNotification] {
             
-            if (deal.notification != nil) && (notifcation.fireDate == deal.notification.date) && deal.notification.text == notifcation.alertBody {
+            if (dealDay.notification != nil) && (notifcation.fireDate == dealDay.notification.date) && dealDay.notification.text == notifcation.alertBody {
                 
                  application.cancelLocalNotification(notifcation)
                 
                 let appDelegate: AppDelegate = application.delegate as! AppDelegate
                 
-                appDelegate.managedObjectContext!.deleteObject(deal.notification)
+                appDelegate.managedObjectContext!.deleteObject(dealDay.notification)
                 
                 appDelegate.managedObjectContext!.save(nil)
             }

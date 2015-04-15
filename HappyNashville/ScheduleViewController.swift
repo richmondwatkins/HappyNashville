@@ -14,15 +14,15 @@ protocol ScheduleProtocol {
 
 class ScheduleViewController: UIViewController, ScheduleViewProtocol {
 
-    var deal: Deal?
+    var dealDay: DealDay?
     var scheduleView: ScheduleView?
     var viewModel: ScheduleViewControllerViewModel = ScheduleViewControllerViewModel()
     let navHeight: CGFloat?
     let selectedIndexPath: NSIndexPath?
     var delegate: ScheduleProtocol?
     
-    init(deal: Deal, navHeight: CGFloat, indexPath: NSIndexPath) {
-        self.deal = deal
+    init(dealDay: DealDay, navHeight: CGFloat, indexPath: NSIndexPath) {
+        self.dealDay = dealDay
         self.navHeight = navHeight
         self.selectedIndexPath = indexPath
         super.init(nibName: nil, bundle: nil);
@@ -39,7 +39,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
 
         let scheduleViewFrame = CGRectMake(0, self.navHeight!, self.view!.width, self.view!.height - self.navHeight!)
         
-        self.scheduleView = ScheduleView(frame: scheduleViewFrame, deal: self.deal!, viewModel: self.viewModel)
+        self.scheduleView = ScheduleView(frame: scheduleViewFrame, dealDay: self.dealDay!, viewModel: self.viewModel)
         self.scheduleView!.delegate = self
 
         self.view!.addSubview(self.scheduleView!)
@@ -52,7 +52,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         
         let parentVC: ViewController = self.parentViewController! as! ViewController
       
-        if self.deal!.notification != nil {
+        if self.dealDay!.notification != nil {
             
             self.delegate!.updateScheduledCell(self.selectedIndexPath!)
         }

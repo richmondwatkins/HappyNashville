@@ -2,25 +2,24 @@
 //  Location.m
 //  HappyNashville
 //
-//  Created by Richmond Watkins on 4/4/15.
+//  Created by Richmond Watkins on 4/14/15.
 //  Copyright (c) 2015 Richmond Watkins. All rights reserved.
 //
 
 #import "Location.h"
-#import "Deal.h"
+#import "DealDay.h"
 
 
 @implementation Location
 
 @dynamic address;
-@dynamic name;
-@dynamic phoneNumber;
-@dynamic website;
-@dynamic slug;
-@dynamic deal;
-@dynamic locId;
-@dynamic coordinates;
-@dynamic rating;
 @dynamic lat;
 @dynamic lng;
+@dynamic name;
+@dynamic phoneNumber;
+@dynamic rating;
+@dynamic slug;
+@dynamic website;
+@dynamic dealDays;
+
 @end

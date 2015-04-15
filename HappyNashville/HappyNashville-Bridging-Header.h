@@ -3,7 +3,7 @@
 //
 
 #import "Location.h"
-#import "Deal.h"
+#import "DealDay.h"
 #import "Special.h"
 #import "MetaData.h"
 #import "Notification.h"

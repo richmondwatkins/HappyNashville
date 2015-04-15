@@ -17,10 +17,10 @@ class ScheduleView: UIView {
     var timePicker: UIDatePicker?
     var recurringSwitch: UISwitch?
     var viewModel: ScheduleViewControllerViewModel?
-    var deal: Deal?
+    var dealDay: DealDay?
     var delegate: ScheduleViewProtocol?
     
-    init(frame: CGRect, deal: Deal, viewModel: ScheduleViewControllerViewModel) {
+    init(frame: CGRect, dealDay: DealDay, viewModel: ScheduleViewControllerViewModel) {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor.whiteColor()
@@ -28,11 +28,11 @@ class ScheduleView: UIView {
         let titleLablePadding: CGFloat = 10
         
         self.viewModel = viewModel
-        self.deal = deal
+        self.dealDay = dealDay
         self.frame = frame
         
         var titleLabel: UILabel = UILabel(frame: CGRectMake(titleLablePadding, titleLablePadding, frame.size.width - titleLablePadding, 10));
-        titleLabel.text = "Schedule a reminder for \(deal.location.name)"
+        titleLabel.text = "Schedule a reminder for \(dealDay.location.name)"
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.numberOfLines = 0
         titleLabel.sizeToFit()
@@ -41,7 +41,7 @@ class ScheduleView: UIView {
         self.addSubview(titleLabel)
         
         self.timePicker = UIDatePicker(frame: CGRectMake(0, titleLabel.bottom, frame.width * 0.95, frame.height * 0.4))
-        self.timePicker?.date = self.viewModel!.calculateDatePickerDate(deal)
+        self.timePicker?.date = self.viewModel!.calculateDatePickerDate(dealDay)
         self.addSubview(self.timePicker!)
     
         let controlViewHeight: CGFloat = 40
@@ -95,7 +95,7 @@ class ScheduleView: UIView {
     
     func submitSchedule() {
         
-        self.viewModel?.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, deal: self.deal!)
+        self.viewModel?.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
         
         self.delegate?.dismissVC()
     }

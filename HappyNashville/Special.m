@@ -2,22 +2,22 @@
 //  Special.m
 //  HappyNashville
 //
-//  Created by Richmond Watkins on 4/4/15.
+//  Created by Richmond Watkins on 4/14/15.
 //  Copyright (c) 2015 Richmond Watkins. All rights reserved.
 //
 
 #import "Special.h"
-#import "Deal.h"
+#import "DealDay.h"
 
 
 @implementation Special
 
-@dynamic specialDescription;
 @dynamic allDay;
-@dynamic hourStart;
-@dynamic minuteStart;
 @dynamic hourEnd;
+@dynamic hourStart;
 @dynamic minuteEnd;
-@dynamic deal;
+@dynamic minuteStart;
+@dynamic specialDescription;
+@dynamic dealDay;
 
 @end

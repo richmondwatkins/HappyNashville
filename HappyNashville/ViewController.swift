@@ -93,7 +93,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let deals = returnDealsArray(indexPath)
         
-        var deal: Deal = deals[indexPath.row] as! Deal
+        var deal: DealDay = deals[indexPath.row] as! DealDay
         
         cell.titleLable.text = deal.location.name
         
@@ -180,7 +180,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func webSiteButtonPressed(sender: UIButton) {
         
-        let deal: Deal = returnSelectedDeal(sender).deal
+        let deal: DealDay = returnSelectedDealDay(sender).dealDay
         
         let webViewController: LocationWebViewController = LocationWebViewController(location: deal.location, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
         
@@ -189,7 +189,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func scheduleButtonPressed(sender: UIButton) {
         
-        var scheduleViewController: ScheduleViewController = ScheduleViewController(deal:returnSelectedDeal(sender).deal, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height, indexPath: returnSelectedDeal(sender).indexPath)
+        var scheduleViewController: ScheduleViewController = ScheduleViewController(dealDay: returnSelectedDealDay(sender).dealDay, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height, indexPath: returnSelectedDealDay(sender).indexPath)
         scheduleViewController.delegate = self
         
         self.addChildViewController(scheduleViewController)
@@ -204,14 +204,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(sender)
         
-        self.viewModel.unscheduleNotification(returnSelectedDeal(sender).deal)
+        self.viewModel.unscheduleNotification(returnSelectedDealDay(sender).dealDay)
         
         var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
         configureCell(cell, indexPath: indexPath)
     }
     
-    func returnSelectedDeal(selectedButton: UIButton) -> (deal: Deal, indexPath: NSIndexPath) {
+    func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
@@ -219,7 +219,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let deals = self.viewModel.tableDataSource[dataSourceKey] as! NSArray
         
-        return (deals[indexPath.row] as! Deal, indexPath)
+        return (deals[indexPath.row] as! DealDay, indexPath)
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {

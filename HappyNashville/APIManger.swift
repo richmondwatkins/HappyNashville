@@ -51,58 +51,68 @@ class APIManger: NSObject {
         
         for key in locationDict.allKeys as! [String] {
             
-            if key == "deal" {
+            if key == "dealDays" {
                 
-                location.deal = self.addDeal(locationDict[key] as! NSDictionary, moc: moc)
+                location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, moc: moc, location: location) as Set<NSObject>)
             } else if key == "_id" {
                 
                 println(locationDict[key])
-            }else if key == "coordinates" {
-                
-                println(locationDict[key])
+            }else if key == "coords" {
+                var coordsDict: NSDictionary = locationDict[key] as! NSDictionary
+                location.lat = coordsDict["lat"] as! NSNumber
+                location.lng = coordsDict["lng"] as! NSNumber
             } else {
-                
+
                 location.setValue(locationDict[key], forKey: key)
             }
         }
     }
     
-    class func addDeal(dealDict: NSDictionary, moc: NSManagedObjectContext) -> Deal {
+    class func addDealDays(dealDays: NSArray, moc: NSManagedObjectContext, location: Location) -> NSSet {
+    
+        var dealDaysArray: Array<DealDay> = []
         
-         var deal: Deal = NSEntityDescription.insertNewObjectForEntityForName("Deal", inManagedObjectContext: moc) as! Deal
-        
-        for  dealAttr in dealDict.allKeys as! [String] {
+        for dealDayDict in dealDays as! [NSDictionary] {
             
-            if dealAttr == "specials" {
+            var dealDay: DealDay = NSEntityDescription.insertNewObjectForEntityForName("DealDay", inManagedObjectContext: moc) as! DealDay
+            
+            dealDay.location = location
+            
+            for key in dealDayDict.allKeys as! [String] {
                 
-                deal.addSpecials(self.setSpecials(dealDict["specials"] as! NSArray, moc: moc) as Set<NSObject>)
-            } else {
+                if key == "specials" {
+                    
+                    dealDay.addSpecials(self.setSpecials(dealDayDict[key] as! NSArray, moc: moc) as Set<NSObject>)
+                } else {
+
+                    dealDay.setValue(dealDayDict[key], forKey: key)
+                }
                 
-                deal.setValue(dealDict[dealAttr], forKey: dealAttr)
+                dealDaysArray.append(dealDay)
             }
             
         }
         
-        return deal
+        return NSSet(array: dealDaysArray)
     }
     
     class func setSpecials(specials: NSArray, moc: NSManagedObjectContext) -> NSSet {
         
-        var specialMutable: NSMutableArray = NSMutableArray()
+        var specialMutable: Array<Special> = []
         
         for  specialDict in specials as! [NSDictionary] {
             
             var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as! Special
             
             for key in specialDict.allKeys as! [String] {
-    
+                
                 special.setValue(specialDict[key], forKey: key)
             }
             
-            specialMutable.addObject(special)
+            specialMutable.append(special)
         }
         
-        return NSSet().setByAddingObjectsFromArray(specialMutable as [AnyObject])
+        return NSSet(array: specialMutable)
     }
     
     class func updateOrAdd(locationDict: NSDictionary, moc: NSManagedObjectContext) {
@@ -148,9 +158,9 @@ class APIManger: NSObject {
         }
     }
     
-    class func fetchAllDeals(moc: NSManagedObjectContext) -> NSArray? {
+    class func fetchAllDealDays(moc: NSManagedObjectContext) -> NSArray? {
     
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Deal")
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "DealDay")
         
         return moc.executeFetchRequest(fetchRequest, error: nil)
     }
