@@ -53,7 +53,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionTitle: String = self.viewModel.tableSections![section] as! String
+        let sectionTitle: String = self.viewModel.tableSections[section]
         
         let deals = self.viewModel.tableDataSource[sectionTitle] as! NSArray
         
@@ -62,12 +62,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return self.viewModel.tableSections!.count
+        return self.viewModel.tableSections.count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return self.viewModel.tableSections![section] as? String
+        return self.viewModel.tableSections[section]
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -208,18 +208,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
-        configureCell(cell, indexPath: indexPath)
+        cell.scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
+        cell.scheduleButton.removeTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
+        cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
+    }
+    
+    func updateScheduledCell(indexPath: NSIndexPath) {
+        
+        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
+        
+        cell.scheduleButton.setTitle("UnSchedule", forState: .Normal)
+        cell.scheduleButton.removeTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
+        cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
-        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as! String
+        let dataSourceKey: String = self.viewModel.tableSections[indexPath.section]
         
-        let deals = self.viewModel.tableDataSource[dataSourceKey] as! NSArray
+        let deals = self.viewModel.tableDataSource[dataSourceKey]!
         
-        return (deals[indexPath.row] as! DealDay, indexPath)
+        return (deals[indexPath.row], indexPath)
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {
@@ -231,9 +242,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func returnDealsArray(indexPath: NSIndexPath) -> NSArray {
         
-        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as! String
+        let dataSourceKey: String = self.viewModel.tableSections[indexPath.section]
         
-        return self.viewModel.tableDataSource[dataSourceKey] as! NSArray
+        return self.viewModel.tableDataSource[dataSourceKey]!
     }
     
     
@@ -248,13 +259,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let contentCardOffset: CGFloat = 20
         
         return cellHeight + contentCardOffset
-    }
-    
-    func updateScheduledCell(indexPath: NSIndexPath) {
-        
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
-        
-        configureCell(cell, indexPath: indexPath)
     }
     
     func reloadTable() {

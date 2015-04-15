@@ -43,6 +43,15 @@ class LocationTableViewCell: UITableViewCell {
         self.scheduleButton.backgroundColor = UIColor.redColor()
         self.contentCard.backgroundColor = UIColor.whiteColor()
         
+        self.contentCard.layer.masksToBounds = false
+        self.contentCard.layer.cornerRadius = 1
+        self.contentCard.layer.shadowOffset = CGSizeMake(-0.2, 0.2)
+        self.contentCard.layer.shadowRadius = 1
+        
+        var bezierPath: UIBezierPath = UIBezierPath(rect: self.contentCard.bounds)
+        self.contentCard.layer.shadowPath = bezierPath.CGPath
+        self.contentCard.layer.shadowOpacity = 0.2
+        
         self.contentCard.addSubview(self.titleLable)
         self.contentCard.addSubview(self.webSiteButton)
         self.contentCard.addSubview(self.scheduleButton)

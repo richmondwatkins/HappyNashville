@@ -16,9 +16,9 @@ import CoreData
 
 public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelegate {
     
-    var tableDataSource: NSMutableDictionary = NSMutableDictionary()
+    var tableDataSource: Dictionary<String,Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
-    var tableSections: NSArray?
+    var tableSections: Array<String> = []
     
     override init() {
         super.init()
@@ -39,38 +39,38 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
     
     func sortData(fetchResult: NSArray) {
         
-        var sundayArray: NSMutableArray = []
-        var mondayArray: NSMutableArray = []
-        var tuesdayArray: NSMutableArray = []
-        var wednesdayArray: NSMutableArray = []
-        var thursdayArray: NSMutableArray = []
-        var fridayArray: NSMutableArray = []
-        var saturdayArray: NSMutableArray = []
+        var sundayArray: Array<DealDay> = []
+        var mondayArray: Array<DealDay> = []
+        var tuesdayArray: Array<DealDay> = []
+        var wednesdayArray: Array<DealDay> = []
+        var thursdayArray: Array<DealDay> = []
+        var fridayArray: Array<DealDay> = []
+        var saturdayArray: Array<DealDay> = []
         
         for deal in fetchResult as! [DealDay] {
             
             switch deal.day.integerValue {
                 
             case 1:
-                sundayArray.addObject(deal)
+                sundayArray.append(deal)
                     break
             case 2:
-                mondayArray.addObject(deal)
+                mondayArray.append(deal)
                 break
             case 3:
-                tuesdayArray.addObject(deal)
+                tuesdayArray.append(deal)
                 break
             case 4:
-                wednesdayArray.addObject(deal)
+                wednesdayArray.append(deal)
                 break
             case 5:
-                thursdayArray.addObject(deal)
+                thursdayArray.append(deal)
                 break
             case 6:
-                fridayArray.addObject(deal)
+                fridayArray.append(deal)
                 break
             case 7:
-                saturdayArray.addObject(deal)
+                saturdayArray.append(deal)
                 break
             default:
                 break
@@ -106,7 +106,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         }
         
         
-        self.tableSections = self.tableDataSource.allKeys
+        self.tableSections = self.tableDataSource.keys.array
     }
     
     func unscheduleNotification(dealDay: DealDay) {
