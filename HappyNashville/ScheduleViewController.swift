@@ -50,7 +50,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         
         self.willMoveToParentViewController(nil)
         
-        let parentVC: ViewController = self.parentViewController! as ViewController
+        let parentVC: ViewController = self.parentViewController! as! ViewController
       
         if self.deal!.notification != nil {
             

@@ -36,6 +36,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view!.addSubview(self.subView)
         self.view!.backgroundColor = UIColor.whiteColor()
         
+        self.tableView.separatorColor = UIColor.clearColor()
+        self.tableView.backgroundColor = UIColor(hexString: "DBDBDB")
         self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
@@ -51,9 +53,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionTitle: String = self.viewModel.tableSections![section] as String
+        let sectionTitle: String = self.viewModel.tableSections![section] as! String
         
-        let deals = self.viewModel.tableDataSource[sectionTitle] as NSArray
+        let deals = self.viewModel.tableDataSource[sectionTitle] as! NSArray
         
         return deals.count
     }
@@ -83,21 +85,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        
-        let deals = returnDealsArray(indexPath)
-        
-        let specials = deals[indexPath.row].specials as NSSet
-        let cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsHeight + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
-        
-        return cellHeight
 
+        return calculateCellHeight(indexPath)
     }
     
     func configureCell(cell: LocationTableViewCell, indexPath: NSIndexPath) {
         
         let deals = returnDealsArray(indexPath)
         
-        var deal: Deal = deals[indexPath.row] as Deal
+        var deal: Deal = deals[indexPath.row] as! Deal
         
         cell.titleLable.text = deal.location.name
         
@@ -105,11 +101,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var top: CGFloat = cell.titleLable.bottom + self.titleBottomPadding
         
-        for special in self.viewModel.sortSpecialsByTime(deal.specials) as [Special] {
+        for special in self.viewModel.sortSpecialsByTime(deal.specials) as! [Special] {
         
             let specialView: SpecialView = SpecialView(special: special, frame: CGRectMake(10, top, self.view!.width - 10, self.specialHeight))
             
-            cell.addSubview(specialView)
+            cell.contentCard.addSubview(specialView)
 
             specialView.top = top
             
@@ -120,63 +116,62 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let cellHeight: CGFloat = calculateCellHeight(indexPath)
         
-        var scheduleButton: UIButton = UIButton(frame: CGRectMake(self.view!.width - infoButtonWidth, cellHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight));
-        scheduleButton.backgroundColor = UIColor.redColor()
+        cell.contentCard.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.9)
+        
+        cell.contentCard.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
+        
+        let cardHeight = cell.contentCard.height
+        let cardWidth = cell.contentCard.width
+        
+        cell.scheduleButton.frame = CGRectMake(cardWidth - infoButtonWidth, cardHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight)
         
         if deal.notification == nil {
          
-            scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
-            scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
+            cell.scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
+            cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
         } else {
             
-            scheduleButton.setTitle("Unschedule", forState: UIControlState.Normal)
-            scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
+            cell.scheduleButton.setTitle("Unschedule", forState: UIControlState.Normal)
+            cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
         }
         
-        var webSiteButton: UIButton = UIButton(frame: CGRectMake(0, cellHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight))
-        webSiteButton.backgroundColor = UIColor.blueColor()
-        webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
-        webSiteButton.setTitle("Website", forState: UIControlState.Normal)
+        cell.webSiteButton.frame = CGRectMake(0, cardHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight)
+        cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
         
         cell.titleLable.sizeToFit()
-        var typeView: UIView = UIView();
         
         switch deal.type.integerValue {
             case 0:
-                typeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
-                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                typeView.left = cell.titleLable.right + 5;
+                cell.typeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
+                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                cell.typeView.left = cell.titleLable.right + 5;
                 break;
             case 1:
-                typeView.layer.contents = UIImage(named: "food")?.CGImage!
-                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                typeView.left = cell.titleLable.right + 5;
+                cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
+                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                cell.typeView.left = cell.titleLable.right + 5;
                 break;
             case 2:
-                typeView.layer.contents = UIImage(named: "food")?.CGImage!
-                typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                typeView.left = cell.titleLable.right + 5;
+                cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
+                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
+                cell.typeView.left = cell.titleLable.right + 5;
                 
                 var secondTypeView: UIView = UIView()
                 secondTypeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
                 secondTypeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                secondTypeView.left = typeView.right + 2;
-                cell.addSubview(secondTypeView)
+                secondTypeView.left = cell.typeView.right + 2;
+                cell.contentCard.addSubview(secondTypeView)
                 break;
             default:
                 break;
         }
-        
-        cell.addSubview(typeView)
-        
-        cell.addSubview(webSiteButton)
-        cell.addSubview(scheduleButton)
+
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let splitVC: UISplitViewController = appDelegate.window.rootViewController as UISplitViewController
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let splitVC: UISplitViewController = appDelegate.window!.rootViewController as! UISplitViewController
         let detailViewController: DetailViewController = DetailViewController()
         
         splitVC.showDetailViewController(detailViewController, sender: self)
@@ -211,7 +206,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.viewModel.unscheduleNotification(returnSelectedDeal(sender).deal)
         
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as LocationTableViewCell
+        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
         configureCell(cell, indexPath: indexPath)
     }
@@ -220,11 +215,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
-        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as String
+        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as! String
         
-        let deals = self.viewModel.tableDataSource[dataSourceKey] as NSArray
+        let deals = self.viewModel.tableDataSource[dataSourceKey] as! NSArray
         
-        return (deals[indexPath.row] as Deal, indexPath)
+        return (deals[indexPath.row] as! Deal, indexPath)
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {
@@ -236,9 +231,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func returnDealsArray(indexPath: NSIndexPath) -> NSArray {
         
-        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as String
+        let dataSourceKey: String = self.viewModel.tableSections![indexPath.section] as! String
         
-        return self.viewModel.tableDataSource[dataSourceKey] as NSArray
+        return self.viewModel.tableDataSource[dataSourceKey] as! NSArray
     }
     
     
@@ -247,14 +242,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let deals = returnDealsArray(indexPath)
         
         let specials = deals[indexPath.row].specials as NSSet
+       
         var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsHeight + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
         
-        return cellHeight
+        let contentCardOffset: CGFloat = 20
+        
+        return cellHeight + contentCardOffset
     }
     
     func updateScheduledCell(indexPath: NSIndexPath) {
         
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as LocationTableViewCell
+        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
         configureCell(cell, indexPath: indexPath)
     }

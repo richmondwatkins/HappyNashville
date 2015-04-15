@@ -13,7 +13,7 @@ class ScheduleViewControllerViewModel: NSObject {
    
     func calculateDatePickerDate(deal: Deal) -> NSDate {
         
-        let gregorianCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let date: NSDate = NSDate()
         let dateCompenents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: date)
@@ -56,9 +56,9 @@ class ScheduleViewControllerViewModel: NSObject {
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
      
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        var notificationCD: Notification = NSEntityDescription.insertNewObjectForEntityForName("Notification", inManagedObjectContext: appDelegate.managedObjectContext!) as Notification
+        var notificationCD: Notification = NSEntityDescription.insertNewObjectForEntityForName("Notification", inManagedObjectContext: appDelegate.managedObjectContext!) as! Notification
         
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate

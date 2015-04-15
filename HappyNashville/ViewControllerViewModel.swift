@@ -28,7 +28,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
     
     func fetchData() {
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
         if let fetchResult = APIManger.fetchAllDeals(appDelegate.managedObjectContext!) {
            
@@ -47,7 +47,7 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         var fridayArray: NSMutableArray = []
         var saturdayArray: NSMutableArray = []
         
-        for deal in fetchResult as [Deal] {
+        for deal in fetchResult as! [Deal] {
             
             switch deal.day.integerValue {
                 
@@ -115,13 +115,13 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         
         let scheduledNotifications: NSArray = application.scheduledLocalNotifications as NSArray
         
-        for notifcation in scheduledNotifications as [UILocalNotification] {
+        for notifcation in scheduledNotifications as! [UILocalNotification] {
             
             if (deal.notification != nil) && (notifcation.fireDate == deal.notification.date) && deal.notification.text == notifcation.alertBody {
                 
                  application.cancelLocalNotification(notifcation)
                 
-                let appDelegate: AppDelegate = application.delegate as AppDelegate
+                let appDelegate: AppDelegate = application.delegate as! AppDelegate
                 
                 appDelegate.managedObjectContext!.deleteObject(deal.notification)
                 

@@ -42,7 +42,7 @@ extension UIView {
 
                 UIView.animateWithDuration(animationDuration, animations: { () -> Void in
                     self.transform = CGAffineTransformIdentity
-                }, { (completion) -> Void in
+                }, completion: { (completion) -> Void in
                     
                     completed(result: "woo")
                 })

@@ -14,8 +14,8 @@ protocol ScheduleViewProtocol {
 
 class ScheduleView: UIView {
     
-    let timePicker: UIDatePicker?
-    let recurringSwitch: UISwitch?
+    var timePicker: UIDatePicker?
+    var recurringSwitch: UISwitch?
     var viewModel: ScheduleViewControllerViewModel?
     var deal: Deal?
     var delegate: ScheduleViewProtocol?
@@ -68,7 +68,7 @@ class ScheduleView: UIView {
         
         switchView.addSubview(switchLabel)
         
-        let controlSwitchWidth: CGFloat = 50
+        var controlSwitchWidth: CGFloat = 50
         
         self.recurringSwitch = UISwitch(frame: CGRectMake(switchView.width - controlSwitchWidth - switchPadding, 0, controlSwitchWidth, controlViewHeight))
         self.recurringSwitch!.center = CGPointMake(self.recurringSwitch!.center.x, controlViewHeight / 2)

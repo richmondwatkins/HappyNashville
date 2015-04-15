@@ -12,7 +12,7 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
 
-    var window: UIWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
+    var window: UIWindow?
     
     var splitVC: UISplitViewController?
 
@@ -27,7 +27,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
         self.splitVC?.viewControllers = [navController, detailVC]
         self.splitVC?.delegate = self
         
-        window.rootViewController = splitVC;
+        if let window = window {
+            window.rootViewController = splitVC
+            window.makeKeyAndVisible()
+        }
         
         return true
     }
@@ -69,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.richmondwatkins.HappyNashville" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as NSURL
+        return urls[urls.count-1] as! NSURL
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {

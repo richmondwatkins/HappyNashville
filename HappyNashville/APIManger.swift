@@ -24,11 +24,11 @@ class APIManger: NSObject {
         
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
                 
-                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as NSDictionary
+                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
                 
-                if self.shouldUpdateData(jsonResult["version"] as NSNumber, moc: moc) {
+                if self.shouldUpdateData(jsonResult["version"]as! NSNumber, moc: moc) {
                     
-                    self.updateDeals(jsonResult["locations"] as NSArray, moc: moc);
+                    self.updateDeals(jsonResult["locations"] as! NSArray, moc: moc);
                 }
 //            }
         }
@@ -36,7 +36,7 @@ class APIManger: NSObject {
     
     class func updateDeals(deals: NSArray, moc: NSManagedObjectContext) {
         
-        for location in deals as [NSDictionary] {
+        for location in deals as! [NSDictionary] {
             
             updateOrAdd(location, moc: moc)
             
@@ -47,13 +47,13 @@ class APIManger: NSObject {
     }
     
     class func createLocation(locationDict: NSDictionary, moc: NSManagedObjectContext) {
-        let location: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: moc) as Location;
+        let location: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: moc) as! Location;
         
-        for key in locationDict.allKeys as [String] {
+        for key in locationDict.allKeys as! [String] {
             
             if key == "deal" {
                 
-                location.deal = self.addDeal(locationDict[key] as NSDictionary, moc: moc)
+                location.deal = self.addDeal(locationDict[key] as! NSDictionary, moc: moc)
             } else if key == "_id" {
                 
                 println(locationDict[key])
@@ -69,13 +69,13 @@ class APIManger: NSObject {
     
     class func addDeal(dealDict: NSDictionary, moc: NSManagedObjectContext) -> Deal {
         
-         var deal: Deal = NSEntityDescription.insertNewObjectForEntityForName("Deal", inManagedObjectContext: moc) as Deal
+         var deal: Deal = NSEntityDescription.insertNewObjectForEntityForName("Deal", inManagedObjectContext: moc) as! Deal
         
-        for  dealAttr in dealDict.allKeys as [String] {
+        for  dealAttr in dealDict.allKeys as! [String] {
             
             if dealAttr == "specials" {
                 
-                deal.addSpecials(self.setSpecials(dealDict["specials"] as NSArray, moc: moc))
+                deal.addSpecials(self.setSpecials(dealDict["specials"] as! NSArray, moc: moc) as Set<NSObject>)
             } else {
                 
                 deal.setValue(dealDict[dealAttr], forKey: dealAttr)
@@ -90,11 +90,11 @@ class APIManger: NSObject {
         
         var specialMutable: NSMutableArray = NSMutableArray()
         
-        for  specialDict in specials as [NSDictionary] {
+        for  specialDict in specials as! [NSDictionary] {
             
-            var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as Special
+            var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as! Special
             
-            for key in specialDict.allKeys as [String] {
+            for key in specialDict.allKeys as! [String] {
     
                 special.setValue(specialDict[key], forKey: key)
             }
@@ -102,14 +102,14 @@ class APIManger: NSObject {
             specialMutable.addObject(special)
         }
         
-        return NSSet().setByAddingObjectsFromArray(specialMutable)
+        return NSSet().setByAddingObjectsFromArray(specialMutable as [AnyObject])
     }
     
     class func updateOrAdd(locationDict: NSDictionary, moc: NSManagedObjectContext) {
         
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
         
-        fetchRequest.predicate =  NSPredicate(format: "name == %@", locationDict["name"] as String)
+        fetchRequest.predicate =  NSPredicate(format: "name == %@", locationDict["name"] as! String)
         
         let result = moc.executeFetchRequest(fetchRequest, error: nil)
         
@@ -139,11 +139,11 @@ class APIManger: NSObject {
     
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
         
-        if let result: NSArray = moc.executeFetchRequest(fetchRequest, error: nil)? {
+        if let result: NSArray = moc.executeFetchRequest(fetchRequest, error: nil) {
             
             for  location in result {
                 
-                moc.deleteObject(location as NSManagedObject)
+                moc.deleteObject(location as! NSManagedObject)
             }
         }
     }
@@ -163,7 +163,7 @@ class APIManger: NSObject {
         
         if  result.count > 0 {
             
-            let metaData: MetaData = result[0] as MetaData
+            let metaData: MetaData = result[0] as! MetaData
             
             if metaData.version == version {
                 
@@ -179,7 +179,7 @@ class APIManger: NSObject {
         
         } else {
             
-            let metaData: MetaData = NSEntityDescription.insertNewObjectForEntityForName("MetaData", inManagedObjectContext: moc) as MetaData
+            let metaData: MetaData = NSEntityDescription.insertNewObjectForEntityForName("MetaData", inManagedObjectContext: moc) as! MetaData
             
             metaData.version = version
             

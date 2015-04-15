@@ -51,7 +51,7 @@ class SpecialView: UIView {
         endDateComponents.minute = special.minuteEnd.integerValue
         endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
-        let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSGregorianCalendar)!
+        let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
         var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         

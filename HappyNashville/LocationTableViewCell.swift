@@ -15,14 +15,17 @@ protocol ScheduleReminder {
 class LocationTableViewCell: UITableViewCell {
     
     var scheduleButton: UIButton = UIButton()
-    
     var titleLable: UILabel = UILabel()
-    
     var delegate:ScheduleReminder?
+    var contentCard = UIView()
+    var webSiteButton = UIButton()
+    var typeView = UIView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-                
+        
+        self.selectionStyle = UITableViewCellSelectionStyle.None
+        
         let buttonWidth: CGFloat = 100
         
         let buttonHeight: CGFloat = 30
@@ -32,8 +35,20 @@ class LocationTableViewCell: UITableViewCell {
         self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.numberOfLines = 0
         self.titleLable.textAlignment = NSTextAlignment.Left
-
-        self.addSubview(self.titleLable)
+        
+        self.backgroundColor = UIColor.clearColor()
+        
+        self.webSiteButton.setTitle("Website", forState: UIControlState.Normal)
+        self.webSiteButton.backgroundColor = UIColor.blueColor()
+        self.scheduleButton.backgroundColor = UIColor.redColor()
+        self.contentCard.backgroundColor = UIColor.whiteColor()
+        
+        self.contentCard.addSubview(self.titleLable)
+        self.contentCard.addSubview(self.webSiteButton)
+        self.contentCard.addSubview(self.scheduleButton)
+        self.contentCard.addSubview(self.typeView)
+        
+        self.addSubview(self.contentCard)
     }
   
     required init(coder aDecoder: NSCoder) {
