@@ -16,9 +16,9 @@ import CoreData
 
 public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelegate {
     
-    var tableDataSource: Dictionary<String,Array<DealDay>> = [:]
+    var tableDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
-    var tableSections: Array<String> = []
+    var tableSections: Array<Int> = []
     
     override init() {
         super.init()
@@ -51,25 +51,25 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
             
             switch deal.day.integerValue {
                 
-            case 1:
+            case 0:
                 sundayArray.append(deal)
                     break
-            case 2:
+            case 1:
                 mondayArray.append(deal)
                 break
-            case 3:
+            case 2:
                 tuesdayArray.append(deal)
                 break
-            case 4:
+            case 3:
                 wednesdayArray.append(deal)
                 break
-            case 5:
+            case 4:
                 thursdayArray.append(deal)
                 break
-            case 6:
+            case 5:
                 fridayArray.append(deal)
                 break
-            case 7:
+            case 6:
                 saturdayArray.append(deal)
                 break
             default:
@@ -78,35 +78,34 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         }
         
         if sundayArray.count > 0 {
-            self.tableDataSource["Sunday"] = sundayArray
+            self.tableDataSource[0] = sundayArray
         }
         
         if mondayArray.count > 0 {
-            self.tableDataSource["Monday"] = mondayArray
+            self.tableDataSource[1] = mondayArray
         }
         
         if tuesdayArray.count > 0 {
-            self.tableDataSource["Tuesday"] = tuesdayArray
+            self.tableDataSource[2] = tuesdayArray
         }
         
         if wednesdayArray.count > 0 {
-            self.tableDataSource["Wednesday"] = wednesdayArray
+            self.tableDataSource[4] = wednesdayArray
         }
         
         if thursdayArray.count > 0 {
-            self.tableDataSource["Thursday"] = thursdayArray
+            self.tableDataSource[5] = thursdayArray
         }
         
         if fridayArray.count > 0 {
-            self.tableDataSource["Friday"] = fridayArray
+            self.tableDataSource[6] = fridayArray
         }
         
         if saturdayArray.count > 0 {
-            self.tableDataSource["Saturday"] = saturdayArray
+            self.tableDataSource[7] = saturdayArray
         }
         
-        
-        self.tableSections = self.tableDataSource.keys.array
+        self.tableSections =  self.tableDataSource.keys.array
     }
     
     func unscheduleNotification(dealDay: DealDay) {
@@ -136,6 +135,39 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         var specialsArray: NSMutableArray = NSMutableArray(array: specials.allObjects)
         
         return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
+    }
+    
+    func dayForDayNumber(dayNumber: Int) -> String {
+        
+        var dayString: String = String()
+        
+        switch dayNumber {
+            case 0:
+                dayString = "Sunday"
+                break;
+            case 1:
+                dayString = "Monday"
+                break;
+            case 2:
+                dayString = "Tuesday"
+                break;
+            case 3:
+                dayString = "Wednesday"
+                break;
+            case 4:
+                dayString = "Thursday"
+                break;
+            case 5:
+                dayString = "Friday"
+                break;
+            case 6:
+                dayString = "Saturday"
+                break;
+            default:
+                break;
+        }
+        
+        return dayString
     }
     
     

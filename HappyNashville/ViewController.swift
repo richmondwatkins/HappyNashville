@@ -53,11 +53,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionTitle: String = self.viewModel.tableSections[section]
+        let sectionDay: Int = self.viewModel.tableSections[section]
         
-        let deals = self.viewModel.tableDataSource[sectionTitle] as! NSArray
-        
-        return deals.count
+        return  self.viewModel.tableDataSource[sectionDay]!.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -67,7 +65,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return self.viewModel.tableSections[section]
+        return self.viewModel.dayForDayNumber(section)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -226,7 +224,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
-        let dataSourceKey: String = self.viewModel.tableSections[indexPath.section]
+        let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
         let deals = self.viewModel.tableDataSource[dataSourceKey]!
         
@@ -242,7 +240,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func returnDealsArray(indexPath: NSIndexPath) -> NSArray {
         
-        let dataSourceKey: String = self.viewModel.tableSections[indexPath.section]
+        let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
         return self.viewModel.tableDataSource[dataSourceKey]!
     }
