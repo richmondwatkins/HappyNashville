@@ -170,5 +170,16 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         return dayString
     }
     
-    
+    func getButtonWidth(parentViewWidth: CGFloat) -> (buttonWidth: CGFloat, buttonPadding: CGFloat) {
+        
+        let numberOfButtons: CGFloat = 3
+        
+        let paddingSeperators: CGFloat = 2
+        
+        var buttonPadding:CGFloat = 5 * paddingSeperators
+        
+        var buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
+        
+        return (buttonWidth, 5)
+    }
 }

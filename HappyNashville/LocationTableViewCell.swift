@@ -18,17 +18,16 @@ class LocationTableViewCell: UITableViewCell {
     var titleLable: UILabel = UILabel()
     var delegate:ScheduleReminder?
     var contentCard = UIView()
+    var buttonView = UIView()
+    var containerView = UIView()
     var webSiteButton = UIButton()
+    var mapButton = UIButton()
     var typeView = UIView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.selectionStyle = UITableViewCellSelectionStyle.None
-        
-        let buttonWidth: CGFloat = 100
-        
-        let buttonHeight: CGFloat = 30
         
         self.layoutMargins = UIEdgeInsetsZero
         
@@ -42,7 +41,10 @@ class LocationTableViewCell: UITableViewCell {
         self.webSiteButton.backgroundColor = UIColor.blueColor()
         self.scheduleButton.backgroundColor = UIColor.redColor()
         self.contentCard.backgroundColor = UIColor.whiteColor()
-        
+        self.buttonView.backgroundColor = UIColor.greenColor()
+        self.mapButton.setTitle("Map", forState: .Normal)
+        self.mapButton.backgroundColor = UIColor.brownColor()
+
         self.contentCard.layer.masksToBounds = false
         self.contentCard.layer.cornerRadius = 1
         self.contentCard.layer.shadowOffset = CGSizeMake(-0.2, 0.2)
@@ -52,12 +54,17 @@ class LocationTableViewCell: UITableViewCell {
         self.contentCard.layer.shadowPath = bezierPath.CGPath
         self.contentCard.layer.shadowOpacity = 0.2
         
+        self.buttonView.addSubview(self.mapButton)
+        self.buttonView.addSubview(self.webSiteButton)
+        self.buttonView.addSubview(self.scheduleButton)
+        
         self.contentCard.addSubview(self.titleLable)
-        self.contentCard.addSubview(self.webSiteButton)
-        self.contentCard.addSubview(self.scheduleButton)
         self.contentCard.addSubview(self.typeView)
         
-        self.addSubview(self.contentCard)
+        self.containerView.addSubview(self.buttonView)
+        self.containerView.addSubview(self.contentCard)
+        
+        self.addSubview(self.containerView)
     }
   
     required init(coder aDecoder: NSCoder) {

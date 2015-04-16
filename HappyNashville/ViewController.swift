@@ -15,9 +15,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
     var subView: UIView = UIView()
-    let titleBottomPadding: CGFloat = 10
+    let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
-    let infoButtonsHeight: CGFloat = 30
+    let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
@@ -75,6 +75,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if cell == nil {
             
             cell = LocationTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
+        } else {
+            
+            clearCellSpecials(cell!)
         }
         
         configureCell(cell!, indexPath: indexPath)
@@ -87,19 +90,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return calculateCellHeight(indexPath)
     }
     
+    func clearCellSpecials(cell: LocationTableViewCell) {
+        for view in cell.contentCard.subviews {
+            if view.tag == 1 || view.tag == 2 {
+                view.removeFromSuperview()
+            }
+        }
+    }
+    
     func configureCell(cell: LocationTableViewCell, indexPath: NSIndexPath) {
         
         let deals = returnDealsArray(indexPath)
         
-        var deal: DealDay = deals[indexPath.row] as! DealDay
+        var dealDay: DealDay = deals[indexPath.row] as! DealDay
         
-        cell.titleLable.text = deal.location.name
+        cell.titleLable.text = dealDay.location.name
         
         cell.delegate = self
         
         var top: CGFloat = cell.titleLable.bottom + self.titleBottomPadding
         
-        for special in self.viewModel.sortSpecialsByTime(deal.specials) as! [Special] {
+        for special in self.viewModel.sortSpecialsByTime(dealDay.specials) as! [Special] {
         
             let specialView: SpecialView = SpecialView(special: special, frame: CGRectMake(10, top, self.view!.width - 10, self.specialHeight))
             
@@ -108,22 +119,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             specialView.top = top
             
             top = specialView.bottom + specialBottomPadding
+            
+            specialView.tag = 1
         }
         
         let infoButtonWidth: CGFloat = 100
         
         let cellHeight: CGFloat = calculateCellHeight(indexPath)
         
-        cell.contentCard.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.9)
+        cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.98)
+        cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
         
-        cell.contentCard.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
+        cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
         
-        let cardHeight = cell.contentCard.height
-        let cardWidth = cell.contentCard.width
+        cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, self.infoButtonsHeight)
         
-        cell.scheduleButton.frame = CGRectMake(cardWidth - infoButtonWidth, cardHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight)
+        let buttonViewHeight = cell.buttonView.height
+        let buttonViewWidth = cell.buttonView.width
         
-        if deal.notification == nil {
+        let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth)
+        
+        cell.webSiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
+        cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
+        
+        cell.mapButton.frame = CGRectMake(cell.webSiteButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
+        cell.mapButton.addTarget(self, action: "mapButtonPressed:", forControlEvents: .TouchUpInside)
+        
+        cell.scheduleButton.frame = CGRectMake(cell.mapButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
+        
+        if dealDay.notification == nil {
          
             cell.scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
             cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
@@ -133,37 +157,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
         }
         
-        cell.webSiteButton.frame = CGRectMake(0, cardHeight - self.infoButtonsHeight, infoButtonWidth, self.infoButtonsHeight)
-        cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
-        
         cell.titleLable.sizeToFit()
+        let typeViewWidth: CGFloat = 20
         
-        switch deal.type.integerValue {
+        switch dealDay.type.integerValue {
             case 0:
                 cell.typeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
-                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                cell.typeView.left = cell.titleLable.right + 5;
+                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
                 break;
             case 1:
                 cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
-                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                cell.typeView.left = cell.titleLable.right + 5;
+                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
                 break;
             case 2:
                 cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
-                cell.typeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                cell.typeView.left = cell.titleLable.right + 5;
+                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
                 
                 var secondTypeView: UIView = UIView()
                 secondTypeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
-                secondTypeView.frame = CGRectMake(0, cell.titleLable.top, 20, 20);
-                secondTypeView.left = cell.typeView.right + 2;
+                secondTypeView.frame = CGRectMake(0, cell.titleLable.top, typeViewWidth, 20);
+                secondTypeView.right = cell.typeView.left - 2;
+                secondTypeView.tag = 2
                 cell.contentCard.addSubview(secondTypeView)
                 break;
             default:
                 break;
         }
-
+        
+        let ratingViewWidth: CGFloat = 80
+        var ratingView = HCSStarRatingView(frame: CGRectMake(cell.contentCard.width - ratingViewWidth, cell.typeView.bottom + 2, ratingViewWidth, titleBottomPadding))
+        ratingView.maximumValue = 5
+        ratingView.minimumValue = 0
+        ratingView.allowsHalfStars = true
+        ratingView.tintColor = UIColor.redColor()
+        ratingView.value = CGFloat(dealDay.location.rating.intValue)
+        
+        cell.contentCard.addSubview(ratingView)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -195,7 +224,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subView.transformAndAddSubview(scheduleViewController.view)
         
         scheduleViewController.didMoveToParentViewController(self)
-            
+    }
+    
+    func mapButtonPressed(sender: UIButton) {
+        
+        let dealDay: DealDay = returnSelectedDealDay(sender).dealDay
+        
+        let mapViewController: MapViewController = MapViewController(location: dealDay.location)
+        
+        self.navigationController?.pushViewController(mapViewController, animated: true)
     }
     
     func unscheduleNotification(sender: UIButton) {
@@ -254,9 +291,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        
         var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsHeight + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
         
-        let contentCardOffset: CGFloat = 20
         
-        return cellHeight + contentCardOffset
+        return cellHeight
     }
     
     func reloadTable() {
