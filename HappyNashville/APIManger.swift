@@ -18,7 +18,7 @@ class APIManger: NSObject {
         let urlString = "https://frozen-hollows-3577.herokuapp.com/locations"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
-        let reachability = Reachability.reachabilityForInternetConnection()
+//        let reachability = Reachability.reachabilityForInternetConnection()
         
 //        reachability.whenReachable = { reachability in
         
@@ -197,6 +197,38 @@ class APIManger: NSObject {
             
             return true
         }
+    }
+    
+    class func fetchNotifications() -> NSArray? {
+        
+        var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+        
+        return appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
+    }
+    
+    class func deleteNotification(notification: Notification) {
+        
+        var app:UIApplication = UIApplication.sharedApplication()
+        println(app.scheduledLocalNotifications.count)
+        for oneEvent in app.scheduledLocalNotifications {
+            
+            var localNotif = oneEvent as! UILocalNotification
+            let userInfoCurrent = localNotif.userInfo!
+            let uid = userInfoCurrent["notifId"] as! String
+            
+            if uid == notification.notifId {
+                app.cancelLocalNotification(localNotif)
+                break;
+            }
+        }
+        println(app.scheduledLocalNotifications.count)
+        var appDelegate: AppDelegate = app.delegate! as! AppDelegate
+
+        appDelegate.managedObjectContext?.deleteObject(notification)
+        
+        appDelegate.managedObjectContext?.save(nil)
     }
     
 }

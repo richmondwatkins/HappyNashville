@@ -15,5 +15,6 @@
 @dynamic date;
 @dynamic text;
 @dynamic dealDay;
+@dynamic notifId;
 
 @end

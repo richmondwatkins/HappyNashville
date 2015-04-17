@@ -94,7 +94,6 @@ class ScheduleView: UIView {
     }
     
     func submitSchedule() {
-        
         self.viewModel?.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
         
         self.delegate?.dismissVC()

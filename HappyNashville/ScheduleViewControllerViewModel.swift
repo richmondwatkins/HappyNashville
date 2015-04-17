@@ -49,6 +49,9 @@ class ScheduleViewControllerViewModel: NSObject {
         var notification = UILocalNotification()
         notification.fireDate = date
         notification.alertBody = "\(dealDay.location.name)" // TODO: Add in special descriptions
+        
+        let notifId: String = randomString(10)
+        notification.userInfo = ["notifId" : notifId]
 
         if isRecurring {
             notification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
@@ -63,11 +66,24 @@ class ScheduleViewControllerViewModel: NSObject {
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate
         notificationCD.dealDay = dealDay
-        
+        notificationCD.notifId = notifId
         dealDay.notification = notificationCD
         
         appDelegate.managedObjectContext!.save(nil)
+    }
+    
+    func randomString (len : Int) -> String {
         
+        let letters : NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
         
+        var randomString : Array<String> = []
+        
+        for (var i=0; i < len; i++){
+            var length = UInt32 (letters.length)
+            var rand = arc4random_uniform(length)
+            randomString.append("\(letters.characterAtIndex(Int(rand)))")
+        }
+        
+        return "".join(randomString)
     }
 }

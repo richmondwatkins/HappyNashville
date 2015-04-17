@@ -182,4 +182,13 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         
         return (buttonWidth, 5)
     }
+    
+    func getCurrentDay() -> Int {
+        
+        var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        
+        var dateComponents = calendar!.components(NSCalendarUnit.CalendarUnitWeekday, fromDate: NSDate())
+        
+        return dateComponents.weekday
+    }
 }

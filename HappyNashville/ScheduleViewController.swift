@@ -53,7 +53,6 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         let parentVC: ViewController = self.parentViewController! as! ViewController
       
         if self.dealDay!.notification != nil {
-            
             self.delegate!.updateScheduledCell(self.selectedIndexPath!)
         }
         

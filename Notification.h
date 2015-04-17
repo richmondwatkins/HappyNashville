@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * notifId;
 @property (nonatomic, retain) DealDay *dealDay;
 
 @end

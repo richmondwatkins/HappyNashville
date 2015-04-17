@@ -23,6 +23,7 @@
     </entity>
     <entity name="Notification" representedClassName="Notification" syncable="YES">
         <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="notifId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="dealDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealDay" inverseName="notification" inverseEntity="DealDay" syncable="YES"/>
     </entity>
@@ -36,10 +37,10 @@
         <relationship name="dealDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealDay" inverseName="specials" inverseEntity="DealDay" syncable="YES"/>
     </entity>
     <elements>
+        <element name="DealDay" positionX="-54" positionY="99" width="128" height="120"/>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="180"/>
         <element name="MetaData" positionX="-63" positionY="63" width="128" height="60"/>
-        <element name="Notification" positionX="-63" positionY="63" width="128" height="90"/>
+        <element name="Notification" positionX="-63" positionY="63" width="128" height="105"/>
         <element name="Special" positionX="-54" positionY="72" width="128" height="150"/>
-        <element name="DealDay" positionX="-54" positionY="99" width="128" height="120"/>
     </elements>
 </model>

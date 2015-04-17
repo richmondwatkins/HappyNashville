@@ -43,6 +43,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
         self.viewModel.delegate = self
+        
+        if self.viewModel.tableSections.count - 1 > self.viewModel.getCurrentDay() {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay()), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        } else if (self.viewModel.tableSections.count > 0) {
+             self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.tableSections.count - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+        
+        var settingsButton : UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
+        
+        self.navigationItem.leftBarButtonItem = settingsButton
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -185,21 +196,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
         
         let ratingViewWidth: CGFloat = 80
-        var ratingView = HCSStarRatingView(frame: CGRectMake(cell.contentCard.width - ratingViewWidth, cell.typeView.bottom + 2, ratingViewWidth, titleBottomPadding))
-        ratingView.maximumValue = 5
-        ratingView.minimumValue = 0
-        ratingView.allowsHalfStars = true
-        ratingView.tintColor = UIColor.redColor()
-        ratingView.value = CGFloat(dealDay.location.rating.intValue)
-        
-        cell.contentCard.addSubview(ratingView)
+        cell.ratingView.frame = CGRectMake(cell.contentCard.width - ratingViewWidth, cell.typeView.bottom + 2, ratingViewWidth, titleBottomPadding)
+     
+        cell.ratingView.value = CGFloat(dealDay.location.rating.intValue)
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let splitVC: UISplitViewController = appDelegate.window!.rootViewController as! UISplitViewController
-        let detailViewController: DetailViewController = DetailViewController()
+        
+        let dealDay: DealDay = getDealDayForIndexPath(indexPath)
+        
+        let detailViewController: DetailViewController = DetailViewController(location: dealDay.location)
         
         splitVC.showDetailViewController(detailViewController, sender: self)
         
@@ -261,11 +270,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
+        return (getDealDayForIndexPath(indexPath), indexPath)
+    }
+    
+    func getDealDayForIndexPath(indexPath: NSIndexPath) -> DealDay {
+        
         let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
-        let deals = self.viewModel.tableDataSource[dataSourceKey]!
+        let dealDays = self.viewModel.tableDataSource[dataSourceKey]!
         
-        return (deals[indexPath.row], indexPath)
+        return dealDays[indexPath.row]
+    }
+    
+    func displayNotifications(sender: UIButton) {
+        
+        var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController()
+        
+        self.presentViewController(notificationViewController, animated: true, completion: nil)
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {

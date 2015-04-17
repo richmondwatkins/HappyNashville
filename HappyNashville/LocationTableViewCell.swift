@@ -23,6 +23,7 @@ class LocationTableViewCell: UITableViewCell {
     var webSiteButton = UIButton()
     var mapButton = UIButton()
     var typeView = UIView()
+    var ratingView = HCSStarRatingView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -54,10 +55,17 @@ class LocationTableViewCell: UITableViewCell {
         self.contentCard.layer.shadowPath = bezierPath.CGPath
         self.contentCard.layer.shadowOpacity = 0.2
         
+        self.ratingView.maximumValue = 5
+        self.ratingView.minimumValue = 0
+        self.ratingView.allowsHalfStars = true
+        self.ratingView.userInteractionEnabled = false
+        self.ratingView.tintColor = UIColor.redColor()
+        
         self.buttonView.addSubview(self.mapButton)
         self.buttonView.addSubview(self.webSiteButton)
         self.buttonView.addSubview(self.scheduleButton)
         
+        self.contentCard.addSubview(self.ratingView)
         self.contentCard.addSubview(self.titleLable)
         self.contentCard.addSubview(self.typeView)
         
