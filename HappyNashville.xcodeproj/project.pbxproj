@@ -28,6 +28,7 @@
 		5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB541AE325EF0071396E /* LocationSpecialViewController.swift */; };
 		5DB3EB571AE334CE0071396E /* LocationSpecialViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB561AE334CE0071396E /* LocationSpecialViewModel.swift */; };
 		5DB3EB591AE335C70071396E /* LocationSpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB581AE335C70071396E /* LocationSpecialView.swift */; };
+		5DB3EB5B1AE373A20071396E /* AppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB5A1AE373A20071396E /* AppViewModel.swift */; };
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
@@ -83,6 +84,7 @@
 		5DB3EB541AE325EF0071396E /* LocationSpecialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSpecialViewController.swift; sourceTree = "<group>"; };
 		5DB3EB561AE334CE0071396E /* LocationSpecialViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSpecialViewModel.swift; sourceTree = "<group>"; };
 		5DB3EB581AE335C70071396E /* LocationSpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSpecialView.swift; sourceTree = "<group>"; };
+		5DB3EB5A1AE373A20071396E /* AppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppViewModel.swift; sourceTree = "<group>"; };
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				5DB3EB481ADF63AB0071396E /* NotificationViewModel.swift */,
 				5DB3EB4C1AE0B2D80071396E /* DetailViewModel.swift */,
 				5DB3EB561AE334CE0071396E /* LocationSpecialViewModel.swift */,
+				5DB3EB5A1AE373A20071396E /* AppViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
 				5DB3EB491ADF63AB0071396E /* NotificationViewModel.swift in Sources */,
 				5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */,
+				5DB3EB5B1AE373A20071396E /* AppViewModel.swift in Sources */,
 				5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,

@@ -14,7 +14,7 @@ import CoreData
 }
 
 
-public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelegate {
+ class ViewControllerViewModel: AppViewModel, NSFetchedResultsControllerDelegate {
     
     var tableDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
@@ -133,14 +133,6 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         }
     }
     
-    
-    func sortSpecialsByTime(specials: NSSet) -> NSArray {
-        
-        var specialsArray: NSMutableArray = NSMutableArray(array: specials.allObjects)
-        
-        return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
-    }
-    
     func dayForDayNumber(dayNumber: Int) -> String {
         
         var dayString: String = String()
@@ -185,14 +177,5 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         var buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
         
         return (buttonWidth, 5)
-    }
-    
-    func getCurrentDay() -> Int {
-        
-        var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
-        
-        var dateComponents = calendar!.components(NSCalendarUnit.CalendarUnitWeekday, fromDate: NSDate())
-        
-        return dateComponents.weekday
     }
 }

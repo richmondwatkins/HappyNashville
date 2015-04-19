@@ -10,7 +10,7 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol {
+class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol {
     
     var location: Location?
     var mapView: MKMapView = MKMapView()
@@ -54,7 +54,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         var cellWidth: CGFloat = CGFloat()
         
-        if self.location!.dealDays.count < 4 {
+        if self.location!.dealDays.count < 7 {
             cellWidth = self.view!.width / CGFloat(self.location!.dealDays.count)
         } else {
             cellWidth = 70
@@ -130,7 +130,10 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        //
+        
+        if let scrollDirection = scrollColletionViewToDay(indexPath.row) {
+            self.pageVC.scrollToDealDayAtIndexPath(indexPath, animate:true, direction: scrollDirection)
+        }
     }
     
     
@@ -179,6 +182,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     func setUpPageViewController(collectionBottom: CGFloat) {
     
         self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource)
+        
         self.pageVC.view!.top = collectionBottom
         
         self.addChildViewController(self.pageVC)
@@ -187,11 +191,21 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         pageVC.didMoveToParentViewController(self)
         
-        
+        pageVC.delegate = self
     }
     
     func scrollPageViewControllertoDay(indexPath: NSIndexPath) {
+        
         self.pageVC.scrollToDealDayAtIndexPath(indexPath)
     }
-    
+
+    func scrollColletionViewToDay(index: Int) -> UIPageViewControllerNavigationDirection? {
+        var cell: DayCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! DayCollectionViewCell
+        
+        if let scrollDirection = self.viewModel?.setNewSelectedCell(cell, index: index) {
+            return scrollDirection
+        } else {
+            return nil
+        }
+    }
 }

@@ -12,13 +12,15 @@ protocol DetialViewModelProtocol {
     func scrollPageViewControllertoDay(indexPath: NSIndexPath)
 }
 
-class DetailViewModel: NSObject {
+class DetailViewModel: AppViewModel {
     
     var weekLookup: Array<String> = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     var dataSource: Array<DealDay> = []
     var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
     var hasCurrentDay: Bool!
     var delegate:DetialViewModelProtocol?
+    var currentDayCell: DayCollectionViewCell?
+    var currentCellIndex: Int = Int()
     
      init(dealDays: Array<DealDay>) {
         super.init()
@@ -28,13 +30,6 @@ class DetailViewModel: NSObject {
         })
         
         self.hasCurrentDay = isTodayIncluded()
-    }
-    
-    func getCurrentDay() -> Int {
-        
-        var dateComponents = self.calendar!.components(NSCalendarUnit.CalendarUnitWeekday, fromDate: NSDate())
-        
-        return dateComponents.weekday
     }
     
     func dayLabelText(dealDay: DealDay) -> String {
@@ -74,6 +69,22 @@ class DetailViewModel: NSObject {
         return false
     }
     
+    func setNewSelectedCell(cell: DayCollectionViewCell, index: Int) -> UIPageViewControllerNavigationDirection? {
+        self.currentDayCell!.selectedView.backgroundColor = .clearColor()
+        cell.selectedView.backgroundColor = .blackColor()
+        self.currentDayCell = cell
+        
+        if self.currentCellIndex < index {
+            self.currentCellIndex = index
+            return UIPageViewControllerNavigationDirection.Forward
+        } else if (self.currentCellIndex > index) {
+            self.currentCellIndex = index
+            return UIPageViewControllerNavigationDirection.Reverse
+        } else {
+            return nil
+        }
+    }
+    
     func configureSelected(cell: DayCollectionViewCell, indexPath: NSIndexPath) {
         
         let dealDay: DealDay = self.dataSource[indexPath.row]
@@ -81,13 +92,16 @@ class DetailViewModel: NSObject {
         if self.hasCurrentDay == true {
             if dealDay.day.integerValue == getCurrentDay() {
                 cell.selectedView.backgroundColor = UIColor.blackColor()
-                cell.isCurrentDay = true
                 delegate?.scrollPageViewControllertoDay(indexPath)
-            } else if(cell.isCurrentDay) {
+                self.currentDayCell = cell
+                self.currentCellIndex = indexPath.row
+            } else if(self.currentDayCell == cell) {
                 cell.selectedView.backgroundColor = UIColor.clearColor()
             }
         } else if (indexPath.row == 0) {
             cell.selectedView.backgroundColor = .blackColor()
+            self.currentDayCell = cell
+            self.currentCellIndex = indexPath.row
         }
     }
 }

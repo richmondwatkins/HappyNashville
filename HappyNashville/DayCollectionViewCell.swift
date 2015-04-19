@@ -13,7 +13,6 @@ class DayCollectionViewCell: UICollectionViewCell {
     var dayLabel: UILabel = UILabel()
     var dateLabel: UILabel = UILabel()
     var selectedView: UIView = UIView()
-    var isCurrentDay: Bool = Bool()
     
     override init(frame: CGRect) {
       super.init(frame: frame)

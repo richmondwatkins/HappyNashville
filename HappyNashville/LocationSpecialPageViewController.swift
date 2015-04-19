@@ -8,10 +8,15 @@
 
 import UIKit
 
+protocol PageScrollProtocol {
+    func scrollColletionViewToDay(index: Int) -> UIPageViewControllerNavigationDirection?
+}
+
 class LocationSpecialPageViewController: UIViewController,  UIPageViewControllerDataSource, UIPageViewControllerDelegate {
 
     var pageController: UIPageViewController?
     var dealDays: Array<DealDay> = []
+    var delegate: PageScrollProtocol?
     
     init(dealDays: Array<DealDay>) {
         super.init(nibName: nil, bundle: nil)
@@ -55,13 +60,15 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
 
         var vc = viewController as! LocationSpecialViewController
         
-        if vc.index == 0 {
+        var index = vc.index
+        
+        if index == 0 {
             return nil
         }
         
-        vc.index--
-        
-        return viewControllerAtIndex(vc.index)
+        index--
+
+        return viewControllerAtIndex(index)
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
@@ -79,8 +86,17 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         return viewControllerAtIndex(index)
     }
     
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool) {
+        
+        var currentPageVC: LocationSpecialViewController = pageViewController.viewControllers.last as! LocationSpecialViewController
+        
+        self.delegate?.scrollColletionViewToDay(currentPageVC.index)
+    }
+    
     func viewControllerAtIndex(index: Int) -> LocationSpecialViewController {
         
+        var dealDay: DealDay = self.dealDays[index]
+
         var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[index])
         
         vc.index = index
@@ -96,10 +112,12 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         return 0
     }
     
+    func scrollToDealDayAtIndexPath(indexPath: NSIndexPath, animate: Bool, direction: UIPageViewControllerNavigationDirection) {
+        self.pageController!.setViewControllers([viewControllerAtIndex(indexPath.row)], direction: direction, animated: animate, completion: nil)
+    }
+    
     func scrollToDealDayAtIndexPath(indexPath: NSIndexPath) {
-        var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[indexPath.row])
-        
-        self.pageController!.setViewControllers([vc], direction: UIPageViewControllerNavigationDirection.Forward, animated: false, completion: nil)
+        self.pageController!.setViewControllers([viewControllerAtIndex(indexPath.row)], direction: .Forward, animated: false, completion: nil)
     }
 
 }

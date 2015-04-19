@@ -8,13 +8,7 @@
 
 import UIKit
 
-class LocationSpecialViewModel: NSObject {
+class LocationSpecialViewModel: AppViewModel {
    
-    
-    func sortSpecialsByTime(specials: NSSet) -> NSArray {
-        
-        var specialsArray: NSMutableArray = NSMutableArray(array: specials.allObjects)
-        
-        return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
-    }
+
 }
