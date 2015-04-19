@@ -76,7 +76,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return self.viewModel.dayForDayNumber(section)
+        return self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {

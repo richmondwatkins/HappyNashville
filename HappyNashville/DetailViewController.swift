@@ -1,3 +1,4 @@
+
 //
 //  DetailViewController.swift
 //  HappyNashville
@@ -9,14 +10,15 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol {
     
     var location: Location?
     var mapView: MKMapView = MKMapView()
     var collectionView: UICollectionView?
     var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    var viewModel = DetailViewModel()
+    var viewModel: DetailViewModel?
     let selectedHeight: CGFloat = 5
+    var pageVC: LocationSpecialPageViewController!
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -38,6 +40,10 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.view!.backgroundColor = UIColor.whiteColor()
         
         if (self.location != nil) {
+            var dealDays: NSSet = self.location!.dealDays
+            self.viewModel = DetailViewModel(dealDays:dealDays.allObjects as! Array<DealDay>)
+            self.viewModel!.delegate = self
+            
             setTitleView()
             setUpMapView()
             setUpCollectionView()
@@ -46,15 +52,18 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func setUpCollectionView() {
         
-        self.flowLayout.itemSize = CGSizeMake(70, 40)
-        self.flowLayout.scrollDirection = UICollectionViewScrollDirection.Horizontal
-        self.flowLayout.minimumInteritemSpacing = 0
-        self.flowLayout.minimumLineSpacing = 0.5
+        var cellWidth: CGFloat = CGFloat()
+        
+        if self.location!.dealDays.count < 4 {
+            cellWidth = self.view!.width / CGFloat(self.location!.dealDays.count)
+        } else {
+            cellWidth = 70
+        }
         
         self.collectionView = UICollectionView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40), collectionViewLayout: self.flowLayout)
         
         self.collectionView!.registerClass(DayCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "CollCell")
-        self.collectionView!.setCollectionViewLayout(self.flowLayout, animated: true)
+        self.collectionView!.setCollectionViewLayout(WeekFlowLayout(cellWidth: cellWidth, celHeight: 40), animated: true)
         self.collectionView!.bounces = true
         self.collectionView!.showsHorizontalScrollIndicator = false
         self.collectionView!.showsVerticalScrollIndicator = false
@@ -65,9 +74,12 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         self.view!.addSubview(self.collectionView!)
         
-        self.collectionView!.reloadData()
+        setUpPageViewController(self.collectionView!.bottom)
         
-        self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forRow: self.viewModel.getCurrentDay(), inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        self.collectionView!.reloadData()
+//        
+//        self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forRow: self.viewModel!.getCurrentDay() - 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -79,7 +91,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.viewModel.dataSource.count
+        return self.location!.dealDays.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -87,7 +99,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         if cell == nil {
             
-            cell = DayCollectionViewCell(frame: CGRectMake(0,0,70,70))
+            cell = DayCollectionViewCell(frame: CGRectMake(0, 0, 70, 70))
         }
         
         configureCell(cell!, indexPath: indexPath)
@@ -99,22 +111,26 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         cell.selectedView.frame = CGRectMake(0, cell.height - self.selectedHeight, cell.width, self.selectedHeight)
         
-        self.viewModel.configureSelected(cell, indexPath: indexPath)
+        self.viewModel!.configureSelected(cell, indexPath: indexPath)
         
-        cell.dayLabel.text = self.viewModel.dayLabelText(indexPath)
+        cell.dayLabel.text = self.viewModel!.dayLabelText(self.viewModel!.dataSource[indexPath.row])
         
         cell.dayLabel.font = UIFont.systemFontOfSize(12)
         cell.dayLabel.sizeToFit()
         cell.dayLabel.center = CGPointMake(cell.width / 2, (cell.height * 0.15))
         
-        cell.dateLabel.text = self.viewModel.dateLabelText(indexPath)
+        cell.dateLabel.text = self.viewModel!.dateLabelText(indexPath)
         
         cell.dateLabel.font = UIFont.systemFontOfSize(9)
         cell.dateLabel.sizeToFit()
         cell.dateLabel.center = CGPointMake(cell.width / 2, cell.dayLabel.center.y)
         cell.dateLabel.top = cell.dayLabel.bottom + 3
         
-        self.viewModel.dateLabelText(indexPath)
+        self.viewModel!.dateLabelText(indexPath)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        //
     }
     
     
@@ -158,6 +174,24 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.mapView.addAnnotation(locationAnnotation)
         self.mapView.region = mapRegion
         self.mapView.selectAnnotation(locationAnnotation, animated: true)
+    }
+    
+    func setUpPageViewController(collectionBottom: CGFloat) {
+    
+        self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource)
+        self.pageVC.view!.top = collectionBottom
+        
+        self.addChildViewController(self.pageVC)
+        
+        self.view!.addSubview(self.pageVC.view!)
+        
+        pageVC.didMoveToParentViewController(self)
+        
+        
+    }
+    
+    func scrollPageViewControllertoDay(indexPath: NSIndexPath) {
+        self.pageVC.scrollToDealDayAtIndexPath(indexPath)
     }
     
 }

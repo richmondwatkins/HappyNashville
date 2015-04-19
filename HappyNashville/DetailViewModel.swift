@@ -8,14 +8,26 @@
 
 import UIKit
 
+protocol DetialViewModelProtocol {
+    func scrollPageViewControllertoDay(indexPath: NSIndexPath)
+}
+
 class DetailViewModel: NSObject {
     
-    var dataSource: Array<String> = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-   var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+    var weekLookup: Array<String> = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    var dataSource: Array<DealDay> = []
+    var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+    var hasCurrentDay: Bool!
+    var delegate:DetialViewModelProtocol?
     
-    override init() {
+     init(dealDays: Array<DealDay>) {
         super.init()
+        self.dataSource = sorted(dealDays, {
+            (day1: DealDay, day2: DealDay) -> Bool in
+            return day1.day.integerValue < day2.day.integerValue
+        })
         
+        self.hasCurrentDay = isTodayIncluded()
     }
     
     func getCurrentDay() -> Int {
@@ -25,12 +37,13 @@ class DetailViewModel: NSObject {
         return dateComponents.weekday
     }
     
-    func dayLabelText(indexPath: NSIndexPath) -> String {
+    func dayLabelText(dealDay: DealDay) -> String {
         
-        if indexPath.row == getCurrentDay() {
+        if dealDay.day.integerValue == getCurrentDay() {
             return "Today"
         } else {
-            return self.dataSource[indexPath.row]
+            
+             return self.weekLookup[dealDay.day.integerValue]
         }
     }
     
@@ -38,7 +51,9 @@ class DetailViewModel: NSObject {
         
         var dateComponents = NSDateComponents()
         
-        dateComponents.day = indexPath.row - getCurrentDay()
+        var dealDay: DealDay = self.dataSource[indexPath.row]
+        
+        dateComponents.day = dealDay.day.integerValue - getCurrentDay()
         
         var dateForIndex: NSDate = self.calendar!.dateByAddingComponents(dateComponents, toDate: NSDate(), options: nil)!
         
@@ -48,10 +63,31 @@ class DetailViewModel: NSObject {
         return dateFormatter.stringFromDate(dateForIndex)
     }
     
+    func isTodayIncluded() -> Bool {
+        
+        for dealDay in self.dataSource {
+            if dealDay.day == getCurrentDay() {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     func configureSelected(cell: DayCollectionViewCell, indexPath: NSIndexPath) {
         
-        if indexPath.row == getCurrentDay() {
-            cell.selectedView.backgroundColor = UIColor.blackColor()
+        let dealDay: DealDay = self.dataSource[indexPath.row]
+        
+        if self.hasCurrentDay == true {
+            if dealDay.day.integerValue == getCurrentDay() {
+                cell.selectedView.backgroundColor = UIColor.blackColor()
+                cell.isCurrentDay = true
+                delegate?.scrollPageViewControllertoDay(indexPath)
+            } else if(cell.isCurrentDay) {
+                cell.selectedView.backgroundColor = UIColor.clearColor()
+            }
+        } else if (indexPath.row == 0) {
+            cell.selectedView.backgroundColor = .blackColor()
         }
     }
 }

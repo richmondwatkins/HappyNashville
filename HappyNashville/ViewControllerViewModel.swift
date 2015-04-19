@@ -51,25 +51,25 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
             
             switch deal.day.integerValue {
                 
-            case 0:
+            case 1:
                 sundayArray.append(deal)
                     break
-            case 1:
+            case 2:
                 mondayArray.append(deal)
                 break
-            case 2:
+            case 3:
                 tuesdayArray.append(deal)
                 break
-            case 3:
+            case 4:
                 wednesdayArray.append(deal)
                 break
-            case 4:
+            case 5:
                 thursdayArray.append(deal)
                 break
-            case 5:
+            case 6:
                 fridayArray.append(deal)
                 break
-            case 6:
+            case 7:
                 saturdayArray.append(deal)
                 break
             default:
@@ -78,15 +78,15 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         }
         
         if sundayArray.count > 0 {
-            self.tableDataSource[0] = sundayArray
+            self.tableDataSource[1] = sundayArray
         }
         
         if mondayArray.count > 0 {
-            self.tableDataSource[1] = mondayArray
+            self.tableDataSource[2] = mondayArray
         }
         
         if tuesdayArray.count > 0 {
-            self.tableDataSource[2] = tuesdayArray
+            self.tableDataSource[3] = tuesdayArray
         }
         
         if wednesdayArray.count > 0 {
@@ -106,6 +106,10 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         }
         
         self.tableSections =  self.tableDataSource.keys.array
+        
+        self.tableSections.sort {
+            return $0 < $1
+        }
     }
     
     func unscheduleNotification(dealDay: DealDay) {
@@ -142,25 +146,25 @@ public class ViewControllerViewModel: NSObject, NSFetchedResultsControllerDelega
         var dayString: String = String()
         
         switch dayNumber {
-            case 0:
+            case 1:
                 dayString = "Sunday"
                 break;
-            case 1:
+            case 2:
                 dayString = "Monday"
                 break;
-            case 2:
+            case 3:
                 dayString = "Tuesday"
                 break;
-            case 3:
+            case 4:
                 dayString = "Wednesday"
                 break;
-            case 4:
+            case 5:
                 dayString = "Thursday"
                 break;
-            case 5:
+            case 6:
                 dayString = "Friday"
                 break;
-            case 6:
+            case 7:
                 dayString = "Saturday"
                 break;
             default:
