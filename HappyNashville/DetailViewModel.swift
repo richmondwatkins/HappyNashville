@@ -21,6 +21,7 @@ class DetailViewModel: AppViewModel {
     var delegate:DetialViewModelProtocol?
     var currentDayCell: DayCollectionViewCell?
     var currentCellIndex: Int = Int()
+    var originalConfigCount: Int = Int()
     
      init(dealDays: Array<DealDay>) {
         super.init()
@@ -87,21 +88,25 @@ class DetailViewModel: AppViewModel {
     
     func configureSelected(cell: DayCollectionViewCell, indexPath: NSIndexPath) {
         
-        let dealDay: DealDay = self.dataSource[indexPath.row]
-        
-        if self.hasCurrentDay == true {
-            if dealDay.day.integerValue == getCurrentDay() {
-                cell.selectedView.backgroundColor = UIColor.blackColor()
-                delegate?.scrollPageViewControllertoDay(indexPath)
+        if self.originalConfigCount <= self.dataSource.count {
+            let dealDay: DealDay = self.dataSource[indexPath.row]
+            
+            if self.hasCurrentDay == true {
+                if dealDay.day.integerValue == getCurrentDay() {
+                    cell.selectedView.backgroundColor = UIColor.blackColor()
+                    delegate?.scrollPageViewControllertoDay(indexPath)
+                    self.currentDayCell = cell
+                    self.currentCellIndex = indexPath.row
+                } else if(self.currentDayCell == cell) {
+                    cell.selectedView.backgroundColor = UIColor.clearColor()
+                }
+            } else if (indexPath.row == 0) {
+                cell.selectedView.backgroundColor = .blackColor()
                 self.currentDayCell = cell
                 self.currentCellIndex = indexPath.row
-            } else if(self.currentDayCell == cell) {
-                cell.selectedView.backgroundColor = UIColor.clearColor()
             }
-        } else if (indexPath.row == 0) {
-            cell.selectedView.backgroundColor = .blackColor()
-            self.currentDayCell = cell
-            self.currentCellIndex = indexPath.row
+            
+            self.originalConfigCount++
         }
     }
 }

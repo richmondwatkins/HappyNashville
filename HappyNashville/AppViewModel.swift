@@ -26,4 +26,15 @@ class AppViewModel: NSObject {
         
         return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
     }
+    
+    func getButtonWidth(parentViewWidth: CGFloat, numberOfButtons: CGFloat) -> (buttonWidth: CGFloat, buttonPadding: CGFloat) {
+        
+        let paddingSeperators: CGFloat = 2
+        
+        var buttonPadding:CGFloat = 5 * paddingSeperators
+        
+        var buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
+        
+        return (buttonWidth, 5)
+    }
 }

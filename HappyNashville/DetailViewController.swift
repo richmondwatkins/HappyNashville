@@ -19,6 +19,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var viewModel: DetailViewModel?
     let selectedHeight: CGFloat = 5
     var pageVC: LocationSpecialPageViewController!
+    var tabButtonView: LocationTabButtonView?
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -47,7 +48,29 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             setTitleView()
             setUpMapView()
             setUpCollectionView()
+            setUpTabButtonView()
+            setUpPageViewController()
         }
+    }
+    
+    func setUpTabButtonView() {
+        
+        self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40))
+        self.tabButtonView!.backgroundColor = .greenColor()
+        let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(4))
+        
+        self.tabButtonView?.websiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        self.tabButtonView?.websiteButton.addTarget(self, action: "showWebsite:", forControlEvents: .TouchUpInside)
+        
+        self.tabButtonView?.phoneButton.frame = CGRectMake(self.tabButtonView!.websiteButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        self.tabButtonView?.phoneButton.addTarget(self, action: "callLocation:", forControlEvents: .TouchUpInside)
+        
+        self.tabButtonView?.scheduleButton.frame = CGRectMake(self.tabButtonView!.phoneButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        
+        self.tabButtonView?.directionsButton.frame = CGRectMake(self.tabButtonView!.scheduleButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        self.tabButtonView?.directionsButton.addTarget(self, action: "showDirectionsPopUp:", forControlEvents: .TouchUpInside)
+        
+        self.view!.addSubview(self.tabButtonView!)
     }
     
     func setUpCollectionView() {
@@ -60,7 +83,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             cellWidth = 70
         }
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40), collectionViewLayout: self.flowLayout)
+        self.collectionView = UICollectionView(frame: CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40), collectionViewLayout: self.flowLayout)
         
         self.collectionView!.registerClass(DayCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "CollCell")
         self.collectionView!.setCollectionViewLayout(WeekFlowLayout(cellWidth: cellWidth, celHeight: 40), animated: true)
@@ -74,12 +97,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         self.view!.addSubview(self.collectionView!)
         
-        setUpPageViewController(self.collectionView!.bottom)
-        
         self.collectionView!.reloadData()
-//        
-//        self.collectionView!.scrollToItemAtIndexPath(NSIndexPath(forRow: self.viewModel!.getCurrentDay() - 1, inSection: 0), atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
-        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
@@ -179,11 +197,13 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.mapView.selectAnnotation(locationAnnotation, animated: true)
     }
     
-    func setUpPageViewController(collectionBottom: CGFloat) {
+    func setUpPageViewController() {
     
         self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource)
         
-        self.pageVC.view!.top = collectionBottom
+        self.pageVC.view!.height = self.tabButtonView!.bottom - self.collectionView!.top
+        
+        self.pageVC.view!.top = self.tabButtonView!.bottom
         
         self.addChildViewController(self.pageVC)
         
@@ -207,5 +227,37 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         } else {
             return nil
         }
+    }
+    
+    func showWebsite(sender: UIButton) {
+        
+        let webViewController: LocationWebViewController = LocationWebViewController(location: self.viewModel!.dataSource[0].location, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
+        
+        self.presentViewController(webViewController, animated: true, completion: nil)
+    }
+    
+    func callLocation(sender: UIButton) {
+        
+        let location: Location = self.viewModel!.dataSource[0].location
+        
+        let phoneURL = NSURL(string: "telprompt:\(location.phoneNumber)")!
+        
+        if UIApplication.sharedApplication().canOpenURL(phoneURL) {
+            UIApplication.sharedApplication().openURL(phoneURL)
+        } else {
+            let alert: UIAlertView = UIAlertView(title: "Error", message: "Your call could not be made at this time", delegate: self, cancelButtonTitle: "Ok")
+            alert.show()
+        }
+    }
+    
+    func showDirectionsPopUp(sender: UIButton) {
+        
+        var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.viewModel!.dataSource[0].location)
+        
+        self.addChildViewController(directionsVC)
+        
+        self.view!.addSubview(directionsVC.view)
+        
+        directionsVC.didMoveToParentViewController(self)
     }
 }

@@ -34,13 +34,13 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         pageController = UIPageViewController(
             transitionStyle: .Scroll,
             navigationOrientation: .Horizontal,
-            options: nil)
+            options: nil
+        )
         
         pageController?.delegate = self
         pageController?.dataSource = self
         
-        let startingViewController: LocationSpecialViewController =
-        viewControllerAtIndex(0)
+        let startingViewController: LocationSpecialViewController = viewControllerAtIndex(0)
         
         let viewControllers: NSArray = [startingViewController]
         pageController!.setViewControllers(viewControllers as [AnyObject],
@@ -50,9 +50,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         
         self.addChildViewController(pageController!)
         self.view.addSubview(self.pageController!.view)
-        
-        var pageViewRect = self.view.bounds
-        pageController!.view.frame = pageViewRect    
+          
         pageController!.didMoveToParentViewController(self)
     }
     
@@ -98,14 +96,13 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         var dealDay: DealDay = self.dealDays[index]
 
         var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[index])
-        
         vc.index = index
         
         return vc
     }
     
     func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return self.dealDays.count
+        return 0
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {

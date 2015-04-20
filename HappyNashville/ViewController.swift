@@ -45,7 +45,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.viewModel.delegate = self
         
         if self.viewModel.tableSections.count - 1 > self.viewModel.getCurrentDay() {
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay()), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay() - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         } else if (self.viewModel.tableSections.count > 0) {
              self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.tableSections.count - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -148,7 +148,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let buttonViewHeight = cell.buttonView.height
         let buttonViewWidth = cell.buttonView.width
         
-        let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth)
+        let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth, numberOfButtons: CGFloat(3))
         
         cell.webSiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
         cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
@@ -157,6 +157,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.mapButton.addTarget(self, action: "mapButtonPressed:", forControlEvents: .TouchUpInside)
         
         cell.scheduleButton.frame = CGRectMake(cell.mapButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
+
+        cell.scheduleButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
         
         if dealDay.notification == nil {
          
@@ -248,7 +250,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(sender)
         
-        self.viewModel.unscheduleNotification(returnSelectedDealDay(sender).dealDay)
+        let dealDay = returnSelectedDealDay(sender).dealDay
+        dealDay.notification = nil
+        self.viewModel.unscheduleNotification(dealDay)
         
         var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
