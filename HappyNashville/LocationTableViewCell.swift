@@ -31,6 +31,7 @@ class LocationTableViewCell: UITableViewCell {
     var isOpen: Bool = false
     var originalHeight: CGFloat = CGFloat()
     var originalContentHeight: CGFloat = CGFloat()
+     var originalContainerHeight: CGFloat = CGFloat()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -85,15 +86,18 @@ class LocationTableViewCell: UITableViewCell {
         self.addSubview(self.containerView)
     }
     
-    func openInfoView(sender: UIButton) {
+    func openInfoView(sender: UIButton, cellHeight: CGFloat, completed: () -> Void) {
         
         if self.originalHeight == 0 {
-            self.originalHeight = self.height
+            self.originalHeight = cellHeight
             self.originalContentHeight = self.contentCard.height
+            self.originalContainerHeight = self.containerView.height
         }
         
         if self.isOpen {
-            closeInfoView()
+            closeInfoView({ () -> Void in
+                completed()
+            })
         } else {
 
             self.discloseButton.transformWithCompletion { (result) -> Void in
@@ -104,12 +108,10 @@ class LocationTableViewCell: UITableViewCell {
                 })
             }
             
-            self.delegate?.startUpdatingCell(self.height + 40, cell: self)
-            self.delegate?.finishedUpdating(self)
-            
             self.containerView.bringSubviewToFront(self.buttonView)
+            self.delegate?.startUpdatingCell(cellHeight + 40, cell: self)
+            self.delegate?.finishedUpdating(self)
             UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
-                
                 self.containerView.height = self.contentCard.height + 40
                 self.buttonView.height = 40
                 self.scheduleButton.height = 40
@@ -117,7 +119,7 @@ class LocationTableViewCell: UITableViewCell {
                 self.mapButton.height = 40
                 self.contentCard.height = self.contentCard.height + 40
             }, completion: { (finished: Bool) -> Void in
-                
+                completed()
                 self.isOpen = true
             })
             
@@ -125,7 +127,7 @@ class LocationTableViewCell: UITableViewCell {
         
     }
     
-    func closeInfoView() {
+    func closeInfoView(completed: () -> Void) {
         
         if self.isOpen {
             self.discloseButton.transformWithCompletion { (result) -> Void in
@@ -139,21 +141,19 @@ class LocationTableViewCell: UITableViewCell {
             self.delegate?.startUpdatingCell(self.originalHeight, cell: self)
             self.delegate?.finishedUpdating(self)
             
-            
             UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                self.containerView.height = self.contentCard.height - 40
+                self.containerView.height = self.originalContainerHeight
                 self.buttonView.height = 0
                 self.scheduleButton.height = 0
                 self.webSiteButton.height = 0
                 self.mapButton.height = 0
                 self.contentCard.height = self.originalContentHeight
                 }) { (finished: Bool) -> Void in
-                    
+                    self.isOpen = false
+                    completed()
             }
         }
         
-         self.isOpen = false
     }
     
     func setUpButtons(buttons: Array<UIButton>) {

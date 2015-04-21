@@ -417,32 +417,42 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
+        let cellHeight: CGFloat = self.tableView.rectForRowAtIndexPath(indexPath).size.height
         
-        if self.expandedCell != nil &&  self.expandedCell!.isOpen == false {
-            
-            self.expandedCell!.closeInfoView()
-            
-            self.expandedCell = nil
+        if self.expandedCell != nil && self.expandedCell != cell && self.expandedCell!.isOpen {
+            self.expandedCell!.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
+                cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
+                    self.expandedCell = cell
+                })
+            })
+        } else if(self.expandedCell != nil && self.expandedCell != cell) {
+            cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
+                self.expandedCell = cell
+            })
+        } else {
+            cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
+                self.expandedCell = cell
+            })
         }
         
-        cell.openInfoView(sender)
-        
-        self.expandedCell = cell
+       
     }
     
     func startUpdatingCell(cellHeight: CGFloat, cell: LocationTableViewCell) {
         self.disclosedCellHeight = cellHeight
+        println("begin updates")
+        println(cellHeight)
         self.tableView.beginUpdates()
     }
     
     func finishedUpdating(cell: LocationTableViewCell) {
         self.tableView.endUpdates()
+        println("end updates")
         self.disclosedCellHeight = 0
     }
     
     func setExpandedCellToNil() {
         self.expandedCell = nil
-        self.disclosedCellHeight = 0
     }
     
     func reloadTable() {
