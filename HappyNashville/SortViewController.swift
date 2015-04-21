@@ -9,11 +9,11 @@
 import UIKit
 
 protocol SortProtocol {
-    func showFoodOnly()
-    func showDrinkOnly()
-    func resetSort()
-    func ratingSort()
-    func alphaSort()
+    func showFoodOnly(navTitle: String)
+    func showDrinkOnly(navTitle: String)
+    func resetSort(navTitle: String)
+    func ratingSort(navTitle: String)
+    func alphaSort(navTitle: String)
 }
 
 class SortViewController: UIViewController, UIGestureRecognizerDelegate {
@@ -48,27 +48,27 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func foodSort(sender: UIButton) {
-        self.delegate?.showFoodOnly()
+        self.delegate?.showFoodOnly("Food")
         dismissVC();
     }
     
     func drinkSort(sender: UIButton) {
-        self.delegate?.showDrinkOnly()
+        self.delegate?.showDrinkOnly("Drink")
         dismissVC();
     }
     
     func resetSort(sender: UIButton) {
-        self.delegate?.resetSort()
+        self.delegate?.resetSort("")
         dismissVC();
     }
     
     func ratingSort(sender: UIButton) {
-        self.delegate?.ratingSort()
+        self.delegate?.ratingSort("Rating")
         dismissVC();
     }
     
     func alphaSort(sender: UIButton) {
-        self.delegate?.alphaSort()
+        self.delegate?.alphaSort("A-Z")
         dismissVC();
     }
     

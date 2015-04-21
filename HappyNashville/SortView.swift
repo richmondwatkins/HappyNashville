@@ -26,12 +26,9 @@ class SortView: UIView {
         self.foodSortButton.setImage(UIImage(named: "food"), forState: .Normal)
         self.drinkSortButton.setImage(UIImage(named: "alcohol"), forState: .Normal)
         self.resetSortButton.setTitle("Reset", forState: .Normal)
-        self.ratingSortButton.setTitle("Rating", forState: .Normal)
-        self.alphaSortButton.setTitle("A  - Z", forState: .Normal)
-        
-        self.resetSortButton.backgroundColor = .blueColor()
-        self.ratingSortButton.backgroundColor = .greenColor()
-        self.alphaSortButton.backgroundColor = .greenColor()
+        self.ratingSortButton.setImage(UIImage(named: "rating"), forState: .Normal)
+        self.alphaSortButton.setImage(UIImage(named: "a-z"), forState: .Normal)
+        self.resetSortButton.setImage(UIImage(named: "reset"), forState: .Normal)
         
         self.foodSortButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.height)
         self.drinkSortButton.frame = CGRectMake(self.foodSortButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.height)

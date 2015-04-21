@@ -31,10 +31,10 @@ class AppViewModel: NSObject {
         
         let paddingSeperators: CGFloat = 2
         
-        var buttonPadding:CGFloat = 5 * paddingSeperators
+        var buttonPadding:CGFloat = 1 * paddingSeperators
         
         var buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
         
-        return (buttonWidth, 5)
+        return (buttonWidth, 1)
     }
 }

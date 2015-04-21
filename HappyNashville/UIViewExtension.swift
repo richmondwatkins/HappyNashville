@@ -11,6 +11,19 @@ import UIKit
 
 extension UIView {
     
+    func transformWithCompletion(completed: (result: String) -> Void) {
+        let animationDuration = 0.35
+        
+        UIView.animateWithDuration(animationDuration, animations: { () -> Void in
+            self.transform = CGAffineTransformScale(self.transform, 0.001, 0.001)
+            }) { (completion) -> Void in
+                
+                self.transform = CGAffineTransformScale(self.transform, 0.001, 0.001)
+                
+                completed(result: "complete")
+        }
+    }
+    
     func transformAndAddSubview(viewToShow: UIView) {
         let animationDuration = 0.35
         

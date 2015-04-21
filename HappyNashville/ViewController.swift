@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ScheduleReminder, ViewModelProtocol, ScheduleProtocol, SortProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol {
     
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
@@ -22,7 +22,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
-
+    var disclosedCellHeight: CGFloat = CGFloat()
+    var selectedIndexPath: NSIndexPath?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,7 +40,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view!.backgroundColor = UIColor.whiteColor()
         
         self.tableView.separatorColor = UIColor.clearColor()
-        self.tableView.backgroundColor = UIColor(hexString: "DBDBDB")
+        self.tableView.backgroundColor = UIColor(hexString: "F1F1F1")
         self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
@@ -51,14 +53,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
              self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.tableSections.count - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
         
-        var settingsButton : UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
+        var settingsButton: UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
+        settingsButton.tintColor = .whiteColor()
         
         self.navigationItem.leftBarButtonItem = settingsButton
         
         var sortButton : UIBarButtonItem = UIBarButtonItem(title: "Sort", style: UIBarButtonItemStyle.Plain, target: self, action: "displaySortOptions:")
-        
+        sortButton.tintColor = .whiteColor()
         self.navigationItem.rightBarButtonItem = sortButton
         
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "7EBEA5")
     }
     
     func scrollToCurrentDay() {
@@ -114,7 +118,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return calculateCellHeight(getDealDayForIndexPath(indexPath))
+        if self.disclosedCellHeight != 0 && self.selectedIndexPath == indexPath {
+            return self.disclosedCellHeight
+        } else {
+            return calculateCellHeight(getDealDayForIndexPath(indexPath))
+        }
     }
     
     func clearCellSpecials(cell: LocationTableViewCell) {
@@ -153,9 +161,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.95)
         cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
         
-        cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
+//        cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
+//        
+//        cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, self.infoButtonsHeight)
+        cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height)
         
-        cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, self.infoButtonsHeight)
+        cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, 0)
+        
+        cell.discloseButton.frame = CGRectMake(cell.contentCard.width - cell.discloseButton.width, cell.contentCard.height - cell.discloseButton.height, cell.discloseButton.width, cell.discloseButton.height)
+        cell.contentCard.bringSubviewToFront(cell.discloseButton)
+        cell.discloseButton.addTarget(cell, action: "openInfoView:", forControlEvents: .TouchUpInside)
         
         let buttonViewHeight = cell.buttonView.height
         let buttonViewWidth = cell.buttonView.width
@@ -174,7 +189,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         if dealDay.notification == nil {
          
-            cell.scheduleButton.setTitle("Schedule", forState: UIControlState.Normal)
+            cell.scheduleButton.setImage(UIImage(named: "schedule"), forState: .Normal)
             cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
         } else {
             
@@ -318,30 +333,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         sortViewController.didMoveToParentViewController(self)
     }
     
-    func resetSort() {
+    func resetSort(navTitle: String) {
+        self.title = navTitle
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.resetSort()
         self.tableView.reloadData()
     }
     
-    func showFoodOnly() {
+    func showFoodOnly(navTitle: String) {
+        self.title = navTitle
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByFoodOnly()
         self.tableView.reloadData()
     }
     
-    func showDrinkOnly() {
+    func showDrinkOnly(navTitle: String) {
+        self.title = navTitle
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByDrinkOnly()
         self.tableView.reloadData()
     }
     
-    func ratingSort() {
+    func ratingSort(navTitle: String) {
+        self.title = navTitle
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(false)
     }
     
-    func alphaSort() {
+    func alphaSort(navTitle: String) {
+        self.title = navTitle
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(true)
     }
@@ -386,9 +406,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let specials = dealDay.specials as NSSet
        
-        var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsHeight + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
+        var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
         
         return cellHeight
+    }
+    
+    func startUpdatingCell(cellHeight: CGFloat, cell: LocationTableViewCell) {
+        self.selectedIndexPath = self.tableView.indexPathForCell(cell)
+        self.disclosedCellHeight = cellHeight
+        self.tableView.beginUpdates()
+    }
+    
+    func finishedUpdating() {
+        self.tableView.endUpdates()
+        self.disclosedCellHeight = 0
     }
     
     func reloadTable() {
