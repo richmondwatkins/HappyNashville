@@ -14,6 +14,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
+    var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
     var subView: UIView = UIView()
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
@@ -45,7 +46,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.viewModel.delegate = self
         
         if self.viewModel.tableSections.count - 1 > self.viewModel.getCurrentDay() {
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay() - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+            scrollToCurrentDay()
         } else if (self.viewModel.tableSections.count > 0) {
              self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.tableSections.count - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
@@ -60,6 +61,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
     }
     
+    func scrollToCurrentDay() {
+        self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay() - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+    }
+    
     override func viewDidLayoutSubviews() {
         
         self.tableView.layoutMargins = UIEdgeInsetsZero
@@ -68,34 +73,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if self.viewModel.useSectionHeaders {
-            
-            let sectionDay: Int = self.viewModel.tableSections[section]
-            
-            return  self.viewModel.tableDataSource[sectionDay]!.count
-        } else {
-            return self.viewModel.unformattedData.count
-        }
+        let sectionDay: Int = self.viewModel.tableSections[section]
+        
+        return  self.viewModel.tableDataSource[sectionDay]!.count
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        if self.viewModel.useSectionHeaders {
-            
-            return self.viewModel.tableSections.count
-        } else {
-    
-            return 1
-        }
+        return self.viewModel.tableSections.count
+
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        if self.viewModel.useSectionHeaders {
-            
+        let sectionDay: Int = self.viewModel.tableSections[section]
+        
+        if self.viewModel.tableDataSource[sectionDay]!.count > 0 {
             return self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
         } else {
-            
             return nil
         }
     }
@@ -112,14 +107,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             clearCellSpecials(cell!)
         }
         
-        configureCell(cell!, indexPath: indexPath)
+        configureCell(cell!, dealDay: returnDealsArray(indexPath)[indexPath.row])
         
         return cell!
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        return calculateCellHeight(indexPath)
+        return calculateCellHeight(getDealDayForIndexPath(indexPath))
     }
     
     func clearCellSpecials(cell: LocationTableViewCell) {
@@ -130,18 +125,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func configureCell(cell: LocationTableViewCell, indexPath: NSIndexPath) {
-        
-        var deals: Array<DealDay> = []
-        
-        if self.viewModel.useSectionHeaders {
-         
-            deals = returnDealsArray(indexPath)
-        } else {
-            deals = self.viewModel.unformattedData
-        }
-        
-        var dealDay: DealDay = deals[indexPath.row]
+    func configureCell(cell: LocationTableViewCell, dealDay: DealDay) {
         
         cell.titleLable.text = dealDay.location.name
         
@@ -164,7 +148,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let infoButtonWidth: CGFloat = 100
         
-        let cellHeight: CGFloat = calculateCellHeight(indexPath)
+        let cellHeight: CGFloat = calculateCellHeight(dealDay)
         
         cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.95)
         cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
@@ -335,24 +319,52 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func resetSort() {
-        self.viewModel.resetSort(true)
+        checkForAndRemoveVCWithoutHeaders()
+        self.viewModel.resetSort()
         self.tableView.reloadData()
     }
     
     func showFoodOnly() {
+        checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByFoodOnly()
         self.tableView.reloadData()
     }
     
     func showDrinkOnly() {
+        checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByDrinkOnly()
         self.tableView.reloadData()
     }
     
     func ratingSort() {
-        self.viewModel.sortByRating()
-        self.tableView.reloadData()
-        self.tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: true)
+        checkForAndRemoveVCWithoutHeaders()
+        instantiateHeaderlessView(false)
+    }
+    
+    func alphaSort() {
+        checkForAndRemoveVCWithoutHeaders()
+        instantiateHeaderlessView(true)
+    }
+    
+    func instantiateHeaderlessView(isAlphaSort: Bool) {
+        
+        self.vcWithOutHeaders = ViewControllerWithoutHeadersViewController(isAlphaSort: isAlphaSort)
+        
+        self.addChildViewController(self.vcWithOutHeaders)
+        
+        self.view!.addSubview(self.vcWithOutHeaders.view)
+        
+        self.vcWithOutHeaders.didMoveToParentViewController(self)
+    }
+    
+    func checkForAndRemoveVCWithoutHeaders () {
+        if self.vcWithOutHeaders != nil {
+            self.vcWithOutHeaders.willMoveToParentViewController(nil)
+            self.vcWithOutHeaders.view!.removeFromSuperview()
+            self.vcWithOutHeaders.removeFromParentViewController()
+            
+            self.vcWithOutHeaders = nil
+        }
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {
@@ -370,22 +382,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
-    func calculateCellHeight(indexPath: NSIndexPath) -> CGFloat {
+    func calculateCellHeight(dealDay: DealDay) -> CGFloat {
         
-        var deals: Array<DealDay> = []
-        
-        if self.viewModel.useSectionHeaders {
-            
-            deals = returnDealsArray(indexPath)
-        } else {
-            
-            deals = self.viewModel.unformattedData
-        }
-        
-        let specials = deals[indexPath.row].specials as NSSet
+        let specials = dealDay.specials as NSSet
        
         var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsHeight + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
-        
         
         return cellHeight
     }

@@ -13,9 +13,10 @@ protocol SortProtocol {
     func showDrinkOnly()
     func resetSort()
     func ratingSort()
+    func alphaSort()
 }
 
-class SortViewController: UIViewController {
+class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var delegate: SortProtocol?
 
@@ -30,6 +31,7 @@ class SortViewController: UIViewController {
         
         self.sortView = SortView(frame: CGRectMake(0, self.view!.height - sortViewHeight, self.view!.width, sortViewHeight))
         self.sortView.backgroundColor = .whiteColor()
+        self.sortView.tag = 1
         
         self.view!.addSubview(self.sortView)
         
@@ -37,6 +39,12 @@ class SortViewController: UIViewController {
         self.sortView.drinkSortButton.addTarget(self, action: "drinkSort:", forControlEvents: .TouchUpInside)
         self.sortView.resetSortButton.addTarget(self, action: "resetSort:", forControlEvents: .TouchUpInside)
         self.sortView.ratingSortButton.addTarget(self, action: "ratingSort:", forControlEvents: .TouchUpInside)
+        self.sortView.alphaSortButton.addTarget(self, action: "alphaSort:", forControlEvents: .TouchUpInside)
+        
+        var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
+        tapGesture.numberOfTapsRequired = 1
+        
+        self.view!.addGestureRecognizer(tapGesture)
     }
     
     func foodSort(sender: UIButton) {
@@ -57,6 +65,20 @@ class SortViewController: UIViewController {
     func ratingSort(sender: UIButton) {
         self.delegate?.ratingSort()
         dismissVC();
+    }
+    
+    func alphaSort(sender: UIButton) {
+        self.delegate?.alphaSort()
+        dismissVC();
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
+        
+        if touch.view.tag == 1 {
+            return false
+        } else {
+            return true
+        }
     }
     
     func dismissVC() {

@@ -11,14 +11,12 @@ import UIKit
 class DayCollectionViewCell: UICollectionViewCell {
  
     var dayLabel: UILabel = UILabel()
-    var dateLabel: UILabel = UILabel()
     var selectedView: UIView = UIView()
     
     override init(frame: CGRect) {
       super.init(frame: frame)
         
         self.addSubview(self.dayLabel)
-        self.addSubview(self.dateLabel)
         self.addSubview(self.selectedView)
         
         self.backgroundColor = UIColor.yellowColor()

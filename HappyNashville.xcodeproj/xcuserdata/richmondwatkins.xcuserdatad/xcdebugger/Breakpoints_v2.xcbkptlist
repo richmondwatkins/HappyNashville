@@ -82,11 +82,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/DetailViewController.swift"
-            timestampString = "451197085.88182"
+            timestampString = "451280740.860905"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "269"
-            endingLineNumber = "269"
+            startingLineNumber = "258"
+            endingLineNumber = "258"
             landmarkName = "displayUserPinOnMap(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -97,13 +97,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HappyNashville/ViewController.swift"
-            timestampString = "451275574.947585"
+            filePath = "HappyNashville/MapViewController.swift"
+            timestampString = "451282870.159062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
-            landmarkName = "configureCell(_:indexPath:)"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -113,13 +113,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HappyNashville/ViewController.swift"
-            timestampString = "451275574.947585"
+            filePath = "HappyNashville/MapViewController.swift"
+            timestampString = "451282870.159062"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "141"
-            endingLineNumber = "141"
-            landmarkName = "configureCell(_:indexPath:)"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
+            landmarkName = "createAnnotation(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

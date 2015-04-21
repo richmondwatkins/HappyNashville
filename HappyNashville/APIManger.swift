@@ -165,6 +165,13 @@ class APIManger: NSObject {
         return moc.executeFetchRequest(fetchRequest, error: nil)
     }
     
+    class func fetchAllLocations(moc: NSManagedObjectContext) -> NSArray? {
+        
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
+        
+        return moc.executeFetchRequest(fetchRequest, error: nil)
+    }
+    
     class func shouldUpdateData(version: NSNumber, moc: NSManagedObjectContext) -> Bool {
         
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "MetaData")

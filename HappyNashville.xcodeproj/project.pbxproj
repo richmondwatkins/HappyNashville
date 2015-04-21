@@ -34,6 +34,8 @@
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
 		5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */; };
 		5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */; };
+		5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */; };
+		5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
 		5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94F1ACB5A7E007E852A /* ViewController.swift */; };
@@ -94,6 +96,8 @@
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
+		5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithoutHeadersViewController.swift; sourceTree = "<group>"; };
+		5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -188,6 +192,7 @@
 				5DF6B97E1ACB86E4007E852A /* CoreDataModels */,
 				5DF6B9481ACB5A7E007E852A /* Supporting Files */,
 				5DB3EB581AE335C70071396E /* LocationSpecialView.swift */,
+				5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */,
 			);
 			path = HappyNashville;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				5DB3EB4C1AE0B2D80071396E /* DetailViewModel.swift */,
 				5DB3EB561AE334CE0071396E /* LocationSpecialViewModel.swift */,
 				5DB3EB5A1AE373A20071396E /* AppViewModel.swift */,
+				5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -376,6 +382,7 @@
 				5DF8B1681ADE14EF00AE2B25 /* DealDay.m in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
+				5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */,
 				5DB3EB4B1AE0AB600071396E /* DayCollectionViewCell.swift in Sources */,
 				5DB3EB4D1AE0B2D80071396E /* DetailViewModel.swift in Sources */,
 				5DF8B15C1ADE07C100AE2B25 /* Location.m in Sources */,
@@ -398,6 +405,7 @@
 				5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */,
 				5DB3EB5D1AE436F60071396E /* LocationTabButtonView.swift in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
+				5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
 				5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */,
 				5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */,

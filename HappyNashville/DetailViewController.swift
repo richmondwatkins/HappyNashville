@@ -57,17 +57,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40))
         self.tabButtonView!.backgroundColor = .greenColor()
-        let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(4))
+        let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(3))
         
         self.tabButtonView?.websiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
         self.tabButtonView?.websiteButton.addTarget(self, action: "showWebsite:", forControlEvents: .TouchUpInside)
         
         self.tabButtonView?.phoneButton.frame = CGRectMake(self.tabButtonView!.websiteButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
         self.tabButtonView?.phoneButton.addTarget(self, action: "callLocation:", forControlEvents: .TouchUpInside)
-        
-        self.tabButtonView?.scheduleButton.frame = CGRectMake(self.tabButtonView!.phoneButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
-        
-        self.tabButtonView?.directionsButton.frame = CGRectMake(self.tabButtonView!.scheduleButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+
+        self.tabButtonView?.directionsButton.frame = CGRectMake(self.tabButtonView!.phoneButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
         self.tabButtonView?.directionsButton.addTarget(self, action: "showDirectionsPopUp:", forControlEvents: .TouchUpInside)
         
         self.view!.addSubview(self.tabButtonView!)
@@ -127,7 +125,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func configureCell(cell: DayCollectionViewCell, indexPath: NSIndexPath) {
         
-        cell.selectedView.frame = CGRectMake(0, cell.height - self.selectedHeight, cell.width, self.selectedHeight)
+        cell.selectedView.frame = CGRectMake(0, 0, cell.width, self.selectedHeight)
         
         self.viewModel!.configureSelected(cell, indexPath: indexPath)
         
@@ -135,16 +133,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         cell.dayLabel.font = UIFont.systemFontOfSize(12)
         cell.dayLabel.sizeToFit()
-        cell.dayLabel.center = CGPointMake(cell.width / 2, (cell.height * 0.15))
-        
-        cell.dateLabel.text = self.viewModel!.dateLabelText(indexPath)
-        
-        cell.dateLabel.font = UIFont.systemFontOfSize(9)
-        cell.dateLabel.sizeToFit()
-        cell.dateLabel.center = CGPointMake(cell.width / 2, cell.dayLabel.center.y)
-        cell.dateLabel.top = cell.dayLabel.bottom + 3
-        
-        self.viewModel!.dateLabelText(indexPath)
+        cell.dayLabel.center = CGPointMake(cell.width / 2, cell.height / 2)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -265,7 +254,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func displayUserPinOnMap(coords: CLLocationCoordinate2D) {
         
-        self.mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+        self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
         
         var userPoint = MKMapPointForCoordinate(coords)

@@ -12,7 +12,6 @@ class LocationTabButtonView: UIView {
     
     var phoneButton: UIButton = UIButton()
     var websiteButton: UIButton = UIButton()
-    var scheduleButton: UIButton = UIButton()
     var directionsButton: UIButton = UIButton()
 
     override init(frame: CGRect) {
@@ -20,10 +19,9 @@ class LocationTabButtonView: UIView {
         
         self.phoneButton.setTitle("Phone", forState: .Normal)
         self.websiteButton.setTitle("Web", forState: .Normal)
-        self.scheduleButton.setTitle("Schedule", forState: .Normal)
         self.directionsButton.setTitle("Directions", forState: .Normal)
         
-        configButtons([self.phoneButton, self.websiteButton, self.scheduleButton, self.directionsButton])
+        configButtons([self.phoneButton, self.websiteButton, self.directionsButton])
     }
     
     func configButtons(buttons: Array<UIButton>) {

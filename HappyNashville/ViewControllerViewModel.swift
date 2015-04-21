@@ -21,7 +21,6 @@ import CoreData
     var delegate: ViewModelProtocol?
     var tableSections: Array<Int> = []
     var unformattedData: Array<DealDay>!
-    var useSectionHeaders: Bool = true
     
     override init() {
         super.init()
@@ -174,7 +173,7 @@ import CoreData
     }
     
     func sortByFoodOnly() {
-        resetSort(true)
+        resetSort()
         self.originalDataSource = self.tableDataSource
         
         for (key, value) in self.originalDataSource {
@@ -189,7 +188,7 @@ import CoreData
     }
     
     func sortByDrinkOnly() {
-        resetSort(true)
+        resetSort()
         
         self.originalDataSource = self.tableDataSource
         
@@ -205,17 +204,23 @@ import CoreData
     }
     
     func sortByRating() {
-        resetSort(false)
+        resetSort()
         
         self.originalDataSource = self.tableDataSource
         
-        sorted(self.unformattedData) { ($0.location.rating as Int) < ($1.location.rating as Int) }
+        self.unformattedData = sorted(self.unformattedData) { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
         
     }
     
-    func resetSort(userHeaders: Bool) {
-        self.useSectionHeaders = userHeaders
+    func sortAlphabetically() {
+        resetSort()
         
+        self.originalDataSource = self.tableDataSource
+        
+        self.unformattedData = sorted(self.unformattedData) { ($0.location.name as String) < ($1.location.name as String) }
+    }
+    
+    func resetSort() {
         if self.originalDataSource.count > 0 {
             self.tableDataSource = self.originalDataSource
         }
