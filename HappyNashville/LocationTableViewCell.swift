@@ -10,8 +10,9 @@ import UIKit
 
 protocol LocationCellProtocol {
     func scheduleButtonPressed(sender: UIButton)
-    func finishedUpdating()
+    func finishedUpdating(cell: LocationTableViewCell)
     func startUpdatingCell(cellHeight: CGFloat, cell: LocationTableViewCell)
+    func setExpandedCellToNil()
 }
 
 class LocationTableViewCell: UITableViewCell {
@@ -28,6 +29,8 @@ class LocationTableViewCell: UITableViewCell {
     var ratingView = HCSStarRatingView()
     var discloseButton: UIButton = UIButton()
     var isOpen: Bool = false
+    var originalHeight: CGFloat = CGFloat()
+    var originalContentHeight: CGFloat = CGFloat()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -84,35 +87,15 @@ class LocationTableViewCell: UITableViewCell {
     
     func openInfoView(sender: UIButton) {
         
+        if self.originalHeight == 0 {
+            self.originalHeight = self.height
+            self.originalContentHeight = self.contentCard.height
+        }
+        
         if self.isOpen {
-            
-            self.discloseButton.transformWithCompletion { (result) -> Void in
-                self.discloseButton.setImage(UIImage(named: "disclose"), forState: .Normal)
-                
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.discloseButton.transform = CGAffineTransformIdentity
-                })
-            }
-            
-            self.delegate?.startUpdatingCell(self.height - 40, cell: self)
-            self.delegate?.finishedUpdating()
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                
-                self.containerView.height = self.contentCard.height - 40
-                self.buttonView.height = 0
-                self.scheduleButton.height = 0
-                self.webSiteButton.height = 0
-                self.mapButton.height = 0
-                
-                self.mapButton.addTarget(self, action: "test", forControlEvents: .TouchUpInside)
-                
-                }) { (finished: Bool) -> Void in
-                    
-                    self.isOpen = false
-            }
-            
+            closeInfoView()
         } else {
-            
+
             self.discloseButton.transformWithCompletion { (result) -> Void in
                 self.discloseButton.setImage(UIImage(named: "close"), forState: .Normal)
                 
@@ -122,23 +105,55 @@ class LocationTableViewCell: UITableViewCell {
             }
             
             self.delegate?.startUpdatingCell(self.height + 40, cell: self)
-            self.delegate?.finishedUpdating()
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.delegate?.finishedUpdating(self)
+            
+            self.containerView.bringSubviewToFront(self.buttonView)
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
                 
                 self.containerView.height = self.contentCard.height + 40
                 self.buttonView.height = 40
                 self.scheduleButton.height = 40
                 self.webSiteButton.height = 40
                 self.mapButton.height = 40
+                self.contentCard.height = self.contentCard.height + 40
+            }, completion: { (finished: Bool) -> Void in
                 
-                self.mapButton.addTarget(self, action: "test", forControlEvents: .TouchUpInside)
+                self.isOpen = true
+            })
+            
+        }
+        
+    }
+    
+    func closeInfoView() {
+        
+        if self.isOpen {
+            self.discloseButton.transformWithCompletion { (result) -> Void in
+                self.discloseButton.setImage(UIImage(named: "disclose"), forState: .Normal)
                 
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.discloseButton.transform = CGAffineTransformIdentity
+                })
+            }
+            
+            self.delegate?.startUpdatingCell(self.originalHeight, cell: self)
+            self.delegate?.finishedUpdating(self)
+            
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                
+                self.containerView.height = self.contentCard.height - 40
+                self.buttonView.height = 0
+                self.scheduleButton.height = 0
+                self.webSiteButton.height = 0
+                self.mapButton.height = 0
+                self.contentCard.height = self.originalContentHeight
                 }) { (finished: Bool) -> Void in
                     
-                    self.isOpen = true
             }
         }
         
+         self.isOpen = false
     }
     
     func setUpButtons(buttons: Array<UIButton>) {

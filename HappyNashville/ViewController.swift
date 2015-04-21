@@ -24,6 +24,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let specialHeight: CGFloat = 15
     var disclosedCellHeight: CGFloat = CGFloat()
     var selectedIndexPath: NSIndexPath?
+    var expandedCell: LocationTableViewCell?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -161,16 +162,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.95)
         cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
         
-//        cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
-//        
-//        cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, self.infoButtonsHeight)
         cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height)
         
         cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, 0)
         
-        cell.discloseButton.frame = CGRectMake(cell.contentCard.width - cell.discloseButton.width, cell.contentCard.height - cell.discloseButton.height, cell.discloseButton.width, cell.discloseButton.height)
+        cell.discloseButton.frame = CGRectMake(cell.contentCard.width - cell.discloseButton.width, cell.contentCard.height - cell.discloseButton.height + 10, cell.discloseButton.width, cell.discloseButton.height)
         cell.contentCard.bringSubviewToFront(cell.discloseButton)
-        cell.discloseButton.addTarget(cell, action: "openInfoView:", forControlEvents: .TouchUpInside)
+        cell.discloseButton.addTarget(self, action: "expandInfoCell:", forControlEvents: .TouchUpInside)
         
         let buttonViewHeight = cell.buttonView.height
         let buttonViewWidth = cell.buttonView.width
@@ -411,14 +409,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return cellHeight
     }
     
+    func expandInfoCell(sender: UIButton) {
+        
+        let indexPath: NSIndexPath = indexPathForSelectedRow(sender)
+        
+        self.selectedIndexPath = indexPath
+        
+        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
+        
+        
+        if self.expandedCell != nil &&  self.expandedCell!.isOpen == false {
+            
+            self.expandedCell!.closeInfoView()
+            
+            self.expandedCell = nil
+        }
+        
+        cell.openInfoView(sender)
+        
+        self.expandedCell = cell
+    }
+    
     func startUpdatingCell(cellHeight: CGFloat, cell: LocationTableViewCell) {
-        self.selectedIndexPath = self.tableView.indexPathForCell(cell)
         self.disclosedCellHeight = cellHeight
         self.tableView.beginUpdates()
     }
     
-    func finishedUpdating() {
+    func finishedUpdating(cell: LocationTableViewCell) {
         self.tableView.endUpdates()
+        self.disclosedCellHeight = 0
+    }
+    
+    func setExpandedCellToNil() {
+        self.expandedCell = nil
         self.disclosedCellHeight = 0
     }
     
