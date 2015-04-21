@@ -10,12 +10,18 @@ import UIKit
 import CoreLocation
 import MapKit
 
+protocol UserLocationProtocol {
+    func displayUserPinOnMap(coords: CLLocationCoordinate2D)
+}
+
 class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
     var parentFrame: CGRect = CGRect()
     var containerView: UIView = UIView()
     let location: Location?
     let manager = CLLocationManager()
+    var openOutsideMap: Bool = true
+    var delegate: UserLocationProtocol?
     
     init(parentFrame: CGRect, location: Location) {
         
@@ -47,6 +53,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         var showOnMap: UIButton = UIButton(frame: CGRectMake(0, directionsButton.bottom, self.containerView.width, self.containerView.height / 2))
         showOnMap.backgroundColor = .redColor()
         showOnMap.setTitle("Show my location", forState: .Normal)
+        showOnMap.addTarget(self, action: "showLocationOnMap:", forControlEvents: .TouchUpInside)
         
         self.containerView.addSubview(directionsButton)
         self.containerView.addSubview(showOnMap)
@@ -60,7 +67,6 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         tapGesture.numberOfTapsRequired = 1
         
         self.view!.addGestureRecognizer(tapGesture)
-        println("WOO")
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
@@ -73,7 +79,11 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
     }
     
     func getDirections(sender: UIButton) {
-        
+        self.openOutsideMap = true
+        findLocation()
+    }
+    
+    func findLocation() {
         self.manager.delegate = self
         self.manager.desiredAccuracy = kCLLocationAccuracyBest
         
@@ -86,7 +96,6 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         } else {
             //
         }
-    
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
@@ -97,10 +106,15 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         self.manager.stopUpdatingLocation()
         
-        displayOnMap(coord)
+        if self.openOutsideMap {
+            openOutsideMap(coord)
+        } else {
+            self.delegate?.displayUserPinOnMap(coord)
+        }
+        dismissVC()
     }
     
-    func displayOnMap(coords: CLLocationCoordinate2D) {
+    func openOutsideMap(coords: CLLocationCoordinate2D) {
        
         if UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!) {
             
@@ -129,6 +143,11 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         if status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
             manager.startUpdatingLocation()
         }
+    }
+    
+    func showLocationOnMap(sender: UIButton) {
+        self.openOutsideMap = false
+        findLocation()
     }
 
     func dismissVC() {

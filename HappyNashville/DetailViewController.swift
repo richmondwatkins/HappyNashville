@@ -10,7 +10,7 @@
 import UIKit
 import MapKit
 
-class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol {
+class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol {
     
     var location: Location?
     var mapView: MKMapView = MKMapView()
@@ -254,10 +254,33 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.viewModel!.dataSource[0].location)
         
+        directionsVC.delegate = self
+        
         self.addChildViewController(directionsVC)
         
         self.view!.addSubview(directionsVC.view)
         
         directionsVC.didMoveToParentViewController(self)
     }
+    
+    func displayUserPinOnMap(coords: CLLocationCoordinate2D) {
+        
+        self.mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
+        self.mapView.showsUserLocation = true
+        
+        var userPoint = MKMapPointForCoordinate(coords)
+        var annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
+        
+        var userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
+        
+        var annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
+
+        var unionRect = MKMapRectUnion(userRect, annotationRect)
+        
+        var fittedRect = self.mapView.mapRectThatFits(unionRect)
+ 
+        self.mapView.setVisibleMapRect(unionRect, animated: true)
+                
+    }
+    
 }

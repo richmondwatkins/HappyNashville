@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ScheduleReminder, ViewModelProtocol, ScheduleProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ScheduleReminder, ViewModelProtocol, ScheduleProtocol, SortProtocol {
     
     var viewModel: ViewControllerViewModel = ViewControllerViewModel()
     var tableView: UITableView = UITableView()
@@ -21,7 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,6 +54,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.navigationItem.leftBarButtonItem = settingsButton
         
+        var sortButton : UIBarButtonItem = UIBarButtonItem(title: "Sort", style: UIBarButtonItemStyle.Plain, target: self, action: "displaySortOptions:")
+        
+        self.navigationItem.rightBarButtonItem = sortButton
+        
     }
     
     override func viewDidLayoutSubviews() {
@@ -64,19 +68,36 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        let sectionDay: Int = self.viewModel.tableSections[section]
-        
-        return  self.viewModel.tableDataSource[sectionDay]!.count
+        if self.viewModel.useSectionHeaders {
+            
+            let sectionDay: Int = self.viewModel.tableSections[section]
+            
+            return  self.viewModel.tableDataSource[sectionDay]!.count
+        } else {
+            return self.viewModel.unformattedData.count
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
-        return self.viewModel.tableSections.count
+        if self.viewModel.useSectionHeaders {
+            
+            return self.viewModel.tableSections.count
+        } else {
+    
+            return 1
+        }
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
-        return self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
+        if self.viewModel.useSectionHeaders {
+            
+            return self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
+        } else {
+            
+            return nil
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -111,9 +132,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func configureCell(cell: LocationTableViewCell, indexPath: NSIndexPath) {
         
-        let deals = returnDealsArray(indexPath)
+        var deals: Array<DealDay> = []
         
-        var dealDay: DealDay = deals[indexPath.row] as! DealDay
+        if self.viewModel.useSectionHeaders {
+         
+            deals = returnDealsArray(indexPath)
+        } else {
+            deals = self.viewModel.unformattedData
+        }
+        
+        var dealDay: DealDay = deals[indexPath.row]
         
         cell.titleLable.text = dealDay.location.name
         
@@ -138,7 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let cellHeight: CGFloat = calculateCellHeight(indexPath)
         
-        cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.98)
+        cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.95)
         cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
         
         cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
@@ -293,6 +321,40 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.presentViewController(notificationViewController, animated: true, completion: nil)
     }
     
+    func displaySortOptions(sender: UIButton) {
+        
+        var sortViewController: SortViewController = SortViewController()
+        
+        sortViewController.delegate = self
+        
+        self.addChildViewController(sortViewController)
+        
+        self.view!.addSubview(sortViewController.view)
+        
+        sortViewController.didMoveToParentViewController(self)
+    }
+    
+    func resetSort() {
+        self.viewModel.resetSort(true)
+        self.tableView.reloadData()
+    }
+    
+    func showFoodOnly() {
+        self.viewModel.sortByFoodOnly()
+        self.tableView.reloadData()
+    }
+    
+    func showDrinkOnly() {
+        self.viewModel.sortByDrinkOnly()
+        self.tableView.reloadData()
+    }
+    
+    func ratingSort() {
+        self.viewModel.sortByRating()
+        self.tableView.reloadData()
+        self.tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: true)
+    }
+    
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {
         
         let buttonPostion: CGPoint = selectedButton.convertPoint(CGPointZero, toView: self.tableView)
@@ -300,7 +362,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return self.tableView.indexPathForRowAtPoint(buttonPostion)!
     }
     
-    func returnDealsArray(indexPath: NSIndexPath) -> NSArray {
+    func returnDealsArray(indexPath: NSIndexPath) -> Array<DealDay> {
         
         let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
@@ -310,7 +372,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func calculateCellHeight(indexPath: NSIndexPath) -> CGFloat {
         
-        let deals = returnDealsArray(indexPath)
+        var deals: Array<DealDay> = []
+        
+        if self.viewModel.useSectionHeaders {
+            
+            deals = returnDealsArray(indexPath)
+        } else {
+            
+            deals = self.viewModel.unformattedData
+        }
         
         let specials = deals[indexPath.row].specials as NSSet
        

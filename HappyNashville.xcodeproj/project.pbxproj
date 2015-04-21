@@ -32,6 +32,8 @@
 		5DB3EB5D1AE436F60071396E /* LocationTabButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB5C1AE436F60071396E /* LocationTabButtonView.swift */; };
 		5DB3EB5F1AE44AEA0071396E /* DirectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB5E1AE44AEA0071396E /* DirectionsViewController.swift */; };
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
+		5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */; };
+		5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
 		5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94F1ACB5A7E007E852A /* ViewController.swift */; };
@@ -90,6 +92,8 @@
 		5DB3EB5C1AE436F60071396E /* LocationTabButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTabButtonView.swift; sourceTree = "<group>"; };
 		5DB3EB5E1AE44AEA0071396E /* DirectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DirectionsViewController.swift; sourceTree = "<group>"; };
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
+		5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
+		5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -174,6 +178,8 @@
 				5DB3EB441ADF4A950071396E /* MapViewController.swift */,
 				5DB3EB461ADF629D0071396E /* NotificationsManagerViewController.swift */,
 				5DB3EB5E1AE44AEA0071396E /* DirectionsViewController.swift */,
+				5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */,
+				5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */,
 				5DF6B9511ACB5A7E007E852A /* Main.storyboard */,
 				5DF6B9541ACB5A7E007E852A /* Images.xcassets */,
 				5DF6B9561ACB5A7E007E852A /* LaunchScreen.xib */,
@@ -383,7 +389,9 @@
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
+				5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */,
 				5DB3EB5F1AE44AEA0071396E /* DirectionsViewController.swift in Sources */,
+				5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */,
 				5DB3EB491ADF63AB0071396E /* NotificationViewModel.swift in Sources */,
 				5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */,
 				5DB3EB5B1AE373A20071396E /* AppViewModel.swift in Sources */,

@@ -17,8 +17,11 @@ import CoreData
  class ViewControllerViewModel: AppViewModel, NSFetchedResultsControllerDelegate {
     
     var tableDataSource: Dictionary<Int, Array<DealDay>> = [:]
+    var originalDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
     var tableSections: Array<Int> = []
+    var unformattedData: Array<DealDay>!
+    var useSectionHeaders: Bool = true
     
     override init() {
         super.init()
@@ -32,12 +35,16 @@ import CoreData
         
         if let fetchResult = APIManger.fetchAllDealDays(appDelegate.managedObjectContext!) {
            
-           sortData(fetchResult)
+            var swiftArray = fetchResult.mutableCopy() as AnyObject as! [DealDay]
+            
+            self.unformattedData = swiftArray
+            
+            sortData(swiftArray)
         }
         
     }
     
-    func sortData(fetchResult: NSArray) {
+    func sortData(fetchResult: Array<DealDay>) {
         
         var sundayArray: Array<DealDay> = []
         var mondayArray: Array<DealDay> = []
@@ -47,7 +54,7 @@ import CoreData
         var fridayArray: Array<DealDay> = []
         var saturdayArray: Array<DealDay> = []
         
-        for deal in fetchResult as! [DealDay] {
+        for deal in fetchResult {
             
             switch deal.day.integerValue {
                 
@@ -164,6 +171,54 @@ import CoreData
         }
         
         return dayString
+    }
+    
+    func sortByFoodOnly() {
+        resetSort(true)
+        self.originalDataSource = self.tableDataSource
+        
+        for (key, value) in self.originalDataSource {
+            
+            for dealDay in value {
+                if dealDay.type.integerValue != 1 {
+                    var arr: Array<DealDay> = self.tableDataSource[key]!
+                    self.tableDataSource[key]?.removeAtIndex(find(arr, dealDay)!)
+                }
+            }
+        }
+    }
+    
+    func sortByDrinkOnly() {
+        resetSort(true)
+        
+        self.originalDataSource = self.tableDataSource
+        
+        for (key, value) in self.originalDataSource {
+            
+            for dealDay in value {
+                if dealDay.type.integerValue != 0 {
+                    var arr: Array<DealDay> = self.tableDataSource[key]!
+                    self.tableDataSource[key]?.removeAtIndex(find(arr, dealDay)!)
+                }
+            }
+        }
+    }
+    
+    func sortByRating() {
+        resetSort(false)
+        
+        self.originalDataSource = self.tableDataSource
+        
+        sorted(self.unformattedData) { ($0.location.rating as Int) < ($1.location.rating as Int) }
+        
+    }
+    
+    func resetSort(userHeaders: Bool) {
+        self.useSectionHeaders = userHeaders
+        
+        if self.originalDataSource.count > 0 {
+            self.tableDataSource = self.originalDataSource
+        }
     }
     
 }
