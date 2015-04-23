@@ -22,6 +22,8 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
     let manager = CLLocationManager()
     var openOutsideMap: Bool = true
     var delegate: UserLocationProtocol?
+    var directionsButton: UIButton!
+    var showOnMap: UIButton!
     
     init(parentFrame: CGRect, location: Location) {
         
@@ -45,28 +47,60 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         self.containerView.layer.cornerRadius = 5.0
         self.containerView.tag = 1
         
-        var directionsButton: UIButton = UIButton(frame: CGRectMake(0, 0, self.containerView.width, self.containerView.height / 2))
-        directionsButton.backgroundColor = .orangeColor()
-        directionsButton.setTitle("Get Directions", forState: .Normal)
-        directionsButton.addTarget(self, action: "getDirections:", forControlEvents: .TouchUpInside)
+        self.directionsButton = UIButton(frame: CGRectMake(0, 0, self.containerView.width, self.containerView.height / 2))
+        self.directionsButton.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor)
+        self.directionsButton.setTitle("Get Directions", forState: .Normal)
+        self.directionsButton.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
+        self.directionsButton.addTarget(self, action: "getDirections:", forControlEvents: .TouchUpInside)
         
-        var showOnMap: UIButton = UIButton(frame: CGRectMake(0, directionsButton.bottom, self.containerView.width, self.containerView.height / 2))
-        showOnMap.backgroundColor = .redColor()
-        showOnMap.setTitle("Show my location", forState: .Normal)
-        showOnMap.addTarget(self, action: "showLocationOnMap:", forControlEvents: .TouchUpInside)
+        self.showOnMap = UIButton(frame: CGRectMake(0, directionsButton.bottom, self.containerView.width, self.containerView.height / 2))
+        self.showOnMap.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
+        self.showOnMap.setTitle("Show My Location", forState: .Normal)
+        self.showOnMap.addTarget(self, action: "showLocationOnMap:", forControlEvents: .TouchUpInside)
         
-        self.containerView.addSubview(directionsButton)
-        self.containerView.addSubview(showOnMap)
+        self.containerView.addSubview(self.directionsButton)
+        self.containerView.addSubview(self.showOnMap)
+        
+        if !NSUserDefaults.standardUserDefaults().boolForKey("SeenDirections") {
+            
+            setUpFirstTimeView()
+            NSUserDefaults.standardUserDefaults().setBool(true, forKey: "SeenDirections")
+            NSUserDefaults.standardUserDefaults().synchronize()
+        }
         
         self.view!.addSubview(self.containerView)
-
+        
         self.view!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         
         var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
-        
         self.view!.addGestureRecognizer(tapGesture)
+    }
+    
+    func setUpFirstTimeView() {
+        
+        var dirExplLabel: UILabel = UILabel()
+        
+        dirExplLabel.text = "Takes you to a map application"
+        dirExplLabel.textColor = UIColor(hexString: StringConstants.primaryColor)
+        dirExplLabel.textAlignment = .Center
+        dirExplLabel.sizeToFit()
+        dirExplLabel.font = UIFont.systemFontOfSize(10)
+        dirExplLabel.center = CGPointMake(self.directionsButton.width / 2, self.directionsButton.height / 2 + 20)
+        
+        self.directionsButton.addSubview(dirExplLabel)
+        
+        var mapExplLabel: UILabel = UILabel()
+        mapExplLabel.text = "Keeps you in the app"
+        mapExplLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
+        mapExplLabel.textAlignment = .Center
+        mapExplLabel.font = UIFont.systemFontOfSize(10)
+        mapExplLabel.sizeToFit()
+        
+        mapExplLabel.center = CGPointMake(self.showOnMap.width / 2, self.showOnMap.height / 2 + 20)
+        
+        self.showOnMap.addSubview(mapExplLabel)
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
