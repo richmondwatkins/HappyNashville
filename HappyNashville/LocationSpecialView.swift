@@ -12,6 +12,7 @@ class LocationSpecialView: UIView {
     
     var dateView: UILabel = UILabel()
     var specialView: UILabel = UILabel()
+    let padding: CGFloat = 4
     var containerView: UIView = UIView()
     
     init(special: Special, frame: CGRect) {
@@ -19,22 +20,23 @@ class LocationSpecialView: UIView {
         
         dateView.text = configureDateString(special)
         dateView.font = UIFont.systemFontOfSize(10)
-        dateView.sizeToFit()
+        dateView.frame = CGRectMake(0, 0, self.width, 10)
+        dateView.textAlignment = NSTextAlignment.Center
         
         specialView.text = special.specialDescription
         specialView.textAlignment = NSTextAlignment.Center
         specialView.numberOfLines = 0
         specialView.sizeToFit()
         
-        containerView.height = dateView.height + specialView.height
+        containerView.height = dateView.height + specialView.height + self.padding
         containerView.width = self.width
         
-        self.frame = CGRectMake(0, 0, frame.size.width, dateView.height + specialView.height)
+        self.frame = CGRectMake(0, 0, frame.size.width, dateView.height + specialView.height + self.padding)
         
         containerView.addSubview(dateView)
         containerView.addSubview(specialView)
         
-        specialView.top = dateView.bottom
+        specialView.top = dateView.bottom + self.padding
         
         dateView.center = CGPointMake(self.width / 2, dateView.center.y)
         specialView.center = CGPointMake(self.width / 2, specialView.center.y)

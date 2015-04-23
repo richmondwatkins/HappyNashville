@@ -35,39 +35,59 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.view!.addSubview(self.sortView)
         
-        self.sortView.foodSortButton.addTarget(self, action: "foodSort:", forControlEvents: .TouchUpInside)
-        self.sortView.drinkSortButton.addTarget(self, action: "drinkSort:", forControlEvents: .TouchUpInside)
-        self.sortView.resetSortButton.addTarget(self, action: "resetSort:", forControlEvents: .TouchUpInside)
-        self.sortView.ratingSortButton.addTarget(self, action: "ratingSort:", forControlEvents: .TouchUpInside)
-        self.sortView.alphaSortButton.addTarget(self, action: "alphaSort:", forControlEvents: .TouchUpInside)
-        
+        self.sortView.segmentControl.addTarget(self, action: "segmentTapped:", forControlEvents: UIControlEvents.ValueChanged)
         var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
         tapGesture.numberOfTapsRequired = 1
         
         self.view!.addGestureRecognizer(tapGesture)
     }
     
-    func foodSort(sender: UIButton) {
+    func segmentTapped(sender: UISegmentedControl) {
+        
+        
+        switch sender.selectedSegmentIndex {
+            case 0:
+                foodSort()
+                break;
+            case 1:
+                drinkSort()
+                break;
+            case 2:
+                ratingSort()
+                break;
+            case 3:
+                alphaSort()
+                break;
+            case 4:
+                resetSort()
+                break;
+            default:
+                break;
+            
+        }
+    }
+    
+    func foodSort() {
         self.delegate?.showFoodOnly("Food")
         dismissVC();
     }
     
-    func drinkSort(sender: UIButton) {
+    func drinkSort() {
         self.delegate?.showDrinkOnly("Drink")
         dismissVC();
     }
     
-    func resetSort(sender: UIButton) {
+    func resetSort() {
         self.delegate?.resetSort("")
         dismissVC();
     }
     
-    func ratingSort(sender: UIButton) {
+    func ratingSort() {
         self.delegate?.ratingSort("Rating")
         dismissVC();
     }
     
-    func alphaSort(sender: UIButton) {
+    func alphaSort() {
         self.delegate?.alphaSort("A-Z")
         dismissVC();
     }

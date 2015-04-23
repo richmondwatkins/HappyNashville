@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class ScheduleViewControllerViewModel: NSObject {
+class ScheduleViewControllerViewModel: AppViewModel {
    
     func calculateDatePickerDate(dealDay: DealDay) -> NSDate {
         

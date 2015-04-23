@@ -63,10 +63,7 @@ class ViewControllerWithoutHeadersViewController: ViewController {
         if cell == nil {
             
             cell = LocationTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
-        } else {
-            
-            clearCellSpecials(cell!)
-        }
+        } 
         
         configureCell(cell!, dealDay: self.viewModel.unformattedData[indexPath.row])
         

@@ -43,7 +43,7 @@ class LocationSpecialViewController: UIViewController {
             
             specialView.top = top
             
-            top = specialView.bottom + 2
+            top = specialView.bottom + 4
             
             self.contentHeight += specialView.height + 2
         }

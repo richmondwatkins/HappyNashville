@@ -16,16 +16,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var tableView: UITableView = UITableView()
     var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
     var subView: UIView = UIView()
+    var customTitleView: UILabel = UILabel()
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
-    var disclosedCellHeight: CGFloat = CGFloat()
-    var selectedIndexPath: NSIndexPath?
-    var expandedCell: LocationTableViewCell?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,7 +39,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.view!.backgroundColor = UIColor.whiteColor()
         
         self.tableView.separatorColor = UIColor.clearColor()
-        self.tableView.backgroundColor = UIColor(hexString: "F1F1F1")
+        self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
@@ -63,7 +61,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         sortButton.tintColor = .whiteColor()
         self.navigationItem.rightBarButtonItem = sortButton
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "7EBEA5")
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: StringConstants.primaryColor)
+        
+        self.customTitleView.backgroundColor = .clearColor()
+        self.customTitleView.textColor = UIColor(hexString: StringConstants.navBarTextColor)
+        self.customTitleView.textAlignment = .Center
+        self.navigationItem.titleView = self.customTitleView
     }
     
     func scrollToCurrentDay() {
@@ -107,9 +110,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if cell == nil {
             
             cell = LocationTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
-        } else {
-            
-            clearCellSpecials(cell!)
         }
         
         configureCell(cell!, dealDay: returnDealsArray(indexPath)[indexPath.row])
@@ -119,18 +119,27 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        if self.disclosedCellHeight != 0 && self.selectedIndexPath == indexPath {
-            return self.disclosedCellHeight
+        var dealDay: DealDay = getDealDayForIndexPath(indexPath)!
+        
+        if dealDay.isOpen.boolValue {
+            return CGFloat(dealDay.height.integerValue) + 40
         } else {
-            return calculateCellHeight(getDealDayForIndexPath(indexPath))
+            return CGFloat(dealDay.height.integerValue)
         }
     }
     
-    func clearCellSpecials(cell: LocationTableViewCell) {
-        for view in cell.contentCard.subviews {
+    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let locCell: LocationTableViewCell = cell as! LocationTableViewCell
+        
+        for view in locCell.contentCard.subviews {
             if view.tag == 1 || view.tag == 2 {
                 view.removeFromSuperview()
             }
+        }
+
+        if let dealDay = getDealDayForIndexPath(indexPath) {
+            locCell.discloseButton.setImage(UIImage(named: "disclose"), forState: .Normal)
+            dealDay.isOpen = NSNumber(bool: false)
         }
     }
     
@@ -157,7 +166,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let infoButtonWidth: CGFloat = 100
         
-        let cellHeight: CGFloat = calculateCellHeight(dealDay)
+        let cellHeight: CGFloat = self.viewModel.calculateCellHeight(dealDay)
         
         cell.containerView.frame = CGRectMake(0, 0, self.view!.width * 0.95, cellHeight * 0.95)
         cell.containerView.center = CGPointMake(self.view!.width / 2, cellHeight / 2)
@@ -173,7 +182,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let buttonViewHeight = cell.buttonView.height
         let buttonViewWidth = cell.buttonView.width
         
-        let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth, numberOfButtons: CGFloat(3))
+        let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth, numberOfButtons: CGFloat(3), padding: 1)
         
         cell.webSiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, buttonViewHeight)
         cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
@@ -233,12 +242,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         let splitVC: UISplitViewController = appDelegate.window!.rootViewController as! UISplitViewController
         
-        let dealDay: DealDay = getDealDayForIndexPath(indexPath)
-        
-        let detailViewController: DetailViewController = DetailViewController(location: dealDay.location)
-        
-        splitVC.showDetailViewController(detailViewController, sender: self)
-        
+        if let dealDay = getDealDayForIndexPath(indexPath) {
+            let detailViewController: DetailViewController = DetailViewController(location: dealDay.location)
+            
+            splitVC.showDetailViewController(detailViewController, sender: self)
+            
+            var barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+            
+            barButtonItem.tintColor = .whiteColor()
+            
+            self.navigationItem.backBarButtonItem = barButtonItem
+        }
     }
     
     func webSiteButtonPressed(sender: UIButton) {
@@ -260,6 +274,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subView.transformAndAddSubview(scheduleViewController.view)
         
         scheduleViewController.didMoveToParentViewController(self)
+        
+        self.navigationItem.rightBarButtonItem!.title = ""
     }
     
     func mapButtonPressed(sender: UIButton) {
@@ -299,16 +315,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(selectedButton)
         
-        return (getDealDayForIndexPath(indexPath), indexPath)
+        return (getDealDayForIndexPath(indexPath)!, indexPath)
     }
     
-    func getDealDayForIndexPath(indexPath: NSIndexPath) -> DealDay {
+    func getDealDayForIndexPath(indexPath: NSIndexPath) -> DealDay? {
         
         let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
         let dealDays = self.viewModel.tableDataSource[dataSourceKey]!
         
-        return dealDays[indexPath.row]
+        if dealDays.count - 1 >= indexPath.row {
+            return dealDays[indexPath.row]
+        } else {
+            return nil
+        }
     }
     
     func displayNotifications(sender: UIButton) {
@@ -332,34 +352,39 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func resetSort(navTitle: String) {
-        self.title = navTitle
+        self.customTitleView.text = navTitle
+        self.customTitleView.sizeToFit()
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.resetSort()
         self.tableView.reloadData()
     }
     
     func showFoodOnly(navTitle: String) {
-        self.title = navTitle
+        self.customTitleView.text = navTitle
+        self.customTitleView.sizeToFit()
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByFoodOnly()
         self.tableView.reloadData()
     }
     
     func showDrinkOnly(navTitle: String) {
-        self.title = navTitle
+        self.customTitleView.text = navTitle
+        self.customTitleView.sizeToFit()
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByDrinkOnly()
         self.tableView.reloadData()
     }
     
     func ratingSort(navTitle: String) {
-        self.title = navTitle
+        self.customTitleView.text = navTitle
+        self.customTitleView.sizeToFit()
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(false)
     }
     
     func alphaSort(navTitle: String) {
-        self.title = navTitle
+        self.customTitleView.text = navTitle
+        self.customTitleView.sizeToFit()
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(true)
     }
@@ -399,60 +424,80 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return self.viewModel.tableDataSource[dataSourceKey]!
     }
     
-    
-    func calculateCellHeight(dealDay: DealDay) -> CGFloat {
-        
-        let specials = dealDay.specials as NSSet
-       
-        var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
-        
-        return cellHeight
-    }
-    
     func expandInfoCell(sender: UIButton) {
         
         let indexPath: NSIndexPath = indexPathForSelectedRow(sender)
         
-        self.selectedIndexPath = indexPath
+        if let dealDay = getDealDayForIndexPath(indexPath) {
+            var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
+            
+            openInfoView(cell, dealDay: dealDay) { () -> Void in
+                //
+            }
+        }
+    }
+    
+    func openInfoView(cell: LocationTableViewCell, dealDay: DealDay, completed: () -> Void) {
         
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
-        
-        let cellHeight: CGFloat = self.tableView.rectForRowAtIndexPath(indexPath).size.height
-        
-        if self.expandedCell != nil && self.expandedCell != cell && self.expandedCell!.isOpen {
-            self.expandedCell!.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
-                cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
-                    self.expandedCell = cell
-                })
-            })
-        } else if(self.expandedCell != nil && self.expandedCell != cell) {
-            cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
-                self.expandedCell = cell
+        if dealDay.isOpen.boolValue {
+             dealDay.isOpen = NSNumber(bool: false)
+            
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            closeInfoView(cell, completed: { () -> Void in
+                completed()
             })
         } else {
-            cell.openInfoView(sender, cellHeight: cellHeight, completed: { () -> Void in
-                self.expandedCell = cell
+            
+            cell.discloseButton.transformWithCompletion { (result) -> Void in
+                cell.discloseButton.setImage(UIImage(named: "close"), forState: .Normal)
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    cell.discloseButton.transform = CGAffineTransformIdentity
+                })
+            }
+            
+            cell.containerView.bringSubviewToFront(cell.buttonView)
+            
+            dealDay.isOpen = NSNumber(bool: true)
+            
+            self.tableView.beginUpdates()
+            self.tableView.endUpdates()
+            
+            UIView.animateWithDuration(0.3, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: { () -> Void in
+                cell.containerView.height = cell.containerView.height + 40
+                cell.buttonView.height = 40
+                cell.scheduleButton.height = 40
+                cell.webSiteButton.height = 40
+                cell.mapButton.height = 40
+                }, completion: { (finished: Bool) -> Void in
+                    completed()
             })
+            
         }
         
+    }
+    
+    func closeInfoView(cell: LocationTableViewCell, completed: () -> Void) {
+        
+        cell.discloseButton.transformWithCompletion { (result) -> Void in
+            cell.discloseButton.setImage(UIImage(named: "disclose"), forState: .Normal)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                cell.discloseButton.transform = CGAffineTransformIdentity
+            })
+        }
        
-    }
-    
-    func startUpdatingCell(cellHeight: CGFloat, cell: LocationTableViewCell) {
-        self.disclosedCellHeight = cellHeight
-        println("begin updates")
-        println(cellHeight)
-        self.tableView.beginUpdates()
-    }
-    
-    func finishedUpdating(cell: LocationTableViewCell) {
-        self.tableView.endUpdates()
-        println("end updates")
-        self.disclosedCellHeight = 0
-    }
-    
-    func setExpandedCellToNil() {
-        self.expandedCell = nil
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            cell.containerView.height = cell.containerView.height - 40
+            cell.buttonView.height = 0
+            cell.scheduleButton.height = 0
+            cell.webSiteButton.height = 0
+            cell.mapButton.height = 0
+            }) { (finished: Bool) -> Void in
+                completed()
+        }
+        
     }
     
     func reloadTable() {

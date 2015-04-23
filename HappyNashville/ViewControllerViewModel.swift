@@ -22,6 +22,13 @@ import CoreData
     var tableSections: Array<Int> = []
     var unformattedData: Array<DealDay>!
     
+    let titleBottomPadding: CGFloat = 15
+    let specialBottomPadding: CGFloat = 5
+    let infoButtonsHeight: CGFloat = 40
+    let infoButtonsTopPadding: CGFloat = 10
+    let titleLabelHeight: CGFloat = 30
+    let specialHeight: CGFloat = 15
+    
     override init() {
         super.init()
         
@@ -54,6 +61,9 @@ import CoreData
         var saturdayArray: Array<DealDay> = []
         
         for deal in fetchResult {
+            
+            deal.height = calculateCellHeight(deal)
+            deal.isOpen = NSNumber(bool: false)
             
             switch deal.day.integerValue {
                 
@@ -224,6 +234,15 @@ import CoreData
         if self.originalDataSource.count > 0 {
             self.tableDataSource = self.originalDataSource
         }
+    }
+    
+    func calculateCellHeight(dealDay: DealDay) -> CGFloat {
+        
+        let specials = dealDay.specials as NSSet
+        
+        var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
+        
+        return cellHeight
     }
     
 }

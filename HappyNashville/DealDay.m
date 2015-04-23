@@ -2,7 +2,7 @@
 //  DealDay.m
 //  HappyNashville
 //
-//  Created by Richmond Watkins on 4/14/15.
+//  Created by Richmond Watkins on 4/22/15.
 //  Copyright (c) 2015 Richmond Watkins. All rights reserved.
 //
 
@@ -14,10 +14,12 @@
 
 @implementation DealDay
 
-@dynamic type;
 @dynamic day;
+@dynamic type;
+@dynamic height;
+@dynamic isOpen;
 @dynamic location;
-@dynamic specials;
 @dynamic notification;
+@dynamic specials;
 
 @end

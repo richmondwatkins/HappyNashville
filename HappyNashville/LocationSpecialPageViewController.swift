@@ -43,11 +43,11 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         let startingViewController: LocationSpecialViewController = viewControllerAtIndex(0)
         
         let viewControllers: NSArray = [startingViewController]
-        pageController!.setViewControllers(viewControllers as [AnyObject],
+        self.pageController!.setViewControllers(viewControllers as [AnyObject],
             direction: .Forward,
             animated: false,
             completion: nil)
-        
+                
         self.addChildViewController(pageController!)
         self.view.addSubview(self.pageController!.view)
           

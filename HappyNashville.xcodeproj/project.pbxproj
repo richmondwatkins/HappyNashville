@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
+		5D5F689C1AE8754F00772F0A /* DealDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D5F689B1AE8754F00772F0A /* DealDay.m */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
 		5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8B1AD0459F00F23EA5 /* MetaData.m */; };
 		5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */; };
@@ -36,6 +37,7 @@
 		5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */; };
 		5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */; };
 		5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */; };
+		5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262721AE881E0005EE2EA /* StringConstants.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
 		5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94F1ACB5A7E007E852A /* ViewController.swift */; };
@@ -48,7 +50,6 @@
 		5DF8B15C1ADE07C100AE2B25 /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8B15B1ADE07C100AE2B25 /* Location.m */; };
 		5DF8B15F1ADE07C100AE2B25 /* Special.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8B15E1ADE07C100AE2B25 /* Special.m */; };
 		5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8B1641ADE14EE00AE2B25 /* Notification.m */; };
-		5DF8B1681ADE14EF00AE2B25 /* DealDay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8B1671ADE14EF00AE2B25 /* DealDay.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		5D5F689A1AE8754F00772F0A /* DealDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DealDay.h; sourceTree = "<group>"; };
+		5D5F689B1AE8754F00772F0A /* DealDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DealDay.m; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		5D87FB8A1AD0459F00F23EA5 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaData.h; path = ../MetaData.h; sourceTree = "<group>"; };
 		5D87FB8B1AD0459F00F23EA5 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MetaData.m; path = ../MetaData.m; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
 		5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithoutHeadersViewController.swift; sourceTree = "<group>"; };
 		5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		5DF262721AE881E0005EE2EA /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -117,8 +121,6 @@
 		5DF8B15E1ADE07C100AE2B25 /* Special.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Special.m; sourceTree = "<group>"; };
 		5DF8B1631ADE14EE00AE2B25 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = ../Notification.h; sourceTree = "<group>"; };
 		5DF8B1641ADE14EE00AE2B25 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = ../Notification.m; sourceTree = "<group>"; };
-		5DF8B1661ADE14EF00AE2B25 /* DealDay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DealDay.h; path = ../DealDay.h; sourceTree = "<group>"; };
-		5DF8B1671ADE14EF00AE2B25 /* DealDay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DealDay.m; path = ../DealDay.m; sourceTree = "<group>"; };
 		A27D129DC2507EC1CED1784B /* libPods-HappyNashville.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HappyNashville.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E947630BC279528DAA7554B9 /* Pods-HappyNashville.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -210,6 +212,7 @@
 				5D87FB981AD049EE00F23EA5 /* HappyNashville-Bridging-Header.h */,
 				5DF6B9491ACB5A7E007E852A /* Info.plist */,
 				5DB3EB4E1AE322E20071396E /* WeekFlowLayout.swift */,
+				5DF262721AE881E0005EE2EA /* StringConstants.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -235,8 +238,6 @@
 		5DF6B97E1ACB86E4007E852A /* CoreDataModels */ = {
 			isa = PBXGroup;
 			children = (
-				5DF8B1661ADE14EF00AE2B25 /* DealDay.h */,
-				5DF8B1671ADE14EF00AE2B25 /* DealDay.m */,
 				5DF8B1631ADE14EE00AE2B25 /* Notification.h */,
 				5DF8B1641ADE14EE00AE2B25 /* Notification.m */,
 				5DF8B15D1ADE07C100AE2B25 /* Special.h */,
@@ -245,6 +246,8 @@
 				5DF8B15B1ADE07C100AE2B25 /* Location.m */,
 				5D87FB8A1AD0459F00F23EA5 /* MetaData.h */,
 				5D87FB8B1AD0459F00F23EA5 /* MetaData.m */,
+				5D5F689A1AE8754F00772F0A /* DealDay.h */,
+				5D5F689B1AE8754F00772F0A /* DealDay.m */,
 			);
 			name = CoreDataModels;
 			sourceTree = "<group>";
@@ -379,13 +382,13 @@
 				5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */,
 				5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */,
 				5DB3EB4F1AE322E20071396E /* WeekFlowLayout.swift in Sources */,
-				5DF8B1681ADE14EF00AE2B25 /* DealDay.m in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
 				5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */,
 				5DB3EB4B1AE0AB600071396E /* DayCollectionViewCell.swift in Sources */,
 				5DB3EB4D1AE0B2D80071396E /* DetailViewModel.swift in Sources */,
 				5DF8B15C1ADE07C100AE2B25 /* Location.m in Sources */,
+				5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
@@ -406,6 +409,7 @@
 				5DB3EB5D1AE436F60071396E /* LocationTabButtonView.swift in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
 				5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */,
+				5D5F689C1AE8754F00772F0A /* DealDay.m in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
 				5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */,
 				5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */,

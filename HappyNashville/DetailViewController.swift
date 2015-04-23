@@ -17,7 +17,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var collectionView: UICollectionView?
     var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     var viewModel: DetailViewModel?
-    let selectedHeight: CGFloat = 5
+    let selectedHeight: CGFloat = 2
     var pageVC: LocationSpecialPageViewController!
     var tabButtonView: LocationTabButtonView?
     
@@ -51,13 +51,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             setUpTabButtonView()
             setUpPageViewController()
         }
+        
+        self.navigationController?.navigationBar.tintColor = UIColor(hexString: StringConstants.navBarTextColor)
     }
     
     func setUpTabButtonView() {
         
         self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40))
-        self.tabButtonView!.backgroundColor = .greenColor()
-        let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(3))
+
+        let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(3), padding: 1)
         
         self.tabButtonView?.websiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
         self.tabButtonView?.websiteButton.addTarget(self, action: "showWebsite:", forControlEvents: .TouchUpInside)
@@ -148,10 +150,12 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         var addressLabel: UILabel = UILabel()
         addressLabel.text = self.location!.address
         addressLabel.font = UIFont.systemFontOfSize(12)
+        addressLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         addressLabel.sizeToFit()
         
         var nameLabel: UILabel = UILabel()
         nameLabel.text = self.location!.name
+        nameLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         nameLabel.sizeToFit()
         
         var titleView: UIView = UIView(frame: CGRectMake(0, 0, addressLabel.width, self.navigationController!.navigationBar.height))

@@ -16,10 +16,12 @@ class DayCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
       super.init(frame: frame)
         
+        self.dayLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
+        
         self.addSubview(self.dayLabel)
         self.addSubview(self.selectedView)
         
-        self.backgroundColor = UIColor.yellowColor()
+        self.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
     }
     
 

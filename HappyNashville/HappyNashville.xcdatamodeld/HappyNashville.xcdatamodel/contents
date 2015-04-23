@@ -2,6 +2,8 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14C109" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="DealDay" representedClassName="DealDay" syncable="YES">
         <attribute name="day" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="height" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="isOpen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="dealDays" inverseEntity="Location" syncable="YES"/>
         <relationship name="notification" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Notification" inverseName="dealDay" inverseEntity="Notification" syncable="YES"/>
@@ -37,7 +39,7 @@
         <relationship name="dealDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealDay" inverseName="specials" inverseEntity="DealDay" syncable="YES"/>
     </entity>
     <elements>
-        <element name="DealDay" positionX="-54" positionY="99" width="128" height="120"/>
+        <element name="DealDay" positionX="-54" positionY="99" width="128" height="150"/>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="180"/>
         <element name="MetaData" positionX="-63" positionY="63" width="128" height="60"/>
         <element name="Notification" positionX="-63" positionY="63" width="128" height="105"/>

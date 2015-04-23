@@ -43,7 +43,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         self.scheduleView!.delegate = self
 
         self.view!.addSubview(self.scheduleView!)
-        
+                
     }
     
     func dismissVC() {
@@ -57,6 +57,8 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         }
         
         parentVC.subView.transformAndRemoveSubview(self.view!, completed: { (result) -> Void in
+            
+            parentVC.navigationItem.rightBarButtonItem!.title = "Sort"
             
             self.removeFromParentViewController()
         })

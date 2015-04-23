@@ -22,12 +22,15 @@ class LocationTabButtonView: UIView {
         self.directionsButton.setTitle("Directions", forState: .Normal)
         
         configButtons([self.phoneButton, self.websiteButton, self.directionsButton])
+        
+        self.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
     }
     
     func configButtons(buttons: Array<UIButton>) {
         
         for button in buttons {
-            button.backgroundColor = .blueColor()
+            button.backgroundColor = UIColor(hexString: StringConstants.grayShade)
+            button.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
             self.addSubview(button)
         }
     }

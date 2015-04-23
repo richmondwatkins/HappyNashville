@@ -16,7 +16,7 @@ class ScheduleView: UIView {
     
     var timePicker: UIDatePicker?
     var recurringSwitch: UISwitch?
-    var viewModel: ScheduleViewControllerViewModel?
+    var viewModel: ScheduleViewControllerViewModel = ScheduleViewControllerViewModel()
     var dealDay: DealDay?
     var delegate: ScheduleViewProtocol?
     
@@ -41,7 +41,7 @@ class ScheduleView: UIView {
         self.addSubview(titleLabel)
         
         self.timePicker = UIDatePicker(frame: CGRectMake(0, titleLabel.bottom, frame.width * 0.95, frame.height * 0.4))
-        self.timePicker?.date = self.viewModel!.calculateDatePickerDate(dealDay)
+        self.timePicker?.date = self.viewModel.calculateDatePickerDate(dealDay)
         self.addSubview(self.timePicker!)
     
         let controlViewHeight: CGFloat = 40
@@ -76,17 +76,33 @@ class ScheduleView: UIView {
         switchView.addSubview(self.recurringSwitch!)
         
         let buttonPadding: CGFloat = 10
+        let buttonHeight: CGFloat = 50
+        let buttonY = self.height - buttonHeight - buttonPadding
         
-        var submitButton: UIButton = UIButton(frame: CGRectMake(buttonPadding, self.height - 50 - buttonPadding, self.width - (buttonPadding * 2), 50))
+        let buttonDimensons = self.viewModel.getButtonWidth(self.width, numberOfButtons: 2, padding: 10)
+        
+        var cancelButton: UIButton = UIButton(frame: CGRectMake(buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
+        
+        cancelButton.layer.cornerRadius = 5.0
+        cancelButton.setTitle("Cancel", forState: UIControlState.Normal)
+        cancelButton.backgroundColor = UIColor(hexString: StringConstants.cancelColor)
+        cancelButton.addTarget(self, action: "dismissVC:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var submitButton: UIButton = UIButton(frame: CGRectMake(cancelButton.right + buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
+        
         submitButton.layer.cornerRadius = 5.0
-        submitButton.setTitle("SUBMIT", forState: UIControlState.Normal)
-        submitButton.backgroundColor = UIColor.blueColor()
+        submitButton.setTitle("Submit", forState: UIControlState.Normal)
+        submitButton.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         submitButton.addTarget(self, action: "submitSchedule", forControlEvents: UIControlEvents.TouchUpInside)
         
+        self.addSubview(cancelButton)
         self.addSubview(submitButton)
-    
         self.addSubview(switchView)
-        
+                
+    }
+    
+    func dismissVC(sender: UIButton) {
+        self.delegate?.dismissVC()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -94,7 +110,7 @@ class ScheduleView: UIView {
     }
     
     func submitSchedule() {
-        self.viewModel?.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
+        self.viewModel.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
         
         self.delegate?.dismissVC()
     }

@@ -12,7 +12,7 @@ class SortView: UIView {
     
     let viewModel: AppViewModel = AppViewModel()
     
-    var foodSortButton: UIButton = UIButton()
+    var segmentControl: UISegmentedControl!
     var drinkSortButton: UIButton = UIButton()
     var resetSortButton: UIButton = UIButton()
     var ratingSortButton: UIButton = UIButton()
@@ -20,27 +20,16 @@ class SortView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+
+        self.segmentControl = UISegmentedControl(items: ["Food", "Drink", "Rating", "A-Z", "Reset"])
         
-        let buttonMeasurements = self.viewModel.getButtonWidth(self.width, numberOfButtons: 5)
+        let segHeight = self.height * 0.7
         
-        self.foodSortButton.setImage(UIImage(named: "food"), forState: .Normal)
-        self.drinkSortButton.setImage(UIImage(named: "alcohol"), forState: .Normal)
-        self.resetSortButton.setTitle("Reset", forState: .Normal)
-        self.ratingSortButton.setImage(UIImage(named: "rating"), forState: .Normal)
-        self.alphaSortButton.setImage(UIImage(named: "a-z"), forState: .Normal)
-        self.resetSortButton.setImage(UIImage(named: "reset"), forState: .Normal)
+        self.segmentControl.frame = CGRectMake(10, (self.height / 2) - (segHeight / 2), self.width - 20, segHeight)
         
-        self.foodSortButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.height)
-        self.drinkSortButton.frame = CGRectMake(self.foodSortButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.height)
-        self.ratingSortButton.frame = CGRectMake(self.drinkSortButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.height)
-        self.alphaSortButton.frame = CGRectMake(self.ratingSortButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.height)
-        self.resetSortButton.frame = CGRectMake(self.alphaSortButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.height)
-       
-        self.addSubview(self.alphaSortButton)
-        self.addSubview(self.ratingSortButton)
-        self.addSubview(self.resetSortButton)
-        self.addSubview(self.drinkSortButton)
-        self.addSubview(self.foodSortButton)
+        self.segmentControl.tintColor = UIColor(hexString: StringConstants.primaryColor)
+        
+        self.addSubview(self.segmentControl)
     }
 
     required init(coder aDecoder: NSCoder) {
