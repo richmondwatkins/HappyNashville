@@ -18,16 +18,38 @@ class SortView: UIView {
     var ratingSortButton: UIButton = UIButton()
     var alphaSortButton: UIButton = UIButton()
 
-    override init(frame: CGRect) {
+     init(frame: CGRect, currentSort: String?) {
         super.init(frame: frame)
 
-        self.segmentControl = UISegmentedControl(items: ["Food", "Drink", "Rating", "A-Z", "Reset"])
+        self.segmentControl = UISegmentedControl(items: ["Food", "Drink", "Rating", "A-Z", "Day"])
         
         let segHeight = self.height * 0.7
         
         self.segmentControl.frame = CGRectMake(10, (self.height / 2) - (segHeight / 2), self.width - 20, segHeight)
         
         self.segmentControl.tintColor = UIColor(hexString: StringConstants.primaryColor)
+        
+        if let sort = currentSort {
+            
+            switch sort {
+            case "Food":
+                self.segmentControl.selectedSegmentIndex = 0
+                break;
+            case "Drink":
+                self.segmentControl.selectedSegmentIndex = 1
+                break;
+            case "Rating":
+                self.segmentControl.selectedSegmentIndex = 2
+                break;
+            case "A-Z":
+                self.segmentControl.selectedSegmentIndex = 3
+                break;
+            default:
+                break;
+            }
+        } else {
+            self.segmentControl.selectedSegmentIndex = 4
+        }
         
         self.addSubview(self.segmentControl)
     }

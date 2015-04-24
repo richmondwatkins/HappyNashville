@@ -15,7 +15,7 @@ class APIManger: NSObject {
     
     class func requestNewData(moc: NSManagedObjectContext) {
         
-        let urlString = "https://frozen-hollows-3577.herokuapp.com/locations"
+        let urlString = "https://nameless-sea-7366.herokuapp.com/retrieve"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
 //        let reachability = Reachability.reachabilityForInternetConnection()
@@ -26,7 +26,7 @@ class APIManger: NSObject {
                 
                 var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
                 
-                if self.shouldUpdateData(jsonResult["version"]as! NSNumber, moc: moc) {
+                if self.shouldUpdateData(jsonResult["version"] as! NSNumber, moc: moc) {
                     
                     self.updateDeals(jsonResult["locations"] as! NSArray, moc: moc);
                 }

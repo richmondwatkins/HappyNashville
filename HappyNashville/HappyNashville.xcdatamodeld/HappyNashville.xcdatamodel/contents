@@ -15,6 +15,7 @@
         <attribute name="lng" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="priceLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="rating" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="slug" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="website" optional="YES" attributeType="String" syncable="YES"/>
@@ -36,13 +37,14 @@
         <attribute name="minuteEnd" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="minuteStart" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="specialDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="dealDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealDay" inverseName="specials" inverseEntity="DealDay" syncable="YES"/>
     </entity>
     <elements>
         <element name="DealDay" positionX="-54" positionY="99" width="128" height="150"/>
-        <element name="Location" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Location" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="MetaData" positionX="-63" positionY="63" width="128" height="60"/>
         <element name="Notification" positionX="-63" positionY="63" width="128" height="105"/>
-        <element name="Special" positionX="-54" positionY="72" width="128" height="150"/>
+        <element name="Special" positionX="-54" positionY="72" width="128" height="165"/>
     </elements>
 </model>

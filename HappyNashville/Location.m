@@ -21,5 +21,6 @@
 @dynamic slug;
 @dynamic website;
 @dynamic dealDays;
+@dynamic priceLevel;
 
 @end

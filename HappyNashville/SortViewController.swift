@@ -19,8 +19,18 @@ protocol SortProtocol {
 class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     
     var delegate: SortProtocol?
-
     var sortView: SortView!
+    var currentSort: String?
+    
+    init(sortTitle: String?) {
+        super.init(nibName: nil, bundle: nil)
+        
+        self.currentSort = sortTitle
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +39,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let sortViewHeight: CGFloat = self.view!.height * 0.1
         
-        self.sortView = SortView(frame: CGRectMake(0, self.view!.height - sortViewHeight, self.view!.width, sortViewHeight))
+        self.sortView = SortView(frame: CGRectMake(0, self.view!.height - sortViewHeight, self.view!.width, sortViewHeight), currentSort: self.currentSort)
         self.sortView.backgroundColor = .whiteColor()
         self.sortView.tag = 1
         

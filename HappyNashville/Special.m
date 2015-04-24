@@ -19,5 +19,6 @@
 @dynamic minuteStart;
 @dynamic specialDescription;
 @dynamic dealDay;
+@dynamic type;
 
 @end

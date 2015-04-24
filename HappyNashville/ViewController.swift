@@ -17,6 +17,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
     var subView: UIView = UIView()
     var customTitleView: UILabel = UILabel()
+    var customTitleViewBorder: CALayer = CALayer()
+    
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
@@ -49,7 +51,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if self.viewModel.tableSections.count - 1 > self.viewModel.getCurrentDay() {
             scrollToCurrentDay()
         } else if (self.viewModel.tableSections.count > 0) {
-             self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.tableSections.count - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+             self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
         
         var settingsButton: UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
@@ -66,7 +68,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleView.backgroundColor = .clearColor()
         self.customTitleView.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         self.customTitleView.textAlignment = .Center
+        
         self.navigationItem.titleView = self.customTitleView
+        
+        self.customTitleView.layer.addSublayer(self.customTitleViewBorder)
     }
     
     func scrollToCurrentDay() {
@@ -340,7 +345,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func displaySortOptions(sender: UIButton) {
         
-        var sortViewController: SortViewController = SortViewController()
+        var sortViewController: SortViewController = SortViewController(sortTitle: self.customTitleView.text)
         
         sortViewController.delegate = self
         
@@ -354,6 +359,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func resetSort(navTitle: String) {
         self.customTitleView.text = navTitle
         self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectZero
+        self.customTitleViewBorder.backgroundColor = UIColor.clearColor().CGColor
+        
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.resetSort()
         self.tableView.reloadData()
@@ -361,7 +370,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func showFoodOnly(navTitle: String) {
         self.customTitleView.text = navTitle
+        self.customTitleView.textAlignment = .Center
         self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
+        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
+        
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByFoodOnly()
         self.tableView.reloadData()
@@ -370,6 +384,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func showDrinkOnly(navTitle: String) {
         self.customTitleView.text = navTitle
         self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
+        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
+        
         checkForAndRemoveVCWithoutHeaders()
         self.viewModel.sortByDrinkOnly()
         self.tableView.reloadData()
@@ -378,6 +396,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func ratingSort(navTitle: String) {
         self.customTitleView.text = navTitle
         self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
+        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
+        
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(false)
     }
@@ -385,6 +407,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func alphaSort(navTitle: String) {
         self.customTitleView.text = navTitle
         self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height, self.customTitleView.width + 5, 1);
+        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
+        
         checkForAndRemoveVCWithoutHeaders()
         instantiateHeaderlessView(true)
     }

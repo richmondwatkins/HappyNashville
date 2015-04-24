@@ -17,7 +17,7 @@ class SpecialView: UIView {
         specialLabel.text = special.specialDescription
         specialLabel.font = UIFont.systemFontOfSize(10)
         specialLabel.sizeToFit()
-        specialLabel.frame = CGRectMake(0, 0, specialLabel.width, specialLabel.height)
+        specialLabel.frame = CGRectMake(9, 0, specialLabel.width, specialLabel.height)
         
        
         
@@ -27,6 +27,19 @@ class SpecialView: UIView {
         dateLabel.sizeToFit()
         dateLabel.left = specialLabel.right + 5
         
+        var typeBullet: UIView = UIView()
+        typeBullet.layer.cornerRadius = 2
+        typeBullet.frame = CGRectMake(0, 0, 8, 8)
+        
+        typeBullet.center = CGPointMake(0, self.height / 2)
+        
+        if special.type.integerValue == 0 {
+            typeBullet.backgroundColor = UIColor(hexString: StringConstants.drinkColor)
+        } else {
+            typeBullet.backgroundColor = UIColor(hexString: StringConstants.foodColor)
+        }
+        
+        self.addSubview(typeBullet)
         self.addSubview(specialLabel)
         self.addSubview(dateLabel)
     }

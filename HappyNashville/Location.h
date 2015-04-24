@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSNumber * lat;
+@property (nonatomic, retain) NSNumber * priceLevel;
 @property (nonatomic, retain) NSNumber * lng;
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * phoneNumber;

@@ -20,5 +20,5 @@
 @property (nonatomic, retain) NSNumber * minuteStart;
 @property (nonatomic, retain) NSString * specialDescription;
 @property (nonatomic, retain) DealDay *dealDay;
-
+@property (nonatomic, retain) NSNumber * type;
 @end
