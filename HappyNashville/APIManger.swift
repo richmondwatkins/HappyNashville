@@ -32,6 +32,27 @@ class APIManger: NSObject {
                 }
 //            }
         }
+        
+//        let locations: NSArray =  self.fetchAllLocations(moc)!
+//        
+//        let location: Location = locations[0] as! Location
+//        
+//        for var index = 0; index < 100; ++index {
+//            
+//            var locationCD: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: moc) as! Location;
+//            
+//            locationCD.name = "CHESSER"
+//            locationCD.address = location.address
+//            locationCD.lat = location.lat
+//            locationCD.lng = location.lng
+//            locationCD.phoneNumber = location.phoneNumber
+//            locationCD.rating = location.rating
+//            locationCD.slug = location.slug
+//            locationCD.website = location.website
+//            location.addDealDays(location.dealDays)
+//            
+//            moc.save(nil)
+//        }
     }
     
     class func updateDeals(deals: NSArray, moc: NSManagedObjectContext) {

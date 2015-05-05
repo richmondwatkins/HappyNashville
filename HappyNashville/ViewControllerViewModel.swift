@@ -21,6 +21,7 @@ import CoreData
     var delegate: ViewModelProtocol?
     var tableSections: Array<Int> = []
     var unformattedData: Array<DealDay>!
+    var foodDrinkArray: Array<Special> = []
     
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
@@ -62,7 +63,7 @@ import CoreData
         
         for deal in fetchResult {
             
-            deal.height = calculateCellHeight(deal)
+            deal.height = calculateCellHeight(deal, specialCount: deal.specials.count)
             deal.isOpen = NSNumber(bool: false)
             
             switch deal.day.integerValue {
@@ -189,9 +190,12 @@ import CoreData
         for (key, value) in self.originalDataSource {
             
             for dealDay in value {
-                if dealDay.type.integerValue != 1 {
-                    var arr: Array<DealDay> = self.tableDataSource[key]!
-                    self.tableDataSource[key]?.removeAtIndex(find(arr, dealDay)!)
+                let dealDaySpecials: Array<Special> = Array(dealDay.specials) as! Array<Special>
+                for special in dealDaySpecials {
+                    
+                    if special.type == 1 {
+                        self.foodDrinkArray.append(special)
+                    }
                 }
             }
         }
@@ -236,13 +240,43 @@ import CoreData
         }
     }
     
-    func calculateCellHeight(dealDay: DealDay) -> CGFloat {
+    func calculateCellHeight(dealDay: DealDay, specialCount: Int) -> CGFloat {
+        let tempLabel: UILabel = UILabel()
+        tempLabel.text = dealDay.location.name
+        tempLabel.sizeToFit()
         
         let specials = dealDay.specials as NSSet
         
-        var cellHeight: CGFloat = self.titleLabelHeight + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specials.count))
+        var cellHeight: CGFloat = tempLabel.height + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specialCount))
         
-        return cellHeight
+        return cellHeight + 24
     }
+    
+    func getCellHeightForFood(dealDay: DealDay) -> CGFloat {
+        var foodCount: Int = 0
+        
+        for special in Array(dealDay.specials) {
+            var spec: Special = special as! Special
+            if spec.type == 1 {
+                foodCount++
+            }
+        }
+    
+        return calculateCellHeight(dealDay, specialCount: foodCount)
+    }
+    
+    func getCellHeightForDrink(dealDay: DealDay) -> CGFloat {
+        var drinkCount: Int = 0
+        
+        for special in Array(dealDay.specials) {
+            var spec: Special = special as! Special
+            if spec.type == 0 {
+                drinkCount++
+            }
+        }
+        
+        return calculateCellHeight(dealDay, specialCount: drinkCount)
+    }
+    
     
 }

@@ -29,7 +29,7 @@ class LocationSpecialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var top: CGFloat = 0
+        var top: CGFloat = 20
         
         self.scrollView = UIScrollView(frame: self.view!.frame)
         
@@ -43,7 +43,7 @@ class LocationSpecialViewController: UIViewController {
             
             specialView.top = top
             
-            top = specialView.bottom + 4
+            top = specialView.bottom + 10
             
             self.contentHeight += specialView.height + 2
         }

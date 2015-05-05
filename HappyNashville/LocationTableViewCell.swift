@@ -35,6 +35,8 @@ class LocationTableViewCell: UITableViewCell {
         
         self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.textAlignment = NSTextAlignment.Left
+        self.titleLable.font = UIFont.systemFontOfSize(16)
+        self.titleLable.numberOfLines = 1
         
         self.backgroundColor = UIColor.clearColor()
         

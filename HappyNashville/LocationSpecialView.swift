@@ -12,7 +12,7 @@ class LocationSpecialView: UIView {
     
     var dateView: UILabel = UILabel()
     var specialView: UILabel = UILabel()
-    let padding: CGFloat = 4
+    let padding: CGFloat = 8
     var containerView: UIView = UIView()
     
     init(special: Special, frame: CGRect) {
@@ -20,13 +20,15 @@ class LocationSpecialView: UIView {
         
         dateView.text = configureDateString(special)
         dateView.font = UIFont.systemFontOfSize(10)
-        dateView.frame = CGRectMake(0, 0, self.width, 10)
         dateView.textAlignment = NSTextAlignment.Center
+        dateView.sizeToFit()
         
         specialView.text = special.specialDescription
-        specialView.textAlignment = NSTextAlignment.Center
-        specialView.numberOfLines = 0
+        specialView.textAlignment = NSTextAlignment.Left
+        specialView.font = UIFont.systemFontOfSize(14)
         specialView.sizeToFit()
+        specialView.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        specialView.numberOfLines = 2
         
         containerView.height = dateView.height + specialView.height + self.padding
         containerView.width = self.width
@@ -40,6 +42,18 @@ class LocationSpecialView: UIView {
         
         dateView.center = CGPointMake(self.width / 2, dateView.center.y)
         specialView.center = CGPointMake(self.width / 2, specialView.center.y)
+        
+        var underLineView: UIView = UIView(frame: CGRectMake(0, 0, dateView.width * 1.5, 1))
+        
+        if special.type.integerValue == 1 {
+           underLineView.backgroundColor = UIColor(hexString: StringConstants.foodColor)
+        } else {
+            underLineView.backgroundColor = UIColor(hexString: StringConstants.drinkColor)
+        }
+        
+        underLineView.center = CGPointMake(dateView.center.x, dateView.frame.origin.y + dateView.height)
+        
+        self.containerView.addSubview(underLineView)
         
         self.addSubview(containerView)
     }
@@ -69,10 +83,10 @@ class LocationSpecialView: UIView {
         var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
         var startDateFormatter: NSDateFormatter = NSDateFormatter()
-        startDateFormatter.dateFormat = "hh:mm"
+        startDateFormatter.dateFormat = "h:mm"
         
         var endDateFormatter: NSDateFormatter = NSDateFormatter()
-        endDateFormatter.dateFormat = "hh:mm a"
+        endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
     }

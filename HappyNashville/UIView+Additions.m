@@ -5,14 +5,6 @@
 
 @implementation UIView (Additions)
 
-//- (void)exploreViewAtLevel:(int)level;
-//{
-//    doLog(level, @"%@", [[self class] description]);
-//    doLog(level, @"%@", NSStringFromCGRect([self frame]));
-//    for (UIView *subview in [self subviews])
-//        [subview exploreViewAtLevel:(level + 1)];
-//}
-
 - (CGFloat)left {
     return self.frame.origin.x;
 }

@@ -14,22 +14,24 @@ class SpecialView: UIView {
         super.init(frame: frame)
         
         var specialLabel: UILabel = UILabel()
-        specialLabel.text = special.specialDescription
         specialLabel.font = UIFont.systemFontOfSize(10)
+        specialLabel.numberOfLines = 0
+        
+        var dateText: String = configureDateString(special);
+        var text: String = special.specialDescription + " " + dateText;
+        var attributedText: NSMutableAttributedString = NSMutableAttributedString(string: text)
+        
+        attributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(10)], range: NSRange(location: count(special.specialDescription) + 1, length: count(dateText)))
+  
+        specialLabel.attributedText = attributedText
+        
         specialLabel.sizeToFit()
-        specialLabel.frame = CGRectMake(9, 0, specialLabel.width, specialLabel.height)
-        
+        specialLabel.frame = CGRectMake(9, 0, frame.size.width - 30, specialLabel.height)
+        specialLabel.center = CGPointMake(specialLabel.center.x, self.height / 2)
        
-        
-        var dateLabel: UILabel = UILabel()
-        dateLabel.font = UIFont.boldSystemFontOfSize(10)
-        dateLabel.text = configureDateString(special)
-        dateLabel.sizeToFit()
-        dateLabel.left = specialLabel.right + 5
-        
         var typeBullet: UIView = UIView()
         typeBullet.layer.cornerRadius = 2
-        typeBullet.frame = CGRectMake(0, 0, 8, 8)
+        typeBullet.frame = CGRectMake(0, 0, 6, 6)
         
         typeBullet.center = CGPointMake(0, self.height / 2)
         
@@ -41,7 +43,6 @@ class SpecialView: UIView {
         
         self.addSubview(typeBullet)
         self.addSubview(specialLabel)
-        self.addSubview(dateLabel)
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -69,10 +70,10 @@ class SpecialView: UIView {
         var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
         var startDateFormatter: NSDateFormatter = NSDateFormatter()
-        startDateFormatter.dateFormat = "hh:mm"
+        startDateFormatter.dateFormat = "h:mm"
         
         var endDateFormatter: NSDateFormatter = NSDateFormatter()
-        endDateFormatter.dateFormat = "hh:mm a"
+        endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
     }

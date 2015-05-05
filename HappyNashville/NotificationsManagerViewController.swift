@@ -23,7 +23,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELLY")
         
         self.tableView.reloadData()
     }
@@ -57,14 +57,15 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? LocationTableViewCell
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("CELLY") as? UITableViewCell
         
-        if cell == nil {
-            
-            cell = LocationTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
+        if (cell != nil) {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle,
+                reuseIdentifier: "CELLY")
         }
+
+        configureCell(cell! , indexPath: indexPath)
         
-        configureCell(cell!, indexPath: indexPath)
         
         return cell!
     }
@@ -74,5 +75,19 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         var notification: Notification = self.viewModel.tableDataSource[indexPath.row] as! Notification
         
         cell.textLabel?.text = notification.text
+        
+        cell.detailTextLabel!.text = configureDateString(notification.date)
+    }
+    
+    func configureDateString(date: NSDate) -> String {
+
+        var dayOfWeek: NSDateFormatter = NSDateFormatter()
+        dayOfWeek.dateFormat = "EEEE"
+        
+        var time: NSDateFormatter = NSDateFormatter()
+        time.dateFormat = "h:mm"
+
+        
+        return "Notifies you on \(dayOfWeek.stringFromDate(date)) at \(time.stringFromDate(date))"
     }
 }
