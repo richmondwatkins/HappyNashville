@@ -126,7 +126,6 @@ class APIManger: NSObject {
             var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as! Special
             
             for key in specialDict.allKeys as! [String] {
-                
                 special.setValue(specialDict[key], forKey: key)
             }
             

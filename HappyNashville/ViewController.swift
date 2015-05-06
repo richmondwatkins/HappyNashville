@@ -360,7 +360,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func displayNotifications(sender: UIButton) {
         
-        var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController()
+        var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController(navBarHeight: self.navigationController!.navigationBar.height)
         
         self.presentViewController(notificationViewController, animated: true, completion: nil)
     }

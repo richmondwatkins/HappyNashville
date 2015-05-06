@@ -21,11 +21,11 @@ class ScheduleViewControllerViewModel: AppViewModel {
         var daysToNextOccur = 0
         
         if dealDay.day.integerValue < dateCompenents.weekday {
-            
-            daysToNextOccur = 7 - (dateCompenents.weekday - dealDay.day.integerValue + 1)
+              daysToNextOccur =  7 - dateCompenents.weekday + dealDay.day.integerValue
+//            daysToNextOccur = 7 - (dateCompenents.weekday - dealDay.day.integerValue)
         } else {
             
-            daysToNextOccur = dateCompenents.weekday - dealDay.day.integerValue + 1
+            daysToNextOccur =  dealDay.day.integerValue - dateCompenents.weekday
         }
         
         let timeToDate: Int = 60 * 60 * 24 * daysToNextOccur
@@ -35,7 +35,10 @@ class ScheduleViewControllerViewModel: AppViewModel {
         let toDateComponents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: toDate)
         
-        toDateComponents.hour = 12
+        
+        let special: Special = self.sortSpecialsByTime(dealDay.specials)[0] as! Special
+        
+        toDateComponents.hour = special.hourStart.integerValue - 1
  
         return gregorianCalendar.dateFromComponents(toDateComponents)!
     }
@@ -67,6 +70,7 @@ class ScheduleViewControllerViewModel: AppViewModel {
         notificationCD.date = notification.fireDate
         notificationCD.dealDay = dealDay
         notificationCD.notifId = notifId
+        notificationCD.isRecurring = isRecurring
         dealDay.notification = notificationCD
         
         appDelegate.managedObjectContext!.save(nil)

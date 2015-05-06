@@ -17,6 +17,8 @@ class SpecialView: UIView {
         specialLabel.font = UIFont.systemFontOfSize(10)
         specialLabel.numberOfLines = 0
         
+//        var trimmedDescp = special.specialDescription.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+
         var dateText: String = configureDateString(special);
         var text: String = special.specialDescription + " " + dateText;
         var attributedText: NSMutableAttributedString = NSMutableAttributedString(string: text)

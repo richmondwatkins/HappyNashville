@@ -19,22 +19,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HappyNashville/NotificationsManagerViewController.swift"
-            timestampString = "452487403.525798"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "75"
-            endingLineNumber = "75"
-            landmarkName = "configureCell(_:indexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HappyNashville/LocationWebViewController.swift"
             timestampString = "451092561.676708"
             startingColumnNumber = "9223372036854775807"
@@ -184,6 +168,22 @@
             startingLineNumber = "20"
             endingLineNumber = "20"
             landmarkName = "getCurrentDay()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "HappyNashville/ScheduleViewControllerViewModel.swift"
+            timestampString = "452490052.518931"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "calculateDatePickerDate(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

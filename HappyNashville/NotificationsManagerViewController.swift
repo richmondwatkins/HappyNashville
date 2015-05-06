@@ -12,11 +12,46 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     var tableView: UITableView = UITableView()
     var viewModel: NotificationViewModel = NotificationViewModel()
+    var navBarHeight: CGFloat = 0
+    
+    init(navBarHeight: CGFloat) {
+        self.navBarHeight = navBarHeight
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.frame = self.view!.frame
+        var navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight + 20))
+        
+        navBar.backgroundColor = UIColor(hexString: "F8F8F8")
+        
+        
+        var titleLabel: UILabel = UILabel();
+        titleLabel.text = "Settings"
+        titleLabel.sizeToFit();
+        
+        navBar.addSubview(titleLabel)
+        titleLabel.center = navBar.center
+        
+        var backButton: UIButton = UIButton()
+        
+        backButton.setTitle("Back", forState: .Normal)
+        backButton.sizeToFit()
+        
+        backButton.frame = CGRectMake(navBar.width - backButton.width - 4, navBar.height / 2 - backButton.height / 2, backButton.width, backButton.height)
+        backButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        backButton.addTarget(self, action: "closeVC", forControlEvents: .TouchUpInside)
+        
+        navBar.addSubview(backButton)
+        
+        self.view!.addSubview(navBar)
+        
+        self.tableView.frame = CGRectMake(0, navBar.bottom, self.view!.width, self.view!.height - navBar.height)
         
         self.view!.addSubview(self.tableView)
         
@@ -26,6 +61,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELLY")
         
         self.tableView.reloadData()
+    }
+    
+    func closeVC() {
+        self.dismissViewControllerAnimated(true, completion: {});
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -76,18 +115,21 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         
         cell.textLabel?.text = notification.text
         
-        cell.detailTextLabel!.text = configureDateString(notification.date)
+        cell.detailTextLabel!.text = configureDateString(notification)
     }
     
-    func configureDateString(date: NSDate) -> String {
+    func configureDateString(notification: Notification) -> String {
 
         var dayOfWeek: NSDateFormatter = NSDateFormatter()
         dayOfWeek.dateFormat = "EEEE"
         
         var time: NSDateFormatter = NSDateFormatter()
         time.dateFormat = "h:mm"
-
         
-        return "Notifies you on \(dayOfWeek.stringFromDate(date)) at \(time.stringFromDate(date))"
+        if notification.isRecurring.boolValue {
+            return "Weekly on \(dayOfWeek.stringFromDate(notification.date)) at \(time.stringFromDate(notification.date))"
+        } else {
+            return "Once on \(dayOfWeek.stringFromDate(notification.date)) at \(time.stringFromDate(notification.date))"
+        }
     }
 }
