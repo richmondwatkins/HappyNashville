@@ -18,7 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        APIManger.requestNewData(self.managedObjectContext!);
+        APIManger.requestNewData({ (dealDays) -> Void in
+            println("IN APP DL")
+            println(dealDays)
+        })
         
         let mainVC: ViewController = ViewController()
         let navController: UINavigationController = UINavigationController(rootViewController: mainVC)

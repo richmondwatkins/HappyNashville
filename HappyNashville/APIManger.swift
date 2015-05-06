@@ -11,9 +11,9 @@ import CoreData
 
 class APIManger: NSObject {
     
+    static var masterDealDaysArray: Array<DealDay> = []
     
-    
-    class func requestNewData(moc: NSManagedObjectContext) {
+    class func requestNewData(completed: (dealDays: Array<DealDay>) -> Void) {
         
         let urlString = "https://nameless-sea-7366.herokuapp.com/retrieve"
         var url: NSURL = NSURL(string: urlString)!;
@@ -24,57 +24,36 @@ class APIManger: NSObject {
         
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
                 
-                var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
-                
-                if self.shouldUpdateData(jsonResult["version"] as! NSNumber, moc: moc) {
-                    
-                    self.updateDeals(jsonResult["locations"] as! NSArray, moc: moc);
-                }
-//            }
+            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
+            
+                self.updateDeals(jsonResult["locations"] as! NSArray, completed: { (dealDays) -> Void in
+                    completed(dealDays: dealDays)
+                })
         }
-        
-//        let locations: NSArray =  self.fetchAllLocations(moc)!
-//        
-//        let location: Location = locations[0] as! Location
-//        
-//        for var index = 0; index < 100; ++index {
-//            
-//            var locationCD: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: moc) as! Location;
-//            
-//            locationCD.name = "CHESSER"
-//            locationCD.address = location.address
-//            locationCD.lat = location.lat
-//            locationCD.lng = location.lng
-//            locationCD.phoneNumber = location.phoneNumber
-//            locationCD.rating = location.rating
-//            locationCD.slug = location.slug
-//            locationCD.website = location.website
-//            location.addDealDays(location.dealDays)
-//            
-//            moc.save(nil)
-//        }
+
     }
     
-    class func updateDeals(deals: NSArray, moc: NSManagedObjectContext) {
+    class func updateDeals(deals: NSArray, completed: (dealDays: Array<DealDay>) -> Void) {
         
+        var locationArray: Array<Location> = []
+
         for location in deals as! [NSDictionary] {
             
-            updateOrAdd(location, moc: moc)
+            locationArray.append(createLocation(location))
             
         }
         
-        moc.save(nil)
-        
+        completed(dealDays: self.masterDealDaysArray)
     }
     
-    class func createLocation(locationDict: NSDictionary, moc: NSManagedObjectContext) {
-        let location: Location = NSEntityDescription.insertNewObjectForEntityForName("Location", inManagedObjectContext: moc) as! Location;
+    class func createLocation(locationDict: NSDictionary) -> Location {
+        let location: Location = Location()
         
         for key in locationDict.allKeys as! [String] {
             
             if key == "dealDays" {
                 
-                location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, moc: moc, location: location) as Set<NSObject>)
+                location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)
             } else if key == "_id" {
                 
                 println(locationDict[key])
@@ -87,15 +66,21 @@ class APIManger: NSObject {
                 location.setValue(locationDict[key], forKey: key)
             }
         }
+        
+        return location
     }
     
-    class func addDealDays(dealDays: NSArray, moc: NSManagedObjectContext, location: Location) -> NSSet {
+    class func addDealDays(dealDays: NSArray, location: Location) -> NSSet {
     
         var dealDaysArray: Array<DealDay> = []
         
         for dealDayDict in dealDays as! [NSDictionary] {
             
-            var dealDay: DealDay = NSEntityDescription.insertNewObjectForEntityForName("DealDay", inManagedObjectContext: moc) as! DealDay
+            var dealDay: DealDay = DealDay()
+            
+            self.masterDealDaysArray.append(dealDay)
+            
+            dealDaysArray.append(dealDay)
             
             dealDay.location = location
             
@@ -103,13 +88,11 @@ class APIManger: NSObject {
                 
                 if key == "specials" {
                     
-                    dealDay.addSpecials(self.setSpecials(dealDayDict[key] as! NSArray, moc: moc) as Set<NSObject>)
+                    dealDay.addSpecials(self.setSpecials(dealDayDict[key] as! NSArray) as Set<NSObject>)
                 } else {
 
                     dealDay.setValue(dealDayDict[key], forKey: key)
                 }
-                
-                dealDaysArray.append(dealDay)
             }
             
         }
@@ -117,13 +100,13 @@ class APIManger: NSObject {
         return NSSet(array: dealDaysArray)
     }
     
-    class func setSpecials(specials: NSArray, moc: NSManagedObjectContext) -> NSSet {
+    class func setSpecials(specials: NSArray) -> NSSet {
         
         var specialMutable: Array<Special> = []
         
         for  specialDict in specials as! [NSDictionary] {
             
-            var special: Special = NSEntityDescription.insertNewObjectForEntityForName("Special", inManagedObjectContext: moc) as! Special
+            var special: Special = Special()
             
             for key in specialDict.allKeys as! [String] {
                 special.setValue(specialDict[key], forKey: key)
@@ -159,7 +142,7 @@ class APIManger: NSObject {
 //            }
 //        } else {
 //            
-            createLocation(locationDict, moc: moc)
+            createLocation(locationDict)
 //        }
 
         

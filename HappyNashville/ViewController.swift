@@ -44,6 +44,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
+    
         self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
@@ -569,6 +570,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func reloadTable() {
         
         self.tableView.reloadData()
+        self.scrollToCurrentDay()
     }
     
 }

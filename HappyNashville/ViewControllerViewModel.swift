@@ -38,16 +38,21 @@ import CoreData
     
     func fetchData() {
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+//        
+//        if let fetchResult = APIManger.fetchAllDealDays(appDelegate.managedObjectContext!) {
+//           
+//            var swiftArray = fetchResult.mutableCopy() as AnyObject as! [DealDay]
+//            
+//            self.unformattedData = swiftArray
+//
+//            sortData(swiftArray)
+//        }
         
-        if let fetchResult = APIManger.fetchAllDealDays(appDelegate.managedObjectContext!) {
-           
-            var swiftArray = fetchResult.mutableCopy() as AnyObject as! [DealDay]
-            
-            self.unformattedData = swiftArray
-            
-            sortData(swiftArray)
-        }
+        APIManger.requestNewData({ (dealDays) -> Void in
+            self.sortData(dealDays)
+            self.delegate?.reloadTable()
+        })
         
     }
     
