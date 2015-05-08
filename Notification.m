@@ -13,7 +13,6 @@
 
 @dynamic date;
 @dynamic text;
-@dynamic dealDay;
 @dynamic notifId;
 @dynamic isRecurring;
 @end

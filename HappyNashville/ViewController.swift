@@ -10,9 +10,9 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocl {
     
-    var viewModel: ViewControllerViewModel = ViewControllerViewModel()
+    var viewModel: ViewControllerViewModel =  ViewControllerViewModel()
     var tableView: UITableView = UITableView()
     var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
     var foodDrinkVC: FoodDrinkViewController!
@@ -21,6 +21,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var customTitleViewBorder: CALayer = CALayer()
     var sortIsDisplaying: Bool = Bool()
     
+    let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
@@ -31,7 +32,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.frame = self.view!.frame
         self.tableView.delegate = self
         self.tableView.dataSource = self
         
@@ -44,8 +44,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
-    
-        self.tableView.reloadData()
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
@@ -76,10 +74,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.customTitleView.layer.addSublayer(self.customTitleViewBorder)
         
+        self.navigationItem.titleView = self.activityIndicator;
+        self.activityIndicator.startAnimating()
     }
-    
+
     func scrollToCurrentDay() {
         self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay() - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.tableView.frame = self.view!.frame
     }
     
     override func viewDidLayoutSubviews() {
@@ -87,12 +91,21 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.layoutMargins = UIEdgeInsetsZero
         self.tableView.separatorInset = UIEdgeInsetsZero
     }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
+    {
+        self.tableView.reloadData()
+    }
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         let sectionDay: Int = self.viewModel.tableSections[section]
         
-        return  self.viewModel.tableDataSource[sectionDay]!.count
+        if let array = self.viewModel.tableDataSource[sectionDay] {
+            return array.count
+        } else {
+            return 0
+        }
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -113,7 +126,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let sectionDay: Int = self.viewModel.tableSections[section]
         
-        if self.viewModel.tableDataSource[sectionDay]!.count > 0 {
+        if (self.viewModel.tableDataSource[sectionDay] != nil) {
             return self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
         } else {
             return nil
@@ -121,7 +134,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-
         var cell = tableView.dequeueReusableCellWithIdentifier("CELL") as? LocationTableViewCell
 
         if cell == nil {
@@ -267,13 +279,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let splitVC: UISplitViewController = appDelegate.window!.rootViewController as! UISplitViewController
-        
         if let dealDay = getDealDayForIndexPath(indexPath) {
             let detailViewController: DetailViewController = DetailViewController(location: dealDay.location)
             
-            splitVC.showDetailViewController(detailViewController, sender: self)
+            self.navigationController?.pushViewController(detailViewController, animated: true)
             
             var barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
             
@@ -362,7 +371,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func displayNotifications(sender: UIButton) {
         
         var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController(navBarHeight: self.navigationController!.navigationBar.height)
-        
+        notificationViewController.delegate = self
         self.presentViewController(notificationViewController, animated: true, completion: nil)
     }
     
@@ -387,8 +396,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.backgroundColor = UIColor.clearColor().CGColor
         
         checkAndRemoveChildVCs()
+
         self.viewModel.resetSort()
-        self.tableView.reloadData()
     }
     
     func showFoodOnly(navTitle: String) {
@@ -401,7 +410,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         checkAndRemoveChildVCs()
         
-        instantiateFoodDrinkVC(true)
+        self.viewModel.sortByType(1)        
     }
     
     func showDrinkOnly(navTitle: String) {
@@ -413,7 +422,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         checkAndRemoveChildVCs()
         
-        instantiateFoodDrinkVC(false)
+        self.viewModel.sortByType(0)
+        
+        self.tableView.reloadData()
     }
     
     func ratingSort(navTitle: String) {
@@ -424,7 +435,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
         
         checkAndRemoveChildVCs()
-        instantiateHeaderlessView(false)
+        
+        self.viewModel.sortByRating()
+        
+        instantiateHeaderlessView()
     }
     
     func alphaSort(navTitle: String) {
@@ -435,12 +449,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
         
         checkAndRemoveChildVCs()
-        instantiateHeaderlessView(true)
+        
+        self.viewModel.sortAlphabetically()
+        
+        instantiateHeaderlessView()
     }
     
-    func instantiateHeaderlessView(isAlphaSort: Bool) {
+    func instantiateHeaderlessView() {
         
-        self.vcWithOutHeaders = ViewControllerWithoutHeadersViewController(isAlphaSort: isAlphaSort)
+        self.vcWithOutHeaders = ViewControllerWithoutHeadersViewController(tableData: self.viewModel.unformattedData)
         
         self.addChildViewController(self.vcWithOutHeaders)
         
@@ -450,7 +467,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func instantiateFoodDrinkVC(isFoodSort: Bool) {
-        self.foodDrinkVC = FoodDrinkViewController(isFoodSort: isFoodSort)
+        self.foodDrinkVC = FoodDrinkViewController(isFoodSort: isFoodSort, tableDataSource: self.viewModel.tableDataSource)
         
         self.addChildViewController(self.foodDrinkVC)
         
@@ -466,14 +483,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.vcWithOutHeaders.removeFromParentViewController()
             
             self.vcWithOutHeaders = nil
-        }
-        
-        if self.foodDrinkVC != nil {
-            self.foodDrinkVC.willMoveToParentViewController(nil)
-            self.foodDrinkVC.view!.removeFromSuperview()
-            self.foodDrinkVC.removeFromParentViewController()
-            
-            self.foodDrinkVC = nil
         }
     }
     
@@ -568,9 +577,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func reloadTable() {
-        
         self.tableView.reloadData()
         self.scrollToCurrentDay()
+        self.activityIndicator.stopAnimating()
     }
     
 }

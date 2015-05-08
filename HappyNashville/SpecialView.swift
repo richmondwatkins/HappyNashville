@@ -14,7 +14,7 @@ class SpecialView: UIView {
         super.init(frame: frame)
         
         var specialLabel: UILabel = UILabel()
-        specialLabel.font = UIFont.systemFontOfSize(10)
+        specialLabel.font = UIFont.systemFontOfSize(12)
         specialLabel.numberOfLines = 0
         
 //        var trimmedDescp = special.specialDescription.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())

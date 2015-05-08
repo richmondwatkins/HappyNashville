@@ -221,7 +221,7 @@ class APIManger: NSObject {
     class func deleteNotification(notification: Notification) {
         
         var app:UIApplication = UIApplication.sharedApplication()
-        println(app.scheduledLocalNotifications.count)
+
         for oneEvent in app.scheduledLocalNotifications {
             
             var localNotif = oneEvent as! UILocalNotification
@@ -233,7 +233,7 @@ class APIManger: NSObject {
                 break;
             }
         }
-        println(app.scheduledLocalNotifications.count)
+
         var appDelegate: AppDelegate = app.delegate! as! AppDelegate
 
         appDelegate.managedObjectContext?.deleteObject(notification)

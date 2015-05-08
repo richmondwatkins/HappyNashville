@@ -8,11 +8,16 @@
 
 import UIKit
 
+@objc protocol SettingsProtocl {
+    func reloadTable()
+}
+
 class NotificationsManagerViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var tableView: UITableView = UITableView()
     var viewModel: NotificationViewModel = NotificationViewModel()
     var navBarHeight: CGFloat = 0
+    var delegate: SettingsProtocl?
     
     init(navBarHeight: CGFloat) {
         self.navBarHeight = navBarHeight
@@ -87,6 +92,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { ()->() in
                 
                 APIManger.deleteNotification(notification)
+                
+                dispatch_async(dispatch_get_main_queue(),{
+                   self.delegate?.reloadTable()
+                })
             })
             
             self.viewModel.tableDataSource.removeObjectAtIndex(indexPath.row)

@@ -17,6 +17,5 @@
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * notifId;
 @property (nonatomic, retain) NSNumber * isRecurring;
-@property (nonatomic, retain) DealDay *dealDay;
 
 @end

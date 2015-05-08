@@ -10,28 +10,17 @@ import UIKit
 import CoreData
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var splitVC: UISplitViewController?
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        
-        APIManger.requestNewData({ (dealDays) -> Void in
-            println("IN APP DL")
-            println(dealDays)
-        })
         
         let mainVC: ViewController = ViewController()
         let navController: UINavigationController = UINavigationController(rootViewController: mainVC)
-        let detailVC: DetailViewController = DetailViewController()
-        self.splitVC = UISplitViewController();
-        self.splitVC?.viewControllers = [navController, detailVC]
-        self.splitVC?.delegate = self
         
         if let window = window {
-            window.rootViewController = splitVC
+            window.rootViewController = navController
             window.makeKeyAndVisible()
         }
         

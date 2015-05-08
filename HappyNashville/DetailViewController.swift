@@ -57,7 +57,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func setUpTabButtonView() {
         
-        self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40))
+        self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40))
 
         let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(3), padding: 1)
         
@@ -83,7 +83,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             cellWidth = 70
         }
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40), collectionViewLayout: self.flowLayout)
+        self.collectionView = UICollectionView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40), collectionViewLayout: self.flowLayout)
         
         self.collectionView!.registerClass(DayCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "CollCell")
         self.collectionView!.setCollectionViewLayout(WeekFlowLayout(cellWidth: cellWidth, celHeight: 40), animated: true)
@@ -194,9 +194,9 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
         self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource)
         
-        self.pageVC.view!.height = self.tabButtonView!.bottom - self.collectionView!.top
+        self.pageVC.view!.height = self.collectionView!.bottom - self.tabButtonView!.top
         
-        self.pageVC.view!.top = self.tabButtonView!.bottom
+        self.pageVC.view!.top = self.collectionView!.bottom
         
         self.addChildViewController(self.pageVC)
         
@@ -275,5 +275,5 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.mapView.setVisibleMapRect(unionRect, animated: true)
                 
     }
-    
+
 }

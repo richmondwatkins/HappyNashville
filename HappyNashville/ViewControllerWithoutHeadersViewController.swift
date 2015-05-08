@@ -10,12 +10,12 @@ import UIKit
 
 class ViewControllerWithoutHeadersViewController: ViewController {
     
-    var isAlphaSort: Bool = Bool()
+    var tableData: Array<DealDay>!
     
-    init(isAlphaSort: Bool) {
+    init(tableData: Array<DealDay>) {
         super.init(nibName: nil, bundle: nil)
         
-        self.isAlphaSort = isAlphaSort
+        self.tableData = tableData
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,12 +29,6 @@ class ViewControllerWithoutHeadersViewController: ViewController {
         
         self.tableView.height -= self.navigationController!.navigationBar.bottom
         
-        if self.isAlphaSort {
-            self.viewModel.sortAlphabetically()
-        } else {
-            self.viewModel.sortByRating()
-        }
-                
         self.tableView.reloadData()
     }
     
@@ -48,7 +42,7 @@ class ViewControllerWithoutHeadersViewController: ViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.viewModel.unformattedData.count
+        return self.tableData.count
     }
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -65,14 +59,14 @@ class ViewControllerWithoutHeadersViewController: ViewController {
             cell = LocationTableViewCell(style: UITableViewCellStyle.Value1, reuseIdentifier: "CELL")
         } 
         
-        configureCell(cell!, dealDay: self.viewModel.unformattedData[indexPath.row])
+        configureCell(cell!, dealDay: self.tableData[indexPath.row])
         
         return cell!
     }
     
     override func getDealDayForIndexPath(indexPath: NSIndexPath) -> DealDay {
 
-        return self.viewModel.unformattedData[indexPath.row]
+        return self.tableData[indexPath.row]
     }
 
 }

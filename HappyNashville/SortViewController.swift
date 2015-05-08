@@ -63,7 +63,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
                 drinkSort()
                 break;
             case 2:
-                ratingSort()
+                resetSort()
                 break;
             case 3:
                 alphaSort()

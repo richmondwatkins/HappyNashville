@@ -16,19 +16,35 @@ import CoreData
 
  class ViewControllerViewModel: AppViewModel, NSFetchedResultsControllerDelegate {
     
-    var tableDataSource: Dictionary<Int, Array<DealDay>> = [:]
+    var tableDataSource: Dictionary<Int, Array<DealDay>> {
+        
+        get {
+            if isFiltered {
+                
+                return self.filteredTableDataSource
+            }
+            
+            return self.originalDataSource
+        }
+        
+        set {
+            
+        }
+    }
     var originalDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
     var tableSections: Array<Int> = []
     var unformattedData: Array<DealDay>!
-    var foodDrinkArray: Array<Special> = []
+    var foodDealDays: Array<DealDay> = []
+    var filteredTableDataSource: Dictionary<Int, Array<DealDay>> = [:]
+    var isFiltered: Bool = false
     
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
-    let specialHeight: CGFloat = 15
+    let specialHeight: CGFloat = 17
     
     override init() {
         super.init()
@@ -37,19 +53,8 @@ import CoreData
     }
     
     func fetchData() {
-        
-//        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//        
-//        if let fetchResult = APIManger.fetchAllDealDays(appDelegate.managedObjectContext!) {
-//           
-//            var swiftArray = fetchResult.mutableCopy() as AnyObject as! [DealDay]
-//            
-//            self.unformattedData = swiftArray
-//
-//            sortData(swiftArray)
-//        }
-        
         APIManger.requestNewData({ (dealDays) -> Void in
+            self.unformattedData = dealDays
             self.sortData(dealDays)
             self.delegate?.reloadTable()
         })
@@ -100,34 +105,73 @@ import CoreData
         }
         
         if sundayArray.count > 0 {
-            self.tableDataSource[1] = sundayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[1] = sundayArray
+            } else {
+                self.tableDataSource[1] = sundayArray
+                originalDataSource[1] = sundayArray
+            }
         }
         
         if mondayArray.count > 0 {
-            self.tableDataSource[2] = mondayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[2] = mondayArray
+            } else {
+                self.tableDataSource[2] = mondayArray
+                originalDataSource[2] = mondayArray
+            }
         }
         
         if tuesdayArray.count > 0 {
-            self.tableDataSource[3] = tuesdayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[3] = tuesdayArray
+            } else {
+                self.tableDataSource[3] = tuesdayArray
+                originalDataSource[3] = tuesdayArray
+            }
         }
         
         if wednesdayArray.count > 0 {
-            self.tableDataSource[4] = wednesdayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[4] = wednesdayArray
+            } else {
+                self.tableDataSource[4] = wednesdayArray
+                originalDataSource[4] = wednesdayArray
+            }
         }
         
         if thursdayArray.count > 0 {
-            self.tableDataSource[5] = thursdayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[5] = thursdayArray
+            } else {
+                self.tableDataSource[5] = thursdayArray
+                originalDataSource[5] = thursdayArray
+            }
         }
         
         if fridayArray.count > 0 {
-            self.tableDataSource[6] = fridayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[6] = fridayArray
+            } else {
+                self.tableDataSource[6] = fridayArray
+                originalDataSource[6] = fridayArray
+            }
         }
         
         if saturdayArray.count > 0 {
-            self.tableDataSource[7] = saturdayArray
+            if (isFiltered) {
+                self.filteredTableDataSource[7] = saturdayArray
+            } else {
+                self.tableDataSource[7] = saturdayArray
+                originalDataSource[7] = saturdayArray
+            }
         }
         
-        self.tableSections =  self.tableDataSource.keys.array
+        if (isFiltered) {
+            self.tableSections = [1,2,3,4,5,6,7]
+        } else {
+             self.tableSections =  [1,2,3,4,5,6,7]
+        }
         
         self.tableSections.sort {
             return $0 < $1
@@ -188,61 +232,69 @@ import CoreData
         return dayString
     }
     
-    func sortByFoodOnly() {
-        resetSort()
-        self.originalDataSource = self.tableDataSource
+    func sortByType(specialType: Int) {
+        self.isFiltered = true
+        
+        var newDealDayArray: Array<DealDay> = []
         
         for (key, value) in self.originalDataSource {
+            var j: Int = 0
             
             for dealDay in value {
-                let dealDaySpecials: Array<Special> = Array(dealDay.specials) as! Array<Special>
-                for special in dealDaySpecials {
+                
+                var i: Int = 0
+                
+                var currentDealDay: DealDay = self.originalDataSource[key]![j]
+                var dealDaySpecials: Array<Special> = Array(currentDealDay.specials) as! Array<Special>
+                var hasSpecialOfType: Bool = false;
+                
+                var newDealDay: DealDay = DealDay()
+                
+                for special in Array(dealDay.specials) as! Array<Special> {
                     
-                    if special.type == 1 {
-                        self.foodDrinkArray.append(special)
+                    if special.type == specialType {
+                        hasSpecialOfType = true;
+                    }else {
+                        dealDaySpecials.removeAtIndex(i--)
+
+                        let currentHeight: Int = dealDay.height.integerValue
+                        
+                        var arr: Array<DealDay> = self.originalDataSource[key]!
+                        currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
                     }
+                    
+                    i++
                 }
-            }
-        }
-    }
+                
+                if hasSpecialOfType {
+                    newDealDay.addSpecials(NSSet(array: dealDaySpecials))
+                    newDealDay.height = newDealDay.specials.count * 17
+                    newDealDay.location = currentDealDay.location
+                    newDealDay.type = currentDealDay.type
+                    newDealDay.day = currentDealDay.day
+                    newDealDayArray.append(newDealDay)
+                }
     
-    func sortByDrinkOnly() {
-        resetSort()
-        
-        self.originalDataSource = self.tableDataSource
-        
-        for (key, value) in self.originalDataSource {
-            
-            for dealDay in value {
-                if dealDay.type.integerValue != 0 {
-                    var arr: Array<DealDay> = self.tableDataSource[key]!
-                    self.tableDataSource[key]?.removeAtIndex(find(arr, dealDay)!)
-                }
+                j++
             }
         }
+        
+        sortData(newDealDayArray)
+        
+        self.delegate?.reloadTable()
     }
     
     func sortByRating() {
-        resetSort()
-        
-        self.originalDataSource = self.tableDataSource
-        
         self.unformattedData = sorted(self.unformattedData) { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
-        
     }
     
     func sortAlphabetically() {
-        resetSort()
-        
-        self.originalDataSource = self.tableDataSource
-        
         self.unformattedData = sorted(self.unformattedData) { ($0.location.name as String) < ($1.location.name as String) }
     }
-    
+
     func resetSort() {
-        if self.originalDataSource.count > 0 {
-            self.tableDataSource = self.originalDataSource
-        }
+        self.sortData(self.unformattedData)
+        self.delegate?.reloadTable()
     }
     
     func calculateCellHeight(dealDay: DealDay, specialCount: Int) -> CGFloat {

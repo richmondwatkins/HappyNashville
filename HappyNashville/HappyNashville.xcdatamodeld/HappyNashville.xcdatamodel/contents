@@ -6,7 +6,7 @@
         <attribute name="isOpen" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="dealDays" inverseEntity="Location" syncable="YES"/>
-        <relationship name="notification" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Notification" inverseName="dealDay" inverseEntity="Notification" syncable="YES"/>
+        <relationship name="notification" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Notification" syncable="YES"/>
         <relationship name="specials" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Special" inverseName="dealDay" inverseEntity="Special" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
@@ -29,7 +29,6 @@
         <attribute name="isRecurring" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="notifId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="dealDay" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DealDay" inverseName="notification" inverseEntity="DealDay" syncable="YES"/>
     </entity>
     <entity name="Special" representedClassName="Special" syncable="YES">
         <attribute name="allDay" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -45,7 +44,7 @@
         <element name="DealDay" positionX="-54" positionY="99" width="128" height="150"/>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="195"/>
         <element name="MetaData" positionX="-63" positionY="63" width="128" height="60"/>
-        <element name="Notification" positionX="-63" positionY="63" width="128" height="120"/>
+        <element name="Notification" positionX="-63" positionY="63" width="128" height="105"/>
         <element name="Special" positionX="-54" positionY="72" width="128" height="165"/>
     </elements>
 </model>

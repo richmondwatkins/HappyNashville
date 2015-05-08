@@ -68,7 +68,6 @@ class ScheduleViewControllerViewModel: AppViewModel {
         
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate
-        notificationCD.dealDay = dealDay
         notificationCD.notifId = notifId
         notificationCD.isRecurring = isRecurring
         dealDay.notification = notificationCD
