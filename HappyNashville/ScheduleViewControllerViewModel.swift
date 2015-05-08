@@ -54,7 +54,8 @@ class ScheduleViewControllerViewModel: AppViewModel {
         notification.alertBody = "\(dealDay.location.name)" // TODO: Add in special descriptions
         
         let notifId: String = randomString(10)
-        notification.userInfo = ["notifId" : notifId]
+        notification.userInfo = ["notifId" : notifId, "day" : dealDay.day, "location" : dealDay.location.name]
+
 
         if isRecurring {
             notification.repeatInterval = NSCalendarUnit.WeekCalendarUnit

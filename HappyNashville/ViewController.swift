@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocl {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol {
     
     var viewModel: ViewControllerViewModel =  ViewControllerViewModel()
     var tableView: UITableView = UITableView()
@@ -20,6 +20,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var customTitleView: UILabel = UILabel()
     var customTitleViewBorder: CALayer = CALayer()
     var sortIsDisplaying: Bool = Bool()
+    var footer: FooterViewController!
     
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     let titleBottomPadding: CGFloat = 15
@@ -76,6 +77,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.navigationItem.titleView = self.activityIndicator;
         self.activityIndicator.startAnimating()
+        addFooter()
+    }
+    
+    func addFooter() {
+        let footerHeight: CGFloat = self.view!.height * 0.1
+        
+        self.footer = FooterViewController(viewFrame:
+            CGRectMake(0, self.view!.bottom - footerHeight, self.view!.width, footerHeight))
+        footer.delegate = self
+        
+        self.addChildViewController( self.footer)
+        self.view!.addSubview( self.footer.view)
+         self.footer.didMoveToParentViewController(self)
     }
 
     func scrollToCurrentDay() {
@@ -235,41 +249,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         cell.scheduleButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
         
-        if dealDay.notification == nil {
-         
-            cell.scheduleButton.setImage(UIImage(named: "schedule"), forState: .Normal)
-            cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
-        } else {
+        cell.notifImageView.frame = CGRectMake(self.view!.width - 40 - 2, cell.titleLable.top, 20, 20)
+        if self.viewModel.checkForNotification(dealDay) {
+            cell.notifImageView.hidden = false
             cell.scheduleButton.setImage(UIImage(named: "schedule-cal-white"), forState: .Normal)
             cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
+        } else {
+            cell.notifImageView.hidden = true
+            cell.scheduleButton.setImage(UIImage(named: "schedule"), forState: .Normal)
+            cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
         }
-        
-//        let typeViewWidth: CGFloat = 20
-//        
-//        switch dealDay.type.integerValue {
-//            case 0:
-//                cell.typeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
-//                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
-//                break;
-//            case 1:
-//                cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
-//                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
-//                break;
-//            case 2:
-//                cell.typeView.layer.contents = UIImage(named: "food")?.CGImage!
-//                cell.typeView.frame = CGRectMake(cell.contentCard.width - typeViewWidth - 5, cell.titleLable.top, typeViewWidth, 20);
-//                
-//                var secondTypeView: UIView = UIView()
-//                secondTypeView.layer.contents = UIImage(named: "alcohol")?.CGImage!
-//                secondTypeView.frame = CGRectMake(0, cell.titleLable.top, typeViewWidth, 20);
-//                secondTypeView.right = cell.typeView.left - 2;
-//                secondTypeView.tag = 2
-//                cell.contentCard.addSubview(secondTypeView)
-//                break;
-//            default:
-//                break;
-//        }
-        
     }
     
     func getCellHeight(dealDay: DealDay) -> CGFloat {
@@ -303,14 +292,23 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func scheduleButtonPressed(sender: UIButton) {
         
-        var scheduleViewController: ScheduleViewController = ScheduleViewController(dealDay: returnSelectedDealDay(sender).dealDay, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height, indexPath: returnSelectedDealDay(sender).indexPath)
+        var selectedDay = returnSelectedDealDay(sender)
+        
+        var scheduleViewController: ScheduleViewController = ScheduleViewController(dealDay: selectedDay.dealDay, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height, indexPath: returnSelectedDealDay(sender).indexPath)
         scheduleViewController.delegate = self
         
         self.addChildViewController(scheduleViewController)
-        
         self.subView.transformAndAddSubview(scheduleViewController.view)
-        
         scheduleViewController.didMoveToParentViewController(self)
+        
+         self.footer.view!.hidden = true
+        
+        var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
+        
+        openInfoView(cell, dealDay: selectedDay.dealDay) { () -> Void in
+            //
+        }
+        
         
         self.navigationItem.rightBarButtonItem!.title = ""
     }
@@ -343,9 +341,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
-        cell.scheduleButton.setImage(UIImage(named: "schedule-cal-white"), forState: .Normal)
+//        cell.scheduleButton.setImage(UIImage(named: "schedule-cal-white"), forState: .Normal)
         cell.scheduleButton.removeTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
-        cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
+//        cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
+        
+        configureCell(cell, dealDay: getDealDayForIndexPath(indexPath)!)
+        
+        self.footer.view!.hidden = false
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
@@ -426,56 +428,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.reloadData()
     }
-    
-    func ratingSort(navTitle: String) {
-        self.customTitleView.text = navTitle
-        self.customTitleView.sizeToFit()
-        
-        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
-        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
-        
-        checkAndRemoveChildVCs()
-        
-        self.viewModel.sortByRating()
-        
-        instantiateHeaderlessView()
-    }
-    
-    func alphaSort(navTitle: String) {
-        self.customTitleView.text = navTitle
-        self.customTitleView.sizeToFit()
-        
-        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height, self.customTitleView.width, 1);
-        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
-        
-        checkAndRemoveChildVCs()
-        
-        self.viewModel.sortAlphabetically()
-        
-        instantiateHeaderlessView()
-    }
-    
-    func instantiateHeaderlessView() {
-        
-        self.vcWithOutHeaders = ViewControllerWithoutHeadersViewController(tableData: self.viewModel.unformattedData)
-        
-        self.addChildViewController(self.vcWithOutHeaders)
-        
-        self.view!.addSubview(self.vcWithOutHeaders.view)
-        
-        self.vcWithOutHeaders.didMoveToParentViewController(self)
-    }
-    
-    func instantiateFoodDrinkVC(isFoodSort: Bool) {
-        self.foodDrinkVC = FoodDrinkViewController(isFoodSort: isFoodSort, tableDataSource: self.viewModel.tableDataSource)
-        
-        self.addChildViewController(self.foodDrinkVC)
-        
-        self.view!.addSubview(self.foodDrinkVC.view)
-        
-        self.foodDrinkVC.didMoveToParentViewController(self)
-    }
-    
+
     func checkAndRemoveChildVCs () {
         if self.vcWithOutHeaders != nil {
             self.vcWithOutHeaders.willMoveToParentViewController(nil)
@@ -580,6 +533,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.reloadData()
         self.scrollToCurrentDay()
         self.activityIndicator.stopAnimating()
+    }
+    
+    func slideTableToSection(section: Int) {
+        
+        let scrollToPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: section)
+        
+        self.tableView.scrollToRowAtIndexPath(scrollToPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
 }

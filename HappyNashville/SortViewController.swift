@@ -12,8 +12,6 @@ protocol SortProtocol {
     func showFoodOnly(navTitle: String)
     func showDrinkOnly(navTitle: String)
     func resetSort(navTitle: String)
-    func ratingSort(navTitle: String)
-    func alphaSort(navTitle: String)
 }
 
 class SortViewController: UIViewController, UIGestureRecognizerDelegate {
@@ -65,12 +63,6 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
             case 2:
                 resetSort()
                 break;
-            case 3:
-                alphaSort()
-                break;
-            case 4:
-                resetSort()
-                break;
             default:
                 break;
             
@@ -89,16 +81,6 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func resetSort() {
         self.delegate?.resetSort("")
-        dismissVC();
-    }
-    
-    func ratingSort() {
-        self.delegate?.ratingSort("Rating")
-        dismissVC();
-    }
-    
-    func alphaSort() {
-        self.delegate?.alphaSort("A-Z")
         dismissVC();
     }
     

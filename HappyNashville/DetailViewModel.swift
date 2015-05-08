@@ -14,7 +14,7 @@ protocol DetialViewModelProtocol {
 
 class DetailViewModel: AppViewModel {
     
-    var weekLookup: Array<String> = ["", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+    var weekLookup: Array<String> = ["", "S", "M", "T", "W", "T", "F", "S"]
     var dataSource: Array<DealDay> = []
     var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
     var hasCurrentDay: Bool!
@@ -34,13 +34,8 @@ class DetailViewModel: AppViewModel {
     }
     
     func dayLabelText(dealDay: DealDay) -> String {
-        
-        if dealDay.day.integerValue == getCurrentDay() {
-            return "Today"
-        } else {
             
-             return self.weekLookup[dealDay.day.integerValue]
-        }
+        return self.weekLookup[dealDay.day.integerValue]
     }
     
     func dateLabelText(indexPath: NSIndexPath) -> String {

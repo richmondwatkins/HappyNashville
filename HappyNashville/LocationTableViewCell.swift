@@ -25,6 +25,7 @@ class LocationTableViewCell: UITableViewCell {
     var typeView = UIView()
     var ratingView = HCSStarRatingView()
     var discloseButton: UIButton = UIButton()
+    var notifImageView: UIImageView = UIImageView()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -33,6 +34,8 @@ class LocationTableViewCell: UITableViewCell {
         
         self.layoutMargins = UIEdgeInsetsZero
         
+        self.notifImageView.image = UIImage(named: "bell")
+        self.notifImageView.hidden = true
         self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.textAlignment = NSTextAlignment.Left
         self.titleLable.font = UIFont.systemFontOfSize(16)
@@ -63,6 +66,7 @@ class LocationTableViewCell: UITableViewCell {
         self.ratingView.userInteractionEnabled = false
         self.ratingView.tintColor = UIColor.redColor()
         
+        self.contentCard.addSubview(self.notifImageView)
         self.contentCard.addSubview(self.ratingView)
         self.contentCard.addSubview(self.titleLable)
         self.contentCard.addSubview(self.typeView)

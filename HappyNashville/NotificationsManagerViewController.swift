@@ -8,7 +8,7 @@
 
 import UIKit
 
-@objc protocol SettingsProtocl {
+@objc protocol SettingsProtocol {
     func reloadTable()
 }
 
@@ -17,7 +17,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     var tableView: UITableView = UITableView()
     var viewModel: NotificationViewModel = NotificationViewModel()
     var navBarHeight: CGFloat = 0
-    var delegate: SettingsProtocl?
+    var delegate: SettingsProtocol?
     
     init(navBarHeight: CGFloat) {
         self.navBarHeight = navBarHeight

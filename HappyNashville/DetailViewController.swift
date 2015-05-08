@@ -127,7 +127,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func configureCell(cell: DayCollectionViewCell, indexPath: NSIndexPath) {
         
-        cell.selectedView.frame = CGRectMake(0, 0, cell.width, self.selectedHeight)
+        cell.selectedView.frame = CGRectMake(0, cell.height - self.selectedHeight, cell.width, self.selectedHeight)
         
         self.viewModel!.configureSelected(cell, indexPath: indexPath)
         
@@ -232,8 +232,9 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     func callLocation(sender: UIButton) {
         
         let location: Location = self.viewModel!.dataSource[0].location
-        
-        let phoneURL = NSURL(string: "telprompt:\(location.phoneNumber)")!
+
+        let phoneNumber = location.phoneNumber.stringByReplacingOccurrencesOfString(" ", withString: "")
+        let phoneURL = NSURL(string: "tel://\(phoneNumber)")!
         
         if UIApplication.sharedApplication().canOpenURL(phoneURL) {
             UIApplication.sharedApplication().openURL(phoneURL)

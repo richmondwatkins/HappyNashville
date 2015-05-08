@@ -335,5 +335,23 @@ import CoreData
         return calculateCellHeight(dealDay, specialCount: drinkCount)
     }
     
+    func checkForNotification(dealDay: DealDay) -> Bool {
+        
+        var app:UIApplication = UIApplication.sharedApplication()
+        
+        for oneEvent in app.scheduledLocalNotifications {
+            var localNotif = oneEvent as! UILocalNotification
+            let userInfoCurrent = localNotif.userInfo!
+            let day = userInfoCurrent["day"] as! NSNumber
+            let location = userInfoCurrent["location"] as! String
+            
+            if day == dealDay.day && location == dealDay.location.name {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
     
 }
