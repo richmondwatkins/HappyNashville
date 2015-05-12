@@ -18,6 +18,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     var viewModel: NotificationViewModel = NotificationViewModel()
     var navBarHeight: CGFloat = 0
     var delegate: SettingsProtocol?
+    var navBar: UIView!;
     
     init(navBarHeight: CGFloat) {
         self.navBarHeight = navBarHeight
@@ -31,13 +32,15 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight + 20))
+        self.view.backgroundColor = UIColor.whiteColor()
+        
+        self.navBar = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight + 20))
         
         navBar.backgroundColor = UIColor(hexString: "F8F8F8")
         
         
         var titleLabel: UILabel = UILabel();
-        titleLabel.text = "Settings"
+        titleLabel.text = "Manage Notifications"
         titleLabel.sizeToFit();
         
         navBar.addSubview(titleLabel)
@@ -65,7 +68,23 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELLY")
         
+        if (self.viewModel.tableDataSource.count == 0) {
+            showNoNotificationScreen()
+        }
+        
         self.tableView.reloadData()
+    }
+    
+    func showNoNotificationScreen() {
+        
+        var noNotif: UILabel = UILabel(frame: CGRectMake(0, self.navBar.bottom, self.view!.width, self.navBar.height))
+        noNotif.textAlignment = .Center
+        noNotif.numberOfLines = 0
+        noNotif.text = "You do not have any notifications scheduled!"
+        
+        self.tableView.hidden = true;
+        
+        self.view!.addSubview(noNotif)
     }
     
     func closeVC() {
@@ -74,6 +93,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
+    }
+    
+    func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return "Notifications"
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -100,6 +123,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
             
             self.viewModel.tableDataSource.removeObjectAtIndex(indexPath.row)
             self.tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            
+            if (self.viewModel.tableDataSource.count == 0) {
+                showNoNotificationScreen()
+            }
         }
     }
     

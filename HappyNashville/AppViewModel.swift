@@ -37,4 +37,8 @@ class AppViewModel: NSObject {
         
         return (buttonWidth, padding)
     }
+    
+    func getEaliestSpecial(specials: NSSet) -> Special {
+        return sortSpecialsByTime(specials).firstObject as! Special
+    }
 }

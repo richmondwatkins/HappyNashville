@@ -17,10 +17,12 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
     var pageController: UIPageViewController?
     var dealDays: Array<DealDay> = []
     var delegate: PageScrollProtocol?
+    var top: CGFloat!
     
-    init(dealDays: Array<DealDay>) {
+    init(dealDays: Array<DealDay>, top: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         
+        self.top = top
         self.dealDays = dealDays
     }
 
@@ -97,7 +99,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         
         var dealDay: DealDay = self.dealDays[index]
 
-        var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[index])
+        var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[index], top: self.top)
         vc.index = index
         
         return vc

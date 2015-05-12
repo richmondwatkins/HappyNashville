@@ -16,6 +16,7 @@
 @property (nonatomic, retain) NSDate * date;
 @property (nonatomic, retain) NSString * text;
 @property (nonatomic, retain) NSString * notifId;
+@property (nonatomic, retain) NSString * locationName;
 @property (nonatomic, retain) NSNumber * isRecurring;
 
 @end

@@ -12,7 +12,7 @@ import Foundation
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol {
     
-    var viewModel: ViewControllerViewModel =  ViewControllerViewModel()
+    var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
     var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
     var foodDrinkVC: FoodDrinkViewController!
@@ -32,6 +32,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.viewModel =  ViewControllerViewModel()
         
         self.tableView.delegate = self
         self.tableView.dataSource = self
@@ -97,7 +99,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewWillLayoutSubviews() {
-        self.tableView.frame = self.view!.frame
+        self.tableView.frame = CGRectMake(0, 0, self.view!.width, self.view!.height - self.footer.view!.height)
     }
     
     override func viewDidLayoutSubviews() {
@@ -127,14 +129,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         return self.viewModel.tableSections.count
 
     }
-    
-//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, 20))
-//        
-//        view.backgroundColor = .clearColor()
-//        
-//        return view
-//    }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -301,7 +295,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subView.transformAndAddSubview(scheduleViewController.view)
         scheduleViewController.didMoveToParentViewController(self)
         
-         self.footer.view!.hidden = true
+        self.footer.view!.hidden = true
         
         var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
@@ -335,6 +329,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.scheduleButton.setImage(UIImage(named: "schedule"), forState: .Normal)
         cell.scheduleButton.removeTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
         cell.scheduleButton.addTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
+        cell.notifImageView.hidden = true
     }
     
     func updateScheduledCell(indexPath: NSIndexPath) {
@@ -346,8 +341,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 //        cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
         
         configureCell(cell, dealDay: getDealDayForIndexPath(indexPath)!)
-        
-        self.footer.view!.hidden = false
+    }
+    
+    func showFooter() {
+         self.footer.view!.hidden = false
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {

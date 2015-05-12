@@ -125,27 +125,8 @@ class APIManger: NSObject {
         fetchRequest.predicate =  NSPredicate(format: "name == %@", locationDict["name"] as! String)
         
         let result = moc.executeFetchRequest(fetchRequest, error: nil)
-        
-//        if result?.count > 0 {
-//
-//            for  location in result as [Location] {
-//                
-////                for deal in location.deals {
-////                    
-////                    moc.deleteObject(deal as NSManagedObject)
-////                }
-//                
-//                location.deals = (self.setDeals(locationDict["deals"]! as NSArray,  moc: moc) as NSSet)
-//                
-//                
-//                moc.save(nil)
-//            }
-//        } else {
-//            
-            createLocation(locationDict)
-//        }
 
-        
+        createLocation(locationDict)
     }
     
     class func deleteAllDeals(moc: NSManagedObjectContext) {
@@ -216,6 +197,25 @@ class APIManger: NSObject {
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
         
         return appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
+    }
+    
+    class func deleteNotificationFromID(notifID: String) {
+        var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+        
+        let predicate = NSPredicate(format: "notifId == %@", notifID)
+        
+        fetchRequest.predicate = predicate
+        
+        let results: NSArray = appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) as! [Notification]
+        
+        if results.count > 0 {
+            let notif: Notification = results.firstObject as! Notification
+            
+            appDelegate.managedObjectContext?.deleteObject(notif)
+            appDelegate.managedObjectContext?.save(nil)
+        }
     }
     
     class func deleteNotification(notification: Notification) {

@@ -22,9 +22,9 @@ import CoreData
             if isFiltered {
                 
                 return self.filteredTableDataSource
+            } else {
+                return self.originalDataSource
             }
-            
-            return self.originalDataSource
         }
         
         set {
@@ -48,7 +48,7 @@ import CoreData
     
     override init() {
         super.init()
-        
+
         fetchData()
     }
     
@@ -167,11 +167,7 @@ import CoreData
             }
         }
         
-        if (isFiltered) {
-            self.tableSections = [1,2,3,4,5,6,7]
-        } else {
-             self.tableSections =  [1,2,3,4,5,6,7]
-        }
+        self.tableSections =  [1,2,3,4,5,6,7]
         
         self.tableSections.sort {
             return $0 < $1
@@ -180,21 +176,16 @@ import CoreData
     
     func unscheduleNotification(dealDay: DealDay) {
         
-        let application: UIApplication = UIApplication.sharedApplication()
+        var app: UIApplication = UIApplication.sharedApplication()
         
-        let scheduledNotifications: NSArray = application.scheduledLocalNotifications as NSArray
-        
-        for notifcation in scheduledNotifications as! [UILocalNotification] {
+        for oneEvent in app.scheduledLocalNotifications as! [UILocalNotification] {
+            let userInfoCurrent = oneEvent.userInfo!
+            let day = userInfoCurrent["day"] as! NSNumber
+            let location = userInfoCurrent["location"] as! String
             
-            if (dealDay.notification != nil) && (notifcation.fireDate == dealDay.notification.date) && dealDay.notification.text == notifcation.alertBody {
-                
-                 application.cancelLocalNotification(notifcation)
-                
-                let appDelegate: AppDelegate = application.delegate as! AppDelegate
-                
-                appDelegate.managedObjectContext!.deleteObject(dealDay.notification)
-                
-                appDelegate.managedObjectContext!.save(nil)
+            if day == dealDay.day && location == dealDay.location.name {
+                app.cancelLocalNotification(oneEvent)
+                APIManger.deleteNotificationFromID(userInfoCurrent["notifId"] as! String)
             }
         }
     }
@@ -346,6 +337,7 @@ import CoreData
             let location = userInfoCurrent["location"] as! String
             
             if day == dealDay.day && location == dealDay.location.name {
+                
                 return true
             }
         }

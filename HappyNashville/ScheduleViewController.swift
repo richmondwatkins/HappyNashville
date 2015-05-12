@@ -10,6 +10,7 @@ import UIKit
 
 protocol ScheduleProtocol {
     func updateScheduledCell(indexPath: NSIndexPath)
+    func showFooter()
 }
 
 class ScheduleViewController: UIViewController, ScheduleViewProtocol {
@@ -20,6 +21,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
     let navHeight: CGFloat?
     let selectedIndexPath: NSIndexPath?
     var delegate: ScheduleProtocol?
+    var specialVC: LocationSpecialViewController!
     
     init(dealDay: DealDay, navHeight: CGFloat, indexPath: NSIndexPath) {
         self.dealDay = dealDay
@@ -43,7 +45,39 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         self.scheduleView!.delegate = self
 
         self.view!.addSubview(self.scheduleView!)
-                
+        
+        addSpecialViewController(self.dealDay!)
+    }
+    
+    func addSpecialViewController(dealDay: DealDay) {
+        specialVC = LocationSpecialViewController(dealDay: self.dealDay!, top: 2)
+        specialVC.view!.frame = CGRectMake(
+            0,
+            self.scheduleView!.timePicker!.bottom,
+            self.view!.width,
+            self.scheduleView!.recurringSwitch!.superview!.top - self.scheduleView!.timePicker!.bottom
+        )
+        
+        self.addChildViewController(specialVC)
+        self.scheduleView?.addSubview(specialVC.view!)
+        specialVC.didMoveToParentViewController(self)
+    }
+    
+    func timePickerDidChange() {
+        var dealDays: Array<DealDay> = self.dealDay?.location.dealDays.allObjects as! [DealDay]
+        let changedToDay: Int = self.viewModel.weekDayForTimePicker(self.scheduleView!.timePicker!.date)
+        var foundDealDay: Bool = false
+        for deal in dealDays {
+            if deal.day.integerValue == changedToDay {
+                foundDealDay = true
+                specialVC.dealDay = deal
+                specialVC.changeDealDay(deal)
+            }
+        }
+        
+        if !foundDealDay {
+            specialVC.showNoDealsView()
+        }
     }
     
     func dismissVC() {
@@ -61,6 +95,8 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
             parentVC.navigationItem.rightBarButtonItem!.title = "Sort"
             
             self.removeFromParentViewController()
+            
+            self.delegate?.showFooter()
         })
         
     }

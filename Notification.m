@@ -15,4 +15,6 @@
 @dynamic text;
 @dynamic notifId;
 @dynamic isRecurring;
+@dynamic locationName;
+
 @end

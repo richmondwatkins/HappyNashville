@@ -10,6 +10,7 @@ import UIKit
 
 protocol ScheduleViewProtocol {
     func dismissVC()
+    func timePickerDidChange()
 }
 
 class ScheduleView: UIView {
@@ -19,6 +20,7 @@ class ScheduleView: UIView {
     var viewModel: ScheduleViewControllerViewModel = ScheduleViewControllerViewModel()
     var dealDay: DealDay?
     var delegate: ScheduleViewProtocol?
+    var submitButton: UIButton!
     
     init(frame: CGRect, dealDay: DealDay, viewModel: ScheduleViewControllerViewModel) {
         super.init(frame: frame)
@@ -42,39 +44,10 @@ class ScheduleView: UIView {
         
         self.timePicker = UIDatePicker(frame: CGRectMake(0, titleLabel.bottom, frame.width * 0.95, frame.height * 0.4))
         self.timePicker?.date = self.viewModel.calculateDatePickerDate(dealDay)
+        self.timePicker!.addTarget(self, action: "dateChanged:", forControlEvents: UIControlEvents.ValueChanged)
+        
         self.addSubview(self.timePicker!)
     
-        let controlViewHeight: CGFloat = 40
-    
-        let switchView: UIView = UIView(frame: CGRectMake(0, self.timePicker!.bottom + 10, frame.size.width, controlViewHeight))
-        
-        var topBorder: CALayer = CALayer()
-        topBorder.frame = CGRectMake(0, 0, switchView.width, 1)
-        topBorder.backgroundColor = UIColor.grayColor().CGColor
-        
-        var bottomBorder: CALayer = CALayer()
-        bottomBorder.frame = CGRectMake(0, switchView.height, switchView.width, 1);
-        bottomBorder.backgroundColor = UIColor.grayColor().CGColor
-        
-        switchView.layer.addSublayer(topBorder)
-        switchView.layer.addSublayer(bottomBorder)
-    
-        let switchPadding: CGFloat = 5
-        
-        let switchLabel: UILabel = UILabel(frame: CGRectMake(switchPadding, 0, 10, controlViewHeight))
-        switchLabel.text = "Send weekly reminder"
-        switchLabel.sizeToFit()
-        switchLabel.center = CGPointMake(switchLabel.center.x, controlViewHeight / 2)
-        
-        switchView.addSubview(switchLabel)
-        
-        var controlSwitchWidth: CGFloat = 50
-        
-        self.recurringSwitch = UISwitch(frame: CGRectMake(switchView.width - controlSwitchWidth - switchPadding, 0, controlSwitchWidth, controlViewHeight))
-        self.recurringSwitch!.center = CGPointMake(self.recurringSwitch!.center.x, controlViewHeight / 2)
-
-        switchView.addSubview(self.recurringSwitch!)
-        
         let buttonPadding: CGFloat = 10
         let buttonHeight: CGFloat = 50
         let buttonY = self.height - buttonHeight - buttonPadding
@@ -88,17 +61,52 @@ class ScheduleView: UIView {
         cancelButton.backgroundColor = UIColor(hexString: StringConstants.cancelColor)
         cancelButton.addTarget(self, action: "dismissVC:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        var submitButton: UIButton = UIButton(frame: CGRectMake(cancelButton.right + buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
+        submitButton = UIButton(frame: CGRectMake(cancelButton.right + buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
         
         submitButton.layer.cornerRadius = 5.0
         submitButton.setTitle("Submit", forState: UIControlState.Normal)
         submitButton.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         submitButton.addTarget(self, action: "submitSchedule", forControlEvents: UIControlEvents.TouchUpInside)
         
+        let controlViewHeight: CGFloat = 40
+        
+        let switchView: UIView = UIView(frame: CGRectMake(0, submitButton.top - controlViewHeight - 10, frame.size.width, controlViewHeight))
+        
+        var topBorder: CALayer = CALayer()
+        topBorder.frame = CGRectMake(0, 0, switchView.width, 1)
+        topBorder.backgroundColor = UIColor(hexString: StringConstants.grayShade).CGColor
+        
+        var bottomBorder: CALayer = CALayer()
+        bottomBorder.frame = CGRectMake(0, switchView.height, switchView.width, 1);
+        bottomBorder.backgroundColor = UIColor(hexString: StringConstants.grayShade).CGColor
+        
+        switchView.layer.addSublayer(topBorder)
+        switchView.layer.addSublayer(bottomBorder)
+        
+        let switchPadding: CGFloat = 5
+        
+        let switchLabel: UILabel = UILabel(frame: CGRectMake(switchPadding, 0, 10, controlViewHeight))
+        switchLabel.text = "Send weekly reminder"
+        switchLabel.sizeToFit()
+        switchLabel.center = CGPointMake(switchLabel.center.x, controlViewHeight / 2)
+        
+        switchView.addSubview(switchLabel)
+        
+        var controlSwitchWidth: CGFloat = 50
+        
+        self.recurringSwitch = UISwitch(frame: CGRectMake(switchView.width - controlSwitchWidth - switchPadding, 0, controlSwitchWidth, controlViewHeight))
+        self.recurringSwitch!.center = CGPointMake(self.recurringSwitch!.center.x, controlViewHeight / 2)
+        
+        switchView.addSubview(self.recurringSwitch!)
+
         self.addSubview(cancelButton)
         self.addSubview(submitButton)
         self.addSubview(switchView)
                 
+    }
+    
+    func dateChanged(picker: UIDatePicker) {
+        self.delegate?.timePickerDidChange()
     }
     
     func dismissVC(sender: UIButton) {

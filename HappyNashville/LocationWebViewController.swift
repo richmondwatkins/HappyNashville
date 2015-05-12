@@ -50,8 +50,9 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         titleLabel.text = self.location.name
         titleLabel.font = UIFont.systemFontOfSize(14)
         titleLabel.sizeToFit()
+        titleLabel.textAlignment = .Center
         titleLabel.width = self.view!.width * 0.6
-        titleLabel.center = CGPointMake(navBar.width/2, navBar.height/2)
+        titleLabel.center = CGPointMake(self.view.width / 2, navBar.height/2)
         
         navBar.addSubview(titleLabel)
         

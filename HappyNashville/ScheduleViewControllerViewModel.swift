@@ -12,7 +12,6 @@ import CoreData
 class ScheduleViewControllerViewModel: AppViewModel {
    
     func calculateDatePickerDate(dealDay: DealDay) -> NSDate {
-        
         let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let date: NSDate = NSDate()
         let dateCompenents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
@@ -20,9 +19,10 @@ class ScheduleViewControllerViewModel: AppViewModel {
         
         var daysToNextOccur = 0
         
-        if dealDay.day.integerValue < dateCompenents.weekday {
-              daysToNextOccur =  7 - dateCompenents.weekday + dealDay.day.integerValue
-//            daysToNextOccur = 7 - (dateCompenents.weekday - dealDay.day.integerValue)
+        let earliestSpecial: Special = self.getEaliestSpecial(dealDay.specials)
+        if dealDay.day.integerValue <= dateCompenents.weekday {
+            
+            daysToNextOccur =  7 - dateCompenents.weekday + dealDay.day.integerValue
         } else {
             
             daysToNextOccur =  dealDay.day.integerValue - dateCompenents.weekday
@@ -71,9 +71,19 @@ class ScheduleViewControllerViewModel: AppViewModel {
         notificationCD.date = notification.fireDate
         notificationCD.notifId = notifId
         notificationCD.isRecurring = isRecurring
+        notificationCD.locationName = dealDay.location.name
         dealDay.notification = notificationCD
         
         appDelegate.managedObjectContext!.save(nil)
+    }
+    
+    func weekDayForTimePicker(date: NSDate) -> Int {
+        let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        
+        let dateCompenents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
+            fromDate: date)
+        
+        return dateCompenents.weekday
     }
     
     func randomString (len : Int) -> String {

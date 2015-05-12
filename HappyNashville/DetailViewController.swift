@@ -64,10 +64,19 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.tabButtonView?.websiteButton.frame = CGRectMake(0, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
         self.tabButtonView?.websiteButton.addTarget(self, action: "showWebsite:", forControlEvents: .TouchUpInside)
         
-        self.tabButtonView?.phoneButton.frame = CGRectMake(self.tabButtonView!.websiteButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        self.tabButtonView?.phoneButton.frame = CGRectMake(
+            self.tabButtonView!.websiteButton.right + buttonMeasurements.buttonPadding,
+            0,
+            buttonMeasurements.buttonWidth,
+            self.tabButtonView!.height
+        )
         self.tabButtonView?.phoneButton.addTarget(self, action: "callLocation:", forControlEvents: .TouchUpInside)
 
-        self.tabButtonView?.directionsButton.frame = CGRectMake(self.tabButtonView!.phoneButton.right + buttonMeasurements.buttonPadding, 0, buttonMeasurements.buttonWidth, self.tabButtonView!.height)
+        self.tabButtonView?.directionsButton.frame = CGRectMake(
+            self.tabButtonView!.phoneButton.right + buttonMeasurements.buttonPadding,
+            0, buttonMeasurements.buttonWidth + 3,
+            self.tabButtonView!.height
+        )
         self.tabButtonView?.directionsButton.addTarget(self, action: "showDirectionsPopUp:", forControlEvents: .TouchUpInside)
         
         self.view!.addSubview(self.tabButtonView!)
@@ -77,7 +86,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         var cellWidth: CGFloat = CGFloat()
         
-        if self.location!.dealDays.count < 7 {
+        if self.location!.dealDays.count <= 5 {
             cellWidth = self.view!.width / CGFloat(self.location!.dealDays.count)
         } else {
             cellWidth = 70
@@ -192,7 +201,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func setUpPageViewController() {
     
-        self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource)
+        self.pageVC = LocationSpecialPageViewController(dealDays: self.viewModel!.dataSource, top: 20)
         
         self.pageVC.view!.height = self.collectionView!.bottom - self.tabButtonView!.top
         

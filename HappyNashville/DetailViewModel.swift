@@ -14,7 +14,7 @@ protocol DetialViewModelProtocol {
 
 class DetailViewModel: AppViewModel {
     
-    var weekLookup: Array<String> = ["", "S", "M", "T", "W", "T", "F", "S"]
+    var weekLookup: Array<String> = ["", "S", "M", "T", "W", "Th", "F", "S"]
     var dataSource: Array<DealDay> = []
     var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
     var hasCurrentDay: Bool!
@@ -67,7 +67,7 @@ class DetailViewModel: AppViewModel {
     
     func setNewSelectedCell(cell: DayCollectionViewCell, index: Int) -> UIPageViewControllerNavigationDirection? {
         self.currentDayCell!.selectedView.backgroundColor = .clearColor()
-        cell.selectedView.backgroundColor = .blackColor()
+        cell.selectedView.backgroundColor = .whiteColor()
         self.currentDayCell = cell
         
         if self.currentCellIndex < index {
@@ -88,7 +88,7 @@ class DetailViewModel: AppViewModel {
             
             if self.hasCurrentDay == true {
                 if dealDay.day.integerValue == getCurrentDay() {
-                    cell.selectedView.backgroundColor = UIColor.blackColor()
+                    cell.selectedView.backgroundColor = UIColor.whiteColor()
                     delegate?.scrollPageViewControllertoDay(indexPath)
                     self.currentDayCell = cell
                     self.currentCellIndex = indexPath.row

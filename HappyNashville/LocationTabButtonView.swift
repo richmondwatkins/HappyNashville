@@ -17,9 +17,9 @@ class LocationTabButtonView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.phoneButton.setTitle("Phone", forState: .Normal)
-        self.websiteButton.setTitle("Web", forState: .Normal)
-        self.directionsButton.setTitle("Directions", forState: .Normal)
+        self.phoneButton.setImage(UIImage(named: "phone"), forState: .Normal);
+        self.websiteButton.setImage(UIImage(named: "web"), forState: .Normal)
+        self.directionsButton.setImage(UIImage(named: "directions"), forState: .Normal)
         
         configButtons([self.phoneButton, self.websiteButton, self.directionsButton])
         
@@ -30,7 +30,6 @@ class LocationTabButtonView: UIView {
         
         for button in buttons {
             button.backgroundColor = UIColor(hexString: StringConstants.grayShade)
-            button.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
             self.addSubview(button)
         }
     }
