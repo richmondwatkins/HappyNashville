@@ -20,6 +20,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     let selectedHeight: CGFloat = 2
     var pageVC: LocationSpecialPageViewController!
     var tabButtonView: LocationTabButtonView?
+    var navBar: UIView!
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -45,14 +46,36 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             self.viewModel = DetailViewModel(dealDays:dealDays.allObjects as! Array<DealDay>)
             self.viewModel!.delegate = self
             
+            if self.navigationController != nil {
+                self.navigationController?.navigationBar.tintColor = UIColor(hexString: StringConstants.navBarTextColor)
+            } else {
+                setUpNavBar()
+            }
             setTitleView()
             setUpMapView()
             setUpCollectionView()
             setUpTabButtonView()
             setUpPageViewController()
         }
+    }
+    
+    func setUpNavBar() {
+        self.navBar = UIView(frame: CGRectMake(0, 0, self.view!.width, 65))
+        self.navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
-        self.navigationController?.navigationBar.tintColor = UIColor(hexString: StringConstants.navBarTextColor)
+        
+        var closeButton: UIButton = UIButton(frame: CGRectMake(self.navBar.width - 50, self.navBar.height - 44, 44, 44))
+        closeButton.setImage(UIImage(named: "close-white"), forState: .Normal)
+        
+        closeButton.addTarget(self, action: "dismissVC", forControlEvents: .TouchUpInside)
+        
+        self.navBar.addSubview(closeButton)
+        
+        self.view!.addSubview(navBar)
+    }
+    
+    func dismissVC() {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func setUpTabButtonView() {
@@ -138,6 +161,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         cell.selectedView.frame = CGRectMake(0, cell.height - self.selectedHeight, cell.width, self.selectedHeight)
         
+        cell.selectedView.backgroundColor = .clearColor()
         self.viewModel!.configureSelected(cell, indexPath: indexPath)
         
         cell.dayLabel.text = self.viewModel!.dayLabelText(self.viewModel!.dataSource[indexPath.row])
@@ -167,7 +191,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         nameLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         nameLabel.sizeToFit()
         
-        var titleView: UIView = UIView(frame: CGRectMake(0, 0, addressLabel.width, self.navigationController!.navigationBar.height))
+        var height: CGFloat = 0
+        
+        if self.navigationController != nil {
+            height = self.navigationController!.navigationBar.height
+        } else {
+            height = self.navBar.height
+        }
+        
+        var titleView: UIView = UIView(frame: CGRectMake(0, 0, addressLabel.width, height))
         
         titleView.addSubview(nameLabel)
         titleView.addSubview(addressLabel)
@@ -175,13 +207,30 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         nameLabel.center = CGPointMake(titleView.width / 2, nameLabel.center.y)
         addressLabel.top = nameLabel.bottom
         
-        self.navigationItem.titleView = titleView
+        if self.navigationController != nil {
+           self.navigationItem.titleView = titleView
+        } else {
+            self.navBar.addSubview(titleView)
+            titleView.center = CGPointMake(self.navBar.center.x, UIApplication.sharedApplication().statusBarFrame.size.height)
+            addressLabel.hidden = true
+            nameLabel.bottom = self.navBar.bottom - 4
+        }
+        
+        
     }
 
     func setUpMapView() {
         self.view!.addSubview(self.mapView)
         
-        self.mapView.frame = CGRectMake(0, self.navigationController!.navigationBar.bottom, self.view!.width * 0.98, self.view!.height * 0.3)
+        var bottom: CGFloat = 0
+        
+        if self.navigationController != nil {
+            bottom = self.navigationController!.navigationBar.bottom
+        } else {
+            bottom = self.navBar.bottom
+        }
+        
+        self.mapView.frame = CGRectMake(0, bottom, self.view!.width * 0.98, self.view!.height * 0.3)
         
         self.mapView.center = CGPointMake(self.view!.width / 2, self.mapView.center.y)
         
@@ -233,7 +282,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func showWebsite(sender: UIButton) {
         
-        let webViewController: LocationWebViewController = LocationWebViewController(location: self.viewModel!.dataSource[0].location, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
+        var height: CGFloat = 0
+        
+        if self.navigationController != nil {
+            height = self.navigationController!.navigationBar.height
+        } else {
+            height = self.navBar.height
+        }
+        
+        let webViewController: LocationWebViewController = LocationWebViewController(location: self.viewModel!.dataSource[0].location, navBarHeight: height + UIApplication.sharedApplication().statusBarFrame.height)
         
         self.presentViewController(webViewController, animated: true, completion: nil)
     }

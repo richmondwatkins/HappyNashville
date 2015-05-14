@@ -29,12 +29,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func splitViewController(splitViewController: UISplitViewController, collapseSecondaryViewController secondaryViewController: UIViewController!, ontoPrimaryViewController primaryViewController: UIViewController!) -> Bool {
-        return true
-    }
-    
-    func splitViewController(svc: UISplitViewController, shouldHideViewController vc: UIViewController, inOrientation orientation: UIInterfaceOrientation) -> Bool {
-        return false
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        let navVC: UINavigationController = UIApplication.sharedApplication().windows.first?.rootViewController as! UINavigationController
+        
+        let mainVC: ViewController = navVC.viewControllers[0] as! ViewController
+        
+        if (application.applicationState == UIApplicationState.Inactive) {
+            mainVC.openDetailView(notification)
+        }else if(application.applicationState == UIApplicationState.Active )  {
+           mainVC.openDetailView(notification)
+        }
+
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -38,6 +38,7 @@ import CoreData
     var foodDealDays: Array<DealDay> = []
     var filteredTableDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var isFiltered: Bool = false
+    var locations: Array<Location> = []
     
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
@@ -53,7 +54,8 @@ import CoreData
     }
     
     func fetchData() {
-        APIManger.requestNewData({ (dealDays) -> Void in
+        APIManger.requestNewData({ (dealDays, locations) -> Void in
+            self.locations = locations
             self.unformattedData = dealDays
             self.sortData(dealDays)
             self.delegate?.reloadTable()
@@ -190,39 +192,6 @@ import CoreData
         }
     }
     
-    func dayForDayNumber(dayNumber: Int) -> String {
-        
-        var dayString: String = String()
-        
-        switch dayNumber {
-            case 1:
-                dayString = "Sunday"
-                break;
-            case 2:
-                dayString = "Monday"
-                break;
-            case 3:
-                dayString = "Tuesday"
-                break;
-            case 4:
-                dayString = "Wednesday"
-                break;
-            case 5:
-                dayString = "Thursday"
-                break;
-            case 6:
-                dayString = "Friday"
-                break;
-            case 7:
-                dayString = "Saturday"
-                break;
-            default:
-                break;
-        }
-        
-        return dayString
-    }
-    
     func sortByType(specialType: Int) {
         self.isFiltered = true
         
@@ -345,5 +314,15 @@ import CoreData
         return false
     }
     
+    func returnLocationFromName(name: String) -> Location? {
+        
+        for location in self.locations {
+            if location.name == name {
+                return location
+            }
+        }
+        
+        return nil
+    }
     
 }

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5D25E05B1B02FAE500366923 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E0591B02FAE500366923 /* Fabric.framework */; };
+		5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E05A1B02FAE500366923 /* Crashlytics.framework */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
@@ -66,6 +68,8 @@
 
 /* Begin PBXFileReference section */
 		58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
+		5D25E0591B02FAE500366923 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
+		5D25E05A1B02FAE500366923 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */,
+				5D25E05B1B02FAE500366923 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -169,6 +175,8 @@
 		5DF6B93C1ACB5A7D007E852A = {
 			isa = PBXGroup;
 			children = (
+				5D25E0591B02FAE500366923 /* Fabric.framework */,
+				5D25E05A1B02FAE500366923 /* Crashlytics.framework */,
 				5DF6B9471ACB5A7E007E852A /* HappyNashville */,
 				5DF6B9461ACB5A7E007E852A /* Products */,
 				1594B957B5212D051B57C8CC /* Pods */,
@@ -285,6 +293,7 @@
 			buildPhases = (
 				5DF6B9411ACB5A7E007E852A /* Sources */,
 				5DF6B9431ACB5A7E007E852A /* Resources */,
+				5D25E03A1B02F57400366923 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -370,6 +379,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5D25E03A1B02F57400366923 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b2fa13da961943ada093ca86282c0717d8d6c662 7cad0ab1a6f39490fc1b7a2086c4b18cd46eab09c11125e6b936de9bc4dd93ee";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5DF6B9411ACB5A7E007E852A /* Sources */ = {
@@ -579,6 +604,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -601,6 +627,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
+					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = HappyNashvilleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

@@ -35,10 +35,8 @@ class ScheduleViewControllerViewModel: AppViewModel {
         let toDateComponents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: toDate)
         
-        
-        let special: Special = self.sortSpecialsByTime(dealDay.specials)[0] as! Special
-        
-        toDateComponents.hour = special.hourStart.integerValue - 1
+                
+        toDateComponents.hour = earliestSpecial.hourStart.integerValue - 1
  
         return gregorianCalendar.dateFromComponents(toDateComponents)!
     }
@@ -51,7 +49,13 @@ class ScheduleViewControllerViewModel: AppViewModel {
         
         var notification = UILocalNotification()
         notification.fireDate = date
-        notification.alertBody = "\(dealDay.location.name)" // TODO: Add in special descriptions
+
+        var alertTimeString: String = self.stringForEarliestSpecial(dealDay)
+        var alertString: String!
+    
+        alertString = "\(dealDay.location.name) has specials\(alertTimeString)"
+        
+        notification.alertBody =  alertString // TODO: Add in special descriptions
         
         let notifId: String = randomString(10)
         notification.userInfo = ["notifId" : notifId, "day" : dealDay.day, "location" : dealDay.location.name]

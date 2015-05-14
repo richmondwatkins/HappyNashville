@@ -21,7 +21,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var customTitleViewBorder: CALayer = CALayer()
     var sortIsDisplaying: Bool = Bool()
     var footer: FooterViewController!
-    
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
@@ -77,8 +76,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.customTitleView.layer.addSublayer(self.customTitleViewBorder)
         
-        self.navigationItem.titleView = self.activityIndicator;
+        self.activityIndicator.center = self.navigationItem.titleView!.center
+        self.navigationItem.titleView?.addSubview(self.activityIndicator);
         self.activityIndicator.startAnimating()
+        
         addFooter()
     }
     
@@ -267,12 +268,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             self.navigationController?.pushViewController(detailViewController, animated: true)
             
-            var barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
-            
-            barButtonItem.tintColor = .whiteColor()
-            
-            self.navigationItem.backBarButtonItem = barButtonItem
+            setUpBackButton()
         }
+    }
+    
+    func setUpBackButton() {
+        var barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+        
+        barButtonItem.tintColor = .whiteColor()
+        
+        self.navigationItem.backBarButtonItem = barButtonItem
     }
     
     func webSiteButtonPressed(sender: UIButton) {
@@ -311,9 +316,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let dealDay: DealDay = returnSelectedDealDay(sender).dealDay
         
-        let mapViewController: MapViewController = MapViewController(location: dealDay.location)
+        let mapViewController: MapViewController = MapViewController(location: dealDay.location, locations: self.viewModel.locations)
         
         self.navigationController?.pushViewController(mapViewController, animated: true)
+        
+        setUpBackButton()
     }
     
     func unscheduleNotification(sender: UIButton) {
@@ -537,6 +544,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let scrollToPath: NSIndexPath = NSIndexPath(forRow: 1, inSection: section)
         
         self.tableView.scrollToRowAtIndexPath(scrollToPath, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+    }
+    
+    func openDetailView(notification: UILocalNotification) {
+        let userInfo = notification.userInfo!
+
+        if let location = self.viewModel.returnLocationFromName(userInfo["location"] as! String) {
+            let detailViewController: DetailViewController = DetailViewController(location: location)
+            
+            self.presentViewController(detailViewController, animated: true, completion: nil)
+        }
     }
     
 }

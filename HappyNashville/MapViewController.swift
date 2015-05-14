@@ -12,10 +12,12 @@ import MapKit
 class MapViewController: UIViewController, UserLocationProtocol {
     
     var location: Location?
+    var locations: Array<Location>!
     var mapView: MKMapView = MKMapView()
     var viewModel: MapViewModel = MapViewModel()
     
-    init(location: Location) {
+    init(location: Location, locations: Array<Location>) {
+        self.locations = locations
         self.location = location
         super.init(nibName: nil, bundle: nil)
     }
@@ -41,7 +43,7 @@ class MapViewController: UIViewController, UserLocationProtocol {
         self.mapView.region = mapRegion
         self.mapView.selectAnnotation(locationAnnotation, animated: true)
         
-        for location in self.viewModel.locations {
+        for location in self.locations {
             
             self.mapView.addAnnotation(createAnnotation(location))
         }
@@ -49,6 +51,8 @@ class MapViewController: UIViewController, UserLocationProtocol {
         var findMe : UIBarButtonItem = UIBarButtonItem(title: "Find Me", style: UIBarButtonItemStyle.Plain, target: self, action: "showDirectionsPopUp:")
         
         self.navigationItem.rightBarButtonItem = findMe
+        
+        self.navigationController?.navigationBar.tintColor = .whiteColor()
     }
     
     func showDirectionsPopUp(sender: UIButton) {

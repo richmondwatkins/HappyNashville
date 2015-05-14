@@ -46,7 +46,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
 
         self.view!.addSubview(self.scheduleView!)
         
-        addSpecialViewController(self.dealDay!)
+        addSpecialViewController(self.dealDay!)        
     }
     
     func addSpecialViewController(dealDay: DealDay) {
@@ -76,8 +76,14 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         }
         
         if !foundDealDay {
-            specialVC.showNoDealsView()
+            specialVC.showNoDealsView(self.viewModel.dayForDayNumber(changedToDay))
         }
+    }
+    
+    func alertTimeIsLessThanCurrent() {
+        var alert = UIAlertController(title: "Unable To Schedule", message: "An alert cannot be schedule for a date that has already past", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     func dismissVC() {

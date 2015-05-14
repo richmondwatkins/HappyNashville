@@ -63,6 +63,9 @@ class LocationSpecialViewController: UIViewController {
                 view.removeFromSuperview()
             }
         }
+        
+        self.scrollView?.contentSize = CGSizeZero
+        self.contentHeight = 0
     }
     
     func hideAllSpecials() {
@@ -81,7 +84,7 @@ class LocationSpecialViewController: UIViewController {
 
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.noDealsView.alpha = 0
-            self.scrollView!.center = CGPointMake(self.scrollView!.center.x, -(self.scrollView!.height))
+            self.scrollView!.frame = CGRectMake(0, self.view!.bottom * 2, self.scrollView!.width, self.scrollView!.height)
             self.hideAllSpecials()
         }) { (complete) -> Void in
             self.removeAllSpecialView()
@@ -97,14 +100,14 @@ class LocationSpecialViewController: UIViewController {
     
     func createNoDealsView() {
         noDealsView.frame = CGRectMake(0, 0, self.view!.width, 100)
-        noDealsView.text = "There are no deals at \(self.dealDay!.location.name) on this day"
         noDealsView.textAlignment = .Center
         noDealsView.numberOfLines = 0
         noDealsView.alpha = 0
         self.scrollView!.addSubview(noDealsView)
     }
     
-    func showNoDealsView() {
+    func showNoDealsView(day: String) {
+        noDealsView.text = "There are no deals at \(self.dealDay!.location.name) on \(day)"
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.hideAllSpecials()
             self.noDealsView.alpha = 1

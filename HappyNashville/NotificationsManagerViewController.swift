@@ -36,11 +36,12 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         
         self.navBar = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight + 20))
         
-        navBar.backgroundColor = UIColor(hexString: "F8F8F8")
+        navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
         
         var titleLabel: UILabel = UILabel();
         titleLabel.text = "Manage Notifications"
+        titleLabel.textColor = .whiteColor()
         titleLabel.sizeToFit();
         
         navBar.addSubview(titleLabel)
@@ -49,10 +50,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         var backButton: UIButton = UIButton()
         
         backButton.setTitle("Back", forState: .Normal)
+        backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         backButton.sizeToFit()
         
-        backButton.frame = CGRectMake(navBar.width - backButton.width - 4, navBar.height / 2 - backButton.height / 2, backButton.width, backButton.height)
-        backButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        backButton.frame = CGRectMake(navBar.width - backButton.width - 10, navBar.height / 2 - backButton.height / 2, backButton.width, backButton.height)
         backButton.addTarget(self, action: "closeVC", forControlEvents: .TouchUpInside)
         
         navBar.addSubview(backButton)

@@ -11,6 +11,7 @@ import UIKit
 protocol ScheduleViewProtocol {
     func dismissVC()
     func timePickerDidChange()
+    func alertTimeIsLessThanCurrent()
 }
 
 class ScheduleView: UIView {
@@ -28,13 +29,20 @@ class ScheduleView: UIView {
         self.backgroundColor = UIColor.whiteColor()
 
         let titleLablePadding: CGFloat = 10
-        
+    
         self.viewModel = viewModel
         self.dealDay = dealDay
         self.frame = frame
         
-        var titleLabel: UILabel = UILabel(frame: CGRectMake(titleLablePadding, titleLablePadding, frame.size.width - titleLablePadding, 10));
-        titleLabel.text = "Schedule a reminder for \(dealDay.location.name)"
+        var titleLabel: UILabel = UILabel(
+            frame: CGRectMake(
+                titleLablePadding,
+                titleLablePadding,
+                frame.size.width - titleLablePadding,
+                10
+            )
+        );
+        titleLabel.text = "Schedule a reminder for \(dealDay.location.name) on \(self.viewModel.dayForDayNumber(dealDay.day.integerValue)) at:"
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.numberOfLines = 0
         titleLabel.sizeToFit()
@@ -43,9 +51,9 @@ class ScheduleView: UIView {
         self.addSubview(titleLabel)
         
         self.timePicker = UIDatePicker(frame: CGRectMake(0, titleLabel.bottom, frame.width * 0.95, frame.height * 0.4))
+        self.timePicker?.datePickerMode = UIDatePickerMode.Time
         self.timePicker?.date = self.viewModel.calculateDatePickerDate(dealDay)
-        self.timePicker!.addTarget(self, action: "dateChanged:", forControlEvents: UIControlEvents.ValueChanged)
-        
+
         self.addSubview(self.timePicker!)
     
         let buttonPadding: CGFloat = 10
@@ -83,7 +91,7 @@ class ScheduleView: UIView {
         switchView.layer.addSublayer(topBorder)
         switchView.layer.addSublayer(bottomBorder)
         
-        let switchPadding: CGFloat = 5
+        let switchPadding: CGFloat = 10
         
         let switchLabel: UILabel = UILabel(frame: CGRectMake(switchPadding, 0, 10, controlViewHeight))
         switchLabel.text = "Send weekly reminder"
@@ -118,9 +126,14 @@ class ScheduleView: UIView {
     }
     
     func submitSchedule() {
-        self.viewModel.scheduleReminder(self.timePicker!.date, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
+        let timePickerData = self.timePicker!.date
         
-        self.delegate?.dismissVC()
+        if timePickerData.timeIntervalSince1970 < NSDate().timeIntervalSince1970 {
+            self.delegate?.alertTimeIsLessThanCurrent()
+        } else {
+            self.viewModel.scheduleReminder(timePickerData, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
+            self.delegate?.dismissVC()
+        }
     }
 
 

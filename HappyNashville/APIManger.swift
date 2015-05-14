@@ -13,7 +13,7 @@ class APIManger: NSObject {
     
     static var masterDealDaysArray: Array<DealDay> = []
     
-    class func requestNewData(completed: (dealDays: Array<DealDay>) -> Void) {
+    class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         
         let urlString = "https://nameless-sea-7366.herokuapp.com/retrieve"
         var url: NSURL = NSURL(string: urlString)!;
@@ -26,14 +26,14 @@ class APIManger: NSObject {
                 
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
             
-                self.updateDeals(jsonResult["locations"] as! NSArray, completed: { (dealDays) -> Void in
-                    completed(dealDays: dealDays)
+                self.updateDeals(jsonResult["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
+                    completed(dealDays: dealDays, locations: locations)
                 })
         }
 
     }
     
-    class func updateDeals(deals: NSArray, completed: (dealDays: Array<DealDay>) -> Void) {
+    class func updateDeals(deals: NSArray, completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         
         var locationArray: Array<Location> = []
 
@@ -43,7 +43,7 @@ class APIManger: NSObject {
             
         }
         
-        completed(dealDays: self.masterDealDaysArray)
+        completed(dealDays: self.masterDealDaysArray, locations: locationArray)
     }
     
     class func createLocation(locationDict: NSDictionary) -> Location {
