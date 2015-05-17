@@ -17,7 +17,9 @@ class SortView: UIView {
      init(frame: CGRect, currentSort: String?) {
         super.init(frame: frame)
 
-        self.segmentControl = UISegmentedControl(items: ["Food", "Drink", "Day"])
+        self.segmentControl = UISegmentedControl(items: ["Distance", "Food", "Drink", "Day", ""])
+        
+        self.segmentControl.setImage(UIImage(named: "search"), forSegmentAtIndex: 4)
         
         let segHeight = self.height * 0.7
         
@@ -28,16 +30,16 @@ class SortView: UIView {
         if let sort = currentSort {
             
             switch sort {
-                case "Food":
+                case "Distance":
                     self.segmentControl.selectedSegmentIndex = 0
                     break;
-                case "Drink":
+                case "Food":
                     self.segmentControl.selectedSegmentIndex = 1
                     break;
-                case "Rating":
+                case "Drink":
                     self.segmentControl.selectedSegmentIndex = 2
                     break;
-                case "A-Z":
+                case "":
                     self.segmentControl.selectedSegmentIndex = 3
                     break;
                 default:
@@ -45,7 +47,7 @@ class SortView: UIView {
                     break;
             }
         } else {
-            self.segmentControl.selectedSegmentIndex = 2
+            self.segmentControl.selectedSegmentIndex = 3
         }
         
         self.addSubview(self.segmentControl)

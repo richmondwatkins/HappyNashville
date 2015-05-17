@@ -12,7 +12,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
     
     var location: Location
     var webView: UIWebView = UIWebView()
-    let loadingAnimator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    let loadingAnimator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     var navBarHeight: CGFloat = 0
     let buttonPadding: CGFloat = 10
     
@@ -30,12 +30,12 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         super.viewDidLoad()
         
         var navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight))
-        navBar.backgroundColor = UIColor(hexString: "F8F8F8")
+        navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
         var backButton: UIButton = UIButton(frame: CGRectMake(buttonPadding, (navBar.height / 2) - ((navBar.height / 2) / 2) , 50, navBar.height / 2))
         
         backButton.setTitle("Back", forState: UIControlState.Normal)
-        backButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        backButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         backButton.addTarget(self, action: "backButtonPressed:", forControlEvents: UIControlEvents.TouchUpInside)
         
         navBar.addSubview(backButton)
@@ -53,6 +53,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         titleLabel.textAlignment = .Center
         titleLabel.width = self.view!.width * 0.6
         titleLabel.center = CGPointMake(self.view.width / 2, navBar.height/2)
+        titleLabel.textColor = .whiteColor()
         
         navBar.addSubview(titleLabel)
         

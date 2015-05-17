@@ -17,10 +17,11 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var collectionView: UICollectionView?
     var flowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     var viewModel: DetailViewModel?
-    let selectedHeight: CGFloat = 2
+    let selectedHeight: CGFloat = 1
     var pageVC: LocationSpecialPageViewController!
     var tabButtonView: LocationTabButtonView?
     var navBar: UIView!
+    var directionsVC: DirectionsViewController?
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -108,13 +109,13 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     func setUpCollectionView() {
         
         var cellWidth: CGFloat = CGFloat()
-        
-        if self.location!.dealDays.count <= 5 {
+                
+        if self.location!.dealDays.count <= 7 {
             cellWidth = self.view!.width / CGFloat(self.location!.dealDays.count)
         } else {
             cellWidth = 70
         }
-        
+        self.collectionView?.scrollEnabled = false
         self.collectionView = UICollectionView(frame: CGRectMake(0, self.mapView.bottom, self.view!.width, 40), collectionViewLayout: self.flowLayout)
         
         self.collectionView!.registerClass(DayCollectionViewCell.classForCoder(), forCellWithReuseIdentifier: "CollCell")
@@ -122,7 +123,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.collectionView!.bounces = true
         self.collectionView!.showsHorizontalScrollIndicator = false
         self.collectionView!.showsVerticalScrollIndicator = false
-        self.collectionView!.backgroundColor = UIColor.whiteColor()
+        self.collectionView!.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
         self.collectionView!.delegate = self
         self.collectionView!.dataSource = self
@@ -312,15 +313,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func showDirectionsPopUp(sender: UIButton) {
         
-        var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.viewModel!.dataSource[0].location)
+        self.directionsVC = DirectionsViewController(parentFrame: self.view!.frame, location:  self.viewModel!.dataSource[0].location)
         
-        directionsVC.delegate = self
+        directionsVC!.delegate = self
         
-        self.addChildViewController(directionsVC)
+        self.addChildViewController(directionsVC!)
         
-        self.view!.addSubview(directionsVC.view)
+        self.view!.addSubview(directionsVC!.view)
         
-        directionsVC.didMoveToParentViewController(self)
+        directionsVC!.didMoveToParentViewController(self)
     }
     
     func displayUserPinOnMap(coords: CLLocationCoordinate2D) {

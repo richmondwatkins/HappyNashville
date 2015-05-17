@@ -45,7 +45,12 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         titleLabel.sizeToFit();
         
         navBar.addSubview(titleLabel)
-        titleLabel.center = navBar.center
+        titleLabel.frame = CGRectMake(
+            titleLabel.frame.origin.x,
+            navBar.height / 2 - titleLabel.height + UIApplication.sharedApplication().statusBarFrame.size.height,
+            titleLabel.width, titleLabel.height
+        )
+        titleLabel.center = CGPointMake(navBar.width / 2, navBar.height / 2 + UIApplication.sharedApplication().statusBarFrame.size.height / 2)
         
         var backButton: UIButton = UIButton()
         
@@ -53,7 +58,12 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         backButton.sizeToFit()
         
-        backButton.frame = CGRectMake(navBar.width - backButton.width - 10, navBar.height / 2 - backButton.height / 2, backButton.width, backButton.height)
+        backButton.frame = CGRectMake(
+            navBar.width - backButton.width - 10,
+            (navBar.height / 2) - (backButton.height / 2) + UIApplication.sharedApplication().statusBarFrame.size.height / 2,
+            backButton.width,
+            backButton.height
+        )
         backButton.addTarget(self, action: "closeVC", forControlEvents: .TouchUpInside)
         
         navBar.addSubview(backButton)
@@ -150,7 +160,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         
         var notification: Notification = self.viewModel.tableDataSource[indexPath.row] as! Notification
         
-        cell.textLabel?.text = notification.text
+        cell.textLabel?.text = notification.locationName
         
         cell.detailTextLabel!.text = configureDateString(notification)
     }

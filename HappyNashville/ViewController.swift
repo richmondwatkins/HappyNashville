@@ -21,7 +21,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var customTitleViewBorder: CALayer = CALayer()
     var sortIsDisplaying: Bool = Bool()
     var footer: FooterViewController!
+    var sortButton: UIBarButtonItem!
+    var settingsButton: UIBarButtonItem!
+    var currentSort: String = ""
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
+    var sortViewController: SortViewController?
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
@@ -57,14 +61,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
              self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
         
-        var settingsButton: UIBarButtonItem = UIBarButtonItem(title: "Settings", style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
-        settingsButton.tintColor = .whiteColor()
+      
+        setUpSettingsButton()
         
-        self.navigationItem.leftBarButtonItem = settingsButton
-        
-        var sortButton : UIBarButtonItem = UIBarButtonItem(title: "Sort", style: UIBarButtonItemStyle.Plain, target: self, action: "displaySortOptions:")
-        sortButton.tintColor = .whiteColor()
-        self.navigationItem.rightBarButtonItem = sortButton
+        setUpSortButton()
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: StringConstants.primaryColor)
         
@@ -83,6 +83,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         addFooter()
     }
     
+    func setUpSortButton() {
+        sortButton = UIBarButtonItem(image: UIImage(named: "filter"), style: UIBarButtonItemStyle.Plain, target: self, action: "displaySortOptions:")
+        sortButton.tintColor = .whiteColor()
+        self.navigationItem.rightBarButtonItem = sortButton
+    }
+    
+    func setUpSettingsButton() {
+        settingsButton = UIBarButtonItem(image: UIImage(named: "notification-manager"), style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
+        
+        settingsButton.tintColor = .whiteColor()
+        
+        self.navigationItem.leftBarButtonItem = settingsButton
+    }
+    
     func addFooter() {
         let footerHeight: CGFloat = self.view!.height * 0.1
         
@@ -92,7 +106,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.addChildViewController( self.footer)
         self.view!.addSubview( self.footer.view)
-         self.footer.didMoveToParentViewController(self)
+        self.footer.didMoveToParentViewController(self)
     }
 
     func scrollToCurrentDay() {
@@ -199,6 +213,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func configureCell(cell: LocationTableViewCell, dealDay: DealDay) {
+        println(dealDay.location.distanceFromUser)
         
         cell.titleLable.text = dealDay.location.name
         
@@ -210,7 +225,20 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let ratingViewWidth: CGFloat = 80
         cell.ratingView.frame = CGRectMake(10, cell.titleLable.bottom + 2, ratingViewWidth, titleBottomPadding)
         
-        cell.ratingView.value = CGFloat(dealDay.location.rating.intValue)
+        if dealDay.location.rating != NSNull() {
+            cell.ratingView.value = CGFloat(dealDay.location.rating.doubleValue)   
+        }
+        
+        if dealDay.location.distanceFromUser.doubleValue > 0 {
+            cell.distanceLabel.text = String(format: "approx. %.2f mi", dealDay.location.distanceFromUser.doubleValue)
+            cell.distanceLabel.sizeToFit()
+            cell.distanceLabel.frame = CGRectMake(
+                cell.ratingView.right + 2,
+                cell.ratingView.top,
+                cell.distanceLabel.width,
+                cell.distanceLabel.height
+            )
+        }
         
         addSpecialsToCell(cell, dealDay: dealDay)
         
@@ -305,11 +333,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
         openInfoView(cell, dealDay: selectedDay.dealDay) { () -> Void in
-            //
+            self.sortButton.enabled = false
+            self.settingsButton.enabled = false
         }
-        
-        
-        self.navigationItem.rightBarButtonItem!.title = ""
     }
     
     func mapButtonPressed(sender: UIButton) {
@@ -351,7 +377,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func showFooter() {
-         self.footer.view!.hidden = false
+        self.sortButton.enabled = true
+        self.settingsButton.enabled = true
+        self.footer.view!.hidden = false
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
@@ -365,6 +393,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let dataSourceKey: Int = self.viewModel.tableSections[indexPath.section]
         
+        // TODO: watch for crash
         let dealDays = self.viewModel.tableDataSource[dataSourceKey]!
         
         if dealDays.count - 1 >= indexPath.row {
@@ -383,18 +412,37 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func displaySortOptions(sender: UIButton) {
         
-        var sortViewController: SortViewController = SortViewController(sortTitle: self.customTitleView.text)
-        
-        sortViewController.delegate = self
-        
-        self.addChildViewController(sortViewController)
-        
-        self.view!.addSubview(sortViewController.view)
-        
-        sortViewController.didMoveToParentViewController(self)
+        if (self.sortViewController == nil) {
+            self.sortViewController = SortViewController(
+                sortTitle: self.currentSort,
+                navBottom:
+                self.navigationController!.navigationBar.height +
+                    UIApplication.sharedApplication().statusBarFrame.size.height
+            )
+            
+            sortViewController!.delegate = self
+            
+            self.addChildViewController(sortViewController!)
+            
+            sortViewController!.view.alpha = 0
+            
+            self.view!.addSubview(sortViewController!.view)
+            
+            sortViewController!.didMoveToParentViewController(self)
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.sortViewController!.view.alpha = 1
+            })
+        } else {
+            self.sortViewController?.willMoveToParentViewController(nil)
+            self.sortViewController?.view!.removeFromSuperview()
+            self.sortViewController?.removeFromParentViewController()
+            self.sortViewController = nil
+        }
     }
     
     func resetSort(navTitle: String) {
+        self.currentSort = navTitle
         self.customTitleView.text = navTitle
         self.customTitleView.sizeToFit()
         
@@ -407,6 +455,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func showFoodOnly(navTitle: String) {
+        self.currentSort = navTitle
         self.customTitleView.text = navTitle
         self.customTitleView.textAlignment = .Center
         self.customTitleView.sizeToFit()
@@ -420,17 +469,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func showDrinkOnly(navTitle: String) {
-        self.customTitleView.text = navTitle
-        self.customTitleView.sizeToFit()
-        
-        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
-        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
+        setNavTitle(navTitle)
         
         checkAndRemoveChildVCs()
         
         self.viewModel.sortByType(0)
         
         self.tableView.reloadData()
+    }
+    
+    func sortByLocation(navTitle: String) {
+        self.viewModel.requestUserLocation()
+        
+        setNavTitle(navTitle)
+    }
+    
+    func setNavTitle(title: String) {
+        self.currentSort = title
+        self.customTitleView.text = title
+        self.customTitleView.sizeToFit()
+        
+        self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height,customTitleView.width, 1);
+        self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
     }
 
     func checkAndRemoveChildVCs () {
@@ -537,6 +597,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.reloadData()
         self.scrollToCurrentDay()
         self.activityIndicator.stopAnimating()
+    }
+    
+    func nullifySortVC() {
+        self.sortViewController = nil
+    }
+    
+    func retrieveLocations() -> Array<Location> {
+        return self.viewModel.locations
     }
     
     func slideTableToSection(section: Int) {

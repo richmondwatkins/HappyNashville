@@ -76,6 +76,16 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         self.view!.addGestureRecognizer(tapGesture)
+        
+        self.view!.alpha = 0
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.view!.alpha = 1
+        })        
     }
     
     func setUpFirstTimeView() {

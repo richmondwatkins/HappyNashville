@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 import CoreData
 
 @objc protocol ViewModelProtocol {
@@ -14,11 +15,12 @@ import CoreData
 }
 
 
- class ViewControllerViewModel: AppViewModel, NSFetchedResultsControllerDelegate {
+ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     
     var tableDataSource: Dictionary<Int, Array<DealDay>> {
         
         get {
+            
             if isFiltered {
                 
                 return self.filteredTableDataSource
@@ -40,6 +42,7 @@ import CoreData
     var isFiltered: Bool = false
     var locations: Array<Location> = []
     
+    let locationManager = CLLocationManager()
     let titleBottomPadding: CGFloat = 15
     let specialBottomPadding: CGFloat = 5
     let infoButtonsHeight: CGFloat = 40
@@ -240,6 +243,55 @@ import CoreData
         }
         
         sortData(newDealDayArray)
+        
+        self.delegate?.reloadTable()
+    }
+
+    func requestUserLocation() {
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        if CLLocationManager.authorizationStatus() == .NotDetermined {
+            
+            self.locationManager.requestWhenInUseAuthorization()
+        } else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
+            
+            locationManager.startUpdatingLocation()
+        } else {
+            //
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        
+        var locationArray = locations as NSArray
+        var locationObj = locationArray.lastObject as! CLLocation
+        var coord = locationObj.coordinate
+        
+        self.locationManager.stopUpdatingLocation()
+        
+        sortByVicinity(coord)
+    }
+    
+    func sortByVicinity(coords: CLLocationCoordinate2D) {
+        
+        for location in locations {
+            var newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
+            
+            location.distanceFromUser = newCoord.distanceFromLocation(CLLocation(latitude: coords.latitude, longitude: coords.longitude)) /  1609.344
+        }
+        
+        let sortedByDistance = sorted(locations, {
+            (str1: Location, str2: Location) -> Bool in
+            return str1.distanceFromUser.doubleValue < str2.distanceFromUser.doubleValue
+        })
+        
+        let sortedByDistanceDealDay = sorted(self.unformattedData, {
+            (str1: DealDay, str2: DealDay) -> Bool in
+            return str1.location.distanceFromUser.doubleValue < str2.location.distanceFromUser.doubleValue
+        })
+        
+        sortData(sortedByDistanceDealDay)
         
         self.delegate?.reloadTable()
     }

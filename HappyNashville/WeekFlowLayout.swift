@@ -16,7 +16,7 @@ class WeekFlowLayout: UICollectionViewFlowLayout {
         self.itemSize = CGSizeMake(cellWidth, celHeight)
         self.scrollDirection = UICollectionViewScrollDirection.Horizontal
         self.minimumInteritemSpacing = 0
-        self.minimumLineSpacing = 0.5
+        self.minimumLineSpacing = 0
     }
 
     required init(coder aDecoder: NSCoder) {

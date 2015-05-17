@@ -42,7 +42,18 @@ class ScheduleView: UIView {
                 10
             )
         );
-        titleLabel.text = "Schedule a reminder for \(dealDay.location.name) on \(self.viewModel.dayForDayNumber(dealDay.day.integerValue)) at:"
+        
+        let dayString = self.viewModel.dayForDayNumber(dealDay.day.integerValue)
+        let locationString = dealDay.location.name
+        
+        let titleString = "Schedule a reminder for \(locationString) on \(dayString) at:"
+        
+        var attributedTitle: NSMutableAttributedString = NSMutableAttributedString(string: titleString)
+        let startOfDay: Int = 24 + count(locationString) + 4
+        attributedTitle.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(16)], range: NSRange(location: 24, length: count(locationString)))
+        attributedTitle.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(16)], range: NSRange(location: startOfDay, length: count(dayString)))
+
+        titleLabel.attributedText = attributedTitle
         titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.numberOfLines = 0
         titleLabel.sizeToFit()
@@ -62,19 +73,20 @@ class ScheduleView: UIView {
         
         let buttonDimensons = self.viewModel.getButtonWidth(self.width, numberOfButtons: 2, padding: 10)
         
-        var cancelButton: UIButton = UIButton(frame: CGRectMake(buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
-        
-        cancelButton.layer.cornerRadius = 5.0
-        cancelButton.setTitle("Cancel", forState: UIControlState.Normal)
-        cancelButton.backgroundColor = UIColor(hexString: StringConstants.cancelColor)
-        cancelButton.addTarget(self, action: "dismissVC:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        submitButton = UIButton(frame: CGRectMake(cancelButton.right + buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
+        submitButton = UIButton(frame: CGRectMake(buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
         
         submitButton.layer.cornerRadius = 5.0
         submitButton.setTitle("Submit", forState: UIControlState.Normal)
         submitButton.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         submitButton.addTarget(self, action: "submitSchedule", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        var cancelButton: UIButton = UIButton(frame: CGRectMake(submitButton.right + buttonDimensons.buttonPadding, buttonY, buttonDimensons.buttonWidth, buttonHeight))
+        
+        
+        cancelButton.layer.cornerRadius = 5.0
+        cancelButton.setTitle("Cancel", forState: UIControlState.Normal)
+        cancelButton.backgroundColor = UIColor(hexString: StringConstants.cancelColor)
+        cancelButton.addTarget(self, action: "dismissVC:", forControlEvents: UIControlEvents.TouchUpInside)
         
         let controlViewHeight: CGFloat = 40
         

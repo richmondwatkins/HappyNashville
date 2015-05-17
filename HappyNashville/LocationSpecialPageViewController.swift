@@ -55,7 +55,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
           
         pageController!.didMoveToParentViewController(self)
         
-        self.view!.backgroundColor = UIColor(hexString: "F1F1F1")
+        self.view!.backgroundColor = .whiteColor()
     }
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {

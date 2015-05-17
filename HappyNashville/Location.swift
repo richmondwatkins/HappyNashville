@@ -19,6 +19,8 @@ public class Location: NSObject {
     public var priceLevel: NSNumber = 0.0
     public var slug: String = "";
     public var website: String = "";
+    public var isLocal: NSNumber = 0.0;
+    public var distanceFromUser: NSNumber = 0.0;
     public var dealDays: NSSet = [];
 
     

@@ -66,8 +66,12 @@ class DetailViewModel: AppViewModel {
     }
     
     func setNewSelectedCell(cell: DayCollectionViewCell, index: Int) -> UIPageViewControllerNavigationDirection? {
-        self.currentDayCell!.selectedView.backgroundColor = .clearColor()
-        cell.selectedView.backgroundColor = .whiteColor()
+        
+        if self.currentDayCell != nil {
+             self.currentDayCell!.selectedView.backgroundColor = .clearColor()
+        }
+       
+        cell.selectedView.backgroundColor = UIColor(hexString: "3d3d3e")
         self.currentDayCell = cell
         
         if self.currentCellIndex < index {
@@ -88,7 +92,7 @@ class DetailViewModel: AppViewModel {
             
             if self.hasCurrentDay == true {
                 if dealDay.day.integerValue == getCurrentDay() {
-                    cell.selectedView.backgroundColor = UIColor.whiteColor()
+                    cell.selectedView.backgroundColor = UIColor(hexString: "3d3d3e")
                     delegate?.scrollPageViewControllertoDay(indexPath)
                     self.currentDayCell = cell
                     self.currentCellIndex = indexPath.row

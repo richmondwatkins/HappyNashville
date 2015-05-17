@@ -97,9 +97,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         }
         
         parentVC.subView.transformAndRemoveSubview(self.view!, completed: { (result) -> Void in
-            
-            parentVC.navigationItem.rightBarButtonItem!.title = "Sort"
-            
+                        
             self.removeFromParentViewController()
             
             self.delegate?.showFooter()

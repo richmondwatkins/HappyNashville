@@ -15,7 +15,7 @@ class APIManger: NSObject {
     
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         
-        let urlString = "https://nameless-sea-7366.herokuapp.com/retrieve"
+        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
 //        let reachability = Reachability.reachabilityForInternetConnection()

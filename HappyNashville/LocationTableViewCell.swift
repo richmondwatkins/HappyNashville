@@ -26,6 +26,7 @@ class LocationTableViewCell: UITableViewCell {
     var ratingView = HCSStarRatingView()
     var discloseButton: UIButton = UIButton()
     var notifImageView: UIImageView = UIImageView()
+    var distanceLabel: UILabel = UILabel()
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -40,9 +41,7 @@ class LocationTableViewCell: UITableViewCell {
         self.titleLable.textAlignment = NSTextAlignment.Left
         self.titleLable.font = UIFont.systemFontOfSize(16)
         self.titleLable.numberOfLines = 1
-        
-        self.backgroundColor = UIColor.clearColor()
-        
+            
         self.webSiteButton.setImage(UIImage(named: "web"), forState: .Normal)
         self.mapButton.setImage(UIImage(named: "map"), forState: .Normal)
         
@@ -66,6 +65,10 @@ class LocationTableViewCell: UITableViewCell {
         self.ratingView.userInteractionEnabled = false
         self.ratingView.tintColor = UIColor.redColor()
         
+        self.distanceLabel.font = UIFont.systemFontOfSize(10)
+        self.distanceLabel.textColor = UIColor(hexString: "a8a8a8")
+        
+        self.contentCard.addSubview(self.distanceLabel)
         self.contentCard.addSubview(self.notifImageView)
         self.contentCard.addSubview(self.ratingView)
         self.contentCard.addSubview(self.titleLable)
@@ -81,7 +84,7 @@ class LocationTableViewCell: UITableViewCell {
         self.discloseButton.setImage(discloseImage, forState: .Normal)
         
         self.contentCard.addSubview(self.discloseButton)
-        
+        self.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         self.addSubview(self.containerView)
     }
     

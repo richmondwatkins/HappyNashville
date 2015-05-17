@@ -12,6 +12,9 @@ protocol SortProtocol {
     func showFoodOnly(navTitle: String)
     func showDrinkOnly(navTitle: String)
     func resetSort(navTitle: String)
+    func sortByLocation(navTitle: String)
+    func retrieveLocations() -> Array<Location> 
+    func nullifySortVC()
 }
 
 class SortViewController: UIViewController, UIGestureRecognizerDelegate {
@@ -19,11 +22,13 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     var delegate: SortProtocol?
     var sortView: SortView!
     var currentSort: String?
+    var navHeight: CGFloat!
     
-    init(sortTitle: String?) {
+    init(sortTitle: String?, navBottom: CGFloat) {
         super.init(nibName: nil, bundle: nil)
         
         self.currentSort = sortTitle
+        self.navHeight = navBottom
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -37,6 +42,8 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         
         let sortViewHeight: CGFloat = self.view!.height * 0.1
         
+        self.view!.frame = CGRectMake(0, self.navHeight, self.view!.width, self.view!.height - self.navHeight)
+        
         self.sortView = SortView(frame: CGRectMake(0, self.view!.height - sortViewHeight, self.view!.width, sortViewHeight), currentSort: self.currentSort)
         self.sortView.backgroundColor = .whiteColor()
         self.sortView.tag = 1
@@ -45,6 +52,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         
         self.sortView.segmentControl.addTarget(self, action: "segmentTapped:", forControlEvents: UIControlEvents.ValueChanged)
         var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
+        tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         
         self.view!.addGestureRecognizer(tapGesture)
@@ -55,18 +63,44 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         
         switch sender.selectedSegmentIndex {
             case 0:
-                foodSort()
+                sortByVicinity()
                 break;
             case 1:
-                drinkSort()
+                foodSort()
                 break;
             case 2:
+                drinkSort()
+                break;
+            case 3:
                 resetSort()
+                break;
+            case 4:
+                displaySearch()
                 break;
             default:
                 break;
-            
         }
+    }
+    
+    func displaySearch() {
+        var searchVC: SearchViewController = SearchViewController(
+            viewFrame: CGRectMake(
+                0,
+                0,
+                self.view!.width,
+                self.view!.height / 2
+            ),
+            locations: self.delegate!.retrieveLocations()
+        )
+        searchVC.view.tag = 1
+        self.view!.addSubview(searchVC.view)
+        self.addChildViewController(searchVC)
+        searchVC.didMoveToParentViewController(self)
+    }
+    
+    func sortByVicinity() {
+        self.delegate?.sortByLocation("Distance")
+        dismissVC()
     }
     
     func foodSort() {
@@ -94,8 +128,15 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func dismissVC() {
-        self.willMoveToParentViewController(nil)
-        self.view!.removeFromSuperview()
-        self.removeFromParentViewController()
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.view!.alpha = 0
+        }) { (complete) -> Void in
+            self.willMoveToParentViewController(nil)
+            self.view!.removeFromSuperview()
+            self.removeFromParentViewController()
+            
+            self.delegate?.nullifySortVC()
+        }
+
     }
 }

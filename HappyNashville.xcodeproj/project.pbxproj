@@ -19,6 +19,8 @@
 		5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */; };
 		5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA91AD239F200F23EA5 /* SpecialView.swift */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
+		5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C41B07D0610091DD58 /* SearchViewController.swift */; };
+		5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */; };
 		5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB421ADF45DC0071396E /* HCSStarRatingView.m */; };
 		5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB441ADF4A950071396E /* MapViewController.swift */; };
 		5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB461ADF629D0071396E /* NotificationsManagerViewController.swift */; };
@@ -84,6 +86,8 @@
 		5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIColor_Expanded.m"; sourceTree = "<group>"; };
 		5D87FBA91AD239F200F23EA5 /* SpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialView.swift; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
+		5DAB59C41B07D0610091DD58 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5DB3EB411ADF45DC0071396E /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		5DB3EB421ADF45DC0071396E /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		5DB3EB441ADF4A950071396E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -153,6 +157,44 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5DAB59C01B07CFA20091DD58 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */,
+				5D2D73761ACF3E4F002216CB /* ScheduleView.swift */,
+			);
+			name = Schedule;
+			sourceTree = "<group>";
+		};
+		5DAB59C11B07CFBF0091DD58 /* DetailController */ = {
+			isa = PBXGroup;
+			children = (
+				5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */,
+			);
+			name = DetailController;
+			sourceTree = "<group>";
+		};
+		5DAB59C21B07CFE20091DD58 /* SortVC */ = {
+			isa = PBXGroup;
+			children = (
+				5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */,
+				5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */,
+			);
+			name = SortVC;
+			sourceTree = "<group>";
+		};
+		5DAB59C31B07CFF40091DD58 /* MainVC */ = {
+			isa = PBXGroup;
+			children = (
+				5DAB59C21B07CFE20091DD58 /* SortVC */,
+				5DC4C7AC1AFC52B7000346F7 /* FooterViewController.swift */,
+				5DF6B94F1ACB5A7E007E852A /* ViewController.swift */,
+				5D87FBA91AD239F200F23EA5 /* SpecialView.swift */,
+				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
+			);
+			name = MainVC;
+			sourceTree = "<group>";
+		};
 		5DC4C7B01AFC5F8A000346F7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,19 +238,14 @@
 		5DF6B9471ACB5A7E007E852A /* HappyNashville */ = {
 			isa = PBXGroup;
 			children = (
+				5DAB59C31B07CFF40091DD58 /* MainVC */,
+				5DAB59C11B07CFBF0091DD58 /* DetailController */,
+				5DAB59C01B07CFA20091DD58 /* Schedule */,
 				5DC4C7B01AFC5F8A000346F7 /* Models */,
+				5DAB59C41B07D0610091DD58 /* SearchViewController.swift */,
 				5DC4C7AE1AFC5F76000346F7 /* DayButton.swift */,
-				5DC4C7AC1AFC52B7000346F7 /* FooterViewController.swift */,
 				5DF6B96D1ACB5E03007E852A /* APIManger.swift */,
 				5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */,
-				5DF6B94F1ACB5A7E007E852A /* ViewController.swift */,
-				5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */,
-				5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */,
-				5D2D73761ACF3E4F002216CB /* ScheduleView.swift */,
-				5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */,
-				5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */,
-				5D87FBA91AD239F200F23EA5 /* SpecialView.swift */,
-				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
 				5DB3EB4A1AE0AB600071396E /* DayCollectionViewCell.swift */,
 				5DB3EB5C1AE436F60071396E /* LocationTabButtonView.swift */,
 				5D87FBA41AD21B5B00F23EA5 /* LocationWebViewController.swift */,
@@ -269,6 +306,7 @@
 				5DB3EB561AE334CE0071396E /* LocationSpecialViewModel.swift */,
 				5DB3EB5A1AE373A20071396E /* AppViewModel.swift */,
 				5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */,
+				5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -416,12 +454,14 @@
 				5DB3EB4D1AE0B2D80071396E /* DetailViewModel.swift in Sources */,
 				5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */,
 				5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */,
+				5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
 				5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */,
 				5DB3EB571AE334CE0071396E /* LocationSpecialViewModel.swift in Sources */,
 				5D87FB9D1AD0F3A800F23EA5 /* UIViewExtension.swift in Sources */,
+				5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */,
 				5DDFB5201AF9D3C200A9741F /* Special.swift in Sources */,
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
@@ -571,13 +611,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = "";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -587,11 +630,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 			};
 			name = Release;

@@ -41,6 +41,7 @@ class FooterViewController: UIViewController {
         var left = buttonMeasurements.buttonPadding
         
         var i: Int = 0
+        
         for day in week {
             
             var dayButton:UIButton  = DayButton(frame:
@@ -58,6 +59,10 @@ class FooterViewController: UIViewController {
 
             i++
         }
+        
+        var borderView = UIView(frame: CGRectMake(0, 0, self.view!.width, 1))
+        borderView.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
+        self.view!.addSubview(borderView)
     }
     
     func selecteDay(sender: UIButton) {
