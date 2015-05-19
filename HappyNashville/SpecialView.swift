@@ -37,7 +37,7 @@ class SpecialView: UIView {
         
         typeBullet.center = CGPointMake(0, self.height / 2)
         
-        if special.type.integerValue == 0 {
+        if special.type.integerValue != 6 {
             typeBullet.backgroundColor = UIColor(hexString: StringConstants.drinkColor)
         } else {
             typeBullet.backgroundColor = UIColor(hexString: StringConstants.foodColor)

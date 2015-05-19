@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LocationSpecialViewController: UIViewController {
+class LocationSpecialViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     var index: Int = Int()
     var dealDay: DealDay?
@@ -17,6 +17,10 @@ class LocationSpecialViewController: UIViewController {
     var contentHeight: CGFloat = 0
     var top: CGFloat!
     var noDealsView: UILabel = UILabel()
+    var collectionView: UICollectionView!
+    var cellWidth: CGFloat = 0;
+    var dataSource: Array<Special> = []
+    let cellHeight: CGFloat = 130
     
     init(dealDay: DealDay, top: CGFloat) {
         super.init(nibName: nil, bundle: nil)
@@ -31,11 +35,157 @@ class LocationSpecialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.scrollView = UIScrollView(frame: self.view!.frame)
-        self.view! = self.scrollView!
-        createNoDealsView()
-        createScrollView()
+//        self.scrollView = UIScrollView(frame: self.view!.frame)
+//        self.view! = self.scrollView!
+//        createNoDealsView()
+//        createScrollView()
+        
+        self.dataSource = self.dealDay!.specials.allObjects as! Array<Special>
+        
+        self.dataSource = sorted(self.dataSource, {
+            (spec1: Special, spec2: Special) -> Bool in
+            return spec1.specialItem < spec2.specialItem
+        })
+        
+        setUpCollectionView()
     }
+    
+    override func viewWillLayoutSubviews() {
+        self.collectionView.frame = CGRectMake(0, 0, self.view!.width, self.view!.height)
+    }
+    
+    func setUpCollectionView() {
+        var cellWidth: CGFloat = CGFloat()
+
+        self.cellWidth = self.view!.width
+        
+        let flowLayout: SpecialCollectionFlowLayout = SpecialCollectionFlowLayout(cellWidth:  self.cellWidth, celHeight: cellHeight)
+        
+        self.collectionView = UICollectionView(frame: self.view!.frame, collectionViewLayout: flowLayout)
+        
+        self.collectionView.scrollEnabled = true
+    
+        self.collectionView.registerClass(SpecialCollectionCell.classForCoder(), forCellWithReuseIdentifier: "SpecialCell")
+        self.collectionView.bounces = true
+        self.collectionView.showsHorizontalScrollIndicator = false
+        self.collectionView.showsVerticalScrollIndicator = false
+        self.collectionView.backgroundColor = .whiteColor()
+        
+        self.collectionView.delegate = self
+        self.collectionView.dataSource = self
+        
+        self.view!.addSubview(self.collectionView!)
+        
+        self.collectionView.reloadData()
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, 0, 0);
+    }
+    
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.dealDay!.specials.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        var newSize: CGSize = CGSizeZero
+        
+        if indexPath.row == 0 || indexPath.row % 3 == 0 {
+            if indexPath.row  + 2 <= self.dataSource.count - 1 {
+                newSize = CGSizeMake(self.view!.width / 3 - 1, self.cellHeight)
+            } else if indexPath.row  + 1 <= self.dataSource.count - 1 {
+                newSize = CGSizeMake(self.view!.width / 2, self.cellHeight)
+            } else {
+                newSize = CGSizeMake(self.view!.width, self.cellHeight)
+            }
+        } else if indexPath.row == 1 || indexPath.row % 2 == 0 && indexPath.row != 2{
+            if indexPath.row  + 1 <= self.dataSource.count - 1 {
+                newSize = CGSizeMake(self.view!.width / 3 - 1, self.cellHeight)
+            } else if indexPath.row  <= self.dataSource.count - 1 {
+                newSize = CGSizeMake(self.view!.width / 2, self.cellHeight)
+            } else {
+                newSize = CGSizeMake(self.view!.width, self.cellHeight)
+            }
+        } else {
+            if indexPath.row <= self.dataSource.count - 1 {
+                newSize = CGSizeMake(self.view!.width / 3 - 5, self.cellHeight)
+            }
+        }
+        
+        return newSize
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        var cell = collectionView.dequeueReusableCellWithReuseIdentifier("SpecialCell", forIndexPath: indexPath) as? SpecialCollectionCell
+        
+        if cell == nil {
+            
+            cell = SpecialCollectionCell(frame: CGRectMake(0, 0, self.view!.width / 3, 100))
+        }
+        
+        configureCell(cell!, special: self.dataSource[indexPath.row])
+        
+        return cell!
+    }
+    
+    func configureCell(cell: SpecialCollectionCell, special: Special) {
+        cell.typeImageView.frame = CGRectMake(cell.width / 2 - 40, 4, 50, 50)
+       
+        cell.priceLabel.frame = CGRectMake(0, cell.typeImageView.bottom, cell.width, 15)
+        cell.timeLabel.frame = CGRectMake(0, self.cellHeight - 12, cell.width, 10)
+        cell.descriptionLabel.frame = CGRectMake(0, cell.priceLabel.bottom + (cell.timeLabel.top - cell.priceLabel.bottom - 30) / 2, cell.width - 10, 30)
+        
+        cell.descriptionLabel.text = special.specialItem.uppercaseString
+        cell.descriptionLabel.center = CGPointMake(cell.width / 2, cell.descriptionLabel.center.y)
+        
+        cell.typeImageView.center = CGPointMake((cell.width / 2), cell.typeImageView.center.y)
+        cell.typeImageView.image = UIImage(named: "special-\(special.type.integerValue)")
+        
+        cell.priceLabel.text = special.specialPrice
+        
+        
+        cell.timeLabel.text = configureDateString(special)
+    }
+    
+    func configureDateString(special: Special) -> String {
+        
+        if special.allDay.boolValue {
+            return "All Day"
+        }
+        
+        var startDateComponents: NSDateComponents = NSDateComponents()
+        startDateComponents.hour = special.hourStart.integerValue
+        startDateComponents.minute = special.minuteStart.integerValue
+        startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
+        
+        var endDateComponents: NSDateComponents = NSDateComponents()
+        endDateComponents.hour = special.hourEnd.integerValue
+        endDateComponents.minute = special.minuteEnd.integerValue
+        endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
+        
+        let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
+        
+        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        startDateFormatter.dateFormat = "h:mm"
+        
+        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        endDateFormatter.dateFormat = "h:mm a"
+        
+        return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
+    }
+    
+    
+    
+    
+    
     
     func createScrollView() {
         for special in self.viewModel.sortSpecialsByTime(self.dealDay!.specials) as! [Special] {

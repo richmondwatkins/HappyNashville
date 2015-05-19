@@ -21,6 +21,8 @@
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
 		5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C41B07D0610091DD58 /* SearchViewController.swift */; };
 		5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */; };
+		5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */; };
+		5DAB59CB1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59CA1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift */; };
 		5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB421ADF45DC0071396E /* HCSStarRatingView.m */; };
 		5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB441ADF4A950071396E /* MapViewController.swift */; };
 		5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB3EB461ADF629D0071396E /* NotificationsManagerViewController.swift */; };
@@ -88,6 +90,8 @@
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DAB59C41B07D0610091DD58 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
+		5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCollectionFlowLayout.swift; sourceTree = "<group>"; };
+		5DAB59CA1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCollectionCellCollectionViewCell.swift; sourceTree = "<group>"; };
 		5DB3EB411ADF45DC0071396E /* HCSStarRatingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HCSStarRatingView.h; sourceTree = "<group>"; };
 		5DB3EB421ADF45DC0071396E /* HCSStarRatingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HCSStarRatingView.m; sourceTree = "<group>"; };
 		5DB3EB441ADF4A950071396E /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +174,8 @@
 			isa = PBXGroup;
 			children = (
 				5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */,
+				5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */,
+				5DAB59CA1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift */,
 			);
 			name = DetailController;
 			sourceTree = "<group>";
@@ -449,11 +455,13 @@
 				5DB3EB4F1AE322E20071396E /* WeekFlowLayout.swift in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
+				5DAB59CB1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift in Sources */,
 				5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */,
 				5DB3EB4B1AE0AB600071396E /* DayCollectionViewCell.swift in Sources */,
 				5DB3EB4D1AE0B2D80071396E /* DetailViewModel.swift in Sources */,
 				5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */,
 				5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */,
+				5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */,
 				5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */,

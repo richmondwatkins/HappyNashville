@@ -53,13 +53,13 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         specialVC = LocationSpecialViewController(dealDay: self.dealDay!, top: 2)
         specialVC.view!.frame = CGRectMake(
             0,
-            self.scheduleView!.timePicker!.bottom,
+            self.scheduleView!.timePicker!.bottom - 20,
             self.view!.width,
-            self.scheduleView!.recurringSwitch!.superview!.top - self.scheduleView!.timePicker!.bottom
+            self.scheduleView!.recurringSwitch!.superview!.top - self.scheduleView!.timePicker!.bottom + 20
         )
         
         self.addChildViewController(specialVC)
-        self.scheduleView?.addSubview(specialVC.view!)
+        self.scheduleView!.addSubview(specialVC.view!)
         specialVC.didMoveToParentViewController(self)
     }
     
