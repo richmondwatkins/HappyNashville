@@ -11,6 +11,12 @@
 		5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E05A1B02FAE500366923 /* Crashlytics.framework */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
+		5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */; };
+		5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */; };
+		5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */; };
+		5D7505F91B0ED80F003E7533 /* EastNashvillePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */; };
+		5D7505FB1B0EDA5A003E7533 /* GermantownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */; };
+		5D7505FD1B0EDBDC003E7533 /* GulchPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
 		5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8B1AD0459F00F23EA5 /* MetaData.m */; };
 		5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */; };
@@ -76,6 +82,12 @@
 		5D25E05A1B02FAE500366923 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DowntownPolygon.swift; sourceTree = "<group>"; };
+		5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwelveSouthPolygon.swift; sourceTree = "<group>"; };
+		5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EastNashvillePolygon.swift; sourceTree = "<group>"; };
+		5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GermantownPolygon.swift; sourceTree = "<group>"; };
+		5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GulchPolygon.swift; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		5D87FB8A1AD0459F00F23EA5 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaData.h; path = ../MetaData.h; sourceTree = "<group>"; };
 		5D87FB8B1AD0459F00F23EA5 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MetaData.m; path = ../MetaData.m; sourceTree = "<group>"; };
@@ -161,6 +173,27 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5D7505F21B0ED4CD003E7533 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				5D7505F51B0ED52B003E7533 /* Polygons */,
+				5DB3EB441ADF4A950071396E /* MapViewController.swift */,
+			);
+			name = Map;
+			sourceTree = "<group>";
+		};
+		5D7505F51B0ED52B003E7533 /* Polygons */ = {
+			isa = PBXGroup;
+			children = (
+				5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */,
+				5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */,
+				5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */,
+				5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */,
+				5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */,
+			);
+			name = Polygons;
+			sourceTree = "<group>";
+		};
 		5DAB59C01B07CFA20091DD58 /* Schedule */ = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +277,7 @@
 		5DF6B9471ACB5A7E007E852A /* HappyNashville */ = {
 			isa = PBXGroup;
 			children = (
+				5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */,
 				5DAB59C31B07CFF40091DD58 /* MainVC */,
 				5DAB59C11B07CFBF0091DD58 /* DetailController */,
 				5DAB59C01B07CFA20091DD58 /* Schedule */,
@@ -258,7 +292,7 @@
 				5DB3EB521AE3254C0071396E /* LocationSpecialPageViewController.swift */,
 				5DB3EB541AE325EF0071396E /* LocationSpecialViewController.swift */,
 				5DB3EB581AE335C70071396E /* LocationSpecialView.swift */,
-				5DB3EB441ADF4A950071396E /* MapViewController.swift */,
+				5D7505F21B0ED4CD003E7533 /* Map */,
 				5DB3EB461ADF629D0071396E /* NotificationsManagerViewController.swift */,
 				5DB3EB5E1AE44AEA0071396E /* DirectionsViewController.swift */,
 				5DF6B9511ACB5A7E007E852A /* Main.storyboard */,
@@ -445,7 +479,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5D7505FD1B0EDBDC003E7533 /* GulchPolygon.swift in Sources */,
 				5DB3EB531AE3254C0071396E /* LocationSpecialPageViewController.swift in Sources */,
+				5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */,
 				5D87FBA51AD21B5B00F23EA5 /* LocationWebViewController.swift in Sources */,
 				5DB3EB591AE335C70071396E /* LocationSpecialView.swift in Sources */,
 				5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */,
@@ -453,6 +489,7 @@
 				5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */,
 				5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */,
 				5DB3EB4F1AE322E20071396E /* WeekFlowLayout.swift in Sources */,
+				5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
 				5DAB59CB1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift in Sources */,
@@ -463,7 +500,9 @@
 				5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */,
 				5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */,
 				5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */,
+				5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
+				5D7505F91B0ED80F003E7533 /* EastNashvillePolygon.swift in Sources */,
 				5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
 				5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */,
@@ -474,6 +513,7 @@
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
+				5D7505FB1B0EDA5A003E7533 /* GermantownPolygon.swift in Sources */,
 				5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */,
 				5DB3EB5F1AE44AEA0071396E /* DirectionsViewController.swift in Sources */,
 				5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */,

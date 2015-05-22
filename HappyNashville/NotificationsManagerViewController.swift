@@ -151,8 +151,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         }
 
         configureCell(cell! , indexPath: indexPath)
-        
-        
+    
         return cell!
     }
 
@@ -161,6 +160,8 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         var notification: Notification = self.viewModel.tableDataSource[indexPath.row] as! Notification
         
         cell.textLabel?.text = notification.locationName
+        
+        cell.textLabel?.textColor = UIColor(hexString: "3d3d3e")
         
         cell.detailTextLabel!.text = configureDateString(notification)
     }

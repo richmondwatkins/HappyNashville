@@ -10,18 +10,18 @@ import UIKit
 
 class DayButton: UIButton {
 
-    override var highlighted: Bool {
-        get {
-            return super.highlighted
-        }
-        set {
-            if newValue {
-                backgroundColor = UIColor(hexString: StringConstants.primaryColor)
-            }
-            else {
-                backgroundColor = UIColor.whiteColor()
-            }
-            super.highlighted = newValue
-        }
-    }
+//    override var highlighted: Bool {
+//        get {
+//            return super.highlighted
+//        }
+//        set {
+//            if newValue {
+//                backgroundColor = UIColor(hexString: StringConstants.primaryColor)
+//            }
+//            else {
+//                backgroundColor =  UIColor(hexString: StringConstants.primaryColor)
+//            }
+//            super.highlighted = newValue
+//        }
+//    }
 }

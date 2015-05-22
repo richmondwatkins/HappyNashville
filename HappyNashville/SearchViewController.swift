@@ -120,7 +120,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         cell?.contentView.tag = 1
-        
+        cell?.textLabel?.textColor = UIColor(hexString: "3d3d3e")
         if self.filteredDataSource != nil && self.filteredDataSource?.count > 0 {
             cell?.textLabel?.text = self.filteredDataSource![indexPath.row].name
         } else {

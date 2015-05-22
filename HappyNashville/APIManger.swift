@@ -15,7 +15,8 @@ class APIManger: NSObject {
     
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         
-        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
+//        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
+        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/testDeals.json"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
 //        let reachability = Reachability.reachabilityForInternetConnection()
@@ -26,6 +27,8 @@ class APIManger: NSObject {
                 
             var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
             
+                self.masterDealDaysArray.removeAll(keepCapacity: false)
+                
                 self.updateDeals(jsonResult["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
                     completed(dealDays: dealDays, locations: locations)
                 })
@@ -197,6 +200,30 @@ class APIManger: NSObject {
         var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
         
         return appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
+    }
+    
+    class func deletePastNotifications() {
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { ()->() in
+            var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+            
+            var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+            
+            var notificationsArr: NSArray? = appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
+            
+            if let notifications = notificationsArr {
+                
+                for notification in notificationsArr as! [Notification] {
+                    
+                    if notification.date.timeIntervalSince1970 < NSDate().timeIntervalSince1970 {
+                        
+                        appDelegate.managedObjectContext?.deleteObject(notification)
+                    }
+                }
+                
+                appDelegate.managedObjectContext?.save(nil)
+            }
+        })
     }
     
     class func deleteNotificationFromID(notifID: String) {

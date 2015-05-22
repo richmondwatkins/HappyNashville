@@ -55,7 +55,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
             0,
             self.scheduleView!.timePicker!.bottom - 20,
             self.view!.width,
-            self.scheduleView!.recurringSwitch!.superview!.top - self.scheduleView!.timePicker!.bottom + 20
+            self.scheduleView!.recurringSwitch!.superview!.top - self.scheduleView!.timePicker!.bottom + 18
         )
         
         self.addChildViewController(specialVC)

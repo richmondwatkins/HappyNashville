@@ -12,23 +12,19 @@ import CoreData
 
 @objc protocol ViewModelProtocol {
     func reloadTable()
+    func refreshTable()
 }
-
 
  class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     
     var tableDataSource: Dictionary<Int, Array<DealDay>> {
-        
         get {
-            
             if isFiltered {
-                
                 return self.filteredTableDataSource
             } else {
                 return self.originalDataSource
             }
         }
-        
         set {
             
         }
@@ -36,11 +32,12 @@ import CoreData
     var originalDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var delegate: ViewModelProtocol?
     var tableSections: Array<Int> = []
-    var unformattedData: Array<DealDay>!
+    var unformattedData: Array<DealDay> = []
     var foodDealDays: Array<DealDay> = []
     var filteredTableDataSource: Dictionary<Int, Array<DealDay>> = [:]
     var isFiltered: Bool = false
     var locations: Array<Location> = []
+    var shouldSort: Bool = false
     
     let locationManager = CLLocationManager()
     let titleBottomPadding: CGFloat = 15
@@ -56,14 +53,29 @@ import CoreData
         fetchData()
     }
     
-    func fetchData() {
+    func fetchData(shouldScrollToIndex: Bool? = true) {
         APIManger.requestNewData({ (dealDays, locations) -> Void in
+ 
             self.locations = locations
             self.unformattedData = dealDays
-            self.sortData(dealDays)
-            self.delegate?.reloadTable()
+            
+            if (CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse) {
+                self.requestUserLocation()
+            }
+            
+            let sortedByDistanceDealDay = sorted(dealDays, {
+                (deal1: DealDay, deal2: DealDay) -> Bool in
+                return self.getEaliestSpecial(deal1.specials).hourStart.integerValue < self.getEaliestSpecial(deal2.specials).hourStart.integerValue
+            })
+            
+            self.sortData(sortedByDistanceDealDay)
+
+            if (shouldScrollToIndex == true) {
+                self.delegate?.reloadTable()
+            } else {
+                self.delegate?.refreshTable()
+            }
         })
-        
     }
     
     func sortData(fetchResult: Array<DealDay>) {
@@ -196,6 +208,7 @@ import CoreData
     }
     
     func sortByType(specialType: Int) {
+
         self.isFiltered = true
         
         var newDealDayArray: Array<DealDay> = []
@@ -215,15 +228,28 @@ import CoreData
                 
                 for special in Array(dealDay.specials) as! Array<Special> {
                     
-                    if special.type == specialType {
-                        hasSpecialOfType = true;
-                    }else {
-                        dealDaySpecials.removeAtIndex(i--)
-
-                        let currentHeight: Int = dealDay.height.integerValue
-                        
-                        var arr: Array<DealDay> = self.originalDataSource[key]!
-                        currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
+                    if specialType == 6 {
+                        if special.type == specialType {
+                            hasSpecialOfType = true;
+                        }else {
+                            dealDaySpecials.removeAtIndex(i--)
+                            
+                            let currentHeight: Int = dealDay.height.integerValue
+                            
+                            var arr: Array<DealDay> = self.originalDataSource[key]!
+                            currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
+                        }
+                    } else {
+                        if special.type != 6 {
+                            hasSpecialOfType = true;
+                        }else {
+                            dealDaySpecials.removeAtIndex(i--)
+                            
+                            let currentHeight: Int = dealDay.height.integerValue
+                            
+                            var arr: Array<DealDay> = self.originalDataSource[key]!
+                            currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
+                        }
                     }
                     
                     i++
@@ -254,6 +280,7 @@ import CoreData
         if CLLocationManager.authorizationStatus() == .NotDetermined {
             
             self.locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
         } else if(CLLocationManager.authorizationStatus() == CLAuthorizationStatus.AuthorizedWhenInUse){
             
             locationManager.startUpdatingLocation()
@@ -270,16 +297,24 @@ import CoreData
         
         self.locationManager.stopUpdatingLocation()
         
-        sortByVicinity(coord)
+        addDistanceToLocations(coord)
     }
     
-    func sortByVicinity(coords: CLLocationCoordinate2D) {
-        
+    func addDistanceToLocations(coords: CLLocationCoordinate2D) {
         for location in locations {
             var newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
             
             location.distanceFromUser = newCoord.distanceFromLocation(CLLocation(latitude: coords.latitude, longitude: coords.longitude)) /  1609.344
         }
+        
+        if (self.shouldSort) {
+            sortByVicinity(coords)
+        } else {
+            self.delegate?.reloadTable()
+        }
+    }
+    
+    func sortByVicinity(coords: CLLocationCoordinate2D) {
         
         let sortedByDistance = sorted(locations, {
             (str1: Location, str2: Location) -> Bool in
@@ -294,6 +329,8 @@ import CoreData
         sortData(sortedByDistanceDealDay)
         
         self.delegate?.reloadTable()
+        
+        self.shouldSort = false
     }
     
     func sortByRating() {
@@ -318,7 +355,7 @@ import CoreData
         
         var cellHeight: CGFloat = tempLabel.height + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specialCount))
         
-        return cellHeight + 24
+        return cellHeight + 30
     }
     
     func getCellHeightForFood(dealDay: DealDay) -> CGFloat {

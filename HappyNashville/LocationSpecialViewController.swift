@@ -20,7 +20,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     var collectionView: UICollectionView!
     var cellWidth: CGFloat = 0;
     var dataSource: Array<Special> = []
-    let cellHeight: CGFloat = 130
+    let cellHeight: CGFloat = 110
     
     init(dealDay: DealDay, top: CGFloat) {
         super.init(nibName: nil, bundle: nil)
@@ -51,7 +51,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     }
     
     override func viewWillLayoutSubviews() {
-        self.collectionView.frame = CGRectMake(0, 0, self.view!.width, self.view!.height)
+        self.collectionView.frame = CGRectMake(0, 5, self.view!.width, self.view!.height)
     }
     
     func setUpCollectionView() {

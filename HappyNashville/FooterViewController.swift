@@ -34,7 +34,7 @@ class FooterViewController: UIViewController {
         super.viewDidLoad()
 
         self.view!.frame = self.viewFrame
-        self.view!.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+        self.view!.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.2)
         
         let buttonMeasurements = self.viewModel.getButtonWidth(self.view!.width, numberOfButtons: 7, padding: 0)
         
@@ -48,9 +48,8 @@ class FooterViewController: UIViewController {
                 CGRectMake(CGFloat(left), 0, buttonMeasurements.buttonWidth, self.view!.height))
             
             dayButton.setTitle(day, forState: .Normal)
-            dayButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.9)
-            dayButton.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
-            dayButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Highlighted)
+            dayButton.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.6)
+            dayButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             dayButton.tag = i
             dayButton.addTarget(self, action: "selecteDay:", forControlEvents: .TouchUpInside)
             left = CGFloat(dayButton.right + buttonMeasurements.buttonPadding)

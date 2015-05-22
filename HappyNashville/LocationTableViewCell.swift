@@ -24,9 +24,9 @@ class LocationTableViewCell: UITableViewCell {
     var mapButton = UIButton()
     var typeView = UIView()
     var ratingView = HCSStarRatingView()
-    var discloseButton: UIButton = UIButton()
     var notifImageView: UIImageView = UIImageView()
     var distanceLabel: UILabel = UILabel()
+    var buttonLayer: CALayer!
     
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -39,16 +39,19 @@ class LocationTableViewCell: UITableViewCell {
         self.notifImageView.hidden = true
         self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.textAlignment = NSTextAlignment.Left
-        self.titleLable.font = UIFont.systemFontOfSize(16)
+        self.titleLable.font = UIFont.boldSystemFontOfSize(16)
         self.titleLable.numberOfLines = 1
             
-        self.webSiteButton.setImage(UIImage(named: "web"), forState: .Normal)
+        self.webSiteButton.setImage(UIImage(named: "share"), forState: .Normal)
         self.mapButton.setImage(UIImage(named: "map"), forState: .Normal)
         
         setUpButtons([self.webSiteButton, self.mapButton, self.scheduleButton])
         
         self.contentCard.backgroundColor = UIColor.whiteColor()
-        self.buttonView.backgroundColor = UIColor(hexString: "e0e0e0")
+        self.buttonView.backgroundColor = .whiteColor()
+        
+        self.buttonLayer = buttonViewLayer(buttonView.width)
+        self.buttonView.layer.addSublayer(self.buttonLayer)
 
         self.contentCard.layer.masksToBounds = false
         self.contentCard.layer.cornerRadius = 2
@@ -68,33 +71,33 @@ class LocationTableViewCell: UITableViewCell {
         self.distanceLabel.font = UIFont.systemFontOfSize(10)
         self.distanceLabel.textColor = UIColor(hexString: "a8a8a8")
         
-        self.contentCard.addSubview(self.distanceLabel)
         self.contentCard.addSubview(self.notifImageView)
-        self.contentCard.addSubview(self.ratingView)
         self.contentCard.addSubview(self.titleLable)
         self.contentCard.addSubview(self.typeView)
         
         self.containerView.addSubview(self.buttonView)
         self.containerView.addSubview(self.contentCard)
         
-        var discloseImage:UIImage = UIImage(named: "disclose")!
-        
-        self.discloseButton.frame = CGRectMake(0, 0, discloseImage.size.width, discloseImage.size.height)
-        
-        self.discloseButton.setImage(discloseImage, forState: .Normal)
-        
-        self.contentCard.addSubview(self.discloseButton)
+        self.buttonView.addSubview(self.distanceLabel)
+        self.buttonView.addSubview(self.ratingView)
+  
         self.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         self.addSubview(self.containerView)
     }
     
-    func setUpButtons(buttons: Array<UIButton>) {
+    func buttonViewLayer(width: CGFloat) -> CALayer {
+        var newLayer: CALayer = CALayer()
+        newLayer.frame = CGRectMake(0, 0, width, 1)
+        newLayer.backgroundColor = UIColor(hexString: StringConstants.primaryColor).CGColor
         
+        return newLayer
+    }
+    
+    func setUpButtons(buttons: Array<UIButton>) {
         for button in buttons {
-            button.backgroundColor = UIColor(hexString: "bdbdbd")
+            button.backgroundColor = .whiteColor()
             self.buttonView.addSubview(button)
         }
-        
     }
   
     required init(coder aDecoder: NSCoder) {

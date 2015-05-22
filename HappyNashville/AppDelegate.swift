@@ -26,6 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         
+        APIManger.deletePastNotifications()
+        
         return true
     }
     

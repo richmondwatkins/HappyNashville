@@ -16,7 +16,7 @@ class SpecialCollectionFlowLayout: UICollectionViewFlowLayout {
         self.itemSize = CGSizeMake(cellWidth, celHeight)
         self.scrollDirection = UICollectionViewScrollDirection.Vertical
         self.minimumInteritemSpacing = 0
-        self.minimumLineSpacing = 0.5
+        self.minimumLineSpacing = 5
     }
         
     required init(coder aDecoder: NSCoder) {
