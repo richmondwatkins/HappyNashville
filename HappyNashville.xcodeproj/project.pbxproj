@@ -9,8 +9,12 @@
 /* Begin PBXBuildFile section */
 		5D25E05B1B02FAE500366923 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E0591B02FAE500366923 /* Fabric.framework */; };
 		5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E05A1B02FAE500366923 /* Crashlytics.framework */; };
+		5D2972E41B15605400291470 /* HillsboroVillagePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */; };
+		5D2972E61B156E2B00291470 /* MidtownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2972E51B156E2B00291470 /* MidtownPolygon.swift */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
+		5D352D9C1B13A40300AA852B /* MapFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */; };
+		5D352D9E1B1548AB00AA852B /* MapFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */; };
 		5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */; };
 		5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */; };
 		5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */; };
@@ -80,8 +84,12 @@
 		58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
 		5D25E0591B02FAE500366923 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
 		5D25E05A1B02FAE500366923 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HillsboroVillagePolygon.swift; sourceTree = "<group>"; };
+		5D2972E51B156E2B00291470 /* MidtownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidtownPolygon.swift; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterViewController.swift; sourceTree = "<group>"; };
+		5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterTableViewCell.swift; sourceTree = "<group>"; };
 		5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DowntownPolygon.swift; sourceTree = "<group>"; };
 		5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwelveSouthPolygon.swift; sourceTree = "<group>"; };
@@ -178,6 +186,8 @@
 			children = (
 				5D7505F51B0ED52B003E7533 /* Polygons */,
 				5DB3EB441ADF4A950071396E /* MapViewController.swift */,
+				5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */,
+				5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */,
 			);
 			name = Map;
 			sourceTree = "<group>";
@@ -190,6 +200,8 @@
 				5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */,
 				5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */,
 				5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */,
+				5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */,
+				5D2972E51B156E2B00291470 /* MidtownPolygon.swift */,
 			);
 			name = Polygons;
 			sourceTree = "<group>";
@@ -496,6 +508,7 @@
 				5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */,
 				5DB3EB4B1AE0AB600071396E /* DayCollectionViewCell.swift in Sources */,
 				5DB3EB4D1AE0B2D80071396E /* DetailViewModel.swift in Sources */,
+				5D352D9C1B13A40300AA852B /* MapFilterViewController.swift in Sources */,
 				5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */,
 				5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */,
 				5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */,
@@ -508,8 +521,10 @@
 				5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */,
 				5DB3EB571AE334CE0071396E /* LocationSpecialViewModel.swift in Sources */,
 				5D87FB9D1AD0F3A800F23EA5 /* UIViewExtension.swift in Sources */,
+				5D2972E41B15605400291470 /* HillsboroVillagePolygon.swift in Sources */,
 				5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */,
 				5DDFB5201AF9D3C200A9741F /* Special.swift in Sources */,
+				5D2972E61B156E2B00291470 /* MidtownPolygon.swift in Sources */,
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
@@ -518,6 +533,7 @@
 				5DB3EB5F1AE44AEA0071396E /* DirectionsViewController.swift in Sources */,
 				5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */,
 				5DB3EB491ADF63AB0071396E /* NotificationViewModel.swift in Sources */,
+				5D352D9E1B1548AB00AA852B /* MapFilterTableViewCell.swift in Sources */,
 				5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */,
 				5DB3EB5B1AE373A20071396E /* AppViewModel.swift in Sources */,
 				5DF2627A1AE9E9EC005EE2EA /* FoodDrinkViewController.swift in Sources */,

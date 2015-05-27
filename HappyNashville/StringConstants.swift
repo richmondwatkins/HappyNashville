@@ -16,4 +16,11 @@ public class StringConstants: NSObject {
     public static let navBarTextColor: String = "ffffff"
     public static let foodColor: String = "18314F"
     public static let drinkColor: String = "F45866"
+    public static let twelveSouthColor: String = "7D7DFE"
+    public static let gulchColor: String = "9C6298"
+    public static let downtownColor: String = "7FEE01"
+    public static let eastNashColor: String = "FD625F"
+    public static let germanTownColor: String = "FFB868"
+    public static let hillsboroColor: String = "64FBF7"
+    public static let midtownColor: String = "C1A176"
 }

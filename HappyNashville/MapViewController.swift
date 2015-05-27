@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelegate {
+class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelegate, MapFilterProtocol {
     
     var location: Location?
     var locations: Array<Location>!
@@ -20,6 +20,17 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     var eastNashvillePolyArray: Array<CLLocationCoordinate2D> = []
     var germantownPolyArray: Array<CLLocationCoordinate2D> = []
     var gulchPolyArray: Array<CLLocationCoordinate2D> = []
+    var filterVC: MapFilterViewController!
+    var isFilterOpen: Bool = false
+    var twelveSouthPolygon: TwelveSouthPolygon!
+    var downtownPolygon: DowntownPolygon!
+    var germantownPolygon: GermantownPolygon!
+    var eastNashvillePolygon: EastNashvillePolygon!
+    var gulchPolygon: GulchPolygon!
+    var hillsboroPolygon: HillsboroVillagePolygon!
+    var midTownPolygon: MidtownPolygon!
+    
+    let containerView: UIView = UIView()
     
     init(location: Location, locations: Array<Location>) {
         self.locations = locations
@@ -38,7 +49,11 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.frame = self.view!.frame
         self.mapView.delegate = self
         
-        self.view!.addSubview(self.mapView)
+    
+        self.view!.addSubview(self.containerView)
+        
+        self.containerView.frame = self.view.frame
+        self.containerView.addSubview(self.mapView)
         
         var locationAnnotation = createAnnotation(self.location!)
         
@@ -49,22 +64,118 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.region = mapRegion
         self.mapView.selectAnnotation(locationAnnotation, animated: true)
         
-        for location in self.locations {
-            
-            self.mapView.addAnnotation(createAnnotation(location))
-        }
+        setAllAnnotations()
         
-        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Find Me", style: UIBarButtonItemStyle.Plain, target: self, action: "showDirectionsPopUp:")
+        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Find Me", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
         
         self.navigationItem.rightBarButtonItem = findMe
         
         self.navigationController?.navigationBar.tintColor = .whiteColor()
+        
+        setUpSideMenu()
         
         createTwelveSouthPolyArray()
         createDownTownPolyArray()
         createEastNashvillePolyArray()
         createGermantownPolyArray()
         createGulchPolyArray()
+        createHillsboroPolygon()
+        createMidTownPolygon()
+    }
+    
+    func setAllAnnotations() {
+        for location in self.locations {
+            
+            self.mapView.addAnnotation(createAnnotation(location))
+        }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        self.containerView.frame = self.view.frame
+    }
+    
+    func createMidTownPolygon() {
+        var midTownArry: Array<CLLocationCoordinate2D> = [
+            CLLocationCoordinate2DMake(36.153070, -86.822290),
+            CLLocationCoordinate2DMake(36.154699, -86.818385),
+            CLLocationCoordinate2DMake(36.155496, -86.813192),
+            CLLocationCoordinate2DMake(36.157540, -86.809716),
+            CLLocationCoordinate2DMake(36.157055, -86.803150),
+            CLLocationCoordinate2DMake(36.160485, -86.793709),
+            CLLocationCoordinate2DMake(36.151441, -86.786842),
+            CLLocationCoordinate2DMake(36.151719, -86.789846),
+            CLLocationCoordinate2DMake(36.149362, -86.790233),
+            CLLocationCoordinate2DMake(36.149536, -86.793365),
+            CLLocationCoordinate2DMake(36.136978, -86.796097),
+            CLLocationCoordinate2DMake(36.136908, -86.798200),
+            CLLocationCoordinate2DMake(36.137497, -86.800217),
+            CLLocationCoordinate2DMake(36.138849, -86.812706),
+            CLLocationCoordinate2DMake(36.143909, -86.816740),
+            CLLocationCoordinate2DMake(36.144706, -86.816268),
+            CLLocationCoordinate2DMake(36.146058, -86.813950),
+            CLLocationCoordinate2DMake(36.146370, -86.821460),
+            CLLocationCoordinate2DMake(36.153058, -86.822319)
+        ]
+        
+        midTownPolygon = MidtownPolygon(coordinates: &midTownArry, count: midTownArry.count)
+        
+        self.mapView.addOverlay(midTownPolygon)
+    }
+    
+    func createHillsboroPolygon() {
+         var hillsboroArr: Array<CLLocationCoordinate2D> = [
+            CLLocationCoordinate2DMake(36.136522, -86.795174),
+            CLLocationCoordinate2DMake(36.136175, -86.794445),
+            CLLocationCoordinate2DMake(36.136054, -86.793501),
+            CLLocationCoordinate2DMake(36.135959, -86.793404),
+            CLLocationCoordinate2DMake(36.135967, -86.791977),
+            CLLocationCoordinate2DMake(36.135855, -86.790888),
+            CLLocationCoordinate2DMake(36.136158, -86.789901),
+            CLLocationCoordinate2DMake(36.136149, -86.788903),
+            CLLocationCoordinate2DMake(36.134858, -86.789097),
+            CLLocationCoordinate2DMake(36.133221, -86.788785),
+            CLLocationCoordinate2DMake(36.132753, -86.788592),
+            CLLocationCoordinate2DMake(36.131730, -86.788807),
+            CLLocationCoordinate2DMake(36.130812, -86.788764),
+            CLLocationCoordinate2DMake(36.128659, -86.789093),
+            CLLocationCoordinate2DMake(36.127584, -86.789093),
+            CLLocationCoordinate2DMake(36.126345, -86.789297),
+            CLLocationCoordinate2DMake(36.125686, -86.789286),
+            CLLocationCoordinate2DMake(36.124525, -86.789490),
+            CLLocationCoordinate2DMake(36.123433, -86.789812),
+            CLLocationCoordinate2DMake(36.121544, -86.790005),
+            CLLocationCoordinate2DMake(36.120703, -86.790434),
+            CLLocationCoordinate2DMake(36.117921, -86.791335),
+            CLLocationCoordinate2DMake(36.116326, -86.791700),
+            CLLocationCoordinate2DMake(36.116240, -86.795788),
+            CLLocationCoordinate2DMake(36.116439, -86.797998),
+            CLLocationCoordinate2DMake(36.116647, -86.798642),
+            CLLocationCoordinate2DMake(36.118060, -86.800605),
+            CLLocationCoordinate2DMake(36.120365, -86.802064),
+            CLLocationCoordinate2DMake(36.120894, -86.802482),
+            CLLocationCoordinate2DMake(36.121500, -86.803233),
+            CLLocationCoordinate2DMake(36.121873, -86.803866),
+            CLLocationCoordinate2DMake(36.122757, -86.806280),
+            CLLocationCoordinate2DMake(36.123450, -86.806205),
+            CLLocationCoordinate2DMake(36.125348, -86.805379),
+            CLLocationCoordinate2DMake(36.126345, -86.804499),
+            CLLocationCoordinate2DMake(36.127350, -86.803577),
+            CLLocationCoordinate2DMake(36.127948, -86.803298),
+            CLLocationCoordinate2DMake(36.128251, -86.802997),
+            CLLocationCoordinate2DMake(36.129178, -86.802697),
+            CLLocationCoordinate2DMake(36.130262, -86.801882),
+            CLLocationCoordinate2DMake(36.131284, -86.801485),
+            CLLocationCoordinate2DMake(36.131683, -86.801517),
+            CLLocationCoordinate2DMake(36.133147, -86.801313),
+            CLLocationCoordinate2DMake(36.134716, -86.799199),
+            CLLocationCoordinate2DMake(36.135080, -86.798287),
+            CLLocationCoordinate2DMake(36.135305, -86.797064),
+            CLLocationCoordinate2DMake(36.136553, -86.795187),
+        ]
+        
+        hillsboroPolygon = HillsboroVillagePolygon(coordinates: &hillsboroArr, count: hillsboroArr.count)
+        
+        self.mapView.addOverlay(hillsboroPolygon)
     }
     
     func createGulchPolyArray() {
@@ -80,7 +191,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.gulchPolyArray.append(CLLocationCoordinate2DMake(36.155652, -86.788645))
         self.gulchPolyArray.append(CLLocationCoordinate2DMake(36.155878, -86.788924))
         
-        let gulchPolygon: GulchPolygon = GulchPolygon(coordinates: &self.gulchPolyArray, count: self.gulchPolyArray.count)
+        gulchPolygon = GulchPolygon(coordinates: &self.gulchPolyArray, count: self.gulchPolyArray.count)
         
         self.mapView.addOverlay(gulchPolygon)
     }
@@ -102,7 +213,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.germantownPolyArray.append(CLLocationCoordinate2DMake(36.176819, -86.793592))
         self.germantownPolyArray.append(CLLocationCoordinate2DMake(36.178863, -86.795008))
         
-        let germantownPolygon: GermantownPolygon = GermantownPolygon(coordinates: &self.germantownPolyArray, count: self.germantownPolyArray.count)
+        germantownPolygon = GermantownPolygon(coordinates: &self.germantownPolyArray, count: self.germantownPolyArray.count)
         
         self.mapView.addOverlay(germantownPolygon)
     }
@@ -135,12 +246,34 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.eastNashvillePolyArray.append(CLLocationCoordinate2DMake(36.201715, -86.776650))
         self.eastNashvillePolyArray.append(CLLocationCoordinate2DMake(36.206286, -86.776307))
         
-        let eastNashvillePolygon: EastNashvillePolygon = EastNashvillePolygon(coordinates: &self.eastNashvillePolyArray, count: self.eastNashvillePolyArray.count)
+        eastNashvillePolygon = EastNashvillePolygon(coordinates: &self.eastNashvillePolyArray, count: self.eastNashvillePolyArray.count)
         
         self.mapView.addOverlay(eastNashvillePolygon)
     }
     
     func createDownTownPolyArray() {
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171487, -86.798611))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.175783, -86.781531))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.172076, -86.779599))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161751, -86.773463))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158356, -86.766124))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158304, -86.760352))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156970, -86.760416))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156346, -86.760588))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155203, -86.761768))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.153834, -86.763871))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149381, -86.774214))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149294, -86.774922))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.154544, -86.782089))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155220, -86.783247))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.157663, -86.784814))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155844, -86.789170))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.160036, -86.792517))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161110, -86.793118))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.164125, -86.793762))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.165545, -86.794405))
+//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171435, -86.798611))
+        
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171487, -86.798611))
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.174258, -86.787281))
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.174605, -86.786509))
@@ -168,7 +301,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.166013, -86.794749))
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171452, -86.798568))
         
-        let downtownPolygon: DowntownPolygon = DowntownPolygon(coordinates: &self.downTownPolyArray, count: self.downTownPolyArray.count)
+        downtownPolygon = DowntownPolygon(coordinates: &self.downTownPolyArray, count: self.downTownPolyArray.count)
         
         self.mapView.addOverlay(downtownPolygon)
     }
@@ -200,22 +333,150 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.twelveSouthPoly.append(CLLocationCoordinate2DMake(36.127946, -86.792511))
         self.twelveSouthPoly.append(CLLocationCoordinate2DMake(36.135918, -86.791910))
         
-        let twelveSouthPolygon: TwelveSouthPolygon = TwelveSouthPolygon(coordinates: &self.twelveSouthPoly, count: self.twelveSouthPoly.count)
+        self.twelveSouthPolygon = TwelveSouthPolygon(coordinates: &self.twelveSouthPoly, count: self.twelveSouthPoly.count)
+        
         
         self.mapView.addOverlay(twelveSouthPolygon)
     }
     
-    func showDirectionsPopUp(sender: UIButton) {
+    func setUpSideMenu() {
         
-        var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.location!)
+        let navHeight: CGFloat = self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.size.height
         
-        directionsVC.delegate = self
+        self.filterVC = MapFilterViewController(
+            viewFrame: CGRectMake(
+                self.view!.width,
+                navHeight,
+                100,
+                self.view!.height - navHeight
+            )
+        )
         
-        self.addChildViewController(directionsVC)
+        self.filterVC.delegate = self
         
-        self.view!.addSubview(directionsVC.view)
+        self.filterVC.view!.frame = CGRectMake(
+            self.view!.width,
+            navHeight,
+            100,
+            self.view!.height - navHeight
+        )
         
-        directionsVC.didMoveToParentViewController(self)
+        self.addChildViewController(filterVC)
+        self.view.addSubview(self.filterVC.view!)
+        filterVC.didMoveToParentViewController(self)
+    }
+    
+    func showFilterVC(sender: UIButton) {
+        
+        if self.isFilterOpen {
+            closeSidemenu()
+        } else {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.containerView.frame = CGRectMake(
+                    -(self.filterVC.view.width),
+                    self.view.frame.origin.y,
+                    self.view.width,
+                    self.view.height
+                )
+                
+                self.filterVC.view.frame = CGRectMake(
+                    self.view.width - self.filterVC.view.width,
+                    self.filterVC.view.frame.origin.y,
+                    self.filterVC.view.width,
+                    self.filterVC.view.height
+                )
+                }) { (complete) -> Void in
+                    self.isFilterOpen = true
+            }
+        }
+       
+        
+//        var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.location!)
+//        
+//        directionsVC.delegate = self
+//        
+//        self.addChildViewController(directionsVC)
+//        
+//        self.view!.addSubview(directionsVC.view)
+//        
+//        directionsVC.didMoveToParentViewController(self)
+    }
+    
+    func closeSidemenu() {
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.containerView.frame = CGRectMake(
+                0,
+                self.view.frame.origin.y,
+                self.view.width,
+                self.view.height
+            )
+            
+            self.filterVC.view.frame = CGRectMake(
+                self.view!.width,
+                self.filterVC.view.frame.origin.y,
+                self.filterVC.view.width,
+                self.filterVC.view.height
+            )
+            }) { (complete) -> Void in
+                self.isFilterOpen = false
+        }
+    }
+    
+    func filterDowntown() {
+        runFilter(self.downtownPolygon)
+        runFilter(self.gulchPolygon)
+    }
+    
+    func filterTwelveSouth() {
+        runFilter(self.twelveSouthPolygon)
+    }
+    
+    func filterGermantown() {
+        runFilter(self.germantownPolygon)
+    }
+    
+    func filterEastNashville() {
+        runFilter(self.eastNashvillePolygon)
+    }
+    
+    func filterGulch() {
+        runFilter(self.gulchPolygon)
+    }
+    
+    func filterHillsboro() {
+        runFilter(self.hillsboroPolygon)
+    }
+    
+    func filterMidtown() {
+        runFilter(self.midTownPolygon)
+    }
+    
+    func resetAll() {
+        for annotation in self.mapView.annotations as! [MKPointAnnotation] {
+            self.mapView.viewForAnnotation(annotation).hidden = false
+        }
+        
+        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+    }
+    
+    func runFilter(overlay: MKOverlay) {
+        
+        for annotation in self.mapView.annotations as! [MKPointAnnotation] {
+            let mapPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate);
+            
+            var polygonView = MKPolygonRenderer(overlay: overlay);
+            
+            let polyPoint = polygonView.pointForMapPoint(mapPoint)
+            
+            if CGPathContainsPoint(polygonView.path, nil, polyPoint, false) {
+                if  self.mapView.viewForAnnotation(annotation).hidden == true {
+                    self.mapView.viewForAnnotation(annotation).hidden = false
+                } else {
+                    self.mapView.viewForAnnotation(annotation).hidden = true
+                }
+            }
+        }
+//        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
     }
     
     func createAnnotation(location: Location) -> MKPointAnnotation {
@@ -250,11 +511,11 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         
         var pr = MKPolygonRenderer(overlay: overlay);
         pr.lineWidth = 5;
-
+       
         if (overlay is TwelveSouthPolygon) {
-            pr.strokeColor = UIColor.blueColor().colorWithAlphaComponent(0.5);
+            pr.strokeColor = UIColor(hexString: StringConstants.twelveSouthColor).colorWithAlphaComponent(0.5);
             
-            pr.fillColor = UIColor.blueColor().colorWithAlphaComponent(0.2);
+            pr.fillColor = UIColor(hexString: StringConstants.twelveSouthColor).colorWithAlphaComponent(0.2);
             
             return pr;
         } else if overlay is DowntownPolygon {
@@ -279,6 +540,18 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             pr.strokeColor = UIColor.purpleColor().colorWithAlphaComponent(0.5);
             
             pr.fillColor = UIColor.purpleColor().colorWithAlphaComponent(0.2);
+            
+            return pr
+        } else if overlay is HillsboroVillagePolygon {
+            pr.strokeColor = UIColor.cyanColor().colorWithAlphaComponent(0.5);
+            
+            pr.fillColor = UIColor.cyanColor().colorWithAlphaComponent(0.2);
+            
+            return pr
+        } else if overlay is MidtownPolygon {
+            pr.strokeColor = UIColor.brownColor().colorWithAlphaComponent(0.5);
+            
+            pr.fillColor = UIColor.brownColor().colorWithAlphaComponent(0.2);
             
             return pr
         }
