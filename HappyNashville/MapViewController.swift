@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+
 class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelegate, MapFilterProtocol {
     
     var location: Location?
@@ -29,10 +30,12 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     var gulchPolygon: GulchPolygon!
     var hillsboroPolygon: HillsboroVillagePolygon!
     var midTownPolygon: MidtownPolygon!
+    var musicRowPolyon: MusicRowPolygon!
+    var sobroPolygon: SobroPolygon!
     
     let containerView: UIView = UIView()
     
-    init(location: Location, locations: Array<Location>) {
+    init(location: Location?, locations: Array<Location>) {
         self.locations = locations
         self.location = location
         super.init(nibName: nil, bundle: nil)
@@ -55,18 +58,18 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.containerView.frame = self.view.frame
         self.containerView.addSubview(self.mapView)
         
-        var locationAnnotation = createAnnotation(self.location!)
+        if let loc = self.location {
+            var locationAnnotation = createAnnotation(self.location!)
+
+            self.mapView.addAnnotation(locationAnnotation)
+            self.mapView.selectAnnotation(locationAnnotation, animated: true)
+            self.setMapCenter(locationAnnotation.coordinate)
+        }
         
-        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: locationAnnotation.coordinate, span: coordinateSpan)
-        
-        self.mapView.addAnnotation(locationAnnotation)
-        self.mapView.region = mapRegion
-        self.mapView.selectAnnotation(locationAnnotation, animated: true)
         
         setAllAnnotations()
         
-        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Find Me", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
+        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
         
         self.navigationItem.rightBarButtonItem = findMe
         
@@ -81,6 +84,14 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         createGulchPolyArray()
         createHillsboroPolygon()
         createMidTownPolygon()
+        createMusicRowPloygon()
+        createSobroPolygon()
+    }
+    
+    func setMapCenter(coordinate: CLLocationCoordinate2D) {
+        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
+        self.mapView.region = mapRegion
     }
     
     func setAllAnnotations() {
@@ -88,10 +99,41 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             
             self.mapView.addAnnotation(createAnnotation(location))
         }
+        
+        if self.location == nil {
+            self.setMapCenter(CLLocationCoordinate2D(latitude: 36.1667, longitude: -86.7833))
+        }
     }
     
     override func viewWillLayoutSubviews() {
         self.containerView.frame = self.view.frame
+    }
+    
+    func createSobroPolygon() {
+        var sobroArr: Array<CLLocationCoordinate2D> = [
+            CLLocationCoordinate2DMake(36.156709, -86.783801),
+            CLLocationCoordinate2DMake(36.157835, -86.781462),
+            CLLocationCoordinate2DMake(36.158806, -86.782106),
+            CLLocationCoordinate2DMake(36.160486, -86.778436),
+            CLLocationCoordinate2DMake(36.159429, -86.777707),
+            CLLocationCoordinate2DMake(36.161300, -86.773158),
+            CLLocationCoordinate2DMake(36.159966, -86.769961),
+            CLLocationCoordinate2DMake(36.159273, -86.770111),
+            CLLocationCoordinate2DMake(36.158234, -86.771784),
+            CLLocationCoordinate2DMake(36.157090, -86.774531),
+            CLLocationCoordinate2DMake(36.153296, -86.772171),
+            CLLocationCoordinate2DMake(36.152638, -86.773823),
+            CLLocationCoordinate2DMake(36.153296, -86.775711),
+            CLLocationCoordinate2DMake(36.151823, -86.775668),
+            CLLocationCoordinate2DMake(36.151841, -86.778994),
+            CLLocationCoordinate2DMake(36.153729, -86.781719),
+            CLLocationCoordinate2DMake(36.154232, -86.782256),
+            CLLocationCoordinate2DMake(36.156727, -86.783801)
+        ]
+        
+        sobroPolygon = SobroPolygon(coordinates: &sobroArr, count: sobroArr.count)
+        
+        self.mapView.addOverlay(sobroPolygon)
     }
     
     func createMidTownPolygon() {
@@ -120,6 +162,34 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         midTownPolygon = MidtownPolygon(coordinates: &midTownArry, count: midTownArry.count)
         
         self.mapView.addOverlay(midTownPolygon)
+    }
+    
+    func createMusicRowPloygon() {
+        var musicRowArr: Array<CLLocationCoordinate2D> = [
+            CLLocationCoordinate2DMake(36.154104, -86.790147),
+            CLLocationCoordinate2DMake(36.153082, -86.789503),
+            CLLocationCoordinate2DMake(36.152999, -86.789589),
+            CLLocationCoordinate2DMake(36.152146, -86.788988),
+            CLLocationCoordinate2DMake(36.151929, -86.789460),
+            CLLocationCoordinate2DMake(36.151791, -86.789508),
+            CLLocationCoordinate2DMake(36.151656, -86.789503),
+            CLLocationCoordinate2DMake(36.148568, -86.790034),
+            CLLocationCoordinate2DMake(36.148676, -86.790919),
+            CLLocationCoordinate2DMake(36.143274, -86.791949),
+            CLLocationCoordinate2DMake(36.143274, -86.791949),
+            CLLocationCoordinate2DMake(36.139140, -86.793324),
+            CLLocationCoordinate2DMake(36.139720, -86.796447),
+            CLLocationCoordinate2DMake(36.143663, -86.795738),
+            CLLocationCoordinate2DMake(36.144074, -86.799853),
+            CLLocationCoordinate2DMake(36.148653, -86.799123),
+            CLLocationCoordinate2DMake(36.153201, -86.794027),
+            CLLocationCoordinate2DMake(36.152699, -86.793609),
+            CLLocationCoordinate2DMake(36.154111, -86.790143)
+        ]
+        
+        musicRowPolyon = MusicRowPolygon(coordinates: &musicRowArr, count: musicRowArr.count)
+        
+        self.mapView.addOverlay(musicRowPolyon)
     }
     
     func createHillsboroPolygon() {
@@ -389,17 +459,6 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
                     self.isFilterOpen = true
             }
         }
-       
-        
-//        var directionsVC: DirectionsViewController = DirectionsViewController(parentFrame: self.view!.frame, location:  self.location!)
-//        
-//        directionsVC.delegate = self
-//        
-//        self.addChildViewController(directionsVC)
-//        
-//        self.view!.addSubview(directionsVC.view)
-//        
-//        directionsVC.didMoveToParentViewController(self)
     }
     
     func closeSidemenu() {
@@ -422,33 +481,41 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         }
     }
     
-    func filterDowntown() {
-        runFilter(self.downtownPolygon)
-        runFilter(self.gulchPolygon)
+    func filterDowntown(shouldHide: Bool) {
+        runFilter(self.downtownPolygon, shouldHide: shouldHide)
+//       runFilter(self.musicRowPolyon, shouldHide: shouldHide)
     }
     
-    func filterTwelveSouth() {
-        runFilter(self.twelveSouthPolygon)
+    func filterTwelveSouth(shouldHide: Bool) {
+        runFilter(self.twelveSouthPolygon, shouldHide: shouldHide)
     }
     
-    func filterGermantown() {
-        runFilter(self.germantownPolygon)
+    func filterGermantown(shouldHide: Bool) {
+        runFilter(self.germantownPolygon, shouldHide: shouldHide)
     }
     
-    func filterEastNashville() {
-        runFilter(self.eastNashvillePolygon)
+    func filterEastNashville(shouldHide: Bool) {
+        runFilter(self.eastNashvillePolygon, shouldHide: shouldHide)
     }
     
-    func filterGulch() {
-        runFilter(self.gulchPolygon)
+    func filterGulch(shouldHide: Bool) {
+        runFilter(self.gulchPolygon, shouldHide: shouldHide)
     }
     
-    func filterHillsboro() {
-        runFilter(self.hillsboroPolygon)
+    func filterHillsboro(shouldHide: Bool) {
+        runFilter(self.hillsboroPolygon, shouldHide: shouldHide)
     }
     
-    func filterMidtown() {
-        runFilter(self.midTownPolygon)
+    func filterMidtown(shouldHide: Bool) {
+        runFilter(self.midTownPolygon, shouldHide: shouldHide)
+    }
+    
+    func filterMusicRow(shouldHide: Bool) {
+        runFilter(self.musicRowPolyon, shouldHide: shouldHide)
+    }
+    
+    func filterSobro(shouldHide: Bool) {
+        runFilter(self.sobroPolygon, shouldHide: shouldHide)
     }
     
     func resetAll() {
@@ -459,7 +526,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
     }
     
-    func runFilter(overlay: MKOverlay) {
+    func runFilter(overlay: MKOverlay, shouldHide: Bool) {
         
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
             let mapPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate);
@@ -469,7 +536,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             let polyPoint = polygonView.pointForMapPoint(mapPoint)
             
             if CGPathContainsPoint(polygonView.path, nil, polyPoint, false) {
-                if  self.mapView.viewForAnnotation(annotation).hidden == true {
+                if  !shouldHide {
                     self.mapView.viewForAnnotation(annotation).hidden = false
                 } else {
                     self.mapView.viewForAnnotation(annotation).hidden = true
@@ -554,9 +621,50 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             pr.fillColor = UIColor.brownColor().colorWithAlphaComponent(0.2);
             
             return pr
+        } else if overlay is MusicRowPolygon {
+            pr.strokeColor = UIColor.grayColor().colorWithAlphaComponent(0.5);
+            
+            pr.fillColor = UIColor.grayColor().colorWithAlphaComponent(0.2);
+            
+            return pr
+        } else if overlay is SobroPolygon {
+            pr.strokeColor = UIColor.magentaColor().colorWithAlphaComponent(0.5);
+            
+            pr.fillColor = UIColor.magentaColor().colorWithAlphaComponent(0.2);
+            
+            return pr
         }
         
         return nil
     }
-
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        
+        let identifier = "pin"
+        var view: MKPinAnnotationView
+        if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier)
+            as? MKPinAnnotationView { // 2
+                dequeuedView.annotation = annotation
+                view = dequeuedView
+        } else {
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            view.canShowCallout = true
+            view.calloutOffset = CGPoint(x: -5, y: 5)
+            view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
+        }
+        
+        return view
+    }
+    
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+        
+        for location in self.locations {
+            if location.name == view.annotation.title {
+                let detailViewController: DetailViewController = DetailViewController(location: location)
+                
+                self.presentViewController(detailViewController, animated: true, completion: nil)
+            }
+        }
+        
+    }
 }

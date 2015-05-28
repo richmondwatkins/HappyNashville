@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol {
     
     var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
@@ -22,9 +22,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var sortIsDisplaying: Bool = Bool()
     var footer: FooterViewController!
     var sortButton: UIBarButtonItem!
-    var settingsButton: UIBarButtonItem!
+    var menuButton: UIBarButtonItem!
     var currentSort: String = ""
     var refreshControl: UIRefreshControl!
+    var menuVC: MenuViewController!
+    var isMenuOut: Bool = false
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     var sortViewController: SortViewController?
     let titleBottomPadding: CGFloat = 15
@@ -62,7 +64,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
              self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
 
-        setUpSettingsButton()
+        setUpMenuButton()
         
         setUpSortButton()
         
@@ -73,8 +75,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleView.textAlignment = .Center
         
         self.navigationItem.titleView = self.customTitleView
-        
-//        self.customTitleView.layer.addSublayer(self.customTitleViewBorder)
         
         self.activityIndicator.center = self.navigationItem.titleView!.center
         self.navigationItem.titleView?.addSubview(self.activityIndicator);
@@ -97,12 +97,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.navigationItem.rightBarButtonItem = sortButton
     }
     
-    func setUpSettingsButton() {
-        settingsButton = UIBarButtonItem(image: UIImage(named: "notification-manager"), style: UIBarButtonItemStyle.Plain, target: self, action: "displayNotifications:")
+    func setUpMenuButton() {
+        menuButton = UIBarButtonItem(image: UIImage(named: "menu"), style: UIBarButtonItemStyle.Plain, target: self, action: "showMenu:")
         
-        settingsButton.tintColor = .whiteColor()
+        menuButton.tintColor = .whiteColor()
         
-        self.navigationItem.leftBarButtonItem = settingsButton
+        self.navigationItem.leftBarButtonItem = menuButton
     }
     
     func addFooter() {
@@ -372,12 +372,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.addChildViewController(shareVC)
         self.view!.addSubview(shareVC.view)
         shareVC.didMoveToParentViewController(self)
-        
-  //      let deal: DealDay = returnSelectedDealDay(sender).dealDay
-        
-    //    let webViewController: LocationWebViewController = LocationWebViewController(location: deal.location, navBarHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height)
-        
-      //  self.presentViewController(webViewController, animated: true, completion: nil)
     }
 
     func scheduleButtonPressed(sender: UIButton) {
@@ -391,12 +385,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subView.transformAndAddSubview(scheduleViewController.view)
         scheduleViewController.didMoveToParentViewController(self)
         
-        self.footer.view!.hidden = true
+        self.footer.view.hidden = true
         
         var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
         self.sortButton.enabled = false
-        self.settingsButton.enabled = false
+        self.menuButton.enabled = false
     }
     
     func mapButtonPressed(sender: UIButton) {
@@ -437,8 +431,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func showFooter() {
         self.sortButton.enabled = true
-        self.settingsButton.enabled = true
-        self.footer.view!.hidden = false
+        self.menuButton.enabled = true
+        self.footer.view!.hidden = false        
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
@@ -462,10 +456,44 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
     
-    func displayNotifications(sender: UIButton) {
+    func showMenu(sender: UIButton) {
+        if !isMenuOut {
+            menuVC = MenuViewController(viewFrame:
+                CGRectMake(
+                    0,
+                    self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.size.height,
+                    self.view.width,
+                    self.view.height / 5
+                )
+            )
+            
+            self.addChildViewController(menuVC)
+            self.view.addSubview(menuVC.view)
+            menuVC.didMoveToParentViewController(self)
+            
+            menuVC.delegate = self
+            isMenuOut = true
+        } else {
+            menuVC.dimissView()
+        }
+    }
+    
+    func displayMapView() {
+        let mapVC: MapViewController = MapViewController(location: nil, locations: self.viewModel.locations)
         
+        self.navigationController?.pushViewController(mapVC, animated: true)
+        
+        setUpBackButton()
+    }
+    
+    func setMenuDissmissed() {
+        isMenuOut = false
+    }
+    
+    func displayNotificationManager() {
         var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController(navBarHeight: self.navigationController!.navigationBar.height)
         notificationViewController.delegate = self
+        
         self.presentViewController(notificationViewController, animated: true, completion: nil)
     }
     
@@ -616,6 +644,4 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.presentViewController(detailViewController, animated: true, completion: nil)
         }
     }
-    
 }
-

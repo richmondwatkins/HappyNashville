@@ -13,6 +13,9 @@
 		5D2972E61B156E2B00291470 /* MidtownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2972E51B156E2B00291470 /* MidtownPolygon.swift */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
 		5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73761ACF3E4F002216CB /* ScheduleView.swift */; };
+		5D3435611B168EA400F108A7 /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3435601B168EA400F108A7 /* MenuViewController.swift */; };
+		5D3435631B16C35C00F108A7 /* MusicRowPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3435621B16C35C00F108A7 /* MusicRowPolygon.swift */; };
+		5D3435651B16C98E00F108A7 /* SobroPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D3435641B16C98E00F108A7 /* SobroPolygon.swift */; };
 		5D352D9C1B13A40300AA852B /* MapFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */; };
 		5D352D9E1B1548AB00AA852B /* MapFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */; };
 		5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */; };
@@ -88,6 +91,9 @@
 		5D2972E51B156E2B00291470 /* MidtownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidtownPolygon.swift; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		5D2D73761ACF3E4F002216CB /* ScheduleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleView.swift; sourceTree = "<group>"; };
+		5D3435601B168EA400F108A7 /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		5D3435621B16C35C00F108A7 /* MusicRowPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicRowPolygon.swift; sourceTree = "<group>"; };
+		5D3435641B16C98E00F108A7 /* SobroPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SobroPolygon.swift; sourceTree = "<group>"; };
 		5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterViewController.swift; sourceTree = "<group>"; };
 		5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterTableViewCell.swift; sourceTree = "<group>"; };
 		5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -181,6 +187,14 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		5D34355F1B168E9200F108A7 /* MenuGroup */ = {
+			isa = PBXGroup;
+			children = (
+				5D3435601B168EA400F108A7 /* MenuViewController.swift */,
+			);
+			name = MenuGroup;
+			sourceTree = "<group>";
+		};
 		5D7505F21B0ED4CD003E7533 /* Map */ = {
 			isa = PBXGroup;
 			children = (
@@ -202,6 +216,8 @@
 				5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */,
 				5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */,
 				5D2972E51B156E2B00291470 /* MidtownPolygon.swift */,
+				5D3435621B16C35C00F108A7 /* MusicRowPolygon.swift */,
+				5D3435641B16C98E00F108A7 /* SobroPolygon.swift */,
 			);
 			name = Polygons;
 			sourceTree = "<group>";
@@ -289,6 +305,7 @@
 		5DF6B9471ACB5A7E007E852A /* HappyNashville */ = {
 			isa = PBXGroup;
 			children = (
+				5D34355F1B168E9200F108A7 /* MenuGroup */,
 				5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */,
 				5DAB59C31B07CFF40091DD58 /* MainVC */,
 				5DAB59C11B07CFBF0091DD58 /* DetailController */,
@@ -492,6 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D7505FD1B0EDBDC003E7533 /* GulchPolygon.swift in Sources */,
+				5D3435651B16C98E00F108A7 /* SobroPolygon.swift in Sources */,
 				5DB3EB531AE3254C0071396E /* LocationSpecialPageViewController.swift in Sources */,
 				5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */,
 				5D87FBA51AD21B5B00F23EA5 /* LocationWebViewController.swift in Sources */,
@@ -504,6 +522,7 @@
 				5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
+				5D3435631B16C35C00F108A7 /* MusicRowPolygon.swift in Sources */,
 				5DAB59CB1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift in Sources */,
 				5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */,
 				5DB3EB4B1AE0AB600071396E /* DayCollectionViewCell.swift in Sources */,
@@ -543,6 +562,7 @@
 				5DB3EB5D1AE436F60071396E /* LocationTabButtonView.swift in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
 				5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */,
+				5D3435611B168EA400F108A7 /* MenuViewController.swift in Sources */,
 				5DDFB51C1AF9D0B700A9741F /* Location.swift in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
 				5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */,

@@ -9,14 +9,15 @@
 import UIKit
 
 @objc protocol MapFilterProtocol {
-    func closeSidemenu()
-    func filterTwelveSouth()
-    func filterDowntown()
-    func filterGermantown()
-    func filterEastNashville()
-    func filterGulch()
-    func filterHillsboro()
-    func filterMidtown()
+    func filterTwelveSouth(shouldHide: Bool)
+    func filterDowntown(shouldHide: Bool)
+    func filterGermantown(shouldHide: Bool)
+    func filterEastNashville(shouldHide: Bool)
+    func filterGulch(shouldHide: Bool)
+    func filterHillsboro(shouldHide: Bool)
+    func filterMidtown(shouldHide: Bool)
+    func filterMusicRow(shouldHide: Bool)
+    func filterSobro(shouldHide: Bool)
     func resetAll()
 }
 
@@ -33,6 +34,8 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
         ["zone": "The \n Gulch", "color": StringConstants.gulchColor, "isSelected": "1"],
         ["zone": "Hillsboro \n Village", "color": StringConstants.hillsboroColor, "isSelected": "1"],
         ["zone": "Midtown", "color": StringConstants.midtownColor, "isSelected": "1"],
+        ["zone": "Music \n Row", "color": StringConstants.musicRowColor, "isSelected": "1"],
+        ["zone": "Sobro", "color": StringConstants.sobroColor, "isSelected": "1"],
         ["zone": "Reset", "color": "000000", "isSelected": "1"]
     ]
     
@@ -61,11 +64,7 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view!.addSubview(tableView)
         
         tableView.reloadData()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        self.view.frame = viewFrame
-        
+                
         tableView.frame = CGRectMake(
             0,
             0,
@@ -73,7 +72,7 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
             self.view.height
         )
     }
-    
+
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.dataSource.count
     }
@@ -102,6 +101,8 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         let isFiltered: String = dataSource[indexPath.row]["isSelected"]! == "1" ? "0" : "1"
+        
+        let shouldHide: Bool = dataSource[indexPath.row]["isSelected"]! == "1" ? true : false
             
         self.dataSource[indexPath.row] = [
             "zone": dataSource[indexPath.row]["zone"]!,
@@ -113,27 +114,33 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
 
         switch indexPath.row {
             case 0:
-                self.delegate?.filterTwelveSouth()
+                self.delegate?.filterTwelveSouth(shouldHide)
                 break;
             case 1:
-                self.delegate?.filterDowntown()
+                self.delegate?.filterDowntown(shouldHide)
                 break;
             case 2:
-                self.delegate?.filterEastNashville()
+                self.delegate?.filterEastNashville(shouldHide)
                 break;
             case 3:
-                self.delegate?.filterGermantown()
+                self.delegate?.filterGermantown(shouldHide)
                 break;
             case 4:
-                self.delegate?.filterGulch()
+                self.delegate?.filterGulch(shouldHide)
                 break;
             case 5:
-                 self.delegate?.filterHillsboro()
+                 self.delegate?.filterHillsboro(shouldHide)
                 break;
             case 6:
-                self.delegate?.filterMidtown()
+                self.delegate?.filterMidtown(shouldHide)
                 break;
             case 7:
+                self.delegate?.filterMusicRow(shouldHide)
+                break;
+            case 8:
+                self.delegate?.filterSobro(shouldHide)
+                break;
+            case 9:
                 resetMap()
                 break;
             default:
