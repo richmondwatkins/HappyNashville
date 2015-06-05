@@ -66,11 +66,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/DetailViewController.swift"
-            timestampString = "453341131.25328"
+            timestampString = "454987668.433556"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "329"
-            endingLineNumber = "329"
+            startingLineNumber = "313"
+            endingLineNumber = "313"
             landmarkName = "displayUserPinOnMap(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -129,28 +129,12 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HappyNashville/APIManger.swift"
-            timestampString = "453924454.333342"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
-            landmarkName = "deleteNotificationFromID(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HappyNashville/LocationSpecialViewController.swift"
-            timestampString = "453704572.276478"
+            timestampString = "454906347.46506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "242"
-            endingLineNumber = "242"
+            startingLineNumber = "238"
+            endingLineNumber = "238"
             landmarkName = "changeDealDay(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -162,11 +146,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/LocationSpecialViewController.swift"
-            timestampString = "453704572.276478"
+            timestampString = "454906347.46506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "createNoDealsView()"
             landmarkType = "5">
          </BreakpointContent>
@@ -178,11 +162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/DetailViewController.swift"
-            timestampString = "453341098.616079"
+            timestampString = "454987668.433556"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "253"
-            endingLineNumber = "253"
+            startingLineNumber = "237"
+            endingLineNumber = "237"
             landmarkName = "setUpPageViewController()"
             landmarkType = "5">
          </BreakpointContent>
@@ -225,38 +209,6 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "HappyNashville/DetailViewController.swift"
-            timestampString = "453341098.616079"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "224"
-            endingLineNumber = "224"
-            landmarkName = "setUpMapView()"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HappyNashville/AppViewModel.swift"
-            timestampString = "453258405.998706"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "47"
-            endingLineNumber = "47"
-            landmarkName = "getEaliestSpecial(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "HappyNashville/SortViewController.swift"
             timestampString = "453500275.216786"
             startingColumnNumber = "9223372036854775807"
@@ -274,28 +226,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/LocationSpecialViewController.swift"
-            timestampString = "453704572.276478"
+            timestampString = "454906347.46506"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HappyNashville/ScheduleViewControllerViewModel.swift"
-            timestampString = "453777721.522848"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
-            landmarkName = "calculateDatePickerDate(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -328,22 +264,6 @@
             startingLineNumber = "132"
             endingLineNumber = "132"
             landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "HappyNashville/ViewController.swift"
-            timestampString = "454476398.400726"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "494"
-            endingLineNumber = "494"
-            landmarkName = "displayNotificationManager()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

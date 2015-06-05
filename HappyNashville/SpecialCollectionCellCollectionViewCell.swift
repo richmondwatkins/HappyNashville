@@ -18,13 +18,13 @@ class SpecialCollectionCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        priceLabel.font = UIFont.systemFontOfSize(11)
+        priceLabel.font = UIFont(name: "GillSans-Light", size: 11)!
         priceLabel.textAlignment = .Center
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        descriptionLabel.font = UIFont.systemFontOfSize(11)
+        descriptionLabel.font = UIFont(name: "GillSans", size: 11)!
         descriptionLabel.textAlignment = .Center
-        timeLabel.font = UIFont.systemFontOfSize(10)
+        timeLabel.font = UIFont(name: "GillSans-Light", size: 10)!
         timeLabel.textAlignment = .Center
         
         typeImageView.contentMode = UIViewContentMode.ScaleAspectFit;

@@ -15,17 +15,5 @@ class MapViewModel: NSObject {
     override init() {
         super.init()
         
-        fetchData()
     }
-   
-    func fetchData() {
-        
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        
-        if let fetchResult = APIManger.fetchAllLocations(appDelegate.managedObjectContext!) {
-            
-            self.locations = fetchResult.mutableCopy() as AnyObject as! [Location]
-        }
-    }
-    
 }

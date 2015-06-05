@@ -24,6 +24,7 @@ class MapFilterTableViewCell: UITableViewCell {
         zoneLabel.numberOfLines = 0
         zoneLabel.font = UIFont.systemFontOfSize(12)
         zoneLabel.textAlignment = .Center
+        zoneLabel.textColor = .whiteColor()
         
         self.addSubview(zoneLabel)
         self.addSubview(colorView)
@@ -35,15 +36,11 @@ class MapFilterTableViewCell: UITableViewCell {
         
         let labelSize: CGSize = zonetext.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(12.0)])
         
-        zoneLabel.frame = CGRectMake(0, 0, cellWidth, labelSize.height)
+        zoneLabel.frame = CGRectMake(0, self.height / 2 - labelSize.height / 2, cellWidth, labelSize.height)
         
         zoneLabel.text = zonetext as String
         
-        if data["isSelected"] == "0" {
-            colorView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
-        } else {
-            colorView.backgroundColor = UIColor(hexString: data["color"]!)
-        }
+        self.backgroundColor = UIColor(hexString: data["color"]!)
     }
     
     override func layoutSubviews() {

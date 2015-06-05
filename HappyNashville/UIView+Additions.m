@@ -1,4 +1,3 @@
-
 #import <QuartzCore/QuartzCore.h>
 #import "UIView+Additions.h"
 
@@ -58,7 +57,6 @@
 }
 
 - (void)setSafeCenterX:(CGFloat)safeCenterX {
-    
     self.centerX = safeCenterX;
     self.left = floorf(self.left * UIScreen.mainScreen.scale) / UIScreen.mainScreen.scale;
 }

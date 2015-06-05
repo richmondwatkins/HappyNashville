@@ -32,9 +32,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     var midTownPolygon: MidtownPolygon!
     var musicRowPolyon: MusicRowPolygon!
     var sobroPolygon: SobroPolygon!
-    
+    var allOverlays: Array<MKOverlay>?
+    var isFirstLoad: Bool = true
     let containerView: UIView = UIView()
-    
+
     init(location: Location?, locations: Array<Location>) {
         self.locations = locations
         self.location = location
@@ -52,8 +53,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.frame = self.view!.frame
         self.mapView.delegate = self
         
-    
-        self.view!.addSubview(self.containerView)
+        self.view.addSubview(self.containerView)
         
         self.containerView.frame = self.view.frame
         self.containerView.addSubview(self.mapView)
@@ -65,7 +65,6 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             self.mapView.selectAnnotation(locationAnnotation, animated: true)
             self.setMapCenter(locationAnnotation.coordinate)
         }
-        
         
         setAllAnnotations()
         
@@ -106,7 +105,16 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     override func viewWillLayoutSubviews() {
-        self.containerView.frame = self.view.frame
+        if isFilterOpen {
+            self.mapView.frame = CGRectMake(
+                self.filterVC.view.width,
+                self.mapView.frame.origin.y,
+                self.view.width - self.filterVC.view.width,
+                self.mapView.height
+            )
+        } else {
+            self.containerView.frame = self.view.frame
+        }
     }
     
     func createSobroPolygon() {
@@ -417,19 +425,12 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             viewFrame: CGRectMake(
                 self.view!.width,
                 navHeight,
-                100,
+                70,
                 self.view!.height - navHeight
             )
         )
         
         self.filterVC.delegate = self
-        
-        self.filterVC.view!.frame = CGRectMake(
-            self.view!.width,
-            navHeight,
-            100,
-            self.view!.height - navHeight
-        )
         
         self.addChildViewController(filterVC)
         self.view.addSubview(self.filterVC.view!)
@@ -455,6 +456,14 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
                     self.filterVC.view.width,
                     self.filterVC.view.height
                 )
+                
+                self.mapView.frame = CGRectMake(
+                    self.filterVC.view.width,
+                    self.mapView.frame.origin.y,
+                    self.view.width - self.filterVC.view.width,
+                    self.mapView.height
+                )
+                
                 }) { (complete) -> Void in
                     self.isFilterOpen = true
             }
@@ -476,6 +485,14 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
                 self.filterVC.view.width,
                 self.filterVC.view.height
             )
+            
+            self.mapView.frame = CGRectMake(
+                0,
+                self.mapView.frame.origin.y,
+                self.containerView.width,
+                self.mapView.height
+            )
+            
             }) { (complete) -> Void in
                 self.isFilterOpen = false
         }
@@ -483,7 +500,6 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     
     func filterDowntown(shouldHide: Bool) {
         runFilter(self.downtownPolygon, shouldHide: shouldHide)
-//       runFilter(self.musicRowPolyon, shouldHide: shouldHide)
     }
     
     func filterTwelveSouth(shouldHide: Bool) {
@@ -519,31 +535,51 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func resetAll() {
+        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
+            
             self.mapView.viewForAnnotation(annotation).hidden = false
         }
         
-        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+        if let overlayArr = self.allOverlays {
+            for mkOverlay in overlayArr {
+                self.mapView.addOverlay(mkOverlay)
+            }
+        }
     }
     
     func runFilter(overlay: MKOverlay, shouldHide: Bool) {
         
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
+
             let mapPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate);
             
             var polygonView = MKPolygonRenderer(overlay: overlay);
             
             let polyPoint = polygonView.pointForMapPoint(mapPoint)
+        
+            var shouldHide: Bool = true
             
             if CGPathContainsPoint(polygonView.path, nil, polyPoint, false) {
-                if  !shouldHide {
-                    self.mapView.viewForAnnotation(annotation).hidden = false
+                shouldHide = false
+            }
+            
+            if self.mapView.viewForAnnotation(annotation) != nil {
+                self.mapView.viewForAnnotation(annotation).hidden = shouldHide
+            }
+        }
+
+        if let overlayArr = self.allOverlays {
+            for mkOverlay in overlayArr {
+                if mkOverlay.coordinate.latitude != overlay.coordinate.latitude {
+                    self.mapView.removeOverlay(mkOverlay)
                 } else {
-                    self.mapView.viewForAnnotation(annotation).hidden = true
+                    self.mapView.addOverlay(mkOverlay)
+                    self.mapView.setCenterCoordinate(mkOverlay.coordinate, animated: true)
                 }
             }
         }
-//        self.mapView.showAnnotations(self.mapView.annotations, animated: true)
     }
     
     func createAnnotation(location: Location) -> MKPointAnnotation {
@@ -665,6 +701,19 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
                 self.presentViewController(detailViewController, animated: true, completion: nil)
             }
         }
-        
+    }
+    
+    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+        if isFirstLoad {
+            self.allOverlays = self.mapView.overlays as? [MKOverlay]
+            isFirstLoad = false
+        }
+    }
+    
+    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
+        if isFirstLoad {
+            self.allOverlays = self.mapView.overlays as? [MKOverlay]
+            isFirstLoad = false
+        }
     }
 }

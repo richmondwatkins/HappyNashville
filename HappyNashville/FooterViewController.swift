@@ -48,6 +48,7 @@ class FooterViewController: UIViewController {
                 CGRectMake(CGFloat(left), 0, buttonMeasurements.buttonWidth, self.view!.height))
             
             dayButton.setTitle(day, forState: .Normal)
+            dayButton.titleLabel?.font = UIFont(name: "GillSans", size: 16)!
             dayButton.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.6)
             dayButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
             dayButton.tag = i

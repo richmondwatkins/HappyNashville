@@ -15,7 +15,7 @@ import MessageUI
     func displayNotificationManager()
 }
 
-class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate {
+class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate {
 
     var viewFrame: CGRect!
     var hasLoaded: Bool = false
@@ -46,13 +46,20 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
 
         view.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         view.frame = CGRectMake(0, -(self.viewFrame.size.height), self.viewFrame.size.width, self.viewFrame.size.height)
+        self.view.layer.cornerRadius = 2
+        self.view.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+        self.view.layer.shadowColor = UIColor.blackColor().CGColor
+        self.view.layer.shadowOpacity = 0.8
         
         view.addSubview(scheduleNotifButton)
         view.addSubview(mapListButton)
         view.addSubview(reportButton)
         
         view.userInteractionEnabled = true
-        let swipeGesture: UIPanGestureRecognizer = UIPanGestureRecognizer(target: self, action: "dimissView")
+        let swipeGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: nil)
+        swipeGesture.direction = UISwipeGestureRecognizerDirection.Up
+        swipeGesture.numberOfTouchesRequired = 1
+        swipeGesture.delegate = self
         view.addGestureRecognizer(swipeGesture)
         
         setUpButtons()
@@ -72,11 +79,15 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate 
             self.view.frame = self.viewFrame
             }) { (complete) -> Void in
                 self.hasLoaded = true
-                self.view.layer.cornerRadius = 2
-                self.view.layer.shadowOffset = CGSizeMake(2.0, 2.0)
-                self.view.layer.shadowColor = UIColor.blackColor().CGColor
-                self.view.layer.shadowOpacity = 0.8
         }
+    }
+    
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer.state == UIGestureRecognizerState.Began {
+            dimissView()
+        }
+        
+        return true
     }
     
     func setUpButtons() {

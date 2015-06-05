@@ -1,4 +1,3 @@
-
 //
 //  DetailViewController.swift
 //  HappyNashville
@@ -167,7 +166,8 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         cell.dayLabel.text = self.viewModel!.dayLabelText(self.viewModel!.dataSource[indexPath.row])
         
-        cell.dayLabel.font = UIFont.systemFontOfSize(12)
+        cell.dayLabel.font = UIFont(name: "GillSans", size: 12)!
+
         cell.dayLabel.sizeToFit()
         cell.dayLabel.center = CGPointMake(cell.width / 2, cell.height / 2)
     }
@@ -179,45 +179,27 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         }
     }
     
-    
     func setTitleView() {
-        var addressLabel: UILabel = UILabel()
-        addressLabel.text = self.location!.address
-        addressLabel.font = UIFont.systemFontOfSize(12)
-        addressLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
-        addressLabel.sizeToFit()
-        
         var nameLabel: UILabel = UILabel()
         nameLabel.text = self.location!.name
         nameLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         nameLabel.sizeToFit()
         
-        var height: CGFloat = 0
-        
         if self.navigationController != nil {
-            height = self.navigationController!.navigationBar.height
-        } else {
-            height = self.navBar.height
+            self.title = self.location!.name
+            
+            let titleFont: UIFont = UIFont(name: "GillSans", size: 20)!
+            
+            let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: titleFont]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
+            
         }
-        
-        var titleView: UIView = UIView(frame: CGRectMake(0, 0, addressLabel.width, height))
-        
-        titleView.addSubview(nameLabel)
-        titleView.addSubview(addressLabel)
-        
-        nameLabel.center = CGPointMake(titleView.width / 2, nameLabel.center.y)
-        addressLabel.top = nameLabel.bottom
-        
-        if self.navigationController != nil {
-           self.navigationItem.titleView = titleView
-        } else {
-            self.navBar.addSubview(titleView)
-            titleView.center = CGPointMake(self.navBar.center.x, UIApplication.sharedApplication().statusBarFrame.size.height)
-            addressLabel.hidden = true
-            nameLabel.bottom = self.navBar.bottom - 4
+
+        if self.navigationController == nil {
+            self.navBar.addSubview(nameLabel)
+            
+            nameLabel.center =  CGPointMake(self.navBar.center.x, UIApplication.sharedApplication().statusBarFrame.size.height + self.navBar.height / 2 - nameLabel.height / 2)
         }
-        
-        
     }
 
     func setUpMapView() {

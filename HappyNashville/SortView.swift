@@ -24,7 +24,6 @@ class SortView: UIView {
         let segHeight = self.height * 0.7
         
         self.segmentControl.frame = CGRectMake(10, (self.height / 2) - (segHeight / 2), self.width - 20, segHeight)
-        
         self.segmentControl.tintColor = UIColor(hexString: StringConstants.primaryColor)
         
         if let sort = currentSort {

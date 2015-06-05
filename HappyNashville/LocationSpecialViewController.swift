@@ -35,11 +35,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.scrollView = UIScrollView(frame: self.view!.frame)
-//        self.view! = self.scrollView!
-//        createNoDealsView()
-//        createScrollView()
-        
+
         self.dataSource = self.dealDay!.specials.allObjects as! Array<Special>
         
         self.dataSource = sorted(self.dataSource, {

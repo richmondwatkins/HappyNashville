@@ -17,7 +17,6 @@ class DayCollectionViewCell: UICollectionViewCell {
       super.init(frame: frame)
         
         self.dayLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
-        
         self.addSubview(self.dayLabel)
         self.addSubview(self.selectedView)
         

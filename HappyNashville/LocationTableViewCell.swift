@@ -39,9 +39,8 @@ class LocationTableViewCell: UITableViewCell {
         self.notifImageView.hidden = true
         self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
         self.titleLable.textAlignment = NSTextAlignment.Left
-        self.titleLable.font = UIFont.boldSystemFontOfSize(16)
+        self.titleLable.font = UIFont(name: "GillSans", size: 16)
         self.titleLable.numberOfLines = 1
-            
         self.webSiteButton.setImage(UIImage(named: "share"), forState: .Normal)
         self.mapButton.setImage(UIImage(named: "map"), forState: .Normal)
         

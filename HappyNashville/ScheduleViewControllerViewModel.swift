@@ -20,7 +20,7 @@ class ScheduleViewControllerViewModel: AppViewModel {
         var daysToNextOccur = 0
         
         let earliestSpecial: Special = self.getEaliestSpecial(dealDay.specials)
-        if dealDay.day.integerValue <= dateCompenents.weekday {
+        if dealDay.day.integerValue < dateCompenents.weekday {
             
             daysToNextOccur =  7 - dateCompenents.weekday + dealDay.day.integerValue
         } else {

@@ -14,19 +14,25 @@ class SpecialView: UIView {
         super.init(frame: frame)
         
         var specialLabel: UILabel = UILabel()
-        specialLabel.font = UIFont.systemFontOfSize(12)
         specialLabel.numberOfLines = 0
-        
-//        var trimmedDescp = special.specialDescription.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
 
         var dateText: String = configureDateString(special);
-        var text: String = special.specialDescription + " " + dateText;
-        var attributedText: NSMutableAttributedString = NSMutableAttributedString(string: text)
+
+        var dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
+        let dateFont: UIFont = UIFont(name: "GillSans", size: 12)!
         
-        attributedText.addAttributes([NSFontAttributeName: UIFont.boldSystemFontOfSize(10)], range: NSRange(location: count(special.specialDescription) + 1, length: count(dateText)))
+        dateAttrText.addAttributes([NSFontAttributeName: dateFont],
+            range: NSRange(location: 0, length: count(dateText)))
+        
+        var specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
+        let specialFont: UIFont = UIFont(name: "GillSans-Light", size: 12)!
+        
+        specialAttr.addAttributes([NSFontAttributeName: specialFont],
+            range: NSRange(location: 0, length: count(special.specialDescription)))
   
-        specialLabel.attributedText = attributedText
+        specialAttr.appendAttributedString(dateAttrText)
         
+        specialLabel.attributedText = specialAttr
         specialLabel.sizeToFit()
         specialLabel.frame = CGRectMake(9, 0, frame.size.width - 30, specialLabel.height)
         specialLabel.center = CGPointMake(specialLabel.center.x, self.height / 2)
@@ -54,7 +60,7 @@ class SpecialView: UIView {
     func configureDateString(special: Special) -> String {
         
         if special.allDay.boolValue {
-            return "All Day"
+            return " All Day"
         }
         
         var startDateComponents: NSDateComponents = NSDateComponents()
@@ -72,7 +78,7 @@ class SpecialView: UIView {
         var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
         var startDateFormatter: NSDateFormatter = NSDateFormatter()
-        startDateFormatter.dateFormat = "h:mm"
+        startDateFormatter.dateFormat = " h:mm"
         
         var endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"

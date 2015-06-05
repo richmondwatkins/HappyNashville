@@ -14,14 +14,9 @@ class APIManger: NSObject {
     static var masterDealDaysArray: Array<DealDay> = []
     
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
-        
-//        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
-        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/testDeals.json"
+        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/sandbox.json"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
-//        let reachability = Reachability.reachabilityForInternetConnection()
-        
-//        reachability.whenReachable = { reachability in
         
             NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
                 
@@ -41,9 +36,7 @@ class APIManger: NSObject {
         var locationArray: Array<Location> = []
 
         for location in deals as! [NSDictionary] {
-            
             locationArray.append(createLocation(location))
-            
         }
         
         completed(dealDays: self.masterDealDaysArray, locations: locationArray)
@@ -55,7 +48,6 @@ class APIManger: NSObject {
         for key in locationDict.allKeys as! [String] {
             
             if key == "dealDays" {
-                
                 location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)
             } else if key == "_id" {
                 
@@ -65,7 +57,6 @@ class APIManger: NSObject {
                 location.lat = coordsDict["lat"] as! NSNumber
                 location.lng = coordsDict["lng"] as! NSNumber
             } else {
-
                 location.setValue(locationDict[key], forKey: key)
             }
         }
@@ -120,79 +111,7 @@ class APIManger: NSObject {
         
         return NSSet(array: specialMutable)
     }
-    
-    class func updateOrAdd(locationDict: NSDictionary, moc: NSManagedObjectContext) {
-        
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
-        
-        fetchRequest.predicate =  NSPredicate(format: "name == %@", locationDict["name"] as! String)
-        
-        let result = moc.executeFetchRequest(fetchRequest, error: nil)
 
-        createLocation(locationDict)
-    }
-    
-    class func deleteAllDeals(moc: NSManagedObjectContext) {
-    
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
-        
-        if let result: NSArray = moc.executeFetchRequest(fetchRequest, error: nil) {
-            
-            for  location in result {
-                
-                moc.deleteObject(location as! NSManagedObject)
-            }
-        }
-    }
-    
-    class func fetchAllDealDays(moc: NSManagedObjectContext) -> NSArray? {
-    
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "DealDay")
-        
-        return moc.executeFetchRequest(fetchRequest, error: nil)
-    }
-    
-    class func fetchAllLocations(moc: NSManagedObjectContext) -> NSArray? {
-        
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Location")
-        
-        return moc.executeFetchRequest(fetchRequest, error: nil)
-    }
-    
-    class func shouldUpdateData(version: NSNumber, moc: NSManagedObjectContext) -> Bool {
-        
-        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "MetaData")
-        
-        let result: NSArray = moc.executeFetchRequest(fetchRequest, error: nil)!
-        
-        if  result.count > 0 {
-            
-            let metaData: MetaData = result[0] as! MetaData
-            
-            if metaData.version == version {
-                
-                return false
-            } else {
-                
-                metaData.version = version
-                
-                moc.save(nil)
-                
-                return true
-            }
-        
-        } else {
-            
-            let metaData: MetaData = NSEntityDescription.insertNewObjectForEntityForName("MetaData", inManagedObjectContext: moc) as! MetaData
-            
-            metaData.version = version
-            
-            moc.save(nil)
-            
-            return true
-        }
-    }
-    
     class func fetchNotifications() -> NSArray? {
         
         var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
@@ -267,6 +186,4 @@ class APIManger: NSObject {
         
         appDelegate.managedObjectContext?.save(nil)
     }
-    
 }
-

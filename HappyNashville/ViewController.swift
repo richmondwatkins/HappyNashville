@@ -10,7 +10,7 @@ import UIKit
 import CoreData
 import Foundation
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate {
     
     var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
@@ -25,7 +25,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var menuButton: UIBarButtonItem!
     var currentSort: String = ""
     var refreshControl: UIRefreshControl!
-    var menuVC: MenuViewController!
+    var menuVC: MenuViewController?
     var isMenuOut: Bool = false
     let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.White)
     var sortViewController: SortViewController?
@@ -173,7 +173,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let headerLabel: UILabel = UILabel();
         headerLabel.text = self.viewModel.dayForDayNumber(self.viewModel.tableSections[section])
-        headerLabel.font = UIFont.boldSystemFontOfSize(20)
+        headerLabel.font = UIFont(name: "GillSans-Bold", size: 20)!
         headerLabel.sizeToFit()
         
         sectionHeader.addSubview(headerLabel)
@@ -222,6 +222,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     }
     
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        if let menu = self.menuVC {
+            menu.dimissView()
+            self.menuVC = nil
+        }
+    }
+
     func addSpecialsToCell(cell: LocationTableViewCell, dealDay: DealDay) {
         var top: CGFloat = cell.titleLable.bottom + 5
         
@@ -262,35 +269,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.buttonLayer.frame = CGRectMake(0, 0, cell.buttonView.width, 1)
 
         let buttonViewHeight = cell.buttonView.height
-        let buttonViewWidth: CGFloat = 110
+        let buttonViewWidth: CGFloat = 130
         let buttonPadding: CGFloat = 4
         
         let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth, numberOfButtons: CGFloat(3), padding: 8)
         
-        cell.scheduleButton.frame = CGRectMake(
-            cell.contentCard.right - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
-            buttonPadding,
-            buttonMeasurements.buttonWidth,
-            buttonViewHeight - buttonPadding * 2
-        )
-        cell.scheduleButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
-        
-        cell.mapButton.frame = CGRectMake(
-            cell.scheduleButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
-            buttonPadding,
-            buttonMeasurements.buttonWidth,
-            buttonViewHeight - buttonPadding * 2
-        )
-        cell.mapButton.addTarget(self, action: "mapButtonPressed:", forControlEvents: .TouchUpInside)
-
         cell.webSiteButton.frame = CGRectMake(
-            cell.mapButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
+            cell.contentCard.right - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
             buttonPadding,
             buttonMeasurements.buttonWidth,
             buttonViewHeight - buttonPadding * 2
         )
         cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
         
+        cell.mapButton.frame = CGRectMake(
+            cell.webSiteButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
+            buttonPadding,
+            buttonMeasurements.buttonWidth,
+            buttonViewHeight - buttonPadding * 2
+        )
+        cell.mapButton.addTarget(self, action: "mapButtonPressed:", forControlEvents: .TouchUpInside)
+
+        cell.scheduleButton.frame = CGRectMake(
+            cell.mapButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
+            buttonPadding,
+            buttonMeasurements.buttonWidth,
+            buttonViewHeight - buttonPadding * 2
+        )
+        cell.scheduleButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+
         cell.buttonView.layer.addSublayer(
             getButtonDividerLayer(
                 self.infoButtonsHeight,
@@ -385,7 +392,15 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.subView.transformAndAddSubview(scheduleViewController.view)
         scheduleViewController.didMoveToParentViewController(self)
         
-        self.footer.view.hidden = true
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.footer.view.alpha = 0
+        })
+        
+//        UIView.animateWithDuration(0.3, animations: { () -> Void in
+//            <#code#>
+//        }) { (complete) -> Void in
+//            <#code#>
+//        }
         
         var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
@@ -432,7 +447,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func showFooter() {
         self.sortButton.enabled = true
         self.menuButton.enabled = true
-        self.footer.view!.hidden = false        
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.footer.view.alpha = 1
+        })
     }
     
     func returnSelectedDealDay(selectedButton: UIButton) -> (dealDay: DealDay, indexPath: NSIndexPath) {
@@ -457,7 +475,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func showMenu(sender: UIButton) {
-        if !isMenuOut {
+        if let menu = self.menuVC {
+            menu.dimissView()
+            self.menuVC = nil
+        } else {
             menuVC = MenuViewController(viewFrame:
                 CGRectMake(
                     0,
@@ -467,14 +488,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 )
             )
             
-            self.addChildViewController(menuVC)
-            self.view.addSubview(menuVC.view)
-            menuVC.didMoveToParentViewController(self)
+            self.addChildViewController(menuVC!)
+            self.view.addSubview(menuVC!.view)
+            menuVC!.didMoveToParentViewController(self)
             
-            menuVC.delegate = self
-            isMenuOut = true
-        } else {
-            menuVC.dimissView()
+            menuVC!.delegate = self
         }
     }
     
@@ -487,7 +505,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setMenuDissmissed() {
-        isMenuOut = false
+        self.menuVC = nil
     }
     
     func displayNotificationManager() {

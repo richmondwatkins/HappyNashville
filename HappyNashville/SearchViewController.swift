@@ -85,13 +85,22 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        filterContentForSearchText(searchBar.text)
+        if searchBar.text == "" {
+            self.filteredDataSource = nil
+        } else {
+            filterContentForSearchText(searchBar.text)
+        }
+        
+        if self.filteredDataSource?.count == 0 {
+            self.filteredDataSource = nil
+        }
+        
         self.tableView.reloadData()
     }
     
     func filterContentForSearchText(searchText: String) {
         self.filteredDataSource = self.dataSource.filter({( location: Location) -> Bool in
-            let stringMatch = location.name.rangeOfString(searchText)
+            let stringMatch = location.name.lowercaseString.rangeOfString(searchText.lowercaseString)
             return (stringMatch != nil)
         })
     }
@@ -117,6 +126,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
    
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "SEARCHCELL")
+            cell?.textLabel?.font = UIFont(name: "GillSans", size: 16)!
         }
         
         cell?.contentView.tag = 1
