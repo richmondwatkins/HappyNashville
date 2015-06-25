@@ -16,7 +16,7 @@ extension UIView {
         
         UIView.animateWithDuration(animationDuration, animations: { () -> Void in
             self.transform = CGAffineTransformScale(self.transform, 0.001, 0.001)
-            
+
             }) { (completion) -> Void in
                 
 //                CGAffineTransformMakeScale(finalScaleX, finalScaleY);

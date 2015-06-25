@@ -9,7 +9,6 @@
 import UIKit
 import MapKit
 
-
 class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelegate, MapFilterProtocol {
     
     var location: Location?
@@ -95,7 +94,6 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     
     func setAllAnnotations() {
         for location in self.locations {
-            
             self.mapView.addAnnotation(createAnnotation(location))
         }
         
@@ -105,6 +103,8 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+
         if isFilterOpen {
             self.mapView.frame = CGRectMake(
                 self.filterVC.view.width,
@@ -115,6 +115,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         } else {
             self.containerView.frame = self.view.frame
         }
+        
     }
     
     func createSobroPolygon() {
@@ -696,7 +697,8 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         
         for location in self.locations {
             if location.name == view.annotation.title {
-                let detailViewController: DetailViewController = DetailViewController(location: location)
+                let detailViewController: DetailViewController =
+                    DetailViewController(location: location, dealDay: nil, adBannerView: nil)
                 
                 self.presentViewController(detailViewController, animated: true, completion: nil)
             }

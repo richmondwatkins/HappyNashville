@@ -48,7 +48,8 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         self.pageController!.setViewControllers(viewControllers as [AnyObject],
             direction: .Forward,
             animated: false,
-            completion: nil)
+            completion: nil
+        )
                 
         self.addChildViewController(pageController!)
         self.view.addSubview(self.pageController!.view)

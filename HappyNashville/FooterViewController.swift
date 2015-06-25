@@ -22,7 +22,6 @@ class FooterViewController: UIViewController {
     
     init(viewFrame: CGRect) {
         super.init(nibName: nil, bundle: nil)
-        
         self.viewFrame = viewFrame
     }
     
@@ -32,8 +31,8 @@ class FooterViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.view!.frame = self.viewFrame
+        
+        self.view.frame = self.viewFrame
         self.view!.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.2)
         
         let buttonMeasurements = self.viewModel.getButtonWidth(self.view!.width, numberOfButtons: 7, padding: 0)

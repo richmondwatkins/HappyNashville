@@ -14,7 +14,7 @@ class APIManger: NSObject {
     static var masterDealDaysArray: Array<DealDay> = []
     
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
-        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/sandbox.json"
+        let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
         var url: NSURL = NSURL(string: urlString)!;
         var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
         
@@ -46,18 +46,17 @@ class APIManger: NSObject {
         let location: Location = Location()
         
         for key in locationDict.allKeys as! [String] {
-            
-            if key == "dealDays" {
-                location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)
-            } else if key == "_id" {
-                
-                println(locationDict[key])
-            }else if key == "coords" {
-                var coordsDict: NSDictionary = locationDict[key] as! NSDictionary
-                location.lat = coordsDict["lat"] as! NSNumber
-                location.lng = coordsDict["lng"] as! NSNumber
-            } else {
-                location.setValue(locationDict[key], forKey: key)
+            print(locationDict["name"])
+            if key != "_id" {
+                if key == "dealDays" {
+                    location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)
+                } else if key == "coords" {
+                    var coordsDict: NSDictionary = locationDict[key] as! NSDictionary
+                    location.lat = coordsDict["lat"] as! NSNumber
+                    location.lng = coordsDict["lng"] as! NSNumber
+                } else {
+                    location.setValue(locationDict[key], forKey: key)
+                }
             }
         }
         

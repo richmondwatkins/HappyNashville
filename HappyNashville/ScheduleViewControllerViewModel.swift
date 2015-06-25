@@ -20,6 +20,11 @@ class ScheduleViewControllerViewModel: AppViewModel {
         var daysToNextOccur = 0
         
         let earliestSpecial: Special = self.getEaliestSpecial(dealDay.specials)
+        
+        if earliestSpecial.allDay.boolValue {
+            dealDay.day = NSNumber(int: dealDay.day.integerValue + 1)
+        }
+        
         if dealDay.day.integerValue < dateCompenents.weekday {
             
             daysToNextOccur =  7 - dateCompenents.weekday + dealDay.day.integerValue
@@ -35,7 +40,6 @@ class ScheduleViewControllerViewModel: AppViewModel {
         let toDateComponents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: toDate)
         
-                
         toDateComponents.hour = earliestSpecial.hourStart.integerValue - 1
  
         return gregorianCalendar.dateFromComponents(toDateComponents)!
@@ -43,7 +47,12 @@ class ScheduleViewControllerViewModel: AppViewModel {
     
     func scheduleReminder(date: NSDate, isRecurring: Bool, dealDay:DealDay) {
         
-        let notificationSetting = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Alert | UIUserNotificationType.Sound, categories: nil)
+        let notificationSetting = UIUserNotificationSettings(
+            forTypes: UIUserNotificationType.Alert |
+                UIUserNotificationType.Alert |
+                UIUserNotificationType.Sound,
+            categories: nil
+        )
         
         UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
         

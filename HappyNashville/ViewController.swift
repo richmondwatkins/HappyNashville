@@ -9,8 +9,9 @@
 import UIKit
 import CoreData
 import Foundation
+import iAd
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate {
+class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate, ADBannerViewDelegate, DetailVCProtocl {
     
     var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
@@ -35,7 +36,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,6 +54,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
+        self.tableView.contentInset = UIEdgeInsetsZero
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
@@ -65,7 +67,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
 
         setUpMenuButton()
-        
         setUpSortButton()
         
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: StringConstants.primaryColor)
@@ -85,9 +86,48 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.addSubview(refreshControl)
         
         addFooter()
+        inactivateView()
     }
     
+    override func viewWillLayoutSubviews() {
+         super.viewWillLayoutSubviews()
+        
+        if self.iAdIsOut {
+            let navHeight =
+            self.navigationController!.navigationBar.height +
+                UIApplication.sharedApplication().statusBarFrame.height
+            
+            self.tableView.frame = CGRectMake(
+                self.tableView.origin.x,
+                navHeight,
+                self.view!.width,
+                self.view!.height - (self.view!.height * 0.1) - self.iAdHeight - navHeight
+            )
+        } else {
+            self.tableView.frame = CGRectMake(
+                self.tableView.origin.x,
+                self.navigationController!.navigationBar.height,
+                self.view!.width,
+                self.view!.height - self.footer.view.height
+            )
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        
+        self.tableView.layoutMargins = UIEdgeInsetsZero
+        self.tableView.separatorInset = UIEdgeInsetsZero
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
+    {
+        self.tableView.reloadData()
+    }
+    
+    
     func refreshData() {
+        inactivateView()
+        
         self.viewModel.fetchData(shouldScrollToIndex: false)
     }
     
@@ -109,7 +149,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let footerHeight: CGFloat = self.view!.height * 0.1
         
         self.footer = FooterViewController(viewFrame:
-            CGRectMake(0, self.view!.bottom - footerHeight, self.view!.width, footerHeight))
+            CGRectMake(0, self.originalContentView!.bottom - footerHeight, self.view!.width, footerHeight))
         footer.delegate = self
         
         self.addChildViewController( self.footer)
@@ -119,26 +159,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func scrollToCurrentDay() {
         self.tableView.scrollToRowAtIndexPath(NSIndexPath(forItem: 0, inSection: self.viewModel.getCurrentDay() - 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        self.tableView.frame = CGRectMake(
-            0,
-            0,
-            self.view!.width,
-            self.view!.height - self.footer.view!.height
-        )
-    }
-    
-    override func viewDidLayoutSubviews() {
-        
-        self.tableView.layoutMargins = UIEdgeInsetsZero
-        self.tableView.separatorInset = UIEdgeInsetsZero
-    }
-    
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
-    {
-        self.tableView.reloadData()
     }
  
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -356,7 +376,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if let dealDay = getDealDayForIndexPath(indexPath) {
-            let detailViewController: DetailViewController = DetailViewController(location: dealDay.location)
+      
+            let detailViewController: DetailViewController =
+                DetailViewController(location: dealDay.location, dealDay: dealDay, adBannerView:self.iAdBanner)
+            
+            detailViewController.delegate = self
             
             self.navigationController?.pushViewController(detailViewController, animated: true)
             
@@ -385,7 +409,12 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         var selectedDay = returnSelectedDealDay(sender)
         
-        var scheduleViewController: ScheduleViewController = ScheduleViewController(dealDay: selectedDay.dealDay, navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height, indexPath: returnSelectedDealDay(sender).indexPath)
+        var scheduleViewController: ScheduleViewController = ScheduleViewController(
+            dealDay: selectedDay.dealDay,
+            navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height,
+            indexPath: returnSelectedDealDay(sender).indexPath
+        )
+        
         scheduleViewController.delegate = self
         
         self.addChildViewController(scheduleViewController)
@@ -395,12 +424,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.footer.view.alpha = 0
         })
-        
-//        UIView.animateWithDuration(0.3, animations: { () -> Void in
-//            <#code#>
-//        }) { (complete) -> Void in
-//            <#code#>
-//        }
         
         var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
@@ -484,7 +507,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                     0,
                     self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.size.height,
                     self.view.width,
-                    self.view.height / 5
+                    self.view.height / 4
                 )
             )
             
@@ -636,6 +659,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func refreshTable() {
         self.tableView.reloadData()
+        
+        if self.refreshControl.refreshing {
+            self.refreshControl.endRefreshing()
+        }
     }
     
     func nullifySortVC() {
@@ -657,9 +684,72 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let userInfo = notification.userInfo!
 
         if let location = self.viewModel.returnLocationFromName(userInfo["location"] as! String) {
-            let detailViewController: DetailViewController = DetailViewController(location: location)
+            let detailViewController: DetailViewController =
+                DetailViewController(location: location, dealDay: nil, adBannerView: nil)
             
             self.presentViewController(detailViewController, animated: true, completion: nil)
         }
+    }
+    
+    func activateView() {
+        self.footer.view.userInteractionEnabled = true
+        self.navigationItem.leftBarButtonItem?.enabled = true
+        self.navigationItem.rightBarButtonItem?.enabled = true
+    }
+    
+    func inactivateView() {
+        self.footer.view.userInteractionEnabled = false
+        self.navigationItem.leftBarButtonItem?.enabled = false
+        self.navigationItem.rightBarButtonItem?.enabled = false
+    }
+    
+    func passBackiAd(adBanner: ADBannerView) {
+        self.iAdIsOut = true
+        self.view.addSubview(adBanner)
+        self.tableView.contentInset = UIEdgeInsetsMake(-self.navigationController!.navigationBar.height - UIApplication.sharedApplication().statusBarFrame.height, 0, 0, 0)
+    }
+    
+   override func bannerViewWillLoadAd(banner: ADBannerView!) {
+        super.bannerViewWillLoadAd(banner)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.footer.view.frame = CGRectMake(
+                0,
+                self.view!.bottom - self.footer.view.height - self.iAdHeight,
+                self.view!.width,
+                self.footer.view.height
+            )
+            
+            let navHeight =
+            self.navigationController!.navigationBar.height +
+                UIApplication.sharedApplication().statusBarFrame.height
+            
+            self.tableView.frame = CGRectMake(
+                self.tableView.origin.x,
+                navHeight,
+                self.view!.width,
+                self.view!.height - (self.view!.height * 0.1) - self.iAdHeight - navHeight
+            )
+        })
+    }
+    
+    override func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        super.bannerView(banner, didFailToReceiveAdWithError: error)
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.footer.view.frame = CGRectMake(
+                0,
+                self.view!.bottom - self.footer.view.height,
+                self.view!.width,
+                self.footer.view.height
+            )
+            
+            self.tableView.frame = CGRectMake(
+                self.tableView.origin.x,
+                self.tableView.origin.y,
+                self.view!.width,
+                self.view!.height - (self.view!.height * 0.1)
+            )
+        })
     }
 }

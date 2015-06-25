@@ -32,7 +32,12 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         var navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight))
         navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
-        var backButton: UIButton = UIButton(frame: CGRectMake(buttonPadding, (navBar.height / 2) - ((navBar.height / 2) / 2) , 50, navBar.height / 2))
+        var backButton: UIButton = UIButton(frame: CGRectMake(
+            buttonPadding,
+            (navBar.height / 2) - ((navBar.height / 2) / 2) + UIApplication.sharedApplication().statusBarFrame.size.height / 2,
+            50,
+            navBar.height / 2)
+        )
         
         backButton.setTitle("Back", forState: UIControlState.Normal)
         backButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
@@ -42,17 +47,21 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         
         self.loadingAnimator.startAnimating()
         self.loadingAnimator.hidesWhenStopped = true
-        self.loadingAnimator.frame = CGRectMake(navBar.width - self.loadingAnimator.width - buttonPadding, navBar.height / 2 - (self.loadingAnimator.height / 2), self.loadingAnimator.width, self.loadingAnimator.height)
+        self.loadingAnimator.frame = CGRectMake(
+            navBar.width - self.loadingAnimator.width - buttonPadding,
+            navBar.height / 2 - (self.loadingAnimator.height / 2) + UIApplication.sharedApplication().statusBarFrame.size.height / 2,
+            self.loadingAnimator.width,
+            self.loadingAnimator.height)
         
         navBar.addSubview(self.loadingAnimator)
         
         var titleLabel: UILabel = UILabel()
         titleLabel.text = self.location.name
-        titleLabel.font = UIFont.systemFontOfSize(14)
+        titleLabel.font = UIFont.systemFontOfSize(18)
         titleLabel.sizeToFit()
         titleLabel.textAlignment = .Center
         titleLabel.width = self.view!.width * 0.6
-        titleLabel.center = CGPointMake(self.view.width / 2, navBar.height/2)
+        titleLabel.center = CGPointMake(self.view.width / 2, navBar.height / 2 + UIApplication.sharedApplication().statusBarFrame.size.height / 2)
         titleLabel.textColor = .whiteColor()
         
         navBar.addSubview(titleLabel)

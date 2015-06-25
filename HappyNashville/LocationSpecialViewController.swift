@@ -131,7 +131,16 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func configureCell(cell: SpecialCollectionCell, special: Special) {
-        cell.typeImageView.frame = CGRectMake(cell.width / 2 - 40, 4, 50, 50)
+        // Means its a shot and needs to be smaller
+        if special.type.integerValue == 7 {
+            cell.typeImageView.frame = CGRectMake(cell.width / 2 - 40, 20, 20, 20)
+            
+        // Type is well drink and needs to be smaller
+        } else if special.type.integerValue == 3 {
+            cell.typeImageView.frame = CGRectMake(cell.width / 2 - 40, 15, 30, 30)
+        } else {
+            cell.typeImageView.frame = CGRectMake(cell.width / 2 - 40, 4, 50, 50)
+        }
        
         cell.priceLabel.frame = CGRectMake(0, cell.typeImageView.bottom, cell.width, 15)
         cell.timeLabel.frame = CGRectMake(0, self.cellHeight - 12, cell.width, 10)

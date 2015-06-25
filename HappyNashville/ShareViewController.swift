@@ -146,6 +146,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
             let mailVC: MFMailComposeViewController = MFMailComposeViewController()
             mailVC.mailComposeDelegate = self
             mailVC.setMessageBody(messageString, isHTML: false)
+            mailVC.setSubject("Let's go to happy hour!")
             
             UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(mailVC, animated: true, completion: nil)
         }
@@ -153,7 +154,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
     
     func sendText() {
         if MFMessageComposeViewController.canSendText() {
-            var messageString = "\(dealDay.location.name) has the following specials on \(self.viewModel.dayForDayNumber(dealDay.day.integerValue)):"
+            var messageString = "Let's go to happy hour! \(dealDay.location.name) has the following specials on \(self.viewModel.dayForDayNumber(dealDay.day.integerValue)):"
             
             for special in dealDay.specials.allObjects as! [Special] {
                 messageString += " \(special.specialDescription)"

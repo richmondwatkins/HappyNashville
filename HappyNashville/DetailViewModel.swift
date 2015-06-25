@@ -22,14 +22,17 @@ class DetailViewModel: AppViewModel {
     var currentDayCell: DayCollectionViewCell?
     var currentCellIndex: Int = Int()
     var originalConfigCount: Int = Int()
+    var selectedDay: DealDay!
     
-     init(dealDays: Array<DealDay>) {
+    init(dealDays: Array<DealDay>, selectedDate: DealDay?) {
         super.init()
+        
         self.dataSource = sorted(dealDays, {
             (day1: DealDay, day2: DealDay) -> Bool in
             return day1.day.integerValue < day2.day.integerValue
         })
         
+        self.selectedDay = selectedDate
         self.hasCurrentDay = isTodayIncluded()
     }
     
@@ -90,8 +93,8 @@ class DetailViewModel: AppViewModel {
         if self.originalConfigCount <= self.dataSource.count {
             let dealDay: DealDay = self.dataSource[indexPath.row]
             
-            if self.hasCurrentDay == true {
-                if dealDay.day.integerValue == getCurrentDay() {
+            if let selectedDealDay = self.selectedDay {
+                if selectedDealDay.day.integerValue == dealDay.day.integerValue {
                     cell.selectedView.backgroundColor = UIColor(hexString: "3d3d3e")
                     delegate?.scrollPageViewControllertoDay(indexPath)
                     self.currentDayCell = cell
@@ -100,9 +103,9 @@ class DetailViewModel: AppViewModel {
                     cell.selectedView.backgroundColor = UIColor.clearColor()
                 }
             } else if (indexPath.row == 0) {
-                cell.selectedView.backgroundColor = .blackColor()
-                self.currentDayCell = cell
-                self.currentCellIndex = indexPath.row
+                    cell.selectedView.backgroundColor = .blackColor()
+                    self.currentDayCell = cell
+                    self.currentCellIndex = indexPath.row
             }
             
             self.originalConfigCount++

@@ -41,7 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }else if(application.applicationState == UIApplicationState.Active )  {
            mainVC.openDetailView(notification)
         }
-
+    }
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+        
+        println("register");
     }
 
     func applicationWillResignActive(application: UIApplication) {

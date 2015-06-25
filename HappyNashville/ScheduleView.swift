@@ -10,7 +10,6 @@ import UIKit
 
 protocol ScheduleViewProtocol {
     func dismissVC()
-    func timePickerDidChange()
     func alertTimeIsLessThanCurrent()
 }
 
@@ -137,10 +136,6 @@ class ScheduleView: UIView {
                 
     }
     
-    func dateChanged(picker: UIDatePicker) {
-        self.delegate?.timePickerDidChange()
-    }
-    
     func dismissVC(sender: UIButton) {
         self.delegate?.dismissVC()
     }
@@ -150,14 +145,18 @@ class ScheduleView: UIView {
     }
     
     func submitSchedule() {
-        let timePickerData = self.timePicker!.date
+        var timePickerDate: NSDate = self.timePicker!.date
         
-        if timePickerData.timeIntervalSince1970 < NSDate().timeIntervalSince1970 {
-            self.delegate?.alertTimeIsLessThanCurrent()
-        } else {
-            self.viewModel.scheduleReminder(timePickerData, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
-            self.delegate?.dismissVC()
+        if timePickerDate.timeIntervalSince1970 < NSDate().timeIntervalSince1970 {            
+            let dayComponent: NSDateComponents = NSDateComponents();
+            dayComponent.day = 7
+
+            let cal: NSCalendar = NSCalendar.currentCalendar();
+            timePickerDate = cal.dateByAddingComponents(dayComponent, toDate: timePickerDate, options: nil)!
         }
+    
+        self.viewModel.scheduleReminder(timePickerDate, isRecurring: self.recurringSwitch!.on, dealDay: self.dealDay!)
+        self.delegate?.dismissVC()
     }
 
 

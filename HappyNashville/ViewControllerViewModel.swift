@@ -13,6 +13,7 @@ import CoreData
 @objc protocol ViewModelProtocol {
     func reloadTable()
     func refreshTable()
+    func activateView()
 }
 
  class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
@@ -75,6 +76,8 @@ import CoreData
             } else {
                 self.delegate?.refreshTable()
             }
+            
+            self.delegate?.activateView()
         })
     }
     

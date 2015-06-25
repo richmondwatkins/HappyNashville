@@ -25,4 +25,7 @@ public class StringConstants: NSObject {
     public static let midtownColor: String = "C1A176"
     public static let musicRowColor: String = "B0AEAB"
     public static let sobroColor: String = "E962E5"
+    
+    public static let kRemoveAds: String = "RemovedAds";
+    // icons 3D3D3E
 }

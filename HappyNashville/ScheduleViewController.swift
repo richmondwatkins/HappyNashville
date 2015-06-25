@@ -39,11 +39,17 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         
         self.view!.backgroundColor = UIColor.whiteColor()
 
-        let scheduleViewFrame = CGRectMake(0, self.navHeight!, self.view!.width, self.view!.height - self.navHeight!)
+        let scheduleViewFrame = CGRectMake(
+            0,
+            self.navHeight!,
+            self.view!.width,
+            self.view!.height - self.navHeight! - 50
+        )
+        
+        self.view.height = self.view.height - 50
         
         self.scheduleView = ScheduleView(frame: scheduleViewFrame, dealDay: self.dealDay!, viewModel: self.viewModel)
-        self.scheduleView!.delegate = self
-
+        self.scheduleView?.delegate = self
         self.view!.addSubview(self.scheduleView!)
         
         addSpecialViewController(self.dealDay!)        
@@ -63,22 +69,6 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         specialVC.didMoveToParentViewController(self)
     }
     
-    func timePickerDidChange() {
-        var dealDays: Array<DealDay> = self.dealDay?.location.dealDays.allObjects as! [DealDay]
-        let changedToDay: Int = self.viewModel.weekDayForTimePicker(self.scheduleView!.timePicker!.date)
-        var foundDealDay: Bool = false
-        for deal in dealDays {
-            if deal.day.integerValue == changedToDay {
-                foundDealDay = true
-                specialVC.dealDay = deal
-                specialVC.changeDealDay(deal)
-            }
-        }
-        
-        if !foundDealDay {
-            specialVC.showNoDealsView(self.viewModel.dayForDayNumber(changedToDay))
-        }
-    }
     
     func alertTimeIsLessThanCurrent() {
         var alert = UIAlertController(title: "Unable To Schedule", message: "An alert cannot be schedule for a date that has already past", preferredStyle: UIAlertControllerStyle.Alert)

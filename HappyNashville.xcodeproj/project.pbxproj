@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5D25E05B1B02FAE500366923 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E0591B02FAE500366923 /* Fabric.framework */; };
-		5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D25E05A1B02FAE500366923 /* Crashlytics.framework */; };
+		5D02C2981B30EFA100BAA872 /* iAd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D02C2971B30EFA100BAA872 /* iAd.framework */; };
 		5D2972E41B15605400291470 /* HillsboroVillagePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */; };
 		5D2972E61B156E2B00291470 /* MidtownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2972E51B156E2B00291470 /* MidtownPolygon.swift */; };
 		5D2D73741ACF3C9A002216CB /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */; };
@@ -32,6 +31,8 @@
 		5D87FBA81AD2250900F23EA5 /* UIColor+UIColor_Expanded.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */; };
 		5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA91AD239F200F23EA5 /* SpecialView.swift */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
+		5DA048961B324C200006AC76 /* HappyNashvilleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA048951B324C200006AC76 /* HappyNashvilleViewController.swift */; };
+		5DA47E421B3B88DF000403A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E411B3B88DF000403A4 /* StoreKit.framework */; };
 		5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C41B07D0610091DD58 /* SearchViewController.swift */; };
 		5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */; };
 		5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */; };
@@ -85,8 +86,7 @@
 
 /* Begin PBXFileReference section */
 		58DCC0638FCCB4807F1A8B9C /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
-		5D25E0591B02FAE500366923 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		5D25E05A1B02FAE500366923 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
+		5D02C2971B30EFA100BAA872 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HillsboroVillagePolygon.swift; sourceTree = "<group>"; };
 		5D2972E51B156E2B00291470 /* MidtownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidtownPolygon.swift; sourceTree = "<group>"; };
 		5D2D73721ACF3C9A002216CB /* ScheduleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +114,8 @@
 		5D87FBA71AD2250900F23EA5 /* UIColor+UIColor_Expanded.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+UIColor_Expanded.m"; sourceTree = "<group>"; };
 		5D87FBA91AD239F200F23EA5 /* SpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialView.swift; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
+		5DA048951B324C200006AC76 /* HappyNashvilleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyNashvilleViewController.swift; sourceTree = "<group>"; };
+		5DA47E411B3B88DF000403A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		5DAB59C41B07D0610091DD58 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCollectionFlowLayout.swift; sourceTree = "<group>"; };
@@ -166,12 +168,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		5D02C2961B30EF9A00BAA872 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5D02C2981B30EFA100BAA872 /* iAd.framework in Frameworks */,
+				5DA47E421B3B88DF000403A4 /* StoreKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5DF6B95A1ACB5A7E007E852A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D25E05C1B02FAE500366923 /* Crashlytics.framework in Frameworks */,
-				5D25E05B1B02FAE500366923 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,8 +293,6 @@
 		5DF6B93C1ACB5A7D007E852A = {
 			isa = PBXGroup;
 			children = (
-				5D25E0591B02FAE500366923 /* Fabric.framework */,
-				5D25E05A1B02FAE500366923 /* Crashlytics.framework */,
 				5DF6B9471ACB5A7E007E852A /* HappyNashville */,
 				5DF6B9461ACB5A7E007E852A /* Products */,
 				1594B957B5212D051B57C8CC /* Pods */,
@@ -305,6 +312,7 @@
 		5DF6B9471ACB5A7E007E852A /* HappyNashville */ = {
 			isa = PBXGroup;
 			children = (
+				5DA048951B324C200006AC76 /* HappyNashvilleViewController.swift */,
 				5D34355F1B168E9200F108A7 /* MenuGroup */,
 				5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */,
 				5DAB59C31B07CFF40091DD58 /* MainVC */,
@@ -383,6 +391,8 @@
 		9931C79474FA76ABBB754FDD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5DA47E411B3B88DF000403A4 /* StoreKit.framework */,
+				5D02C2971B30EFA100BAA872 /* iAd.framework */,
 				A27D129DC2507EC1CED1784B /* libPods-HappyNashville.a */,
 				HYXIFWTDXJPPRRMDCEPMDTJH /* QuartzCore.framework */,
 				THBDITSPYVFDWQYYBDCIDIXG /* libz.dylib */,
@@ -401,6 +411,7 @@
 				5DF6B9411ACB5A7E007E852A /* Sources */,
 				5DF6B9431ACB5A7E007E852A /* Resources */,
 				5D25E03A1B02F57400366923 /* ShellScript */,
+				5D02C2961B30EF9A00BAA872 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -441,6 +452,11 @@
 					5DF6B9441ACB5A7E007E852A = {
 						CreatedOnToolsVersion = 6.2;
 						DevelopmentTeam = TB5YKEAJ2S;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 					5DF6B95C1ACB5A7E007E852A = {
 						CreatedOnToolsVersion = 6.2;
@@ -499,7 +515,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Fabric.framework/run b2fa13da961943ada093ca86282c0717d8d6c662 7cad0ab1a6f39490fc1b7a2086c4b18cd46eab09c11125e6b936de9bc4dd93ee";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -560,6 +576,7 @@
 				5DC4C7AD1AFC52B7000346F7 /* FooterViewController.swift in Sources */,
 				5DC4C7AF1AFC5F76000346F7 /* DayButton.swift in Sources */,
 				5DB3EB5D1AE436F60071396E /* LocationTabButtonView.swift in Sources */,
+				5DA048961B324C200006AC76 /* HappyNashvilleViewController.swift in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
 				5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */,
 				5D3435611B168EA400F108A7 /* MenuViewController.swift in Sources */,

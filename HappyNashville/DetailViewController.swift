@@ -8,8 +8,13 @@
 
 import UIKit
 import MapKit
+import iAd
 
-class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol {
+@objc protocol DetailVCProtocl {
+    func passBackiAd(adBanner: ADBannerView)
+}
+
+class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol, ADBannerViewDelegate {
     
     var location: Location?
     var mapView: MKMapView = MKMapView()
@@ -21,14 +26,17 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var tabButtonView: LocationTabButtonView?
     var navBar: UIView!
     var directionsVC: DirectionsViewController?
+    var dealDay: DealDay?
+    let iAdHeight: CGFloat = 50
+    var iAdIsOut: Bool = false
+    var iAdBanner: ADBannerView?
+    var delegate: DetailVCProtocl?
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    init(location: Location) {
+    init(location: Location, dealDay: DealDay?, adBannerView: ADBannerView?) {
         super.init(nibName: nil, bundle: nil)
         
+        self.iAdBanner = adBannerView;
+        self.dealDay = dealDay
         self.location = location
     }
 
@@ -38,12 +46,12 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         self.view!.backgroundColor = UIColor.whiteColor()
         
         if (self.location != nil) {
             var dealDays: NSSet = self.location!.dealDays
-            self.viewModel = DetailViewModel(dealDays:dealDays.allObjects as! Array<DealDay>)
+            self.viewModel = DetailViewModel(dealDays:dealDays.allObjects as! Array<DealDay>, selectedDate: self.dealDay)
             self.viewModel!.delegate = self
             
             if self.navigationController != nil {
@@ -51,12 +59,29 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             } else {
                 setUpNavBar()
             }
+            
+            if self.iAdBanner != nil {
+                self.iAdIsOut = true
+                self.iAdBanner?.delegate = self
+                self.view.addSubview(self.iAdBanner!)
+            }
+            
             setTitleView()
             setUpMapView()
             setUpCollectionView()
             setUpTabButtonView()
             setUpPageViewController()
         }
+    }
+    
+    override func viewWillLayoutSubviews() {
+         super.viewWillLayoutSubviews()
+        
+        if self.iAdIsOut && self.iAdBanner != nil {
+            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40 - self.iAdHeight, self.view!.width, 40)
+        } else {
+            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40)
+        }        
     }
     
     func setUpNavBar() {
@@ -80,7 +105,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     
     func setUpTabButtonView() {
         
-        self.tabButtonView = LocationTabButtonView(frame: CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40))
+        let yAxisSub = self.iAdBanner != nil ? self.iAdHeight : 0
+        
+        self.tabButtonView = LocationTabButtonView(frame:
+            CGRectMake(
+                0,
+                self.view!.bottom - yAxisSub - self.iAdHeight,
+                self.view!.width, 40
+            )
+        )
 
         let buttonMeasurements = self.viewModel!.getButtonWidth(self.view!.width, numberOfButtons: CGFloat(3), padding: 1)
         
@@ -306,8 +339,15 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         directionsVC!.didMoveToParentViewController(self)
     }
     
-    func displayUserPinOnMap(coords: CLLocationCoordinate2D) {
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
         
+        if self.iAdBanner != nil {
+            self.delegate?.passBackiAd(self.iAdBanner!)
+        }
+    }
+    
+    func displayUserPinOnMap(coords: CLLocationCoordinate2D) {
         self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
         
@@ -323,7 +363,20 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         var fittedRect = self.mapView.mapRectThatFits(unionRect)
  
         self.mapView.setVisibleMapRect(unionRect, animated: true)
-                
+    }
+    
+     func bannerViewWillLoadAd(banner: ADBannerView!) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40 - self.iAdHeight, self.view!.width, 40)
+        })
+    }
+    
+     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
+        
+        UIView.animateWithDuration(0.3, animations: { () -> Void in
+            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40)
+        })
     }
 
 }
