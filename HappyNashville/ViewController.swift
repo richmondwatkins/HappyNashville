@@ -87,6 +87,9 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
         
         addFooter()
         inactivateView()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideIAd", name: "removeAds", object: nil);
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "adPurchasedFailed", name: "adPurchasedFailed", object: nil);
     }
     
     override func viewWillLayoutSubviews() {
@@ -105,8 +108,8 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
             )
         } else {
             self.tableView.frame = CGRectMake(
-                self.tableView.origin.x,
-                self.navigationController!.navigationBar.height,
+                0,
+                0,
                 self.view!.width,
                 self.view!.height - self.footer.view.height
             )
@@ -709,6 +712,32 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
         self.tableView.contentInset = UIEdgeInsetsMake(-self.navigationController!.navigationBar.height - UIApplication.sharedApplication().statusBarFrame.height, 0, 0, 0)
     }
     
+    func hideIAd() {
+        if self.iAdBanner != nil {
+            animateIAdOffScreen()
+            self.iAdBanner?.removeFromSuperview()
+            self.iAdIsOut = false
+            self.iAdBanner = nil
+            
+            self.tableView.frame = CGRectMake(
+                self.tableView.origin.x,
+                self.tableView.origin.y,
+                self.view!.width,
+                self.view!.height - (self.view!.height * 0.1)
+            )
+        }
+        
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        userDefaults.setBool(true, forKey:StringConstants.kRemoveAds)
+        
+        userDefaults.synchronize()
+    }
+    
+    func adPurchasedFailed() {
+        UIAlertView(title: "Purchased Failed", message: "The purchased failed. Please try again.", delegate: self, cancelButtonTitle:"Ok").show()
+    }
+    
    override func bannerViewWillLoadAd(banner: ADBannerView!) {
         super.bannerViewWillLoadAd(banner)
         
@@ -736,6 +765,10 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
     override func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
         super.bannerView(banner, didFailToReceiveAdWithError: error)
         
+       animateIAdOffScreen()
+    }
+    
+    func animateIAdOffScreen() {
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.footer.view.frame = CGRectMake(
                 0,

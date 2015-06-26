@@ -19,29 +19,28 @@ class HappyNashvilleViewController: UIViewController, ADBannerViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if (!NSUserDefaults.standardUserDefaults().boolForKey(StringConstants.kRemoveAds)) {
-            setUpIAd()
-        }
     }
     
     override func viewWillLayoutSubviews() {
         
         super.viewWillLayoutSubviews()
         
-        if self.iAdIsOut {
-            self.iAdBanner!.frame = CGRectMake(
-                0,
-                self.view.height - self.iAdHeight,
-                self.view.width,
-                self.iAdHeight
-            )
-        } else {
-            self.iAdBanner!.frame = CGRectMake(
-                0,
-                self.view.height,
-                self.view.width,
-                self.iAdHeight
-            )
+        if self.iAdBanner != nil {
+            if self.iAdIsOut {
+                self.iAdBanner!.frame = CGRectMake(
+                    0,
+                    self.view.height - self.iAdHeight,
+                    self.view.width,
+                    self.iAdHeight
+                )
+            } else {
+                self.iAdBanner!.frame = CGRectMake(
+                    0,
+                    self.view.height,
+                    self.view.width,
+                    self.iAdHeight
+                )
+            }
         }
     }
 

@@ -8,6 +8,8 @@
 
 import UIKit
 import CoreData
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,6 +30,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         APIManger.deletePastNotifications()
         
+        Fabric.with([Crashlytics()])
+//        
+//        if (!NSUserDefaults.standardUserDefaults().boolForKey(StringConstants.kRemoveAds)) {
+//            SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
+//        }
+//        
         return true
     }
     

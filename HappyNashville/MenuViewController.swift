@@ -13,9 +13,11 @@ import MessageUI
     func displayMapView()
     func setMenuDissmissed()
     func displayNotificationManager()
+    func hideIAd()
 }
 
-class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate, UIGestureRecognizerDelegate {
+class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
+UIGestureRecognizerDelegate, UIAlertViewDelegate {
 
     var viewFrame: CGRect!
     var hasLoaded: Bool = false
@@ -24,6 +26,7 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
     let scheduleNotifButton: UIButton = UIButton()
     let mapListButton: UIButton = UIButton()
     let reportButton: UIButton = UIButton()
+    let hideAdsButton: UIButton = UIButton()
     var buttons: Array<UIButton>?
     
     init(viewFrame: CGRect) {
@@ -51,6 +54,7 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
         self.view.layer.shadowColor = UIColor.blackColor().CGColor
         self.view.layer.shadowOpacity = 0.8
         
+//        view.addSubview(hideAdsButton)
         view.addSubview(scheduleNotifButton)
         view.addSubview(mapListButton)
         view.addSubview(reportButton)
@@ -61,6 +65,10 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
         swipeGesture.numberOfTouchesRequired = 1
         swipeGesture.delegate = self
         view.addGestureRecognizer(swipeGesture)
+        
+       // if (!NSUserDefaults.standardUserDefaults().boolForKey(StringConstants.kRemoveAds)) {
+       //     setUpAdButton()
+        //}
         
         setUpButtons()
         setUpNotifButton()
@@ -90,13 +98,40 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
         return true
     }
     
+    func setUpAdButton() {
+        hideAdsButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        hideAdsButton.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: UIControlState.Highlighted)
+        hideAdsButton.titleLabel?.font = UIFont.systemFontOfSize(12)
+        
+        if (!NSUserDefaults.standardUserDefaults().boolForKey("hasPurchases")) {
+            hideAdsButton.setTitle("Restore Purchase", forState: .Normal)
+            hideAdsButton.addTarget(self, action: "restorePurchase", forControlEvents: .TouchUpInside)
+        } else {
+            hideAdsButton.setTitle("Hide Ads", forState: .Normal)
+            hideAdsButton.addTarget(self, action: "removeAds", forControlEvents: .TouchUpInside)
+        }
+    }
+    
+    func restorePurchase() {
+        hideAdsButton.removeFromSuperview()
+        NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
+    }
+    
+    func removeAds() {
+//        StoreKitHelper.defaultHelper.initPurchase()
+    }
+    
+    func showAds() {
+        //        UIAlertView(title: "Remove Ads", message: "Happy Nashville is free and always will be. Ads help support the growth of features and the addition of more happy hours.", delegate: self, cancelButtonTitle:"Support Happy Nashville", otherButtonTitles: "Remove Ads").show()
+    }
+    
     func setUpButtons() {
         for button in buttons! {
             button.layer.borderWidth = 1.0
             button.layer.borderColor = UIColor(hexString: StringConstants.primaryColor).CGColor
             button.titleLabel?.font = UIFont.systemFontOfSize(11)
             button.backgroundColor = .whiteColor()
-            button.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
+            button.setTitleColor(UIColor(hexString: "3D3D3E"), forState: .Normal)
         }
     }
     
@@ -171,11 +206,25 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
     
     override func viewWillLayoutSubviews() {
         
-        scheduleNotifButton.frame = CGRectMake(2, 2, (view.width / 2) - 3, view.height * 0.8)
-        mapListButton.frame = CGRectMake(scheduleNotifButton.right + 2, 2, (view.width / 2) - 3, view.height * 0.8)
-        reportButton.frame = CGRectMake(2, scheduleNotifButton.bottom + 2, view.width, view.height * 0.17)
+        let buttonWidth:CGFloat = 100
         
-        scheduleNotifButton.titleEdgeInsets = UIEdgeInsetsMake(scheduleNotifButton.height / 2 + 12, -25, 0, -1)
+        hideAdsButton.frame = CGRectMake(
+            self.view.width - buttonWidth - 2,
+            self.viewFrame.height - 25,
+            buttonWidth,
+            20
+        )
+        
+        scheduleNotifButton.frame = CGRectMake(2, 2, (view.width / 2) - 3, view.height * 0.7)
+        mapListButton.frame = CGRectMake(scheduleNotifButton.right + 2, 2, (view.width / 2) - 3, view.height * 0.7)
+        reportButton.frame = CGRectMake(
+            2,
+            self.viewFrame.height - view.height * 0.17,
+            view.width,
+            view.height * 0.17
+        )
+        
+        scheduleNotifButton.titleEdgeInsets = UIEdgeInsetsMake(scheduleNotifButton.height / 2 + 12, -35, 0, -1)
         scheduleNotifButton.imageEdgeInsets = UIEdgeInsets(
             top: -20,
             left: (scheduleNotifButton.width / 2) - (scheduleNotifButton.imageView!.image!.size.width / 2),
@@ -186,7 +235,7 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
         mapListButton.titleEdgeInsets = UIEdgeInsetsMake(mapListButton.height / 2 + 12, -39, 0, -1)
         mapListButton.imageEdgeInsets = UIEdgeInsets(
             top: -20,
-            left: (mapListButton.width / 2) - (mapListButton.imageView!.image!.size.width / 2),
+            left: (mapListButton.width / 2) - (mapListButton.imageView!.image!.size.width / 2) - 15,
             bottom: 0,
             right: 0
         )
@@ -198,5 +247,7 @@ class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
             bottom: 0,
             right: 0
         )
+        
+        self.view.bringSubviewToFront(hideAdsButton)
     }
 }

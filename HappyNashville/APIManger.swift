@@ -46,7 +46,6 @@ class APIManger: NSObject {
         let location: Location = Location()
         
         for key in locationDict.allKeys as! [String] {
-            print(locationDict["name"])
             if key != "_id" {
                 if key == "dealDays" {
                     location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)

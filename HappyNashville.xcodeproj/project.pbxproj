@@ -32,7 +32,9 @@
 		5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FBA91AD239F200F23EA5 /* SpecialView.swift */; };
 		5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */; };
 		5DA048961B324C200006AC76 /* HappyNashvilleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA048951B324C200006AC76 /* HappyNashvilleViewController.swift */; };
-		5DA47E421B3B88DF000403A4 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E411B3B88DF000403A4 /* StoreKit.framework */; };
+		5DA47E461B3BB7AA000403A4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E441B3BB7AA000403A4 /* Fabric.framework */; };
+		5DA47E471B3BB7AA000403A4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */; };
+		5DA47E491B3C67DE000403A4 /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA47E481B3C67DE000403A4 /* StoreKitHelper.swift */; };
 		5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C41B07D0610091DD58 /* SearchViewController.swift */; };
 		5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */; };
 		5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */; };
@@ -115,7 +117,9 @@
 		5D87FBA91AD239F200F23EA5 /* SpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialView.swift; sourceTree = "<group>"; };
 		5D9C5D621ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScheduleViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DA048951B324C200006AC76 /* HappyNashvilleViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HappyNashvilleViewController.swift; sourceTree = "<group>"; };
-		5DA47E411B3B88DF000403A4 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5DA47E441B3BB7AA000403A4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
+		5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
+		5DA47E481B3C67DE000403A4 /* StoreKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
 		5DAB59C41B07D0610091DD58 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCollectionFlowLayout.swift; sourceTree = "<group>"; };
@@ -173,7 +177,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5D02C2981B30EFA100BAA872 /* iAd.framework in Frameworks */,
-				5DA47E421B3B88DF000403A4 /* StoreKit.framework in Frameworks */,
+				5DA47E471B3BB7AA000403A4 /* Crashlytics.framework in Frameworks */,
+				5DA47E461B3BB7AA000403A4 /* Fabric.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -200,6 +205,7 @@
 			isa = PBXGroup;
 			children = (
 				5D3435601B168EA400F108A7 /* MenuViewController.swift */,
+				5DA47E481B3C67DE000403A4 /* StoreKitHelper.swift */,
 			);
 			name = MenuGroup;
 			sourceTree = "<group>";
@@ -347,6 +353,8 @@
 		5DF6B9481ACB5A7E007E852A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5DA47E441B3BB7AA000403A4 /* Fabric.framework */,
+				5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */,
 				5D87FB9C1AD0F3A800F23EA5 /* UIViewExtension.swift */,
 				5DB3EB411ADF45DC0071396E /* HCSStarRatingView.h */,
 				5DB3EB421ADF45DC0071396E /* HCSStarRatingView.m */,
@@ -391,7 +399,6 @@
 		9931C79474FA76ABBB754FDD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5DA47E411B3B88DF000403A4 /* StoreKit.framework */,
 				5D02C2971B30EFA100BAA872 /* iAd.framework */,
 				A27D129DC2507EC1CED1784B /* libPods-HappyNashville.a */,
 				HYXIFWTDXJPPRRMDCEPMDTJH /* QuartzCore.framework */,
@@ -412,6 +419,7 @@
 				5DF6B9431ACB5A7E007E852A /* Resources */,
 				5D25E03A1B02F57400366923 /* ShellScript */,
 				5D02C2961B30EF9A00BAA872 /* Frameworks */,
+				5DA47E431B3BB78A000403A4 /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -454,7 +462,7 @@
 						DevelopmentTeam = TB5YKEAJ2S;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -517,6 +525,20 @@
 			shellPath = /bin/sh;
 			shellScript = "";
 		};
+		5DA47E431B3BB78A000403A4 /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Fabric.framework/run b2fa13da961943ada093ca86282c0717d8d6c662 7cad0ab1a6f39490fc1b7a2086c4b18cd46eab09c11125e6b936de9bc4dd93ee";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -537,6 +559,7 @@
 				5DB3EB4F1AE322E20071396E /* WeekFlowLayout.swift in Sources */,
 				5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */,
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
+				5DA47E491B3C67DE000403A4 /* StoreKitHelper.swift in Sources */,
 				5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */,
 				5D3435631B16C35C00F108A7 /* MusicRowPolygon.swift in Sources */,
 				5DAB59CB1B09552D0091DD58 /* SpecialCollectionCellCollectionViewCell.swift in Sources */,
@@ -716,7 +739,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = "";
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -736,6 +759,10 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
