@@ -10,9 +10,6 @@ import UIKit
 import MapKit
 import iAd
 
-@objc protocol DetailVCProtocl {
-    func passBackiAd(adBanner: ADBannerView)
-}
 
 class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol, ADBannerViewDelegate {
     
@@ -27,15 +24,10 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var navBar: UIView!
     var directionsVC: DirectionsViewController?
     var dealDay: DealDay?
-    let iAdHeight: CGFloat = 50
-    var iAdIsOut: Bool = false
-    var iAdBanner: ADBannerView?
-    var delegate: DetailVCProtocl?
     
-    init(location: Location, dealDay: DealDay?, adBannerView: ADBannerView?) {
+    init(location: Location, dealDay: DealDay?) {
         super.init(nibName: nil, bundle: nil)
-        
-        self.iAdBanner = adBannerView;
+
         self.dealDay = dealDay
         self.location = location
     }
@@ -60,12 +52,6 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
                 setUpNavBar()
             }
             
-            if self.iAdBanner != nil {
-                self.iAdIsOut = true
-                self.iAdBanner?.delegate = self
-                self.view.addSubview(self.iAdBanner!)
-            }
-            
             setTitleView()
             setUpMapView()
             setUpCollectionView()
@@ -75,13 +61,9 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     override func viewWillLayoutSubviews() {
-         super.viewWillLayoutSubviews()
+        super.viewWillLayoutSubviews()
         
-        if self.iAdIsOut && self.iAdBanner != nil {
-            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40 - self.iAdHeight, self.view!.width, 40)
-        } else {
-            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40)
-        }        
+        self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40)
     }
     
     func setUpNavBar() {
@@ -104,14 +86,12 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     func setUpTabButtonView() {
-        
-        let yAxisSub = self.iAdBanner != nil ? self.iAdHeight : 0
-        
         self.tabButtonView = LocationTabButtonView(frame:
             CGRectMake(
                 0,
-                self.view!.bottom - yAxisSub - self.iAdHeight,
-                self.view!.width, 40
+                self.view!.bottom - 40,
+                self.view!.width,
+                40
             )
         )
 
@@ -338,15 +318,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         directionsVC!.didMoveToParentViewController(self)
     }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        if self.iAdBanner != nil {
-            self.delegate?.passBackiAd(self.iAdBanner!)
-        }
-    }
-    
+
     func displayUserPinOnMap(coords: CLLocationCoordinate2D) {
         self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
@@ -363,20 +335,6 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         var fittedRect = self.mapView.mapRectThatFits(unionRect)
  
         self.mapView.setVisibleMapRect(unionRect, animated: true)
-    }
-    
-     func bannerViewWillLoadAd(banner: ADBannerView!) {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40 - self.iAdHeight, self.view!.width, 40)
-        })
-    }
-    
-     func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.tabButtonView?.frame = CGRectMake(0, self.view!.bottom - 40, self.view!.width, 40)
-        })
     }
 
 }

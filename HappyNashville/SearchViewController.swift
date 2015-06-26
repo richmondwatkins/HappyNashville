@@ -151,7 +151,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         let detailViewController: DetailViewController =
-            DetailViewController(location: location, dealDay: nil, adBannerView: nil)
+            DetailViewController(location: location, dealDay: nil)
         
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }

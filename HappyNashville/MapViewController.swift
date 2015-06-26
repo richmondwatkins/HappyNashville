@@ -31,6 +31,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     var midTownPolygon: MidtownPolygon!
     var musicRowPolyon: MusicRowPolygon!
     var sobroPolygon: SobroPolygon!
+    var greenhillsPolygon: GreenHillsPolygon!
     var allOverlays: Array<MKOverlay>?
     var isFirstLoad: Bool = true
     let containerView: UIView = UIView()
@@ -84,6 +85,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         createMidTownPolygon()
         createMusicRowPloygon()
         createSobroPolygon()
+        createGreenHillsPolygon()
     }
     
     func setMapCenter(coordinate: CLLocationCoordinate2D) {
@@ -116,6 +118,54 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             self.containerView.frame = self.view.frame
         }
         
+    }
+    
+    func createGreenHillsPolygon() {
+        var greenHillsArr: Array<CLLocationCoordinate2D> = [
+            CLLocationCoordinate2DMake(36.136792, -86.821764),
+            CLLocationCoordinate2DMake(36.124037, -86.812495),
+            CLLocationCoordinate2DMake(36.122858, -86.806401),
+            CLLocationCoordinate2DMake(36.121749, -86.803482),
+            CLLocationCoordinate2DMake(36.120362, -86.802023),
+            CLLocationCoordinate2DMake(36.117242, -86.799448),
+            CLLocationCoordinate2DMake(36.116480, -86.798418),
+            CLLocationCoordinate2DMake(36.116202, -86.783570),
+            CLLocationCoordinate2DMake(36.111765, -86.782626),
+            CLLocationCoordinate2DMake(36.110378, -86.782926),
+            CLLocationCoordinate2DMake(36.110482, -86.783527),
+            CLLocationCoordinate2DMake(36.108506, -86.785115),
+            CLLocationCoordinate2DMake(36.105524, -86.784986),
+            CLLocationCoordinate2DMake(36.103721, -86.785286),
+            CLLocationCoordinate2DMake(36.100253, -86.787175),
+            CLLocationCoordinate2DMake(36.100253, -86.787175),
+            CLLocationCoordinate2DMake(36.097445, -86.786402),
+            CLLocationCoordinate2DMake(36.088185, -86.787775),
+            
+            CLLocationCoordinate2DMake(36.090960, -86.818803),
+            CLLocationCoordinate2DMake(36.091341, -86.819490),
+            CLLocationCoordinate2DMake(36.091515, -86.832279),
+            CLLocationCoordinate2DMake(36.092763, -86.839703),
+            CLLocationCoordinate2DMake(36.092902, -86.847042),
+            CLLocationCoordinate2DMake(36.103617, -86.843737),
+            CLLocationCoordinate2DMake(36.103790, -86.844424),
+            CLLocationCoordinate2DMake(36.110066, -86.843007),
+            CLLocationCoordinate2DMake(36.115405, -86.842879),
+            CLLocationCoordinate2DMake(36.115335, -86.843823),
+            CLLocationCoordinate2DMake(36.117381, -86.843480),
+            CLLocationCoordinate2DMake(36.118976, -86.844424),
+            CLLocationCoordinate2DMake(36.121160, -86.848544),
+            CLLocationCoordinate2DMake(36.122858, -86.848930),
+            CLLocationCoordinate2DMake(36.123343, -86.849574),
+            CLLocationCoordinate2DMake(36.127503, -86.843909),
+            CLLocationCoordinate2DMake(36.129999, -86.838630),
+            CLLocationCoordinate2DMake(36.135267, -86.823524),
+            CLLocationCoordinate2DMake(36.136723, -86.821764),
+            
+        ]
+        
+        greenhillsPolygon = GreenHillsPolygon(coordinates: &greenHillsArr, count: greenHillsArr.count)
+        
+        self.mapView.addOverlay(greenhillsPolygon)
     }
     
     func createSobroPolygon() {
@@ -535,6 +585,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         runFilter(self.sobroPolygon, shouldHide: shouldHide)
     }
     
+    func filterGreenHills(shouldHide: Bool) {
+        runFilter(self.greenhillsPolygon, shouldHide: shouldHide)
+    }
+    
     func resetAll() {
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
 
@@ -670,6 +724,12 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             pr.fillColor = UIColor.magentaColor().colorWithAlphaComponent(0.2);
             
             return pr
+        } else if overlay is GreenHillsPolygon {
+            pr.strokeColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.5);
+            
+            pr.fillColor = UIColor.darkGrayColor().colorWithAlphaComponent(0.2);
+            
+            return pr
         }
         
         return nil
@@ -698,7 +758,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         for location in self.locations {
             if location.name == view.annotation.title {
                 let detailViewController: DetailViewController =
-                    DetailViewController(location: location, dealDay: nil, adBannerView: nil)
+                    DetailViewController(location: location, dealDay: nil)
                 
                 self.presentViewController(detailViewController, animated: true, completion: nil)
             }

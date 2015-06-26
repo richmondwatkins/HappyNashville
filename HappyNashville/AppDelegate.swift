@@ -53,6 +53,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        if (!userDefaults.boolForKey("acceptedNotifications")) {
+            userDefaults.setBool(true, forKey: "acceptedNotifications")
+            
+            userDefaults.synchronize()
+        }
+                
         println("register");
     }
 

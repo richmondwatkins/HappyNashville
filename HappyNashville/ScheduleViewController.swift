@@ -43,10 +43,10 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
             0,
             self.navHeight!,
             self.view!.width,
-            self.view!.height - self.navHeight! - 50
+            self.view!.height - self.navHeight!
         )
         
-        self.view.height = self.view.height - 50
+        self.view.height = self.view.height
         
         self.scheduleView = ScheduleView(frame: scheduleViewFrame, dealDay: self.dealDay!, viewModel: self.viewModel)
         self.scheduleView?.delegate = self
@@ -92,7 +92,5 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
             
             self.delegate?.showFooter()
         })
-        
     }
-
 }

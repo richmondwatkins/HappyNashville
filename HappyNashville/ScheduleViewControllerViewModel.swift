@@ -10,7 +10,11 @@ import UIKit
 import CoreData
 
 class ScheduleViewControllerViewModel: AppViewModel {
-   
+    
+    var date: NSDate?
+    var isRecurring: Bool?
+    var dealDay: DealDay?
+    
     func calculateDatePickerDate(dealDay: DealDay) -> NSDate {
         let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let date: NSDate = NSDate()
@@ -45,16 +49,26 @@ class ScheduleViewControllerViewModel: AppViewModel {
         return gregorianCalendar.dateFromComponents(toDateComponents)!
     }
     
+    func sendFirstReminder() {
+        scheduleReminder(self.date!, isRecurring: self.isRecurring!, dealDay: self.dealDay!)
+    }
+    
     func scheduleReminder(date: NSDate, isRecurring: Bool, dealDay:DealDay) {
         
-        let notificationSetting = UIUserNotificationSettings(
-            forTypes: UIUserNotificationType.Alert |
-                UIUserNotificationType.Alert |
-                UIUserNotificationType.Sound,
-            categories: nil
-        )
-        
-        UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
+        if (!NSUserDefaults.standardUserDefaults().boolForKey("acceptedNotifications")) {
+            self.date = date
+            self.isRecurring = isRecurring
+            self.dealDay = dealDay
+            
+            let notificationSetting = UIUserNotificationSettings(
+                forTypes: UIUserNotificationType.Alert |
+                    UIUserNotificationType.Alert |
+                    UIUserNotificationType.Sound,
+                categories: nil
+            )
+            
+            UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
+        }
         
         var notification = UILocalNotification()
         notification.fireDate = date

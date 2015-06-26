@@ -18,6 +18,7 @@ import UIKit
     func filterMidtown(shouldHide: Bool)
     func filterMusicRow(shouldHide: Bool)
     func filterSobro(shouldHide: Bool)
+    func filterGreenHills(shouldHide: Bool)
     func resetAll()
 }
 
@@ -36,6 +37,7 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
         ["zone": "Midtown", "color": StringConstants.midtownColor, "isSelected": "1"],
         ["zone": "Music \n Row", "color": StringConstants.musicRowColor, "isSelected": "1"],
         ["zone": "Sobro", "color": StringConstants.sobroColor, "isSelected": "1"],
+        ["zone": "Greenhills", "color": StringConstants.greenHillColor, "isSelected": "1"],
         ["zone": "Reset", "color": "000000", "isSelected": "1"]
     ]
     
@@ -141,6 +143,9 @@ class MapFilterViewController: UIViewController, UITableViewDelegate, UITableVie
                 self.delegate?.filterSobro(shouldHide)
                 break;
             case 9:
+                self.delegate?.filterGreenHills(shouldHide)
+                break;
+            case 10:
                 resetMap()
                 break;
             default:

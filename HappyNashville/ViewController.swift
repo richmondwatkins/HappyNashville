@@ -9,9 +9,8 @@
 import UIKit
 import CoreData
 import Foundation
-import iAd
 
-class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate, ADBannerViewDelegate, DetailVCProtocl {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate {
     
     var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
@@ -94,26 +93,13 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
     
     override func viewWillLayoutSubviews() {
          super.viewWillLayoutSubviews()
-        
-        if self.iAdIsOut {
-            let navHeight =
-            self.navigationController!.navigationBar.height +
-                UIApplication.sharedApplication().statusBarFrame.height
-            
-            self.tableView.frame = CGRectMake(
-                self.tableView.origin.x,
-                navHeight,
-                self.view!.width,
-                self.view!.height - (self.view!.height * 0.1) - self.iAdHeight - navHeight
-            )
-        } else {
-            self.tableView.frame = CGRectMake(
-                0,
-                0,
-                self.view!.width,
-                self.view!.height - self.footer.view.height
-            )
-        }
+
+        self.tableView.frame = CGRectMake(
+            0,
+            0,
+            self.view!.width,
+            self.view!.height - self.footer.view.height
+        )
     }
     
     override func viewDidLayoutSubviews() {
@@ -381,10 +367,8 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
         if let dealDay = getDealDayForIndexPath(indexPath) {
       
             let detailViewController: DetailViewController =
-                DetailViewController(location: dealDay.location, dealDay: dealDay, adBannerView:self.iAdBanner)
-            
-            detailViewController.delegate = self
-            
+                DetailViewController(location: dealDay.location, dealDay: dealDay)
+                        
             self.navigationController?.pushViewController(detailViewController, animated: true)
             
             setUpBackButton()
@@ -688,7 +672,7 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
 
         if let location = self.viewModel.returnLocationFromName(userInfo["location"] as! String) {
             let detailViewController: DetailViewController =
-                DetailViewController(location: location, dealDay: nil, adBannerView: nil)
+                DetailViewController(location: location, dealDay: nil)
             
             self.presentViewController(detailViewController, animated: true, completion: nil)
         }
@@ -704,85 +688,5 @@ class ViewController: HappyNashvilleViewController, UITableViewDelegate, UITable
         self.footer.view.userInteractionEnabled = false
         self.navigationItem.leftBarButtonItem?.enabled = false
         self.navigationItem.rightBarButtonItem?.enabled = false
-    }
-    
-    func passBackiAd(adBanner: ADBannerView) {
-        self.iAdIsOut = true
-        self.view.addSubview(adBanner)
-        self.tableView.contentInset = UIEdgeInsetsMake(-self.navigationController!.navigationBar.height - UIApplication.sharedApplication().statusBarFrame.height, 0, 0, 0)
-    }
-    
-    func hideIAd() {
-        if self.iAdBanner != nil {
-            animateIAdOffScreen()
-            self.iAdBanner?.removeFromSuperview()
-            self.iAdIsOut = false
-            self.iAdBanner = nil
-            
-            self.tableView.frame = CGRectMake(
-                self.tableView.origin.x,
-                self.tableView.origin.y,
-                self.view!.width,
-                self.view!.height - (self.view!.height * 0.1)
-            )
-        }
-        
-        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
-        
-        userDefaults.setBool(true, forKey:StringConstants.kRemoveAds)
-        
-        userDefaults.synchronize()
-    }
-    
-    func adPurchasedFailed() {
-        UIAlertView(title: "Purchased Failed", message: "The purchased failed. Please try again.", delegate: self, cancelButtonTitle:"Ok").show()
-    }
-    
-   override func bannerViewWillLoadAd(banner: ADBannerView!) {
-        super.bannerViewWillLoadAd(banner)
-        
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.footer.view.frame = CGRectMake(
-                0,
-                self.view!.bottom - self.footer.view.height - self.iAdHeight,
-                self.view!.width,
-                self.footer.view.height
-            )
-            
-            let navHeight =
-            self.navigationController!.navigationBar.height +
-                UIApplication.sharedApplication().statusBarFrame.height
-            
-            self.tableView.frame = CGRectMake(
-                self.tableView.origin.x,
-                navHeight,
-                self.view!.width,
-                self.view!.height - (self.view!.height * 0.1) - self.iAdHeight - navHeight
-            )
-        })
-    }
-    
-    override func bannerView(banner: ADBannerView!, didFailToReceiveAdWithError error: NSError!) {
-        super.bannerView(banner, didFailToReceiveAdWithError: error)
-        
-       animateIAdOffScreen()
-    }
-    
-    func animateIAdOffScreen() {
-        UIView.animateWithDuration(0.3, animations: { () -> Void in
-            self.footer.view.frame = CGRectMake(
-                0,
-                self.view!.bottom - self.footer.view.height,
-                self.view!.width,
-                self.footer.view.height
-            )
-            
-            self.tableView.frame = CGRectMake(
-                self.tableView.origin.x,
-                self.tableView.origin.y,
-                self.view!.width,
-                self.view!.height - (self.view!.height * 0.1)
-            )
-        })
     }
 }

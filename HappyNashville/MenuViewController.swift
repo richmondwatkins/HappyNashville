@@ -13,7 +13,6 @@ import MessageUI
     func displayMapView()
     func setMenuDissmissed()
     func displayNotificationManager()
-    func hideIAd()
 }
 
 class MenuViewController: UIViewController, MFMailComposeViewControllerDelegate,
@@ -54,7 +53,6 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         self.view.layer.shadowColor = UIColor.blackColor().CGColor
         self.view.layer.shadowOpacity = 0.8
         
-//        view.addSubview(hideAdsButton)
         view.addSubview(scheduleNotifButton)
         view.addSubview(mapListButton)
         view.addSubview(reportButton)
@@ -65,10 +63,6 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         swipeGesture.numberOfTouchesRequired = 1
         swipeGesture.delegate = self
         view.addGestureRecognizer(swipeGesture)
-        
-       // if (!NSUserDefaults.standardUserDefaults().boolForKey(StringConstants.kRemoveAds)) {
-       //     setUpAdButton()
-        //}
         
         setUpButtons()
         setUpNotifButton()
@@ -98,31 +92,9 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         return true
     }
     
-    func setUpAdButton() {
-        hideAdsButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        hideAdsButton.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: UIControlState.Highlighted)
-        hideAdsButton.titleLabel?.font = UIFont.systemFontOfSize(12)
-        
-        if (!NSUserDefaults.standardUserDefaults().boolForKey("hasPurchases")) {
-            hideAdsButton.setTitle("Restore Purchase", forState: .Normal)
-            hideAdsButton.addTarget(self, action: "restorePurchase", forControlEvents: .TouchUpInside)
-        } else {
-            hideAdsButton.setTitle("Hide Ads", forState: .Normal)
-            hideAdsButton.addTarget(self, action: "removeAds", forControlEvents: .TouchUpInside)
-        }
-    }
-    
     func restorePurchase() {
         hideAdsButton.removeFromSuperview()
         NSNotificationCenter.defaultCenter().postNotificationName("removeAds", object: nil)
-    }
-    
-    func removeAds() {
-//        StoreKitHelper.defaultHelper.initPurchase()
-    }
-    
-    func showAds() {
-        //        UIAlertView(title: "Remove Ads", message: "Happy Nashville is free and always will be. Ads help support the growth of features and the addition of more happy hours.", delegate: self, cancelButtonTitle:"Support Happy Nashville", otherButtonTitles: "Remove Ads").show()
     }
     
     func setUpButtons() {
@@ -137,7 +109,7 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
     
     func setUpReportButton() {
         reportButton.titleLabel?.font = UIFont.systemFontOfSize(8)
-        reportButton.setTitleColor(UIColor(hexString: StringConstants.primaryColor), forState: .Normal)
+        reportButton.setTitleColor(UIColor(hexString: "3D3D3E"), forState: .Normal)
         reportButton.setTitle("Report Incorrect Special or Location", forState: .Normal)
         reportButton.setImage(UIImage(named: "report-flag"), forState: .Normal)
         reportButton.addTarget(self, action: "reportSpecialOrLoc", forControlEvents: .TouchUpInside)

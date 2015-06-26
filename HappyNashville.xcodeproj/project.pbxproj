@@ -35,6 +35,7 @@
 		5DA47E461B3BB7AA000403A4 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E441B3BB7AA000403A4 /* Fabric.framework */; };
 		5DA47E471B3BB7AA000403A4 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */; };
 		5DA47E491B3C67DE000403A4 /* StoreKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA47E481B3C67DE000403A4 /* StoreKitHelper.swift */; };
+		5DA47E4B1B3CFD35000403A4 /* GreenHillsPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DA47E4A1B3CFD35000403A4 /* GreenHillsPolygon.swift */; };
 		5DAB59C51B07D0610091DD58 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C41B07D0610091DD58 /* SearchViewController.swift */; };
 		5DAB59C71B07D88A0091DD58 /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */; };
 		5DAB59C91B094D550091DD58 /* SpecialCollectionFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */; };
@@ -120,6 +121,7 @@
 		5DA47E441B3BB7AA000403A4 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = SOURCE_ROOT; };
 		5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = SOURCE_ROOT; };
 		5DA47E481B3C67DE000403A4 /* StoreKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreKitHelper.swift; sourceTree = "<group>"; };
+		5DA47E4A1B3CFD35000403A4 /* GreenHillsPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenHillsPolygon.swift; sourceTree = "<group>"; };
 		5DAB59C41B07D0610091DD58 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		5DAB59C61B07D88A0091DD58 /* SearchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewModel.swift; sourceTree = "<group>"; };
 		5DAB59C81B094D550091DD58 /* SpecialCollectionFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpecialCollectionFlowLayout.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				5D2972E51B156E2B00291470 /* MidtownPolygon.swift */,
 				5D3435621B16C35C00F108A7 /* MusicRowPolygon.swift */,
 				5D3435641B16C98E00F108A7 /* SobroPolygon.swift */,
+				5DA47E4A1B3CFD35000403A4 /* GreenHillsPolygon.swift */,
 			);
 			name = Polygons;
 			sourceTree = "<group>";
@@ -607,6 +610,7 @@
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
 				5DB3EB431ADF45DC0071396E /* HCSStarRatingView.m in Sources */,
 				5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */,
+				5DA47E4B1B3CFD35000403A4 /* GreenHillsPolygon.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
