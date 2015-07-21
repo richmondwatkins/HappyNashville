@@ -85,6 +85,4 @@ class SpecialView: UIView {
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
     }
-    
-    
 }

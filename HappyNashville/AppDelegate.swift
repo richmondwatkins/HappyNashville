@@ -31,11 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         APIManger.deletePastNotifications()
         
         Fabric.with([Crashlytics()])
-//        
-//        if (!NSUserDefaults.standardUserDefaults().boolForKey(StringConstants.kRemoveAds)) {
-//            SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
-//        }
-//        
+        
+        var docPathAry : NSArray! = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        var docDirPathStr: AnyObject? = docPathAry.count > 0 ? docPathAry[0] : nil
+        self.addSkipBackupAttributeToItemAtURL(NSURL.fileURLWithPath(docDirPathStr as! String))
+        
         return true
     }
     
@@ -59,9 +59,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             userDefaults.setBool(true, forKey: "acceptedNotifications")
             
             userDefaults.synchronize()
+        }                
+    }
+    
+    
+    func addSkipBackupAttributeToItemAtURL(URL: NSURL!) -> Bool{
+        assert(NSFileManager.defaultManager().fileExistsAtPath(URL.path!))
+        var err : NSError? = nil
+        var success : Bool! = URL.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey, error: &err)
+        
+        if(!success){
+            println("Error excluding \(URL.lastPathComponent) from backup\(err) ")
         }
-                
-        println("register");
+        
+        return success
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -150,6 +161,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 

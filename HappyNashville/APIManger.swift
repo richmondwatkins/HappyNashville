@@ -16,19 +16,115 @@ class APIManger: NSObject {
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
         var url: NSURL = NSURL(string: urlString)!;
-        var request: NSURLRequest = NSURLRequest(URL: url, cachePolicy: NSURLRequestCachePolicy.ReloadIgnoringLocalCacheData, timeoutInterval: 60.0)
+        var request: NSURLRequest = NSURLRequest(URL: url)
         
-            NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) {(response, data, error) in
-                
-            var jsonResult: NSDictionary = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as! NSDictionary
+        if !NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch") {
+            self.updateDeals(self.copyFromBundleAndReturnData()!["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
+                completed(dealDays: dealDays, locations: locations)
+            })
+        } else {
+            let data: NSDictionary? = self.loadDataFromFileSystem()
             
-                self.masterDealDaysArray.removeAll(keepCapacity: false)
-                
-                self.updateDeals(jsonResult["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
-                    completed(dealDays: dealDays, locations: locations)
-                })
+            self.updateDeals(self.loadDataFromFileSystem()!["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
+                completed(dealDays: dealDays, locations: locations)
+            })
         }
+        
+        var session = NSURLSession.sharedSession()
+        var task = session.dataTaskWithRequest(request){
+            (data, response, error) -> Void in
+            var jsonResult: NSDictionary?
+            
+            self.masterDealDaysArray.removeAll(keepCapacity: false)
+            
+            if error == nil && data != nil {
+                jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
+                
+                self.writeNewDataToFile(jsonResult!)
+                //
+                NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
+            }
+        }
+        task.resume()
+    }
+    
+    class func writeNewDataToFile(jsonDictionary: NSDictionary) {
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
+        let paths: NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: NSString = paths.objectAtIndex(0) as! NSString
+        
+        let fileSystemDataPath = documentsDirectory.stringByAppendingPathComponent("data.json")
+        
+        let newData: NSData? = NSJSONSerialization.dataWithJSONObject(jsonDictionary, options: NSJSONWritingOptions.allZeros, error: nil)
+        
+        if newData != nil {
+            let jsonString: NSString? = NSString(data: newData!, encoding: NSUTF8StringEncoding)
+            
+            if (jsonString != nil) {
+                jsonString!.writeToFile(fileSystemDataPath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
+            }
+        }
+    }
+    
+    class func copyFromBundleAndReturnData() -> NSDictionary? {
+        let dataPath: String = NSBundle.mainBundle().pathForResource("data", ofType: "json")!
+        
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
 
+        let fileSystemDataPath = returnDataPath()
+        
+        fileManger.copyItemAtPath(dataPath, toPath: fileSystemDataPath, error: nil)
+        
+        let jsonString: String = String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding, error: nil)!
+        let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+        
+        userDefaults.setBool(true, forKey: "FirstLaunch")
+        userDefaults.synchronize()
+        
+        return NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
+    }
+    
+    class func loadDataFromFileSystem() -> NSDictionary? {
+        let fileSystemDataPath = returnDataPath()
+        
+        let jsonString: String? = String(contentsOfFile: fileSystemDataPath, encoding: NSUTF8StringEncoding, error: nil)
+        
+        if jsonString == nil {
+            return copyFromBundleAndReturnData()
+        }
+        
+        let data: NSData? = jsonString!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        
+        if data != nil {
+            let jsonDict: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
+            
+            if jsonDict != nil {
+                return jsonDict
+            }
+            
+            return loadBackUpData()
+        }
+        
+        return loadBackUpData()
+    }
+    
+    class func loadBackUpData() -> NSDictionary? {
+        let dataPath: String = NSBundle.mainBundle().pathForResource("data", ofType: "json")!
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
+        let jsonString: String = String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding, error: nil)!
+        let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        
+        return NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
+    }
+    
+    class func returnDataPath() ->String {
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
+        let paths: NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
+        let documentsDirectory: NSString = paths.objectAtIndex(0) as! NSString
+        
+        return documentsDirectory.stringByAppendingPathComponent("data.json")
     }
     
     class func updateDeals(deals: NSArray, completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {

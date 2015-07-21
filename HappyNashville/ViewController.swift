@@ -78,14 +78,17 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.activityIndicator.center = self.navigationItem.titleView!.center
         self.navigationItem.titleView?.addSubview(self.activityIndicator);
-        self.activityIndicator.startAnimating()
         
         self.refreshControl = UIRefreshControl()
         self.refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
         self.tableView.addSubview(refreshControl)
         
         addFooter()
-        inactivateView()
+        
+        if self.viewModel.tableDataSource.count == 0 {
+            self.activityIndicator.startAnimating()
+            inactivateView()
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideIAd", name: "removeAds", object: nil);
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "adPurchasedFailed", name: "adPurchasedFailed", object: nil);
@@ -223,12 +226,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let locCell: LocationTableViewCell = cell as! LocationTableViewCell
         
-        for view in locCell.contentCard.subviews {
+        for view: UIView in locCell.contentCard.subviews as! [UIView] {
             if view.tag == 1 || view.tag == 2 {
                 view.removeFromSuperview()
             }
         }
-
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {

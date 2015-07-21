@@ -88,6 +88,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         })        
     }
     
+
     func setUpFirstTimeView() {
         
         var dirExplLabel: UILabel = UILabel()

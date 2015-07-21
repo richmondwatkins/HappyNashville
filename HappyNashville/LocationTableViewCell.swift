@@ -115,5 +115,9 @@ class LocationTableViewCell: UITableViewCell {
         delegate?.scheduleButtonPressed(sender)
     }
     
+    override func drawRect(rect: CGRect) {
+        println("Draw\(rect)")
+    }
+    
 
 }

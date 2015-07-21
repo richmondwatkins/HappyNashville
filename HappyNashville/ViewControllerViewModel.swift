@@ -52,6 +52,14 @@ import CoreData
         super.init()
 
         fetchData()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFromNotif", name:"UpdatedData", object: nil)
+    }
+    
+    func updateFromNotif() {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: "UpdatedData", object: nil)
+
+        fetchData(shouldScrollToIndex: false);
     }
     
     func fetchData(shouldScrollToIndex: Bool? = true) {

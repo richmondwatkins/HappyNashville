@@ -18,6 +18,7 @@
 		5D352D9C1B13A40300AA852B /* MapFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */; };
 		5D352D9E1B1548AB00AA852B /* MapFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */; };
 		5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */; };
+		5D6F876B1B5716870089E45E /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D6F876A1B5716870089E45E /* data.json */; };
 		5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */; };
 		5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */; };
 		5D7505F91B0ED80F003E7533 /* EastNashvillePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */; };
@@ -100,6 +101,7 @@
 		5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterViewController.swift; sourceTree = "<group>"; };
 		5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterTableViewCell.swift; sourceTree = "<group>"; };
 		5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		5D6F876A1B5716870089E45E /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DowntownPolygon.swift; sourceTree = "<group>"; };
 		5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwelveSouthPolygon.swift; sourceTree = "<group>"; };
 		5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EastNashvillePolygon.swift; sourceTree = "<group>"; };
@@ -356,6 +358,7 @@
 		5DF6B9481ACB5A7E007E852A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				5D6F876A1B5716870089E45E /* data.json */,
 				5DA47E441B3BB7AA000403A4 /* Fabric.framework */,
 				5DA47E451B3BB7AA000403A4 /* Crashlytics.framework */,
 				5D87FB9C1AD0F3A800F23EA5 /* UIViewExtension.swift */,
@@ -502,6 +505,7 @@
 				5DF6B9531ACB5A7E007E852A /* Main.storyboard in Resources */,
 				5DF6B9581ACB5A7E007E852A /* LaunchScreen.xib in Resources */,
 				5DF6B9551ACB5A7E007E852A /* Images.xcassets in Resources */,
+				5D6F876B1B5716870089E45E /* data.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +756,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -762,7 +767,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -773,6 +778,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
