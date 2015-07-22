@@ -77,7 +77,7 @@ class LocationTableViewCell: UITableViewCell {
         self.buttonView.addSubview(self.ratingView)
   
         self.backgroundColor = UIColor(hexString: StringConstants.grayShade)
-        self.addSubview(self.containerView)
+        self.addSubview(self.containerView)        
     }
     
     func setSpecialViewDealDay(dealDay: DealDay) {

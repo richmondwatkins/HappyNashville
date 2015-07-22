@@ -75,33 +75,28 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
         smsButton.frame = CGRectMake(padding, titleLabel.bottom + 10, buttonWidth, buttonHeight)
         emailButton.frame = CGRectMake(smsButton.right, titleLabel.bottom + 10, buttonWidth, buttonHeight)
         
-        smsButton.imageEdgeInsets = UIEdgeInsets(
-            top: -(smsButton.height / 2),
-            left: (smsButton.width / 2) - (smsButton.imageView!.image!.size.width / 2),
-            bottom: 0,
-            right: 0
-        )
+        let spacing: CGFloat = 10
         
-        emailButton.imageEdgeInsets = UIEdgeInsets(
-            top: -(emailButton.height / 2),
-            left: (emailButton.width / 2) - (emailButton.imageView!.image!.size.width / 2),
-            bottom: 0,
-            right: 0
-        )
-
-        smsButton.titleEdgeInsets = UIEdgeInsets(
-            top: 40,
-            left: -75,
-            bottom: 0,
-            right: 0
-        )
+        let smsButtonImageSize: CGSize = smsButton.imageView!.image!.size;
         
-        emailButton.titleEdgeInsets = UIEdgeInsets(
-            top: 40,
-            left: -60,
-            bottom: 0,
-            right: 0
-        )
+        smsButton.titleEdgeInsets = UIEdgeInsetsMake(
+            0.0, -smsButtonImageSize.width, -(smsButtonImageSize.height + spacing), 0.0);
+        
+        let smsButtonTitleSize: CGSize = smsButton.titleLabel!.text!.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(16)])
+        
+        smsButton.imageEdgeInsets = UIEdgeInsetsMake(
+            -(smsButtonTitleSize.height + spacing), 0.0, 0.0, -smsButtonTitleSize.width);
+        
+        
+        let emailButtonImageSize: CGSize = emailButton.imageView!.image!.size;
+        
+        emailButton.titleEdgeInsets = UIEdgeInsetsMake(
+            20.0, -emailButtonImageSize.width, -(emailButtonImageSize.height + spacing), 0.0);
+        
+        let emailButtonTitleSize: CGSize = emailButton.titleLabel!.text!.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(16)])
+        
+        emailButton.imageEdgeInsets = UIEdgeInsetsMake(
+            -(emailButtonTitleSize.height + spacing), 0.0, 0.0, -emailButtonTitleSize.width);
     }
     
     func setUpShareView() {

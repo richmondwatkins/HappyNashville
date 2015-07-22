@@ -196,21 +196,29 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
             view.height * 0.17
         )
         
-        scheduleNotifButton.titleEdgeInsets = UIEdgeInsetsMake(scheduleNotifButton.height / 2 + 12, -35, 0, -1)
-        scheduleNotifButton.imageEdgeInsets = UIEdgeInsets(
-            top: -20,
-            left: (scheduleNotifButton.width / 2) - (scheduleNotifButton.imageView!.image!.size.width / 2),
-            bottom: 0,
-            right: 0
-        )
+        let spacing: CGFloat = 10
+
+        let scheduleImageSize: CGSize = scheduleNotifButton.imageView!.image!.size;
         
-        mapListButton.titleEdgeInsets = UIEdgeInsetsMake(mapListButton.height / 2 + 12, -39, 0, -1)
-        mapListButton.imageEdgeInsets = UIEdgeInsets(
-            top: -20,
-            left: (mapListButton.width / 2) - (mapListButton.imageView!.image!.size.width / 2) - 15,
-            bottom: 0,
-            right: 0
-        )
+        scheduleNotifButton.titleEdgeInsets = UIEdgeInsetsMake(
+                        0.0, -scheduleImageSize.width, -(scheduleImageSize.height + spacing), 0.0);
+        
+        let scheduleTitleSize: CGSize = scheduleNotifButton.titleLabel!.text!.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(11)])
+        
+        scheduleNotifButton.imageEdgeInsets = UIEdgeInsetsMake(
+                    -(scheduleTitleSize.height + spacing), 0.0, 0.0, -scheduleTitleSize.width);
+  
+        
+        
+        let mapImageSize: CGSize = mapListButton.imageView!.image!.size;
+        
+        mapListButton.titleEdgeInsets = UIEdgeInsetsMake(
+            0.0, -mapImageSize.width, -(mapImageSize.height + spacing), 0.0);
+        
+        let mapTitleSize: CGSize = mapListButton.titleLabel!.text!.sizeWithAttributes([NSFontAttributeName: UIFont.systemFontOfSize(11)])
+        
+        mapListButton.imageEdgeInsets = UIEdgeInsetsMake(
+            -(mapTitleSize.height + spacing), 0.0, 0.0, -mapTitleSize.width);
 
         reportButton.titleEdgeInsets = UIEdgeInsetsMake(0, -(self.view.width / 1.9) + 5, 0, 0)
         reportButton.imageEdgeInsets = UIEdgeInsets(

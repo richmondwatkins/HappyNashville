@@ -89,13 +89,10 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.activityIndicator.startAnimating()
             inactivateView()
         }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "hideIAd", name: "removeAds", object: nil);
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "adPurchasedFailed", name: "adPurchasedFailed", object: nil);
     }
     
     override func viewWillLayoutSubviews() {
-         super.viewWillLayoutSubviews()
+        super.viewWillLayoutSubviews()
 
         self.tableView.frame = CGRectMake(
             0,
@@ -106,16 +103,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewDidLayoutSubviews() {
-        
         self.tableView.layoutMargins = UIEdgeInsetsZero
         self.tableView.separatorInset = UIEdgeInsetsZero
     }
-    
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval)
-    {
-        self.tableView.reloadData()
-    }
-    
     
     func refreshData() {
         inactivateView()
@@ -222,17 +212,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             return CGFloat(dealDay.height.integerValue)
         }
     }
-    
-    func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        let locCell: LocationTableViewCell = cell as! LocationTableViewCell
-        
-//        for layer: CALayer in locCell.contentCard.layer.sublayers as! [CALayer] {
-//            if layer.name != nil && layer.name == "bullet" {
-//                layer.removeFromSuperlayer()
-//            }
-//        }
-    }
-    
+
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         if let menu = self.menuVC {
             menu.dimissView()
@@ -256,7 +236,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.contentCard.frame = CGRectMake(0, 0, cell.containerView.width, cell.containerView.height - self.infoButtonsHeight)
 
         cell.buttonView.frame = CGRectMake(0, cell.contentCard.bottom, cell.containerView.width, self.infoButtonsHeight)
-        cell.buttonLayer.frame = CGRectMake(0, 0, cell.buttonView.width, 1)
 
         let buttonViewHeight = cell.buttonView.height
         let buttonViewWidth: CGFloat = 130
@@ -264,6 +243,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         let buttonMeasurements = self.viewModel.getButtonWidth(buttonViewWidth, numberOfButtons: CGFloat(3), padding: 8)
         
+        cell.buttonLayer.frame = CGRectMake(0, 0, cell.buttonView.width, 1)
+
         cell.webSiteButton.frame = CGRectMake(
             cell.contentCard.right - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
             buttonPadding,
@@ -543,8 +524,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.frame = CGRectZero
         self.customTitleViewBorder.backgroundColor = UIColor.clearColor().CGColor
         
-        checkAndRemoveChildVCs()
-
         self.viewModel.resetSort()
     }
     
@@ -557,15 +536,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.frame = CGRectMake(self.customTitleView.width / 2, self.customTitleView.height,customTitleView.width, 1);
         self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
         
-        checkAndRemoveChildVCs()
-        
         self.viewModel.sortByType(6)
     }
     
     func showDrinkOnly(navTitle: String) {
         setNavTitle(navTitle)
-        
-        checkAndRemoveChildVCs()
         
         self.viewModel.sortByType(0)
         
@@ -587,16 +562,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.customTitleViewBorder.frame = CGRectMake(0, self.customTitleView.height, customTitleView.width, 1);
 
         self.customTitleViewBorder.backgroundColor = UIColor(hexString: StringConstants.navBarTextColor).CGColor
-    }
-
-    func checkAndRemoveChildVCs () {
-        if self.vcWithOutHeaders != nil {
-            self.vcWithOutHeaders.willMoveToParentViewController(nil)
-            self.vcWithOutHeaders.view!.removeFromSuperview()
-            self.vcWithOutHeaders.removeFromParentViewController()
-            
-            self.vcWithOutHeaders = nil
-        }
     }
     
     func indexPathForSelectedRow(selectedButton: UIButton) -> NSIndexPath {

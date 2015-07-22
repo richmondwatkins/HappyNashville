@@ -37,7 +37,7 @@ class DetailViewModel: AppViewModel {
     }
     
     func dayLabelText(dealDay: DealDay) -> String {
-            
+        
         return self.weekLookup[dealDay.day.integerValue]
     }
     

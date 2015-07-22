@@ -41,8 +41,10 @@ class APIManger: NSObject {
                 jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
                 
                 self.writeNewDataToFile(jsonResult!)
-                //
-                NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
+                
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                     NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
+                })
             }
         }
         task.resume()

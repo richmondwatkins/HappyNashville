@@ -11,21 +11,16 @@ import UIKit
 class LocationCellSpecialView: UIView {
 
     var dealDay: DealDay!
-    
-//    
-  
-//    NSAttributedString *localeNameAttributedString = [[NSAttributedString alloc] initWithString:self.timeZoneWrapper.localeName attributes:mainTextAttributes];
-//    point = CGPointMake(LEFT_COLUMN_OFFSET, UPPER_ROW_TOP);
-//    [localeNameAttributedString drawAtPoint:point];
-    
+
     override func drawRect(rect: CGRect) {
         let titleFont: UIFont = UIFont(name: "GillSans", size: 16)!
         
+        let titleAttributes = [NSFontAttributeName : titleFont]
         
-        let title: NSAttributedString = NSAttributedString(string: self.dealDay.location.name, attributes: [NSFontAttributeName : titleFont])
+        let title: NSString = self.dealDay.location.name as NSString
         
         let titleOrigin: CGPoint = CGPointMake(10, 10);
-        title.drawAtPoint(titleOrigin)
+        title.drawAtPoint(titleOrigin, withAttributes: titleAttributes)
         
         var top: CGFloat = titleOrigin.y + 21
 

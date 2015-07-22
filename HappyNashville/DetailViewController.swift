@@ -267,13 +267,18 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
 
     func scrollColletionViewToDay(index: Int) -> UIPageViewControllerNavigationDirection? {
-        var cell: DayCollectionViewCell = self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as! DayCollectionViewCell
+        var cell: DayCollectionViewCell? =
+            self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? DayCollectionViewCell
         
-        if let scrollDirection = self.viewModel?.setNewSelectedCell(cell, index: index) {
-            return scrollDirection
-        } else {
-            return nil
+        if cell != nil {
+            if let scrollDirection = self.viewModel?.setNewSelectedCell(cell!, index: index) {
+                return scrollDirection
+            } else {
+                return nil
+            }
         }
+        
+        return nil
     }
     
     func showWebsite(sender: UIButton) {
