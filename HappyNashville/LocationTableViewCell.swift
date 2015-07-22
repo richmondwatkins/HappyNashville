@@ -9,20 +9,19 @@
 import UIKit
 
 protocol LocationCellProtocol {
-    func scheduleButtonPressed(sender: UIButton)
+    func webSiteButtonPressed(sender: UIButton)
+    func mapButtonPressed(sender: UIButton)
 }
 
 class LocationTableViewCell: UITableViewCell {
     
     var scheduleButton: UIButton = UIButton()
-    var titleLable: UILabel = UILabel()
     var delegate:LocationCellProtocol?
-    var contentCard = UIView()
+    var contentCard: LocationCellSpecialView = LocationCellSpecialView()
     var buttonView = UIView()
     var containerView = UIView()
     var webSiteButton = UIButton()
     var mapButton = UIButton()
-    var typeView = UIView()
     var ratingView = HCSStarRatingView()
     var notifImageView: UIImageView = UIImageView()
     var distanceLabel: UILabel = UILabel()
@@ -37,14 +36,13 @@ class LocationTableViewCell: UITableViewCell {
         
         self.notifImageView.image = UIImage(named: "bell")
         self.notifImageView.hidden = true
-        self.titleLable.frame = CGRectMake(10, 10, self.width, 20)
-        self.titleLable.textAlignment = NSTextAlignment.Left
-        self.titleLable.font = UIFont(name: "GillSans", size: 16)
-        self.titleLable.numberOfLines = 1
         self.webSiteButton.setImage(UIImage(named: "share"), forState: .Normal)
         self.mapButton.setImage(UIImage(named: "map"), forState: .Normal)
         
         setUpButtons([self.webSiteButton, self.mapButton, self.scheduleButton])
+        
+        self.webSiteButton.addTarget(self, action: "websiteDelegate:", forControlEvents: UIControlEvents.TouchUpInside)
+        self.mapButton.addTarget(self, action: "mapDelegate:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.contentCard.backgroundColor = UIColor.whiteColor()
         self.buttonView.backgroundColor = .whiteColor()
@@ -71,8 +69,6 @@ class LocationTableViewCell: UITableViewCell {
         self.distanceLabel.textColor = UIColor(hexString: "a8a8a8")
         
         self.contentCard.addSubview(self.notifImageView)
-        self.contentCard.addSubview(self.titleLable)
-        self.contentCard.addSubview(self.typeView)
         
         self.containerView.addSubview(self.buttonView)
         self.containerView.addSubview(self.contentCard)
@@ -82,6 +78,10 @@ class LocationTableViewCell: UITableViewCell {
   
         self.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         self.addSubview(self.containerView)
+    }
+    
+    func setSpecialViewDealDay(dealDay: DealDay) {
+        self.contentCard.dealDay = dealDay;
     }
     
     func buttonViewLayer(width: CGFloat) -> CALayer {
@@ -111,13 +111,15 @@ class LocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func scheduleDealDelegate(sender: UIButton) {
-        delegate?.scheduleButtonPressed(sender)
+    func websiteDelegate(sender: UIButton) {
+        delegate?.webSiteButtonPressed(sender)
     }
     
-    override func drawRect(rect: CGRect) {
-        println("Draw\(rect)")
+    func mapDelegate(sender: UIButton) {
+        delegate?.mapButtonPressed(sender)
     }
     
-
+    func reDisplay() {
+        self.contentCard.setNeedsDisplay()
+    }
 }

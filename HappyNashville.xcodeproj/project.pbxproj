@@ -24,6 +24,7 @@
 		5D7505F91B0ED80F003E7533 /* EastNashvillePolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */; };
 		5D7505FB1B0EDA5A003E7533 /* GermantownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */; };
 		5D7505FD1B0EDBDC003E7533 /* GulchPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */; };
+		5D7730FD1B5F05E10002212E /* LocationCellSpecialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7730FC1B5F05E10002212E /* LocationCellSpecialView.swift */; };
 		5D7F8E571ACCBAE100C086A2 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */; };
 		5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB8B1AD0459F00F23EA5 /* MetaData.m */; };
 		5D87FB9B1AD04A2900F23EA5 /* UIView+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5D87FB9A1AD04A2900F23EA5 /* UIView+Additions.m */; };
@@ -107,6 +108,7 @@
 		5D7505F81B0ED80F003E7533 /* EastNashvillePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EastNashvillePolygon.swift; sourceTree = "<group>"; };
 		5D7505FA1B0EDA5A003E7533 /* GermantownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GermantownPolygon.swift; sourceTree = "<group>"; };
 		5D7505FC1B0EDBDC003E7533 /* GulchPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GulchPolygon.swift; sourceTree = "<group>"; };
+		5D7730FC1B5F05E10002212E /* LocationCellSpecialView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationCellSpecialView.swift; sourceTree = "<group>"; };
 		5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		5D87FB8A1AD0459F00F23EA5 /* MetaData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MetaData.h; path = ../MetaData.h; sourceTree = "<group>"; };
 		5D87FB8B1AD0459F00F23EA5 /* MetaData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MetaData.m; path = ../MetaData.m; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 				5DF6B94F1ACB5A7E007E852A /* ViewController.swift */,
 				5D87FBA91AD239F200F23EA5 /* SpecialView.swift */,
 				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
+				5D7730FC1B5F05E10002212E /* LocationCellSpecialView.swift */,
 			);
 			name = MainVC;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
+				5D7730FD1B5F05E10002212E /* LocationCellSpecialView.swift in Sources */,
 				5D7505FB1B0EDA5A003E7533 /* GermantownPolygon.swift in Sources */,
 				5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */,
 				5DB3EB5F1AE44AEA0071396E /* DirectionsViewController.swift in Sources */,

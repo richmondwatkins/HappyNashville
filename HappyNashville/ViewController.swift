@@ -226,11 +226,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         let locCell: LocationTableViewCell = cell as! LocationTableViewCell
         
-        for view: UIView in locCell.contentCard.subviews as! [UIView] {
-            if view.tag == 1 || view.tag == 2 {
-                view.removeFromSuperview()
-            }
-        }
+//        for layer: CALayer in locCell.contentCard.layer.sublayers as! [CALayer] {
+//            if layer.name != nil && layer.name == "bullet" {
+//                layer.removeFromSuperlayer()
+//            }
+//        }
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -240,32 +240,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         }
     }
 
-    func addSpecialsToCell(cell: LocationTableViewCell, dealDay: DealDay) {
-        var top: CGFloat = cell.titleLable.bottom + 5
-        
-        for special in self.viewModel.sortSpecialsByTime(dealDay.specials) as! [Special] {
-            
-            let specialView: SpecialView = SpecialView(special: special, frame: CGRectMake(10, top, self.view!.width - 30, self.specialHeight))
-            
-            cell.contentCard.addSubview(specialView)
-            
-            specialView.top = top
-            
-            top = specialView.bottom + specialBottomPadding
-            
-            specialView.tag = 1
-        }
-    }
-    
     func configureCell(cell: LocationTableViewCell, dealDay: DealDay) {
-        cell.titleLable.text = dealDay.location.name
+        cell.setSpecialViewDealDay(dealDay);
+        cell.reDisplay()
         
         cell.delegate = self
-        
-        cell.titleLable.sizeToFit()
-        cell.titleLable.width = cell.width - 30
-        
-        addSpecialsToCell(cell, dealDay: dealDay)
         
         let infoButtonWidth: CGFloat = 100
         
@@ -291,7 +270,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             buttonMeasurements.buttonWidth,
             buttonViewHeight - buttonPadding * 2
         )
-        cell.webSiteButton.addTarget(self, action: "webSiteButtonPressed:", forControlEvents: .TouchUpInside)
         
         cell.mapButton.frame = CGRectMake(
             cell.webSiteButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
@@ -299,7 +277,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             buttonMeasurements.buttonWidth,
             buttonViewHeight - buttonPadding * 2
         )
-        cell.mapButton.addTarget(self, action: "mapButtonPressed:", forControlEvents: .TouchUpInside)
 
         cell.scheduleButton.frame = CGRectMake(
             cell.mapButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth,
@@ -340,7 +317,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             )
         }
         
-        cell.notifImageView.frame = CGRectMake(self.view!.width - 40 - 2, cell.titleLable.top, 20, 20)
+        cell.notifImageView.frame = CGRectMake(self.view!.width - 40 - 2, cell.top - 10, 20, 20)
         if self.viewModel.checkForNotification(dealDay) {
             cell.notifImageView.hidden = false
             cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
