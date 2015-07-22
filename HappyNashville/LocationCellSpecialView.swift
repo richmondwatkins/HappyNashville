@@ -40,7 +40,7 @@ class LocationCellSpecialView: UIView {
                 bulletColor = UIColor(hexString: StringConstants.foodColor)
             }
             
-            let box: CGRect = CGRectMake(5, top + 5, 6, 6)
+            let box: CGRect = CGRectMake(5, top + 4, 6, 6)
             let bulletPath: UIBezierPath = UIBezierPath(roundedRect: box, cornerRadius: 2)
             bulletColor.setStroke()
             bulletColor.setFill()
