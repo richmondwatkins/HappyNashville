@@ -35,6 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var docPathAry : NSArray! = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         var docDirPathStr: AnyObject? = docPathAry.count > 0 ? docPathAry[0] : nil
         self.addSkipBackupAttributeToItemAtURL(NSURL.fileURLWithPath(docDirPathStr as! String))
+
+        let credProvider: AWSStaticCredentialsProvider = AWSStaticCredentialsProvider(accessKey: "AKIAJCSNHMUQVPO5COEQ", secretKey: "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")
+
+        let serviceConfig: AWSServiceConfiguration = AWSServiceConfiguration(region: AWSRegionType.USWest2, credentialsProvider: credProvider)
+
+        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = serviceConfig
+
+        var type = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound;
+        var setting = UIUserNotificationSettings(forTypes: type, categories: nil);
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
+        UIApplication.sharedApplication().registerForRemoteNotifications();
         
         return true
     }
@@ -62,6 +73,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }                
     }
     
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        
+        let deviceTokenString: String = deviceTokenFromData(deviceToken)
+        
+        let sns: AWSSNS = AWSSNS.defaultSNS()
+        let awsRequest: AWSSNSCreatePlatformEndpointInput = AWSSNSCreatePlatformEndpointInput()
+        
+        awsRequest.token = deviceTokenString
+        awsRequest.platformApplicationArn = "arn:aws:sns:us-west-2:093375523987:app/APNS_SANDBOX/HappyNashville"
+        
+        sns.createPlatformEndpoint(awsRequest)
+    }
+    
+    func deviceTokenFromData(tokenData: NSData) -> String {
+        var token = tokenData.description
+        token = token.stringByReplacingOccurrencesOfString("<", withString: "", options: nil, range: nil)
+        token = token.stringByReplacingOccurrencesOfString(">", withString: "", options: nil, range: nil)
+        token = token.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        
+        println(token)
+        
+        return token
+    }
     
     func addSkipBackupAttributeToItemAtURL(URL: NSURL!) -> Bool{
         assert(NSFileManager.defaultManager().fileExistsAtPath(URL.path!))

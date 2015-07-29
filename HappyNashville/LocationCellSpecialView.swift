@@ -24,7 +24,6 @@ class LocationCellSpecialView: UIView {
         
         var top: CGFloat = titleOrigin.y + 21
 
-        //TODO: add sorting
         for special in self.dealDay.specials.allObjects as! [Special] {
             
             let bulletPoint: CALayer = CALayer()

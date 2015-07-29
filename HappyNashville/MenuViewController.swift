@@ -135,7 +135,7 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
             let mailVC: MFMailComposeViewController = MFMailComposeViewController()
             mailVC.mailComposeDelegate = self
             mailVC.setMessageBody(messageString, isHTML: false)
-            mailVC.setToRecipients(["happynashville.contact@gmail.com"])
+            mailVC.setToRecipients(["happynashvilleapp@gmail.com"])
             mailVC.setSubject("Incorrect Location or Special")
             
             UIApplication.sharedApplication().keyWindow?.rootViewController?.presentViewController(mailVC, animated: true, completion: nil)

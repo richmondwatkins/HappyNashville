@@ -7,3 +7,4 @@
 #import "UIView+Additions.h"
 #import "UIColor+UIColor_Expanded.h"
 #import "HCSStarRatingView.h"
+#import "AWSSNS.h"
