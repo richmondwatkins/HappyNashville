@@ -26,7 +26,7 @@ class FoodDrinkViewController: ViewController {
         self.foodDataSource = tableDataSource;
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -51,7 +51,7 @@ class FoodDrinkViewController: ViewController {
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
-        var dealDay: DealDay = getDealDayForIndexPath(indexPath)!
+        let dealDay: DealDay = getDealDayForIndexPath(indexPath)!
         
         return CGFloat(dealDay.height.floatValue)
     }

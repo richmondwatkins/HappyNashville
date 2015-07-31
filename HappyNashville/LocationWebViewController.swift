@@ -22,17 +22,17 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        var navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight))
+        let navBar: UIView = UIView(frame: CGRectMake(0, 0, self.view!.width, self.navBarHeight))
         navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
-        var backButton: UIButton = UIButton(frame: CGRectMake(
+        let backButton: UIButton = UIButton(frame: CGRectMake(
             buttonPadding,
             (navBar.height / 2) - ((navBar.height / 2) / 2) + UIApplication.sharedApplication().statusBarFrame.size.height / 2,
             50,
@@ -55,7 +55,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         
         navBar.addSubview(self.loadingAnimator)
         
-        var titleLabel: UILabel = UILabel()
+        let titleLabel: UILabel = UILabel()
         titleLabel.text = self.location.name
         titleLabel.font = UIFont.systemFontOfSize(18)
         titleLabel.sizeToFit()
@@ -83,7 +83,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         self.loadingAnimator.stopAnimating()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         self.loadingAnimator.stopAnimating()
     }
     

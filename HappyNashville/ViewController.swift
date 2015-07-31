@@ -102,6 +102,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         )
     }
     
+    override func viewDidAppear(animated: Bool) {
+        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound];
+        let setting = UIUserNotificationSettings(forTypes: type, categories: nil);
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
+        UIApplication.sharedApplication().registerForRemoteNotifications();
+    }
+    
     override func viewDidLayoutSubviews() {
         self.tableView.layoutMargins = UIEdgeInsetsZero
         self.tableView.separatorInset = UIEdgeInsetsZero
@@ -110,7 +117,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func refreshData() {
         inactivateView()
         
-        self.viewModel.fetchData(shouldScrollToIndex: false)
+        self.viewModel.fetchData(false)
     }
     
     func setUpSortButton() {
@@ -170,7 +177,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        var sectionHeader: UIView = UIView();
+        let sectionHeader: UIView = UIView();
         sectionHeader.backgroundColor = UIColor(hexString: "E9E9E9")
         
         let headerLabel: UILabel = UILabel();
@@ -204,7 +211,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
 
-        var dealDay: DealDay = getDealDayForIndexPath(indexPath)!
+        let dealDay: DealDay = getDealDayForIndexPath(indexPath)!
         
         if dealDay.isOpen.boolValue {
             return CGFloat(dealDay.height.integerValue) + 40
@@ -225,8 +232,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.reDisplay()
         
         cell.delegate = self
-        
-        let infoButtonWidth: CGFloat = 100
         
         let cellHeight: CGFloat = getCellHeight(dealDay)
         
@@ -310,7 +315,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func getButtonDividerLayer(height: CGFloat, xValue: CGFloat) -> CALayer {
-        var newLayer: CALayer = CALayer()
+        let newLayer: CALayer = CALayer()
         newLayer.frame = CGRectMake(xValue, 0, 1, height)
         newLayer.backgroundColor = UIColor(hexString: StringConstants.primaryColor).CGColor
         
@@ -336,7 +341,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func setUpBackButton() {
-        var barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
+        let barButtonItem:UIBarButtonItem = UIBarButtonItem(title:"", style:.Plain, target:nil, action:nil)
         
         barButtonItem.tintColor = .whiteColor()
         
@@ -354,9 +359,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
     func scheduleButtonPressed(sender: UIButton) {
         
-        var selectedDay = returnSelectedDealDay(sender)
+        let selectedDay = returnSelectedDealDay(sender)
         
-        var scheduleViewController: ScheduleViewController = ScheduleViewController(
+        let scheduleViewController: ScheduleViewController = ScheduleViewController(
             dealDay: selectedDay.dealDay,
             navHeight: self.navigationController!.navigationBar.height + UIApplication.sharedApplication().statusBarFrame.height,
             indexPath: returnSelectedDealDay(sender).indexPath
@@ -371,8 +376,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.footer.view.alpha = 0
         })
-        
-        var cell = self.tableView.cellForRowAtIndexPath(selectedDay.indexPath) as! LocationTableViewCell
         
         self.sortButton.enabled = false
         self.menuButton.enabled = false
@@ -397,7 +400,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         dealDay.notification = nil
         self.viewModel.unscheduleNotification(dealDay)
         
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
+        let cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
         cell.scheduleButton.setImage(UIImage(named: "schedule"), forState: .Normal)
         cell.scheduleButton.removeTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)
@@ -407,7 +410,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func updateScheduledCell(indexPath: NSIndexPath) {
         
-        var cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
+        let cell: LocationTableViewCell = self.tableView.cellForRowAtIndexPath(indexPath) as! LocationTableViewCell
         
         cell.scheduleButton.removeTarget(self, action: "scheduleButtonPressed:", forControlEvents:.TouchUpInside)
         
@@ -479,7 +482,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func displayNotificationManager() {
-        var notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController(navBarHeight: self.navigationController!.navigationBar.height)
+        let notificationViewController: NotificationsManagerViewController = NotificationsManagerViewController(navBarHeight: self.navigationController!.navigationBar.height)
         notificationViewController.delegate = self
         
         self.presentViewController(notificationViewController, animated: true, completion: nil)

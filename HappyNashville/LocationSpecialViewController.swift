@@ -29,7 +29,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
         self.dealDay = dealDay
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -38,7 +38,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
 
         self.dataSource = self.dealDay!.specials.allObjects as! Array<Special>
         
-        self.dataSource = sorted(self.dataSource, {
+        self.dataSource = self.dataSource.sort({
             (spec1: Special, spec2: Special) -> Bool in
             return spec1.specialItem < spec2.specialItem
         })
@@ -164,24 +164,24 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
             return "All Day"
         }
         
-        var startDateComponents: NSDateComponents = NSDateComponents()
+        let startDateComponents: NSDateComponents = NSDateComponents()
         startDateComponents.hour = special.hourStart.integerValue
         startDateComponents.minute = special.minuteStart.integerValue
         startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
-        var endDateComponents: NSDateComponents = NSDateComponents()
+        let endDateComponents: NSDateComponents = NSDateComponents()
         endDateComponents.hour = special.hourEnd.integerValue
         endDateComponents.minute = special.minuteEnd.integerValue
         endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
-        var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
+        let startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
-        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        let startDateFormatter: NSDateFormatter = NSDateFormatter()
         startDateFormatter.dateFormat = "h:mm"
         
-        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
@@ -224,7 +224,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func hideAllSpecials() {
-        for view in self.scrollView!.subviews as! [UIView]{
+        for view in self.scrollView!.subviews {
             if view.tag == 1 {
                 view.alpha = 0
             }

@@ -31,7 +31,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navHeight = navBottom
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -51,7 +51,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         self.view!.addSubview(self.sortView)
         
         self.sortView.segmentControl.addTarget(self, action: "segmentTapped:", forControlEvents: UIControlEvents.ValueChanged)
-        var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         
@@ -83,7 +83,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     func displaySearch() {
-        var searchVC: SearchViewController = SearchViewController(
+        let searchVC: SearchViewController = SearchViewController(
             viewFrame: CGRectMake(
                 0,
                 0,
@@ -120,7 +120,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
-        if touch.view.tag == 1 {
+        if touch.view!.tag == 1 {
             return false
         } else {
             return true

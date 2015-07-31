@@ -32,8 +32,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         Fabric.with([Crashlytics()])
         
-        var docPathAry : NSArray! = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
-        var docDirPathStr: AnyObject? = docPathAry.count > 0 ? docPathAry[0] : nil
+        let docPathAry : NSArray! = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        let docDirPathStr: AnyObject? = docPathAry.count > 0 ? docPathAry[0] : nil
         self.addSkipBackupAttributeToItemAtURL(NSURL.fileURLWithPath(docDirPathStr as! String))
 
         let credProvider: AWSStaticCredentialsProvider = AWSStaticCredentialsProvider(accessKey: "AKIAJCSNHMUQVPO5COEQ", secretKey: "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")
@@ -41,11 +41,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let serviceConfig: AWSServiceConfiguration = AWSServiceConfiguration(region: AWSRegionType.USWest2, credentialsProvider: credProvider)
 
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = serviceConfig
-
-        var type = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound;
-        var setting = UIUserNotificationSettings(forTypes: type, categories: nil);
-        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
-        UIApplication.sharedApplication().registerForRemoteNotifications();
         
         return true
     }
@@ -88,11 +83,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func deviceTokenFromData(tokenData: NSData) -> String {
         var token = tokenData.description
-        token = token.stringByReplacingOccurrencesOfString("<", withString: "", options: nil, range: nil)
-        token = token.stringByReplacingOccurrencesOfString(">", withString: "", options: nil, range: nil)
-        token = token.stringByReplacingOccurrencesOfString(" ", withString: "", options: nil, range: nil)
+        token = token.stringByReplacingOccurrencesOfString("<", withString: "", options: [], range: nil)
+        token = token.stringByReplacingOccurrencesOfString(">", withString: "", options: [], range: nil)
+        token = token.stringByReplacingOccurrencesOfString(" ", withString: "", options: [], range: nil)
         
-        println(token)
+        print(token)
         
         return token
     }
@@ -100,10 +95,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func addSkipBackupAttributeToItemAtURL(URL: NSURL!) -> Bool{
         assert(NSFileManager.defaultManager().fileExistsAtPath(URL.path!))
         var err : NSError? = nil
-        var success : Bool! = URL.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey, error: &err)
+        var success : Bool!
+        do {
+            try URL.setResourceValue(NSNumber(bool: true), forKey: NSURLIsExcludedFromBackupKey)
+            success = true
+        } catch let error as NSError {
+            err = error
+            success = false
+        }
         
         if(!success){
-            println("Error excluding \(URL.lastPathComponent) from backup\(err) ")
+            print("Error excluding \(URL.lastPathComponent) from backup\(err) ")
         }
         
         return success
@@ -138,7 +140,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.richmondwatkins.HappyNashville" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
     }()
 
     lazy var managedObjectModel: NSManagedObjectModel = {
@@ -154,7 +156,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("HappyNashville.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
             var dict = [String: AnyObject]()
@@ -166,6 +171,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         return coordinator
@@ -187,11 +194,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil
-            if moc.hasChanges && !moc.save(&error) {
-                // Replace this implementation with code to handle the error appropriately.
-                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if moc.hasChanges {
+                do {
+                    try moc.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    // Replace this implementation with code to handle the error appropriately.
+                    // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }

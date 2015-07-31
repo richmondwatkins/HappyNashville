@@ -162,11 +162,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "HappyNashville/ScheduleViewControllerViewModel.swift"
-            timestampString = "456984129.646179"
+            timestampString = "459885284.17579"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
             landmarkName = "calculateDatePickerDate(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -211,6 +211,8 @@
             continueAfterRunningActions = "No"
             symbolName = ""
             moduleName = "">
+            <Locations>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -221,6 +223,8 @@
             continueAfterRunningActions = "No"
             symbolName = ""
             moduleName = "">
+            <Locations>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

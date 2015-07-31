@@ -13,22 +13,22 @@ class SpecialView: UIView {
     init(special: Special, frame: CGRect) {
         super.init(frame: frame)
         
-        var specialLabel: UILabel = UILabel()
+        let specialLabel: UILabel = UILabel()
         specialLabel.numberOfLines = 0
 
         var dateText: String = configureDateString(special);
 
-        var dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
+        let dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
         let dateFont: UIFont = UIFont(name: "GillSans", size: 12)!
         
         dateAttrText.addAttributes([NSFontAttributeName: dateFont],
-            range: NSRange(location: 0, length: count(dateText)))
+            range: NSRange(location: 0, length: dateText.characters.count))
         
-        var specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
+        let specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
         let specialFont: UIFont = UIFont(name: "GillSans-Light", size: 12)!
         
         specialAttr.addAttributes([NSFontAttributeName: specialFont],
-            range: NSRange(location: 0, length: count(special.specialDescription)))
+            range: NSRange(location: 0, length: special.specialDescription.characters.count))
   
         specialAttr.appendAttributedString(dateAttrText)
         
@@ -37,7 +37,7 @@ class SpecialView: UIView {
         specialLabel.frame = CGRectMake(9, 0, frame.size.width - 30, specialLabel.height)
         specialLabel.center = CGPointMake(specialLabel.center.x, self.height / 2)
        
-        var typeBullet: UIView = UIView()
+        let typeBullet: UIView = UIView()
         typeBullet.layer.cornerRadius = 2
         typeBullet.frame = CGRectMake(0, 0, 6, 6)
         
@@ -53,7 +53,7 @@ class SpecialView: UIView {
         self.addSubview(specialLabel)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -63,24 +63,24 @@ class SpecialView: UIView {
             return " All Day"
         }
         
-        var startDateComponents: NSDateComponents = NSDateComponents()
+        let startDateComponents: NSDateComponents = NSDateComponents()
         startDateComponents.hour = special.hourStart.integerValue
         startDateComponents.minute = special.minuteStart.integerValue
         startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
-        var endDateComponents: NSDateComponents = NSDateComponents()
+        let endDateComponents: NSDateComponents = NSDateComponents()
         endDateComponents.hour = special.hourEnd.integerValue
         endDateComponents.minute = special.minuteEnd.integerValue
         endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
-        var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
+        let startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
-        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        let startDateFormatter: NSDateFormatter = NSDateFormatter()
         startDateFormatter.dateFormat = " h:mm"
         
-        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"

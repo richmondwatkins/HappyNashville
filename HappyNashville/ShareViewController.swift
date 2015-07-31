@@ -26,7 +26,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
         self.dealDay = dealDay
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -36,7 +36,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
         self.view!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         self.view!.alpha = 0
         self.view.tag = 1
-        var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "close")
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "close")
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         self.view!.addGestureRecognizer(tapGesture)
@@ -174,16 +174,16 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
         }
     }
 
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if touch.view.tag == 1 {
+        if touch.view!.tag == 1 {
             return true
         } else {
             return false

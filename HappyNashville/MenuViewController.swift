@@ -39,7 +39,7 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         super.init(nibName: nil, bundle: nil);
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -130,7 +130,7 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
     func reportSpecialOrLoc() {
         if MFMailComposeViewController.canSendMail() {
             
-            var messageString = "Please include name of the incorrect location and what is wrong with it"
+            let messageString = "Please include name of the incorrect location and what is wrong with it"
 
             let mailVC: MFMailComposeViewController = MFMailComposeViewController()
             mailVC.mailComposeDelegate = self
@@ -142,7 +142,7 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         }
     }
     
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         UIApplication.sharedApplication().keyWindow?.rootViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     

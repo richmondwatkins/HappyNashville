@@ -25,7 +25,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         super.init(nibName: nil, bundle: nil)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -39,7 +39,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
         
-        var titleLabel: UILabel = UILabel();
+        let titleLabel: UILabel = UILabel();
         titleLabel.text = "Manage Notifications"
         titleLabel.textColor = .whiteColor()
         titleLabel.sizeToFit();
@@ -52,7 +52,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
         )
         titleLabel.center = CGPointMake(navBar.width / 2, navBar.height / 2 + UIApplication.sharedApplication().statusBarFrame.size.height / 2)
         
-        var backButton: UIButton = UIButton()
+        let backButton: UIButton = UIButton()
         
         backButton.setTitle("Back", forState: .Normal)
         backButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
@@ -88,7 +88,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func showNoNotificationScreen() {
         
-        var noNotif: UILabel = UILabel(frame: CGRectMake(0, self.navBar.bottom, self.view!.width, self.navBar.height))
+        let noNotif: UILabel = UILabel(frame: CGRectMake(0, self.navBar.bottom, self.view!.width, self.navBar.height))
         noNotif.textAlignment = .Center
         noNotif.numberOfLines = 0
         noNotif.text = "You do not have any notifications scheduled!"
@@ -143,7 +143,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("CELLY") as? UITableViewCell
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("CELLY")
         
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle,
@@ -157,7 +157,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
 
     func configureCell(cell: UITableViewCell, indexPath: NSIndexPath) {
         
-        var notification: Notification = self.viewModel.tableDataSource[indexPath.row] as! Notification
+        let notification: Notification = self.viewModel.tableDataSource[indexPath.row] as! Notification
         
         cell.textLabel?.text = notification.locationName
         
@@ -168,10 +168,10 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func configureDateString(notification: Notification) -> String {
 
-        var dayOfWeek: NSDateFormatter = NSDateFormatter()
+        let dayOfWeek: NSDateFormatter = NSDateFormatter()
         dayOfWeek.dateFormat = "EEEE"
         
-        var time: NSDateFormatter = NSDateFormatter()
+        let time: NSDateFormatter = NSDateFormatter()
         time.dateFormat = "h:mm"
         
         if notification.isRecurring.boolValue {

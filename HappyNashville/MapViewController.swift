@@ -42,7 +42,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -59,7 +59,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.containerView.addSubview(self.mapView)
         
         if let loc = self.location {
-            var locationAnnotation = createAnnotation(self.location!)
+            let locationAnnotation = createAnnotation(loc)
 
             self.mapView.addAnnotation(locationAnnotation)
             self.mapView.selectAnnotation(locationAnnotation, animated: true)
@@ -68,7 +68,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         
         setAllAnnotations()
         
-        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
+        let findMe : UIBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
         
         self.navigationItem.rightBarButtonItem = findMe
         
@@ -89,8 +89,8 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func setMapCenter(coordinate: CLLocationCoordinate2D) {
-        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
+        let coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
         self.mapView.region = mapRegion
     }
     
@@ -594,7 +594,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
 
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
             
-            self.mapView.viewForAnnotation(annotation).hidden = false
+            self.mapView.viewForAnnotation(annotation)!.hidden = false
         }
         
         if let overlayArr = self.allOverlays {
@@ -610,7 +610,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
 
             let mapPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate);
             
-            var polygonView = MKPolygonRenderer(overlay: overlay);
+            let polygonView = MKPolygonRenderer(overlay: overlay);
             
             let polyPoint = polygonView.pointForMapPoint(mapPoint)
         
@@ -621,7 +621,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             }
             
             if self.mapView.viewForAnnotation(annotation) != nil {
-                self.mapView.viewForAnnotation(annotation).hidden = shouldHide
+                self.mapView.viewForAnnotation(annotation)!.hidden = shouldHide
             }
         }
 
@@ -638,7 +638,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func createAnnotation(location: Location) -> MKPointAnnotation {
-        var locationAnnotation: MKPointAnnotation = MKPointAnnotation()
+        let locationAnnotation: MKPointAnnotation = MKPointAnnotation()
         locationAnnotation.coordinate = CLLocationCoordinate2DMake(location.lat.doubleValue, location.lng.doubleValue)
         locationAnnotation.title = location.name
         
@@ -650,24 +650,22 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
         
-        var userPoint = MKMapPointForCoordinate(coords)
-        var annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
+        let userPoint = MKMapPointForCoordinate(coords)
+        let annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
         
-        var userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
+        let userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
         
-        var annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
+        let annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
         
-        var unionRect = MKMapRectUnion(userRect, annotationRect)
-        
-        var fittedRect = self.mapView.mapRectThatFits(unionRect)
+        let unionRect = MKMapRectUnion(userRect, annotationRect)
         
         self.mapView.setVisibleMapRect(unionRect, animated: true)
     }
     
     
-    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         
-        var pr = MKPolygonRenderer(overlay: overlay);
+        let pr = MKPolygonRenderer(overlay: overlay);
         pr.lineWidth = 5;
        
         if (overlay is TwelveSouthPolygon) {
@@ -732,10 +730,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             return pr
         }
         
-        return nil
+        return overlay as! MKOverlayRenderer
     }
     
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let identifier = "pin"
         var view: MKPinAnnotationView
@@ -747,16 +745,16 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
+            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
         }
         
         return view
     }
     
-    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         for location in self.locations {
-            if location.name == view.annotation.title {
+            if location.name == view.annotation!.title! {
                 let detailViewController: DetailViewController =
                     DetailViewController(location: location, dealDay: nil)
                 
@@ -765,16 +763,16 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         }
     }
     
-    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
         if isFirstLoad {
-            self.allOverlays = self.mapView.overlays as? [MKOverlay]
+            self.allOverlays = self.mapView.overlays
             isFirstLoad = false
         }
     }
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
+    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
         if isFirstLoad {
-            self.allOverlays = self.mapView.overlays as? [MKOverlay]
+            self.allOverlays = self.mapView.overlays
             isFirstLoad = false
         }
     }

@@ -32,7 +32,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.location = location
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -42,7 +42,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.view!.backgroundColor = UIColor.whiteColor()
         
         if (self.location != nil) {
-            var dealDays: NSSet = self.location!.dealDays
+            let dealDays: NSSet = self.location!.dealDays
             self.viewModel = DetailViewModel(dealDays:dealDays.allObjects as! Array<DealDay>, selectedDate: self.dealDay)
             self.viewModel!.delegate = self
             
@@ -71,7 +71,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.navBar.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         
         
-        var closeButton: UIButton = UIButton(frame: CGRectMake(self.navBar.width - 50, self.navBar.height - 44, 44, 44))
+        let closeButton: UIButton = UIButton(frame: CGRectMake(self.navBar.width - 50, self.navBar.height - 44, 44, 44))
         closeButton.setImage(UIImage(named: "close-white"), forState: .Normal)
         
         closeButton.addTarget(self, action: "dismissVC", forControlEvents: .TouchUpInside)
@@ -204,7 +204,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             let titleFont: UIFont = UIFont(name: "GillSans", size: 20)!
             
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: titleFont]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as [NSObject : AnyObject]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as! [String : AnyObject]
             
         }
 
@@ -230,14 +230,14 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         
         self.mapView.center = CGPointMake(self.view!.width / 2, self.mapView.center.y)
         
-        var coords: CLLocationCoordinate2D = CLLocationCoordinate2DMake(self.location!.lat.doubleValue, self.location!.lng.doubleValue)
+        let coords: CLLocationCoordinate2D = CLLocationCoordinate2DMake(self.location!.lat.doubleValue, self.location!.lng.doubleValue)
         
-        var locationAnnotation: MKPointAnnotation = MKPointAnnotation()
+        let locationAnnotation: MKPointAnnotation = MKPointAnnotation()
         locationAnnotation.coordinate = coords
         locationAnnotation.title = self.location!.name
         
-        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coords, span: coordinateSpan)
+        let coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        let mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coords, span: coordinateSpan)
         
         self.mapView.addAnnotation(locationAnnotation)
         self.mapView.region = mapRegion
@@ -267,7 +267,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
 
     func scrollColletionViewToDay(index: Int) -> UIPageViewControllerNavigationDirection? {
-        var cell: DayCollectionViewCell? =
+        let cell: DayCollectionViewCell? =
             self.collectionView!.cellForItemAtIndexPath(NSIndexPath(forRow: index, inSection: 0)) as? DayCollectionViewCell
         
         if cell != nil {
@@ -328,14 +328,14 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
         
-        var userPoint = MKMapPointForCoordinate(coords)
-        var annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
+        let userPoint = MKMapPointForCoordinate(coords)
+        let annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
         
-        var userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
+        let userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
         
-        var annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
+        let annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
 
-        var unionRect = MKMapRectUnion(userRect, annotationRect)
+        let unionRect = MKMapRectUnion(userRect, annotationRect)
         
         var fittedRect = self.mapView.mapRectThatFits(unionRect)
  

@@ -28,7 +28,7 @@ class LocationCellSpecialView: UIView {
             
             let bulletPoint: CALayer = CALayer()
             
-            var typeBullet: CALayer = CALayer()
+            let typeBullet: CALayer = CALayer()
             typeBullet.cornerRadius = 2
             typeBullet.frame = CGRectMake(5, top + 5, 6, 6)
             
@@ -47,13 +47,13 @@ class LocationCellSpecialView: UIView {
             bulletPath.fill()
             
             let dateText = self.configureDateString(special)
-            var dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
+            let dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
             let dateFont: UIFont = UIFont(name: "GillSans", size: 12)!
             
             dateAttrText.addAttributes([NSFontAttributeName: dateFont],
-                range: NSRange(location: 0, length: count(dateText)))
+                range: NSRange(location: 0, length: dateText.characters.count))
             
-            var specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
+            let specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
             let specialFont: UIFont = UIFont(name: "GillSans-Light", size: 12)!
             
             specialAttr.appendAttributedString(dateAttrText)
@@ -70,24 +70,24 @@ class LocationCellSpecialView: UIView {
             return " All Day"
         }
         
-        var startDateComponents: NSDateComponents = NSDateComponents()
+        let startDateComponents: NSDateComponents = NSDateComponents()
         startDateComponents.hour = special.hourStart.integerValue
         startDateComponents.minute = special.minuteStart.integerValue
         startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
-        var endDateComponents: NSDateComponents = NSDateComponents()
+        let endDateComponents: NSDateComponents = NSDateComponents()
         endDateComponents.hour = special.hourEnd.integerValue
         endDateComponents.minute = special.minuteEnd.integerValue
         endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
-        var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
+        let startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
-        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        let startDateFormatter: NSDateFormatter = NSDateFormatter()
         startDateFormatter.dateFormat = " h:mm"
         
-        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"

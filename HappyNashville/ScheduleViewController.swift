@@ -30,7 +30,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
         super.init(nibName: nil, bundle: nil);
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -71,7 +71,7 @@ class ScheduleViewController: UIViewController, ScheduleViewProtocol {
     
     
     func alertTimeIsLessThanCurrent() {
-        var alert = UIAlertController(title: "Unable To Schedule", message: "An alert cannot be schedule for a date that has already past", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Unable To Schedule", message: "An alert cannot be schedule for a date that has already past", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

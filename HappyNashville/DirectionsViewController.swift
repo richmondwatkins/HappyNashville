@@ -33,7 +33,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -72,7 +72,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         self.view!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         
-        var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
+        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         self.view!.addGestureRecognizer(tapGesture)
@@ -91,7 +91,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
 
     func setUpFirstTimeView() {
         
-        var dirExplLabel: UILabel = UILabel()
+        let dirExplLabel: UILabel = UILabel()
         
         dirExplLabel.text = "Takes you to a map application"
         dirExplLabel.textColor = UIColor(hexString: StringConstants.primaryColor)
@@ -102,7 +102,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         self.directionsButton.addSubview(dirExplLabel)
         
-        var mapExplLabel: UILabel = UILabel()
+        let mapExplLabel: UILabel = UILabel()
         mapExplLabel.text = "Keeps you in the app"
         mapExplLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         mapExplLabel.textAlignment = .Center
@@ -116,7 +116,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
-        if touch.view.tag == 1 {
+        if touch.view!.tag == 1 {
             return false
         } else {
             return true
@@ -143,11 +143,11 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        var locationArray = locations as NSArray
-        var locationObj = locationArray.lastObject as! CLLocation
-        var coord = locationObj.coordinate
+        let locationArray = locations as NSArray
+        let locationObj = locationArray.lastObject as! CLLocation
+        let coord = locationObj.coordinate
         
         self.manager.stopUpdatingLocation()
         
@@ -166,12 +166,12 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
             UIApplication.sharedApplication().openURL(NSURL(string: "comgooglemaps://?saddr=\(coords.latitude),\(coords.longitude)&daddr=\(self.location!.lat.doubleValue),\(self.location!.lng.doubleValue)&center=\(self.location!.lat),\(self.location!.lng)&zoom=10")!)
         } else {
             
-            var placeMark: MKPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue), addressDictionary: nil)
+            let placeMark: MKPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue), addressDictionary: nil)
             
-            var destination: MKMapItem = MKMapItem(placemark: placeMark)
+            let destination: MKMapItem = MKMapItem(placemark: placeMark)
             destination.name = self.location!.name
             
-            var options = [
+            let options = [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ]
             
@@ -184,7 +184,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         return string.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
     }
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
             manager.startUpdatingLocation()
         }

@@ -55,7 +55,7 @@ class LocationTableViewCell: UITableViewCell {
         self.contentCard.layer.shadowOffset = CGSizeMake(-0.2, 0.2)
         self.contentCard.layer.shadowRadius = 1
         
-        var bezierPath: UIBezierPath = UIBezierPath(rect: self.contentCard.bounds)
+        let bezierPath: UIBezierPath = UIBezierPath(rect: self.contentCard.bounds)
         self.contentCard.layer.shadowPath = bezierPath.CGPath
         self.contentCard.layer.shadowOpacity = 0.2
         
@@ -85,7 +85,7 @@ class LocationTableViewCell: UITableViewCell {
     }
     
     func buttonViewLayer(width: CGFloat) -> CALayer {
-        var newLayer: CALayer = CALayer()
+        let newLayer: CALayer = CALayer()
         newLayer.frame = CGRectMake(0, 0, width, 1)
         newLayer.backgroundColor = UIColor(hexString: StringConstants.primaryColor).CGColor
         
@@ -99,7 +99,7 @@ class LocationTableViewCell: UITableViewCell {
         }
     }
   
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }

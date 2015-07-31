@@ -26,7 +26,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         self.dealDays = dealDays
     }
 
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -45,8 +45,8 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         let startingViewController: LocationSpecialViewController = viewControllerAtIndex(0)
         
         let viewControllers: NSArray = [startingViewController]
-        self.pageController!.setViewControllers(viewControllers as [AnyObject],
-            direction: .Forward,
+        self.pageController!.setViewControllers(viewControllers as? [UIViewController],
+            direction: UIPageViewControllerNavigationDirection.Forward,
             animated: false,
             completion: nil
         )
@@ -61,7 +61,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
 
-        var vc = viewController as! LocationSpecialViewController
+        let vc = viewController as! LocationSpecialViewController
         
         var index = vc.index
         
@@ -76,7 +76,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
     
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         
-        var vc = viewController as! LocationSpecialViewController
+        let vc = viewController as! LocationSpecialViewController
         
         var index = vc.index
         
@@ -89,9 +89,9 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         return viewControllerAtIndex(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool) {
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        var currentPageVC: LocationSpecialViewController = pageViewController.viewControllers.last as! LocationSpecialViewController
+        let currentPageVC: LocationSpecialViewController = pageViewController.viewControllers!.last as! LocationSpecialViewController
         
         self.delegate?.scrollColletionViewToDay(currentPageVC.index)
     }
@@ -100,7 +100,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         
         var dealDay: DealDay = self.dealDays[index]
 
-        var vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: self.dealDays[index], top: self.top)
+        let vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: dealDay, top: self.top)
         vc.index = index
         
         return vc

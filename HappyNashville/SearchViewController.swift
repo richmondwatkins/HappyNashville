@@ -23,13 +23,13 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.viewFrame = viewFrame
         self.dataSource = locations
         
-        self.dataSource = sorted(locations, {
+        self.dataSource = locations.sort({
             (loc1: Location, loc2: Location) -> Bool in
             return loc1.name < loc2.name
         })
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -80,7 +80,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        filterContentForSearchText(searchBar.text)
+        filterContentForSearchText(searchBar.text!)
         self.tableView.reloadData()
     }
     
@@ -88,7 +88,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if searchBar.text == "" {
             self.filteredDataSource = nil
         } else {
-            filterContentForSearchText(searchBar.text)
+            filterContentForSearchText(searchBar.text!)
         }
         
         if self.filteredDataSource?.count == 0 {
@@ -122,8 +122,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SEARCHCELL") as? UITableViewCell
-   
+        var cell = tableView.dequeueReusableCellWithIdentifier("SEARCHCELL")   
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "SEARCHCELL")
             cell?.textLabel?.font = UIFont(name: "GillSans", size: 16)!

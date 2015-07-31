@@ -25,7 +25,7 @@ class FooterViewController: UIViewController {
         self.viewFrame = viewFrame
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -43,7 +43,7 @@ class FooterViewController: UIViewController {
         
         for day in week {
             
-            var dayButton:UIButton  = DayButton(frame:
+            let dayButton:UIButton  = DayButton(frame:
                 CGRectMake(CGFloat(left), 0, buttonMeasurements.buttonWidth, self.view!.height))
             
             dayButton.setTitle(day, forState: .Normal)
@@ -59,7 +59,7 @@ class FooterViewController: UIViewController {
             i++
         }
         
-        var borderView = UIView(frame: CGRectMake(0, 0, self.view!.width, 1))
+        let borderView = UIView(frame: CGRectMake(0, 0, self.view!.width, 1))
         borderView.backgroundColor = UIColor(hexString: StringConstants.primaryColor)
         self.view!.addSubview(borderView)
     }

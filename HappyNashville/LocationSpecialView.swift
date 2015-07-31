@@ -43,7 +43,7 @@ class LocationSpecialView: UIView {
         dateView.center = CGPointMake(self.width / 2, dateView.center.y)
         specialView.center = CGPointMake(self.width / 2, specialView.center.y)
         
-        var underLineView: UIView = UIView(frame: CGRectMake(0, 0, dateView.width * 1.5, 1))
+        let underLineView: UIView = UIView(frame: CGRectMake(0, 0, dateView.width * 1.5, 1))
         
         if special.type.integerValue == 1 {
            underLineView.backgroundColor = UIColor(hexString: StringConstants.foodColor)
@@ -58,7 +58,7 @@ class LocationSpecialView: UIView {
         self.addSubview(containerView)
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -68,24 +68,24 @@ class LocationSpecialView: UIView {
             return "All Day"
         }
         
-        var startDateComponents: NSDateComponents = NSDateComponents()
+        let startDateComponents: NSDateComponents = NSDateComponents()
         startDateComponents.hour = special.hourStart.integerValue
         startDateComponents.minute = special.minuteStart.integerValue
         startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
-        var endDateComponents: NSDateComponents = NSDateComponents()
+        let endDateComponents: NSDateComponents = NSDateComponents()
         endDateComponents.hour = special.hourEnd.integerValue
         endDateComponents.minute = special.minuteEnd.integerValue
         endDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
-        var endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
+        let startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
-        var startDateFormatter: NSDateFormatter = NSDateFormatter()
+        let startDateFormatter: NSDateFormatter = NSDateFormatter()
         startDateFormatter.dateFormat = "h:mm"
         
-        var endDateFormatter: NSDateFormatter = NSDateFormatter()
+        let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"
         
         return "\(startDateFormatter.stringFromDate(startTime)) - \(endDateFormatter.stringFromDate(endTime))"
