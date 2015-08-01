@@ -42,7 +42,7 @@ class APIManger: NSObject {
                 self.writeNewDataToFile(jsonResult!)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                     NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
+//                     NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
                 })
             }
         }

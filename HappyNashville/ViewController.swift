@@ -54,6 +54,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.tableView.separatorColor = UIColor.clearColor()
         self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
         self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.showsVerticalScrollIndicator = false
         
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
         
@@ -103,10 +104,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     override func viewDidAppear(animated: Bool) {
-        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound];
-        let setting = UIUserNotificationSettings(forTypes: type, categories: nil);
-        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
-        UIApplication.sharedApplication().registerForRemoteNotifications();
+        let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
+
+        if !userDefaults.boolForKey("Push") {
+            askForPushRequest()
+        }
+    }
+    
+    func askForPushRequest() {
+        let pushRequestVC = PushRequestViewController()
+        
+        self.addChildViewController(pushRequestVC)
+        self.view.addSubview(pushRequestVC.view)
+        pushRequestVC.didMoveToParentViewController(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -303,7 +313,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             )
         }
         
-        cell.notifImageView.frame = CGRectMake(self.view!.width - 40 - 2, cell.top - 10, 20, 20)
+        cell.notifImageView.frame = CGRectMake(self.view!.width - 40 - 2, 10, 20, 20)
         if self.viewModel.checkForNotification(dealDay) {
             cell.notifImageView.hidden = false
             cell.scheduleButton.addTarget(self, action: "unscheduleNotification:", forControlEvents:.TouchUpInside)

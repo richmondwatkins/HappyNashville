@@ -46,7 +46,7 @@ import CoreData
     let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
-    let specialHeight: CGFloat = 17
+    let specialHeight: CGFloat = 18
     
     override init() {
         super.init()
@@ -351,13 +351,9 @@ import CoreData
     }
     
     func calculateCellHeight(dealDay: DealDay, specialCount: Int) -> CGFloat {
-        let tempLabel: UILabel = UILabel()
-        tempLabel.text = dealDay.location.name
-        tempLabel.sizeToFit()
-        
         let specials = dealDay.specials as NSSet
         
-        let cellHeight: CGFloat = tempLabel.height + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specialCount))
+        let cellHeight: CGFloat = 16 + self.titleBottomPadding + self.infoButtonsTopPadding + (self.specialBottomPadding * CGFloat(specials.count)) + (self.specialHeight * CGFloat(specialCount))
         
         return cellHeight + 30
     }

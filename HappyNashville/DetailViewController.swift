@@ -11,7 +11,7 @@ import MapKit
 import iAd
 
 
-class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol, ADBannerViewDelegate {
+class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol, ADBannerViewDelegate, UIAlertViewDelegate {
     
     var location: Location?
     var mapView: MKMapView = MKMapView()
@@ -193,7 +193,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     func setTitleView() {
-        var nameLabel: UILabel = UILabel()
+        let nameLabel: UILabel = UILabel()
         nameLabel.text = self.location!.name
         nameLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         nameLabel.sizeToFit()
@@ -204,7 +204,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             let titleFont: UIFont = UIFont(name: "GillSans", size: 20)!
             
             let titleDict: NSDictionary = [NSForegroundColorAttributeName: UIColor.whiteColor(), NSFontAttributeName: titleFont]
-            self.navigationController?.navigationBar.titleTextAttributes = titleDict as! [String : AnyObject]
+            self.navigationController?.navigationBar.titleTextAttributes = titleDict as? [String : AnyObject]
             
         }
 
@@ -297,17 +297,30 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     func callLocation(sender: UIButton) {
+       
+        let alert = UIAlertView()
+        alert.title = "Would you like to call"
+        alert.delegate = self
+        alert.message = self.viewModel!.dataSource[0].location.phoneNumber
+        alert.addButtonWithTitle("Cancel")
+        alert.addButtonWithTitle("Ok")
+        alert.show()
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         
-        let location: Location = self.viewModel!.dataSource[0].location
+        if buttonIndex == 1 {
+            let location: Location = self.viewModel!.dataSource[0].location
+            let phoneNumber = location.phoneNumber.stringByReplacingOccurrencesOfString(" ", withString: "")
+            let phoneURL = NSURL(string: "tel://\(phoneNumber)")!
+            
+            if UIApplication.sharedApplication().canOpenURL(phoneURL) {
+                UIApplication.sharedApplication().openURL(phoneURL)
+            } else {
+                let alert: UIAlertView = UIAlertView(title: "Error", message: "Your call could not be made at this time", delegate: self, cancelButtonTitle: "Ok")
+                alert.show()
+            }
 
-        let phoneNumber = location.phoneNumber.stringByReplacingOccurrencesOfString(" ", withString: "")
-        let phoneURL = NSURL(string: "tel://\(phoneNumber)")!
-        
-        if UIApplication.sharedApplication().canOpenURL(phoneURL) {
-            UIApplication.sharedApplication().openURL(phoneURL)
-        } else {
-            let alert: UIAlertView = UIAlertView(title: "Error", message: "Your call could not be made at this time", delegate: self, cancelButtonTitle: "Ok")
-            alert.show()
         }
     }
     
@@ -336,9 +349,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         let annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
 
         let unionRect = MKMapRectUnion(userRect, annotationRect)
-        
-        var fittedRect = self.mapView.mapRectThatFits(unionRect)
- 
+         
         self.mapView.setVisibleMapRect(unionRect, animated: true)
     }
 

@@ -14,24 +14,16 @@ class LocationCellSpecialView: UIView {
 
     override func drawRect(rect: CGRect) {
         let titleFont: UIFont = UIFont(name: "GillSans", size: 16)!
-        
         let titleAttributes = [NSFontAttributeName : titleFont]
-        
         let title: NSString = self.dealDay.location.name as NSString
+        let titleOrigin: CGPoint = CGPointMake(8, 10);
         
-        let titleOrigin: CGPoint = CGPointMake(10, 10);
         title.drawAtPoint(titleOrigin, withAttributes: titleAttributes)
         
-        var top: CGFloat = titleOrigin.y + 21
+        var top: CGFloat = titleOrigin.y + 23
 
         for special in self.dealDay.specials.allObjects as! [Special] {
-            
-            let bulletPoint: CALayer = CALayer()
-            
-            let typeBullet: CALayer = CALayer()
-            typeBullet.cornerRadius = 2
-            typeBullet.frame = CGRectMake(5, top + 5, 6, 6)
-            
+  
             var bulletColor: UIColor!
             if special.type.integerValue != 6 {
                 bulletColor = UIColor(hexString: StringConstants.drinkColor)
@@ -39,35 +31,36 @@ class LocationCellSpecialView: UIView {
                 bulletColor = UIColor(hexString: StringConstants.foodColor)
             }
             
-            let box: CGRect = CGRectMake(5, top + 4, 6, 6)
+            let box: CGRect = CGRectMake(5, top + 5, 4, 4)
             let bulletPath: UIBezierPath = UIBezierPath(roundedRect: box, cornerRadius: 2)
             bulletColor.setStroke()
             bulletColor.setFill()
             bulletPath.stroke()
             bulletPath.fill()
-            
-            let dateText = self.configureDateString(special)
-            let dateAttrText: NSMutableAttributedString = NSMutableAttributedString(string: dateText)
-            let dateFont: UIFont = UIFont(name: "GillSans", size: 12)!
-            
-            dateAttrText.addAttributes([NSFontAttributeName: dateFont],
-                range: NSRange(location: 0, length: dateText.characters.count))
-            
-            let specialAttr: NSMutableAttributedString = NSMutableAttributedString(string: special.specialDescription)
-            let specialFont: UIFont = UIFont(name: "GillSans-Light", size: 12)!
-            
-            specialAttr.appendAttributedString(dateAttrText)
-            
-            specialAttr.drawAtPoint(CGPointMake(titleOrigin.x + 6, top))
 
+            let specialFont: UIFont = UIFont(name: "GillSans", size: 12)!
+            let specialAttrs = [NSFontAttributeName : specialFont]
+            let specialText: NSString = special.specialDescription as NSString
+            let specialPoint: CGPoint = CGPointMake(titleOrigin.x + 6, top)
+            
+            specialText.drawAtPoint(specialPoint, withAttributes: specialAttrs)
+            
+            let specialSize: CGSize = specialText.sizeWithAttributes(specialAttrs)
+            
+            let dateText: NSString = self.configureDateString(special)
+            let dateFont: UIFont = UIFont(name: "GillSans", size: 10)!
+            let dateAttrs = [NSFontAttributeName : dateFont]
+            
+            dateText.drawAtPoint(CGPoint(x: specialPoint.x + specialSize.width + 2, y: specialPoint.y + 2), withAttributes: dateAttrs)
+            
             top += 22
         }
     }
     
-    func configureDateString(special: Special) -> String {
+    func configureDateString(special: Special) -> NSString {
         
         if special.allDay.boolValue {
-            return " All Day"
+            return " - All Day"
         }
         
         let startDateComponents: NSDateComponents = NSDateComponents()
@@ -85,7 +78,7 @@ class LocationCellSpecialView: UIView {
         let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
         let startDateFormatter: NSDateFormatter = NSDateFormatter()
-        startDateFormatter.dateFormat = " h:mm"
+        startDateFormatter.dateFormat = " - h:mm a"
         
         let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"

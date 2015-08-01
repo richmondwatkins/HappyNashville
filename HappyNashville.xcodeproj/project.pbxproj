@@ -73,11 +73,7 @@
 		5DD048681B60A5B90030BBA2 /* AWSFMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047EA1B60A5B90030BBA2 /* AWSFMDatabasePool.m */; };
 		5DD048691B60A5B90030BBA2 /* AWSFMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047EC1B60A5B90030BBA2 /* AWSFMDatabaseQueue.m */; };
 		5DD0486A1B60A5B90030BBA2 /* AWSFMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047EF1B60A5B90030BBA2 /* AWSFMResultSet.m */; };
-		5DD0486B1B60A5B90030BBA2 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DD047F01B60A5B90030BBA2 /* LICENSE.txt */; };
-		5DD0486C1B60A5B90030BBA2 /* README.markdown in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047F11B60A5B90030BBA2 /* README.markdown */; };
 		5DD0486D1B60A5B90030BBA2 /* AWSGZIP.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047F41B60A5B90030BBA2 /* AWSGZIP.m */; };
-		5DD0486E1B60A5B90030BBA2 /* LICENCE.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047F51B60A5B90030BBA2 /* LICENCE.md */; };
-		5DD0486F1B60A5B90030BBA2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047F61B60A5B90030BBA2 /* README.md */; };
 		5DD048701B60A5B90030BBA2 /* AWSMTLJSONAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047FA1B60A5B90030BBA2 /* AWSMTLJSONAdapter.m */; };
 		5DD048711B60A5B90030BBA2 /* AWSMTLManagedObjectAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047FC1B60A5B90030BBA2 /* AWSMTLManagedObjectAdapter.m */; };
 		5DD048721B60A5B90030BBA2 /* AWSMTLModel+NSCoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD047FE1B60A5B90030BBA2 /* AWSMTLModel+NSCoding.m */; };
@@ -86,14 +82,12 @@
 		5DD048751B60A5B90030BBA2 /* AWSMTLValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048041B60A5B90030BBA2 /* AWSMTLValueTransformer.m */; };
 		5DD048761B60A5B90030BBA2 /* AWSEXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048081B60A5B90030BBA2 /* AWSEXTRuntimeExtensions.m */; };
 		5DD048771B60A5B90030BBA2 /* AWSEXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0480A1B60A5B90030BBA2 /* AWSEXTScope.m */; };
-		5DD048781B60A5B90030BBA2 /* LICENSE.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0480C1B60A5B90030BBA2 /* LICENSE.md */; };
 		5DD048791B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0480E1B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.m */; };
 		5DD0487A1B60A5B90030BBA2 /* NSDictionary+AWSMTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048101B60A5B90030BBA2 /* NSDictionary+AWSMTLManipulationAdditions.m */; };
 		5DD0487B1B60A5B90030BBA2 /* NSError+AWSMTLModelException.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048121B60A5B90030BBA2 /* NSError+AWSMTLModelException.m */; };
 		5DD0487C1B60A5B90030BBA2 /* NSObject+AWSMTLComparisonAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048141B60A5B90030BBA2 /* NSObject+AWSMTLComparisonAdditions.m */; };
 		5DD0487D1B60A5B90030BBA2 /* NSValueTransformer+AWSMTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048161B60A5B90030BBA2 /* NSValueTransformer+AWSMTLInversionAdditions.m */; };
 		5DD0487E1B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048181B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */; };
-		5DD0487F1B60A5B90030BBA2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048191B60A5B90030BBA2 /* README.md */; };
 		5DD048801B60A5B90030BBA2 /* AWSNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0481C1B60A5B90030BBA2 /* AWSNetworking.m */; };
 		5DD048811B60A5B90030BBA2 /* AWSURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0481E1B60A5B90030BBA2 /* AWSURLSessionManager.m */; };
 		5DD048821B60A5B90030BBA2 /* AWSReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048211B60A5B90030BBA2 /* AWSReachability.m */; };
@@ -110,18 +104,12 @@
 		5DD0488F1B60A5B90030BBA2 /* AWSTMCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0483F1B60A5B90030BBA2 /* AWSTMCache.m */; };
 		5DD048901B60A5B90030BBA2 /* AWSTMDiskCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048411B60A5B90030BBA2 /* AWSTMDiskCache.m */; };
 		5DD048911B60A5B90030BBA2 /* AWSTMMemoryCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048431B60A5B90030BBA2 /* AWSTMMemoryCache.m */; };
-		5DD048921B60A5B90030BBA2 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5DD048441B60A5B90030BBA2 /* LICENSE.txt */; };
-		5DD048931B60A5B90030BBA2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048451B60A5B90030BBA2 /* README.md */; };
 		5DD048941B60A5B90030BBA2 /* AWSUICKeyChainStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048481B60A5B90030BBA2 /* AWSUICKeyChainStore.m */; };
-		5DD048951B60A5B90030BBA2 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5DD048491B60A5B90030BBA2 /* LICENSE */; };
-		5DD048961B60A5B90030BBA2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0484A1B60A5B90030BBA2 /* README.md */; };
 		5DD048971B60A5B90030BBA2 /* AWSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0484D1B60A5B90030BBA2 /* AWSCategory.m */; };
 		5DD048981B60A5B90030BBA2 /* AWSLogging.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0484F1B60A5B90030BBA2 /* AWSLogging.m */; };
 		5DD048991B60A5B90030BBA2 /* AWSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048511B60A5B90030BBA2 /* AWSModel.m */; };
 		5DD0489A1B60A5B90030BBA2 /* AWSSynchronizedMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048531B60A5B90030BBA2 /* AWSSynchronizedMutableDictionary.m */; };
 		5DD0489B1B60A5B90030BBA2 /* AWSXMLDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048561B60A5B90030BBA2 /* AWSXMLDictionary.m */; };
-		5DD0489C1B60A5B90030BBA2 /* LICENCE.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048571B60A5B90030BBA2 /* LICENCE.md */; };
-		5DD0489D1B60A5B90030BBA2 /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048581B60A5B90030BBA2 /* README.md */; };
 		5DD0489E1B60A5B90030BBA2 /* AWSXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD0485B1B60A5B90030BBA2 /* AWSXMLWriter.m */; };
 		5DD048A71B60A5C80030BBA2 /* AWSSNSModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048A21B60A5C80030BBA2 /* AWSSNSModel.m */; };
 		5DD048A81B60A5C80030BBA2 /* AWSSNSResources.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DD048A41B60A5C80030BBA2 /* AWSSNSResources.m */; };
@@ -136,6 +124,7 @@
 		5DDFB51C1AF9D0B700A9741F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51B1AF9D0B700A9741F /* Location.swift */; };
 		5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51D1AF9D2C000A9741F /* DealDay.swift */; };
 		5DDFB5201AF9D3C200A9741F /* Special.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51F1AF9D3C200A9741F /* Special.swift */; };
+		5DE43DDF1B6D203A0082DC45 /* PushRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */; };
 		5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262721AE881E0005EE2EA /* StringConstants.swift */; };
 		5DF2627A1AE9E9EC005EE2EA /* FoodDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262791AE9E9EC005EE2EA /* FoodDrinkViewController.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
@@ -249,12 +238,8 @@
 		5DD047ED1B60A5B90030BBA2 /* AWSFMDB.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSFMDB.h; sourceTree = "<group>"; };
 		5DD047EE1B60A5B90030BBA2 /* AWSFMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSFMResultSet.h; sourceTree = "<group>"; };
 		5DD047EF1B60A5B90030BBA2 /* AWSFMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSFMResultSet.m; sourceTree = "<group>"; };
-		5DD047F01B60A5B90030BBA2 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		5DD047F11B60A5B90030BBA2 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.markdown; sourceTree = "<group>"; };
 		5DD047F31B60A5B90030BBA2 /* AWSGZIP.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSGZIP.h; sourceTree = "<group>"; };
 		5DD047F41B60A5B90030BBA2 /* AWSGZIP.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSGZIP.m; sourceTree = "<group>"; };
-		5DD047F51B60A5B90030BBA2 /* LICENCE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENCE.md; sourceTree = "<group>"; };
-		5DD047F61B60A5B90030BBA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5DD047F81B60A5B90030BBA2 /* AWSMantle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSMantle.h; sourceTree = "<group>"; };
 		5DD047F91B60A5B90030BBA2 /* AWSMTLJSONAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSMTLJSONAdapter.h; sourceTree = "<group>"; };
 		5DD047FA1B60A5B90030BBA2 /* AWSMTLJSONAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSMTLJSONAdapter.m; sourceTree = "<group>"; };
@@ -274,7 +259,6 @@
 		5DD048091B60A5B90030BBA2 /* AWSEXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSEXTScope.h; sourceTree = "<group>"; };
 		5DD0480A1B60A5B90030BBA2 /* AWSEXTScope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSEXTScope.m; sourceTree = "<group>"; };
 		5DD0480B1B60A5B90030BBA2 /* AWSmetamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSmetamacros.h; sourceTree = "<group>"; };
-		5DD0480C1B60A5B90030BBA2 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 		5DD0480D1B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+AWSMTLManipulationAdditions.h"; sourceTree = "<group>"; };
 		5DD0480E1B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+AWSMTLManipulationAdditions.m"; sourceTree = "<group>"; };
 		5DD0480F1B60A5B90030BBA2 /* NSDictionary+AWSMTLManipulationAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDictionary+AWSMTLManipulationAdditions.h"; sourceTree = "<group>"; };
@@ -287,7 +271,6 @@
 		5DD048161B60A5B90030BBA2 /* NSValueTransformer+AWSMTLInversionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+AWSMTLInversionAdditions.m"; sourceTree = "<group>"; };
 		5DD048171B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValueTransformer+AWSMTLPredefinedTransformerAdditions.h"; sourceTree = "<group>"; };
 		5DD048181B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
-		5DD048191B60A5B90030BBA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5DD0481B1B60A5B90030BBA2 /* AWSNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSNetworking.h; sourceTree = "<group>"; };
 		5DD0481C1B60A5B90030BBA2 /* AWSNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSNetworking.m; sourceTree = "<group>"; };
 		5DD0481D1B60A5B90030BBA2 /* AWSURLSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSURLSessionManager.h; sourceTree = "<group>"; };
@@ -322,12 +305,8 @@
 		5DD048411B60A5B90030BBA2 /* AWSTMDiskCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSTMDiskCache.m; sourceTree = "<group>"; };
 		5DD048421B60A5B90030BBA2 /* AWSTMMemoryCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSTMMemoryCache.h; sourceTree = "<group>"; };
 		5DD048431B60A5B90030BBA2 /* AWSTMMemoryCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSTMMemoryCache.m; sourceTree = "<group>"; };
-		5DD048441B60A5B90030BBA2 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
-		5DD048451B60A5B90030BBA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5DD048471B60A5B90030BBA2 /* AWSUICKeyChainStore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSUICKeyChainStore.h; sourceTree = "<group>"; };
 		5DD048481B60A5B90030BBA2 /* AWSUICKeyChainStore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSUICKeyChainStore.m; sourceTree = "<group>"; };
-		5DD048491B60A5B90030BBA2 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		5DD0484A1B60A5B90030BBA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5DD0484C1B60A5B90030BBA2 /* AWSCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSCategory.h; sourceTree = "<group>"; };
 		5DD0484D1B60A5B90030BBA2 /* AWSCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSCategory.m; sourceTree = "<group>"; };
 		5DD0484E1B60A5B90030BBA2 /* AWSLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSLogging.h; sourceTree = "<group>"; };
@@ -338,8 +317,6 @@
 		5DD048531B60A5B90030BBA2 /* AWSSynchronizedMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSSynchronizedMutableDictionary.m; sourceTree = "<group>"; };
 		5DD048551B60A5B90030BBA2 /* AWSXMLDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSXMLDictionary.h; sourceTree = "<group>"; };
 		5DD048561B60A5B90030BBA2 /* AWSXMLDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSXMLDictionary.m; sourceTree = "<group>"; };
-		5DD048571B60A5B90030BBA2 /* LICENCE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = LICENCE.md; sourceTree = "<group>"; };
-		5DD048581B60A5B90030BBA2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		5DD0485A1B60A5B90030BBA2 /* AWSXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSXMLWriter.h; sourceTree = "<group>"; };
 		5DD0485B1B60A5B90030BBA2 /* AWSXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AWSXMLWriter.m; sourceTree = "<group>"; };
 		5DD048A01B60A5C80030BBA2 /* AWSSNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AWSSNS.h; sourceTree = "<group>"; };
@@ -359,6 +336,7 @@
 		5DDFB51B1AF9D0B700A9741F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		5DDFB51D1AF9D2C000A9741F /* DealDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDay.swift; sourceTree = "<group>"; };
 		5DDFB51F1AF9D3C200A9741F /* Special.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Special.swift; sourceTree = "<group>"; };
+		5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushRequestViewController.swift; sourceTree = "<group>"; };
 		5DF262721AE881E0005EE2EA /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		5DF262791AE9E9EC005EE2EA /* FoodDrinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDrinkViewController.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -476,6 +454,7 @@
 				5D87FBA91AD239F200F23EA5 /* SpecialView.swift */,
 				5D7F8E561ACCBAE100C086A2 /* LocationTableViewCell.swift */,
 				5D7730FC1B5F05E10002212E /* LocationCellSpecialView.swift */,
+				5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */,
 			);
 			name = MainVC;
 			sourceTree = "<group>";
@@ -570,8 +549,6 @@
 				5DD047ED1B60A5B90030BBA2 /* AWSFMDB.h */,
 				5DD047EE1B60A5B90030BBA2 /* AWSFMResultSet.h */,
 				5DD047EF1B60A5B90030BBA2 /* AWSFMResultSet.m */,
-				5DD047F01B60A5B90030BBA2 /* LICENSE.txt */,
-				5DD047F11B60A5B90030BBA2 /* README.markdown */,
 			);
 			path = FMDB;
 			sourceTree = "<group>";
@@ -581,8 +558,6 @@
 			children = (
 				5DD047F31B60A5B90030BBA2 /* AWSGZIP.h */,
 				5DD047F41B60A5B90030BBA2 /* AWSGZIP.m */,
-				5DD047F51B60A5B90030BBA2 /* LICENCE.md */,
-				5DD047F61B60A5B90030BBA2 /* README.md */,
 			);
 			path = GZIP;
 			sourceTree = "<group>";
@@ -604,7 +579,6 @@
 				5DD048031B60A5B90030BBA2 /* AWSMTLValueTransformer.h */,
 				5DD048041B60A5B90030BBA2 /* AWSMTLValueTransformer.m */,
 				5DD048051B60A5B90030BBA2 /* extobjc */,
-				5DD0480C1B60A5B90030BBA2 /* LICENSE.md */,
 				5DD0480D1B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.h */,
 				5DD0480E1B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.m */,
 				5DD0480F1B60A5B90030BBA2 /* NSDictionary+AWSMTLManipulationAdditions.h */,
@@ -617,7 +591,6 @@
 				5DD048161B60A5B90030BBA2 /* NSValueTransformer+AWSMTLInversionAdditions.m */,
 				5DD048171B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.h */,
 				5DD048181B60A5B90030BBA2 /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */,
-				5DD048191B60A5B90030BBA2 /* README.md */,
 			);
 			path = Mantle;
 			sourceTree = "<group>";
@@ -707,8 +680,6 @@
 				5DD048411B60A5B90030BBA2 /* AWSTMDiskCache.m */,
 				5DD048421B60A5B90030BBA2 /* AWSTMMemoryCache.h */,
 				5DD048431B60A5B90030BBA2 /* AWSTMMemoryCache.m */,
-				5DD048441B60A5B90030BBA2 /* LICENSE.txt */,
-				5DD048451B60A5B90030BBA2 /* README.md */,
 			);
 			path = TMCache;
 			sourceTree = "<group>";
@@ -718,8 +689,6 @@
 			children = (
 				5DD048471B60A5B90030BBA2 /* AWSUICKeyChainStore.h */,
 				5DD048481B60A5B90030BBA2 /* AWSUICKeyChainStore.m */,
-				5DD048491B60A5B90030BBA2 /* LICENSE */,
-				5DD0484A1B60A5B90030BBA2 /* README.md */,
 			);
 			path = UICKeyChainStore;
 			sourceTree = "<group>";
@@ -744,8 +713,6 @@
 			children = (
 				5DD048551B60A5B90030BBA2 /* AWSXMLDictionary.h */,
 				5DD048561B60A5B90030BBA2 /* AWSXMLDictionary.m */,
-				5DD048571B60A5B90030BBA2 /* LICENCE.md */,
-				5DD048581B60A5B90030BBA2 /* README.md */,
 			);
 			path = XMLDictionary;
 			sourceTree = "<group>";
@@ -945,7 +912,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0620;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Richmond Watkins";
 				TargetAttributes = {
 					5DF6B9441ACB5A7E007E852A = {
@@ -988,12 +955,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5DF6B9531ACB5A7E007E852A /* Main.storyboard in Resources */,
-				5DD048951B60A5B90030BBA2 /* LICENSE in Resources */,
 				5DF6B9581ACB5A7E007E852A /* LaunchScreen.xib in Resources */,
 				5DF6B9551ACB5A7E007E852A /* Images.xcassets in Resources */,
-				5DD0486B1B60A5B90030BBA2 /* LICENSE.txt in Resources */,
 				5D6F876B1B5716870089E45E /* data.json in Resources */,
-				5DD048921B60A5B90030BBA2 /* LICENSE.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1066,7 +1030,6 @@
 				5DB3EB471ADF629D0071396E /* NotificationsManagerViewController.swift in Sources */,
 				5DA47E491B3C67DE000403A4 /* StoreKitHelper.swift in Sources */,
 				5DD048721B60A5B90030BBA2 /* AWSMTLModel+NSCoding.m in Sources */,
-				5DD0489D1B60A5B90030BBA2 /* README.md in Sources */,
 				5DD0488E1B60A5B90030BBA2 /* AWSSTSService.m in Sources */,
 				5DD048711B60A5B90030BBA2 /* AWSMTLManagedObjectAdapter.m in Sources */,
 				5DD0487D1B60A5B90030BBA2 /* NSValueTransformer+AWSMTLInversionAdditions.m in Sources */,
@@ -1087,14 +1050,12 @@
 				5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */,
 				5DD048871B60A5B90030BBA2 /* AWSURLRequestSerialization.m in Sources */,
 				5DD048751B60A5B90030BBA2 /* AWSMTLValueTransformer.m in Sources */,
-				5DD048781B60A5B90030BBA2 /* LICENSE.md in Sources */,
-				5DD048961B60A5B90030BBA2 /* README.md in Sources */,
 				5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */,
 				5DD048621B60A5B90030BBA2 /* AWSTaskCompletionSource.m in Sources */,
 				5D7505F91B0ED80F003E7533 /* EastNashvillePolygon.swift in Sources */,
-				5DD0487F1B60A5B90030BBA2 /* README.md in Sources */,
 				5DD048611B60A5B90030BBA2 /* AWSTask.m in Sources */,
 				5DD0488B1B60A5B90030BBA2 /* AWSService.m in Sources */,
+				5DE43DDF1B6D203A0082DC45 /* PushRequestViewController.swift in Sources */,
 				5DB3EB451ADF4A950071396E /* MapViewController.swift in Sources */,
 				5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */,
 				5D87FBAA1AD239F200F23EA5 /* SpecialView.swift in Sources */,
@@ -1108,14 +1069,11 @@
 				5DD0488D1B60A5B90030BBA2 /* AWSSTSResources.m in Sources */,
 				5DD048701B60A5B90030BBA2 /* AWSMTLJSONAdapter.m in Sources */,
 				5D2972E61B156E2B00291470 /* MidtownPolygon.swift in Sources */,
-				5DD0486C1B60A5B90030BBA2 /* README.markdown in Sources */,
 				5DD0488A1B60A5B90030BBA2 /* AWSClientContext.m in Sources */,
 				5DD048791B60A5B90030BBA2 /* NSArray+AWSMTLManipulationAdditions.m in Sources */,
-				5DD0489C1B60A5B90030BBA2 /* LICENCE.md in Sources */,
 				5DD0487A1B60A5B90030BBA2 /* NSDictionary+AWSMTLManipulationAdditions.m in Sources */,
 				5DD048671B60A5B90030BBA2 /* AWSFMDatabaseAdditions.m in Sources */,
 				5DD048981B60A5B90030BBA2 /* AWSLogging.m in Sources */,
-				5DD048931B60A5B90030BBA2 /* README.md in Sources */,
 				5DB3EB551AE325EF0071396E /* LocationSpecialViewController.swift in Sources */,
 				5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */,
 				5D87FB8C1AD0459F00F23EA5 /* MetaData.m in Sources */,
@@ -1123,9 +1081,7 @@
 				5DD048901B60A5B90030BBA2 /* AWSTMDiskCache.m in Sources */,
 				5DD048A91B60A5C80030BBA2 /* AWSSNSService.m in Sources */,
 				5DD048911B60A5B90030BBA2 /* AWSTMMemoryCache.m in Sources */,
-				5DD0486E1B60A5B90030BBA2 /* LICENCE.md in Sources */,
 				5DD048811B60A5B90030BBA2 /* AWSURLSessionManager.m in Sources */,
-				5DD0486F1B60A5B90030BBA2 /* README.md in Sources */,
 				5DD048821B60A5B90030BBA2 /* AWSReachability.m in Sources */,
 				5D7505FB1B0EDA5A003E7533 /* GermantownPolygon.swift in Sources */,
 				5DD048651B60A5B90030BBA2 /* AWSCognitoIdentityService.m in Sources */,
@@ -1229,6 +1185,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -1299,15 +1256,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4467e452-5c2f-4785-b147-5496d2c9719b";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1320,8 +1279,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1329,8 +1289,9 @@
 				INFOPLIST_FILE = HappyNashville/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "4467e452-5c2f-4785-b147-5496d2c9719b";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1352,6 +1313,7 @@
 				);
 				INFOPLIST_FILE = HappyNashvilleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashvilleTests/HappyNashvilleTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1371,6 +1333,7 @@
 				);
 				INFOPLIST_FILE = HappyNashvilleTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashvilleTests/HappyNashvilleTests-Bridging-Header.h";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HappyNashville.app/HappyNashville";

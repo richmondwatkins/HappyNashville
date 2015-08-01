@@ -98,7 +98,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
     
     func viewControllerAtIndex(index: Int) -> LocationSpecialViewController {
         
-        var dealDay: DealDay = self.dealDays[index]
+        let dealDay: DealDay = self.dealDays[index]
 
         let vc: LocationSpecialViewController = LocationSpecialViewController(dealDay: dealDay, top: self.top)
         vc.index = index

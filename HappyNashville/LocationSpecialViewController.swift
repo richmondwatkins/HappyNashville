@@ -51,7 +51,6 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     }
     
     func setUpCollectionView() {
-        var cellWidth: CGFloat = CGFloat()
 
         self.cellWidth = self.view!.width
         

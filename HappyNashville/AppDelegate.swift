@@ -18,6 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
+        let type: UIUserNotificationType = [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound];
+        let setting = UIUserNotificationSettings(forTypes: type, categories: nil);
+        UIApplication.sharedApplication().registerUserNotificationSettings(setting);
+        UIApplication.sharedApplication().registerForRemoteNotifications();
+        
         let mainVC: ViewController = ViewController()
         let navController: UINavigationController = UINavigationController(rootViewController: mainVC)
         
@@ -41,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let serviceConfig: AWSServiceConfiguration = AWSServiceConfiguration(region: AWSRegionType.USWest2, credentialsProvider: credProvider)
 
         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = serviceConfig
-        
+
         return true
     }
     
@@ -76,7 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let awsRequest: AWSSNSCreatePlatformEndpointInput = AWSSNSCreatePlatformEndpointInput()
         
         awsRequest.token = deviceTokenString
-        awsRequest.platformApplicationArn = "arn:aws:sns:us-west-2:093375523987:app/APNS_SANDBOX/HappyNashville"
+        awsRequest.platformApplicationArn = "arn:aws:sns:us-west-2:093375523987:app/APNS/HappyNashvilleProduction"
         
         sns.createPlatformEndpoint(awsRequest)
     }

@@ -55,7 +55,6 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
         
         view.addSubview(scheduleNotifButton)
         view.addSubview(mapListButton)
-        view.addSubview(reportButton)
         
         view.userInteractionEnabled = true
         let swipeGesture: UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: nil)
@@ -73,7 +72,9 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
             setUpListView()
         }
         
-        setUpReportButton()
+        if UIDevice.currentDevice().userInterfaceIdiom != .Pad {
+            setUpReportButton()
+        }
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -108,6 +109,8 @@ UIGestureRecognizerDelegate, UIAlertViewDelegate {
     }
     
     func setUpReportButton() {
+        view.addSubview(reportButton)
+
         reportButton.titleLabel?.font = UIFont.systemFontOfSize(8)
         reportButton.setTitleColor(UIColor(hexString: "3D3D3E"), forState: .Normal)
         reportButton.setTitle("Report Incorrect Special or Location", forState: .Normal)
