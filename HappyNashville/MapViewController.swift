@@ -35,17 +35,17 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     var allOverlays: Array<MKOverlay>?
     var isFirstLoad: Bool = true
     let containerView: UIView = UIView()
-
+    
     init(location: Location?, locations: Array<Location>) {
         self.locations = locations
         self.location = location
         super.init(nibName: nil, bundle: nil)
     }
-
-    required init?(coder aDecoder: NSCoder) {
+    
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -59,8 +59,8 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.containerView.addSubview(self.mapView)
         
         if let loc = self.location {
-            let locationAnnotation = createAnnotation(loc)
-
+            var locationAnnotation = createAnnotation(self.location!)
+            
             self.mapView.addAnnotation(locationAnnotation)
             self.mapView.selectAnnotation(locationAnnotation, animated: true)
             self.setMapCenter(locationAnnotation.coordinate)
@@ -68,7 +68,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         
         setAllAnnotations()
         
-        let findMe : UIBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
+        var findMe : UIBarButtonItem = UIBarButtonItem(title: "Filter", style: UIBarButtonItemStyle.Plain, target: self, action: "showFilterVC:")
         
         self.navigationItem.rightBarButtonItem = findMe
         
@@ -89,8 +89,8 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func setMapCenter(coordinate: CLLocationCoordinate2D) {
-        let coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
-        let mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
+        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1)
+        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
         self.mapView.region = mapRegion
     }
     
@@ -106,7 +106,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-
+        
         if isFilterOpen {
             self.mapView.frame = CGRectMake(
                 self.filterVC.view.width,
@@ -252,7 +252,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func createHillsboroPolygon() {
-         var hillsboroArr: Array<CLLocationCoordinate2D> = [
+        var hillsboroArr: Array<CLLocationCoordinate2D> = [
             CLLocationCoordinate2DMake(36.136522, -86.795174),
             CLLocationCoordinate2DMake(36.136175, -86.794445),
             CLLocationCoordinate2DMake(36.136054, -86.793501),
@@ -381,27 +381,27 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func createDownTownPolyArray() {
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171487, -86.798611))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.175783, -86.781531))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.172076, -86.779599))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161751, -86.773463))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158356, -86.766124))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158304, -86.760352))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156970, -86.760416))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156346, -86.760588))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155203, -86.761768))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.153834, -86.763871))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149381, -86.774214))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149294, -86.774922))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.154544, -86.782089))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155220, -86.783247))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.157663, -86.784814))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155844, -86.789170))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.160036, -86.792517))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161110, -86.793118))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.164125, -86.793762))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.165545, -86.794405))
-//        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171435, -86.798611))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171487, -86.798611))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.175783, -86.781531))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.172076, -86.779599))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161751, -86.773463))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158356, -86.766124))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.158304, -86.760352))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156970, -86.760416))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.156346, -86.760588))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155203, -86.761768))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.153834, -86.763871))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149381, -86.774214))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.149294, -86.774922))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.154544, -86.782089))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155220, -86.783247))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.157663, -86.784814))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.155844, -86.789170))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.160036, -86.792517))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.161110, -86.793118))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.164125, -86.793762))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.165545, -86.794405))
+        //        self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171435, -86.798611))
         
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.171487, -86.798611))
         self.downTownPolyArray.append(CLLocationCoordinate2DMake(36.174258, -86.787281))
@@ -591,10 +591,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     
     func resetAll() {
         self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-
+        
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
             
-            self.mapView.viewForAnnotation(annotation)!.hidden = false
+            self.mapView.viewForAnnotation(annotation).hidden = false
         }
         
         if let overlayArr = self.allOverlays {
@@ -607,13 +607,13 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     func runFilter(overlay: MKOverlay, shouldHide: Bool) {
         
         for annotation in self.mapView.annotations as! [MKPointAnnotation] {
-
+            
             let mapPoint:MKMapPoint = MKMapPointForCoordinate(annotation.coordinate);
             
-            let polygonView = MKPolygonRenderer(overlay: overlay);
+            var polygonView = MKPolygonRenderer(overlay: overlay);
             
             let polyPoint = polygonView.pointForMapPoint(mapPoint)
-        
+            
             var shouldHide: Bool = true
             
             if CGPathContainsPoint(polygonView.path, nil, polyPoint, false) {
@@ -621,10 +621,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             }
             
             if self.mapView.viewForAnnotation(annotation) != nil {
-                self.mapView.viewForAnnotation(annotation)!.hidden = shouldHide
+                self.mapView.viewForAnnotation(annotation).hidden = shouldHide
             }
         }
-
+        
         if let overlayArr = self.allOverlays {
             for mkOverlay in overlayArr {
                 if mkOverlay.coordinate.latitude != overlay.coordinate.latitude {
@@ -638,7 +638,7 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
     }
     
     func createAnnotation(location: Location) -> MKPointAnnotation {
-        let locationAnnotation: MKPointAnnotation = MKPointAnnotation()
+        var locationAnnotation: MKPointAnnotation = MKPointAnnotation()
         locationAnnotation.coordinate = CLLocationCoordinate2DMake(location.lat.doubleValue, location.lng.doubleValue)
         locationAnnotation.title = location.name
         
@@ -650,24 +650,26 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
         self.mapView.setUserTrackingMode(MKUserTrackingMode.None, animated: true)
         self.mapView.showsUserLocation = true
         
-        let userPoint = MKMapPointForCoordinate(coords)
-        let annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
+        var userPoint = MKMapPointForCoordinate(coords)
+        var annotationPoint = MKMapPointForCoordinate(CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue))
         
-        let userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
+        var userRect = MKMapRect(origin: userPoint, size: MKMapSize(width: 0, height: 0))
         
-        let annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
+        var annotationRect = MKMapRect(origin: annotationPoint, size: MKMapSize(width: 0, height: 0))
         
-        let unionRect = MKMapRectUnion(userRect, annotationRect)
+        var unionRect = MKMapRectUnion(userRect, annotationRect)
+        
+        var fittedRect = self.mapView.mapRectThatFits(unionRect)
         
         self.mapView.setVisibleMapRect(unionRect, animated: true)
     }
     
     
-    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         
-        let pr = MKPolygonRenderer(overlay: overlay);
+        var pr = MKPolygonRenderer(overlay: overlay);
         pr.lineWidth = 5;
-       
+        
         if (overlay is TwelveSouthPolygon) {
             pr.strokeColor = UIColor(hexString: StringConstants.twelveSouthColor).colorWithAlphaComponent(0.5);
             
@@ -730,10 +732,10 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             return pr
         }
         
-        return overlay as! MKOverlayRenderer
+        return nil
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         
         let identifier = "pin"
         var view: MKPinAnnotationView
@@ -745,34 +747,34 @@ class MapViewController: UIViewController, UserLocationProtocol, MKMapViewDelega
             view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure) as UIView
+            view.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIView
         }
         
         return view
     }
     
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         
         for location in self.locations {
-            if location.name == view.annotation!.title! {
+            if location.name == view.annotation.title {
                 let detailViewController: DetailViewController =
-                    DetailViewController(location: location, dealDay: nil)
+                DetailViewController(location: location, dealDay: nil)
                 
                 self.presentViewController(detailViewController, animated: true, completion: nil)
             }
         }
     }
     
-    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+    func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
         if isFirstLoad {
-            self.allOverlays = self.mapView.overlays
+            self.allOverlays = self.mapView.overlays as? [MKOverlay]
             isFirstLoad = false
         }
     }
     
-    func mapViewDidFinishLoadingMap(mapView: MKMapView) {
+    func mapViewDidFinishLoadingMap(mapView: MKMapView!) {
         if isFirstLoad {
-            self.allOverlays = self.mapView.overlays
+            self.allOverlays = self.mapView.overlays as? [MKOverlay]
             isFirstLoad = false
         }
     }

@@ -22,7 +22,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,7 +83,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         self.loadingAnimator.stopAnimating()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
         self.loadingAnimator.stopAnimating()
     }
     

@@ -26,7 +26,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
         self.dealDay = dealDay
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -183,7 +183,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if touch.view!.tag == 1 {
+        if touch.view.tag == 1 {
             return true
         } else {
             return false

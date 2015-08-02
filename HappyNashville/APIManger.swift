@@ -15,61 +15,51 @@ class APIManger: NSObject {
     
     class func requestNewData(completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         let urlString = "https://s3-us-west-2.amazonaws.com/nashvilledeals/deals.json"
-        let url: NSURL = NSURL(string: urlString)!;
-        let request: NSURLRequest = NSURLRequest(URL: url)
+        var url: NSURL = NSURL(string: urlString)!;
+        var request: NSURLRequest = NSURLRequest(URL: url)
         
         if !NSUserDefaults.standardUserDefaults().boolForKey("FirstLaunch") {
             self.updateDeals(self.copyFromBundleAndReturnData()!["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
                 completed(dealDays: dealDays, locations: locations)
             })
         } else {
+            let data: NSDictionary? = self.loadDataFromFileSystem()
             
             self.updateDeals(self.loadDataFromFileSystem()!["locations"] as! NSArray, completed: { (dealDays, locations) -> Void in
                 completed(dealDays: dealDays, locations: locations)
             })
         }
         
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request){
+        var session = NSURLSession.sharedSession()
+        var task = session.dataTaskWithRequest(request){
             (data, response, error) -> Void in
             var jsonResult: NSDictionary?
             
             self.masterDealDaysArray.removeAll(keepCapacity: false)
             
             if error == nil && data != nil {
-                jsonResult = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary
+                jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
                 
                 self.writeNewDataToFile(jsonResult!)
-                
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                     NSNotificationCenter.defaultCenter().postNotificationName("UpdatedData", object: nil)
-                })
             }
         }
         task.resume()
     }
     
     class func writeNewDataToFile(jsonDictionary: NSDictionary) {
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
         let paths: NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: NSString = paths.objectAtIndex(0) as! NSString
         
         let fileSystemDataPath = documentsDirectory.stringByAppendingPathComponent("data.json")
         
-        let newData: NSData?
-        do {
-            newData = try NSJSONSerialization.dataWithJSONObject(jsonDictionary, options: NSJSONWritingOptions())
-        } catch _ {
-            newData = nil
-        }
+        let newData: NSData? = NSJSONSerialization.dataWithJSONObject(jsonDictionary, options: NSJSONWritingOptions.allZeros, error: nil)
         
         if newData != nil {
             let jsonString: NSString? = NSString(data: newData!, encoding: NSUTF8StringEncoding)
             
             if (jsonString != nil) {
-                do {
-                    try jsonString!.writeToFile(fileSystemDataPath, atomically: true, encoding: NSUTF8StringEncoding)
-                } catch _ {
-                }
+                jsonString!.writeToFile(fileSystemDataPath, atomically: true, encoding: NSUTF8StringEncoding, error: nil)
             }
         }
     }
@@ -78,15 +68,12 @@ class APIManger: NSObject {
         let dataPath: String = NSBundle.mainBundle().pathForResource("data", ofType: "json")!
         
         let fileManger: NSFileManager = NSFileManager.defaultManager()
-
+        
         let fileSystemDataPath = returnDataPath()
         
-        do {
-            try fileManger.copyItemAtPath(dataPath, toPath: fileSystemDataPath)
-        } catch _ {
-        }
+        fileManger.copyItemAtPath(dataPath, toPath: fileSystemDataPath, error: nil)
         
-        let jsonString: String = try! String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding)
+        let jsonString: String = String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding, error: nil)!
         let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         
         let userDefaults: NSUserDefaults = NSUserDefaults.standardUserDefaults()
@@ -94,18 +81,13 @@ class APIManger: NSObject {
         userDefaults.setBool(true, forKey: "FirstLaunch")
         userDefaults.synchronize()
         
-        return try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary
+        return NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
     }
     
     class func loadDataFromFileSystem() -> NSDictionary? {
         let fileSystemDataPath = returnDataPath()
         
-        let jsonString: String?
-        do {
-            jsonString = try String(contentsOfFile: fileSystemDataPath, encoding: NSUTF8StringEncoding)
-        } catch _ {
-            jsonString = nil
-        }
+        let jsonString: String? = String(contentsOfFile: fileSystemDataPath, encoding: NSUTF8StringEncoding, error: nil)
         
         if jsonString == nil {
             return copyFromBundleAndReturnData()
@@ -114,7 +96,7 @@ class APIManger: NSObject {
         let data: NSData? = jsonString!.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         
         if data != nil {
-            let jsonDict: NSDictionary? = try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary
+            let jsonDict: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
             
             if jsonDict != nil {
                 return jsonDict
@@ -128,13 +110,15 @@ class APIManger: NSObject {
     
     class func loadBackUpData() -> NSDictionary? {
         let dataPath: String = NSBundle.mainBundle().pathForResource("data", ofType: "json")!
-        let jsonString: String = try! String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding)
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
+        let jsonString: String = String(contentsOfFile: dataPath, encoding: NSUTF8StringEncoding, error: nil)!
         let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
         
-        return try! NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments) as? NSDictionary
+        return NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? NSDictionary
     }
     
     class func returnDataPath() ->String {
+        let fileManger: NSFileManager = NSFileManager.defaultManager()
         let paths: NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: NSString = paths.objectAtIndex(0) as! NSString
         
@@ -144,7 +128,7 @@ class APIManger: NSObject {
     class func updateDeals(deals: NSArray, completed: (dealDays: Array<DealDay>, locations: Array<Location>) -> Void) {
         
         var locationArray: Array<Location> = []
-
+        
         for location in deals as! [NSDictionary] {
             locationArray.append(createLocation(location))
         }
@@ -160,7 +144,7 @@ class APIManger: NSObject {
                 if key == "dealDays" {
                     location.addDealDays(self.addDealDays(locationDict[key] as! NSArray, location: location) as Set<NSObject>)
                 } else if key == "coords" {
-                    let coordsDict: NSDictionary = locationDict[key] as! NSDictionary
+                    var coordsDict: NSDictionary = locationDict[key] as! NSDictionary
                     location.lat = coordsDict["lat"] as! NSNumber
                     location.lng = coordsDict["lng"] as! NSNumber
                 } else {
@@ -173,12 +157,12 @@ class APIManger: NSObject {
     }
     
     class func addDealDays(dealDays: NSArray, location: Location) -> NSSet {
-    
+        
         var dealDaysArray: Array<DealDay> = []
         
         for dealDayDict in dealDays as! [NSDictionary] {
             
-            let dealDay: DealDay = DealDay()
+            var dealDay: DealDay = DealDay()
             
             self.masterDealDaysArray.append(dealDay)
             
@@ -192,7 +176,7 @@ class APIManger: NSObject {
                     
                     dealDay.addSpecials(self.setSpecials(dealDayDict[key] as! NSArray) as Set<NSObject>)
                 } else {
-
+                    
                     dealDay.setValue(dealDayDict[key], forKey: key)
                 }
             }
@@ -208,7 +192,7 @@ class APIManger: NSObject {
         
         for  specialDict in specials as! [NSDictionary] {
             
-            let special: Special = Special()
+            var special: Special = Special()
             
             for key in specialDict.allKeys as! [String] {
                 special.setValue(specialDict[key], forKey: key)
@@ -219,37 +203,28 @@ class APIManger: NSObject {
         
         return NSSet(array: specialMutable)
     }
-
+    
     class func fetchNotifications() -> NSArray? {
         
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         
-        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
         
-        do {
-            return try appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest)
-        } catch _ {
-            return nil
-        }
+        return appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
     }
     
     class func deletePastNotifications() {
         
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), { ()->() in
-            let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+            var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
             
-            let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+            var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
             
-            var notificationsArr: NSArray?
-            do {
-                notificationsArr = try appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest)
-            } catch _ {
-                notificationsArr = nil
-            }
+            var notificationsArr: NSArray? = appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil)
             
             if let notifications = notificationsArr {
                 
-                for notification in notifications as! [Notification] {
+                for notification in notificationsArr as! [Notification] {
                     
                     if notification.date.timeIntervalSince1970 < NSDate().timeIntervalSince1970 {
                         
@@ -257,43 +232,37 @@ class APIManger: NSObject {
                     }
                 }
                 
-                do {
-                    try appDelegate.managedObjectContext?.save()
-                } catch _ {
-                }
+                appDelegate.managedObjectContext?.save(nil)
             }
         })
     }
     
     class func deleteNotificationFromID(notifID: String) {
-        let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
+        var appDelegate: AppDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         
-        let fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
+        var fetchRequest: NSFetchRequest = NSFetchRequest(entityName: "Notification")
         
         let predicate = NSPredicate(format: "notifId == %@", notifID)
         
         fetchRequest.predicate = predicate
         
-        let results: NSArray = try! appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest) as! [Notification]
+        let results: NSArray = appDelegate.managedObjectContext?.executeFetchRequest(fetchRequest, error: nil) as! [Notification]
         
         if results.count > 0 {
             let notif: Notification = results.firstObject as! Notification
             
             appDelegate.managedObjectContext?.deleteObject(notif)
-            do {
-                try appDelegate.managedObjectContext?.save()
-            } catch _ {
-            }
+            appDelegate.managedObjectContext?.save(nil)
         }
     }
     
     class func deleteNotification(notification: Notification) {
         
-        let app:UIApplication = UIApplication.sharedApplication()
-
-        for oneEvent in app.scheduledLocalNotifications! {
+        var app:UIApplication = UIApplication.sharedApplication()
+        
+        for oneEvent in app.scheduledLocalNotifications {
             
-            let localNotif = oneEvent
+            var localNotif = oneEvent as! UILocalNotification
             let userInfoCurrent = localNotif.userInfo!
             let uid = userInfoCurrent["notifId"] as! String
             
@@ -302,14 +271,11 @@ class APIManger: NSObject {
                 break;
             }
         }
-
-        let appDelegate: AppDelegate = app.delegate! as! AppDelegate
-
+        
+        var appDelegate: AppDelegate = app.delegate! as! AppDelegate
+        
         appDelegate.managedObjectContext?.deleteObject(notification)
         
-        do {
-            try appDelegate.managedObjectContext?.save()
-        } catch _ {
-        }
+        appDelegate.managedObjectContext?.save(nil)
     }
 }

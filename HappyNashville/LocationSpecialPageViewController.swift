@@ -26,7 +26,7 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         self.dealDays = dealDays
     }
 
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -89,9 +89,9 @@ class LocationSpecialPageViewController: UIViewController,  UIPageViewController
         return viewControllerAtIndex(index)
     }
     
-    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+    func pageViewController(pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [AnyObject], transitionCompleted completed: Bool) {
         
-        let currentPageVC: LocationSpecialViewController = pageViewController.viewControllers!.last as! LocationSpecialViewController
+        var currentPageVC: LocationSpecialViewController = pageViewController.viewControllers.last as! LocationSpecialViewController
         
         self.delegate?.scrollColletionViewToDay(currentPageVC.index)
     }

@@ -58,7 +58,7 @@ class LocationSpecialView: UIView {
         self.addSubview(containerView)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

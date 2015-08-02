@@ -127,7 +127,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func refreshData() {
         inactivateView()
         
-        self.viewModel.fetchData(false)
+        self.viewModel.fetchData(shouldScrollToIndex: false)
     }
     
     func setUpSortButton() {

@@ -16,7 +16,7 @@ import CoreData
     func activateView()
 }
 
- class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
+class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     
     var tableDataSource: Dictionary<Int, Array<DealDay>> {
         get {
@@ -46,11 +46,11 @@ import CoreData
     let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
-    let specialHeight: CGFloat = 18
+    let specialHeight: CGFloat = 17
     
     override init() {
         super.init()
-
+        
         fetchData()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFromNotif", name:"UpdatedData", object: nil)
@@ -58,13 +58,13 @@ import CoreData
     
     func updateFromNotif() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "UpdatedData", object: nil)
-
-        fetchData(false);
+        
+        fetchData(shouldScrollToIndex: false);
     }
     
     func fetchData(shouldScrollToIndex: Bool? = true) {
         APIManger.requestNewData({ (dealDays, locations) -> Void in
- 
+            
             self.locations = locations
             self.unformattedData = dealDays
             
@@ -72,13 +72,13 @@ import CoreData
                 self.requestUserLocation()
             }
             
-            let sortedByDistanceDealDay = dealDays.sort({
+            let sortedByDistanceDealDay = sorted(dealDays, {
                 (deal1: DealDay, deal2: DealDay) -> Bool in
                 return self.getEaliestSpecial(deal1.specials).hourStart.integerValue < self.getEaliestSpecial(deal2.specials).hourStart.integerValue
             })
             
             self.sortData(sortedByDistanceDealDay)
-
+            
             if (shouldScrollToIndex == true) {
                 self.delegate?.reloadTable()
             } else {
@@ -108,7 +108,7 @@ import CoreData
                 
             case 1:
                 sundayArray.append(deal)
-                    break
+                break
             case 2:
                 mondayArray.append(deal)
                 break
@@ -197,16 +197,16 @@ import CoreData
         
         self.tableSections =  [1,2,3,4,5,6,7]
         
-        self.tableSections.sortInPlace {
+        self.tableSections.sort {
             return $0 < $1
         }
     }
     
     func unscheduleNotification(dealDay: DealDay) {
         
-        let app: UIApplication = UIApplication.sharedApplication()
+        var app: UIApplication = UIApplication.sharedApplication()
         
-        for oneEvent in app.scheduledLocalNotifications! {
+        for oneEvent in app.scheduledLocalNotifications as! [UILocalNotification] {
             let userInfoCurrent = oneEvent.userInfo!
             let day = userInfoCurrent["day"] as! NSNumber
             let location = userInfoCurrent["location"] as! String
@@ -219,7 +219,7 @@ import CoreData
     }
     
     func sortByType(specialType: Int) {
-
+        
         self.isFiltered = true
         
         var newDealDayArray: Array<DealDay> = []
@@ -231,11 +231,11 @@ import CoreData
                 
                 var i: Int = 0
                 
-                let currentDealDay: DealDay = self.originalDataSource[key]![j]
+                var currentDealDay: DealDay = self.originalDataSource[key]![j]
                 var dealDaySpecials: Array<Special> = Array(currentDealDay.specials) as! Array<Special>
                 var hasSpecialOfType: Bool = false;
                 
-                let newDealDay: DealDay = DealDay()
+                var newDealDay: DealDay = DealDay()
                 
                 for special in Array(dealDay.specials) as! Array<Special> {
                     
@@ -247,6 +247,7 @@ import CoreData
                             
                             let currentHeight: Int = dealDay.height.integerValue
                             
+                            var arr: Array<DealDay> = self.originalDataSource[key]!
                             currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
                         }
                     } else {
@@ -257,6 +258,7 @@ import CoreData
                             
                             let currentHeight: Int = dealDay.height.integerValue
                             
+                            var arr: Array<DealDay> = self.originalDataSource[key]!
                             currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
                         }
                     }
@@ -272,7 +274,7 @@ import CoreData
                     newDealDay.day = currentDealDay.day
                     newDealDayArray.append(newDealDay)
                 }
-    
+                
                 j++
             }
         }
@@ -281,7 +283,7 @@ import CoreData
         
         self.delegate?.reloadTable()
     }
-
+    
     func requestUserLocation() {
         self.locationManager.delegate = self
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -298,11 +300,11 @@ import CoreData
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        let locationArray = locations as NSArray
-        let locationObj = locationArray.lastObject as! CLLocation
-        let coord = locationObj.coordinate
+        var locationArray = locations as NSArray
+        var locationObj = locationArray.lastObject as! CLLocation
+        var coord = locationObj.coordinate
         
         self.locationManager.stopUpdatingLocation()
         
@@ -311,7 +313,7 @@ import CoreData
     
     func addDistanceToLocations(coords: CLLocationCoordinate2D) {
         for location in locations {
-            let newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
+            var newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
             
             location.distanceFromUser = newCoord.distanceFromLocation(CLLocation(latitude: coords.latitude, longitude: coords.longitude)) /  1609.344
         }
@@ -325,7 +327,12 @@ import CoreData
     
     func sortByVicinity(coords: CLLocationCoordinate2D) {
         
-        let sortedByDistanceDealDay = self.unformattedData.sort({
+        let sortedByDistance = sorted(locations, {
+            (str1: Location, str2: Location) -> Bool in
+            return str1.distanceFromUser.doubleValue < str2.distanceFromUser.doubleValue
+        })
+        
+        let sortedByDistanceDealDay = sorted(self.unformattedData, {
             (str1: DealDay, str2: DealDay) -> Bool in
             return str1.location.distanceFromUser.doubleValue < str2.location.distanceFromUser.doubleValue
         })
@@ -338,13 +345,13 @@ import CoreData
     }
     
     func sortByRating() {
-        self.unformattedData = self.unformattedData.sort { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
+        self.unformattedData = sorted(self.unformattedData) { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
     }
     
     func sortAlphabetically() {
-        self.unformattedData = self.unformattedData.sort { ($0.location.name as String) < ($1.location.name as String) }
+        self.unformattedData = sorted(self.unformattedData) { ($0.location.name as String) < ($1.location.name as String) }
     }
-
+    
     func resetSort() {
         self.sortData(self.unformattedData)
         self.delegate?.reloadTable()
@@ -362,12 +369,12 @@ import CoreData
         var foodCount: Int = 0
         
         for special in Array(dealDay.specials) {
-            let spec: Special = special as! Special
+            var spec: Special = special as! Special
             if spec.type == 1 {
                 foodCount++
             }
         }
-    
+        
         return calculateCellHeight(dealDay, specialCount: foodCount)
     }
     
@@ -375,7 +382,7 @@ import CoreData
         var drinkCount: Int = 0
         
         for special in Array(dealDay.specials) {
-            let spec: Special = special as! Special
+            var spec: Special = special as! Special
             if spec.type == 0 {
                 drinkCount++
             }
@@ -386,10 +393,10 @@ import CoreData
     
     func checkForNotification(dealDay: DealDay) -> Bool {
         
-        let app:UIApplication = UIApplication.sharedApplication()
+        var app:UIApplication = UIApplication.sharedApplication()
         
-        for oneEvent in app.scheduledLocalNotifications! {
-            let localNotif = oneEvent
+        for oneEvent in app.scheduledLocalNotifications {
+            var localNotif = oneEvent as! UILocalNotification
             let userInfoCurrent = localNotif.userInfo!
             let day = userInfoCurrent["day"] as! NSNumber
             let location = userInfoCurrent["location"] as! String

@@ -15,7 +15,7 @@ protocol UserLocationProtocol {
 }
 
 class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
-
+    
     var parentFrame: CGRect = CGRect()
     var containerView: UIView = UIView()
     let location: Location?
@@ -32,8 +32,8 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         super.init(nibName: nil, bundle: nil)
     }
-
-    required init?(coder aDecoder: NSCoder) {
+    
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -72,7 +72,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         self.view!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         
-        let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
+        var tapGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: "dismissVC")
         tapGesture.delegate = self
         tapGesture.numberOfTapsRequired = 1
         self.view!.addGestureRecognizer(tapGesture)
@@ -85,13 +85,13 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         UIView.animateWithDuration(0.3, animations: { () -> Void in
             self.view!.alpha = 1
-        })        
+        })
     }
     
-
+    
     func setUpFirstTimeView() {
         
-        let dirExplLabel: UILabel = UILabel()
+        var dirExplLabel: UILabel = UILabel()
         
         dirExplLabel.text = "Takes you to a map application"
         dirExplLabel.textColor = UIColor(hexString: StringConstants.primaryColor)
@@ -102,7 +102,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         
         self.directionsButton.addSubview(dirExplLabel)
         
-        let mapExplLabel: UILabel = UILabel()
+        var mapExplLabel: UILabel = UILabel()
         mapExplLabel.text = "Keeps you in the app"
         mapExplLabel.textColor = UIColor(hexString: StringConstants.navBarTextColor)
         mapExplLabel.textAlignment = .Center
@@ -116,7 +116,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
-        if touch.view!.tag == 1 {
+        if touch.view.tag == 1 {
             return false
         } else {
             return true
@@ -143,11 +143,11 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         }
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         
-        let locationArray = locations as NSArray
-        let locationObj = locationArray.lastObject as! CLLocation
-        let coord = locationObj.coordinate
+        var locationArray = locations as NSArray
+        var locationObj = locationArray.lastObject as! CLLocation
+        var coord = locationObj.coordinate
         
         self.manager.stopUpdatingLocation()
         
@@ -160,18 +160,18 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
     }
     
     func openOutsideMap(coords: CLLocationCoordinate2D) {
-       
+        
         if UIApplication.sharedApplication().canOpenURL(NSURL(string: "comgooglemaps://")!) {
             
             UIApplication.sharedApplication().openURL(NSURL(string: "comgooglemaps://?saddr=\(coords.latitude),\(coords.longitude)&daddr=\(self.location!.lat.doubleValue),\(self.location!.lng.doubleValue)&center=\(self.location!.lat),\(self.location!.lng)&zoom=10")!)
         } else {
             
-            let placeMark: MKPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue), addressDictionary: nil)
+            var placeMark: MKPlacemark = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: self.location!.lat.doubleValue, longitude: self.location!.lng.doubleValue), addressDictionary: nil)
             
-            let destination: MKMapItem = MKMapItem(placemark: placeMark)
+            var destination: MKMapItem = MKMapItem(placemark: placeMark)
             destination.name = self.location!.name
             
-            let options = [
+            var options = [
                 MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving
             ]
             
@@ -184,7 +184,7 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         return string.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status == CLAuthorizationStatus.AuthorizedAlways || status == CLAuthorizationStatus.AuthorizedWhenInUse {
             manager.startUpdatingLocation()
         }
@@ -194,11 +194,11 @@ class DirectionsViewController: UIViewController, UIGestureRecognizerDelegate, C
         self.openOutsideMap = false
         findLocation()
     }
-
+    
     func dismissVC() {
         self.willMoveToParentViewController(nil)
         self.view!.removeFromSuperview()
         self.removeFromParentViewController()
     }
-
+    
 }

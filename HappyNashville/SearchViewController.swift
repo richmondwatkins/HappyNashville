@@ -9,7 +9,7 @@
 import UIKit
 
 class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
-
+    
     var viewFrame: CGRect!
     var tableView: UITableView = UITableView()
     var dataSource: Array<Location>!
@@ -23,19 +23,19 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         self.viewFrame = viewFrame
         self.dataSource = locations
         
-        self.dataSource = locations.sort({
+        self.dataSource = sorted(locations, {
             (loc1: Location, loc2: Location) -> Bool in
             return loc1.name < loc2.name
         })
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.view!.frame = CGRectMake(
             0,
             -(self.viewFrame.size.height),
@@ -80,7 +80,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        filterContentForSearchText(searchBar.text!)
+        filterContentForSearchText(searchBar.text)
         self.tableView.reloadData()
     }
     
@@ -88,7 +88,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         if searchBar.text == "" {
             self.filteredDataSource = nil
         } else {
-            filterContentForSearchText(searchBar.text!)
+            filterContentForSearchText(searchBar.text)
         }
         
         if self.filteredDataSource?.count == 0 {
@@ -114,7 +114,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if self.filteredDataSource != nil && self.filteredDataSource?.count > 0 {
-           return self.filteredDataSource!.count
+            return self.filteredDataSource!.count
         } else {
             return self.dataSource.count
         }
@@ -122,7 +122,8 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("SEARCHCELL")   
+        var cell = tableView.dequeueReusableCellWithIdentifier("SEARCHCELL") as? UITableViewCell
+        
         if cell == nil {
             cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "SEARCHCELL")
             cell?.textLabel?.font = UIFont(name: "GillSans", size: 16)!
@@ -150,7 +151,7 @@ class SearchViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
         
         let detailViewController: DetailViewController =
-            DetailViewController(location: location, dealDay: nil)
+        DetailViewController(location: location, dealDay: nil)
         
         self.navigationController?.pushViewController(detailViewController, animated: true)
     }

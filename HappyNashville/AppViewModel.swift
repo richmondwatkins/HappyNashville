@@ -9,19 +9,21 @@
 import UIKit
 
 class AppViewModel: NSObject {
-   
+    
     
     func getCurrentDay() -> Int {
         
-        let calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
+        var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
         
-        let dateComponents = calendar!.components(NSCalendarUnit.Weekday, fromDate: NSDate())
+        var dateComponents = calendar!.components(NSCalendarUnit.CalendarUnitWeekday, fromDate: NSDate())
         
         return dateComponents.weekday
     }
     
     func sortSpecialsByTime(specials: NSSet) -> NSArray {
-                
+        
+        var specialsArray: NSMutableArray = NSMutableArray(array: specials.allObjects)
+        
         return NSArray(array: specials.sortedArrayUsingDescriptors([NSSortDescriptor(key: "hourStart", ascending: true)]))
     }
     
@@ -29,16 +31,16 @@ class AppViewModel: NSObject {
         
         let paddingSeperators: CGFloat = numberOfButtons + 1
         
-        let buttonPadding:CGFloat = padding * paddingSeperators
+        var buttonPadding:CGFloat = padding * paddingSeperators
         
-        let buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
+        var buttonWidth:CGFloat = (parentViewWidth - buttonPadding) / numberOfButtons
         
         return (buttonWidth, padding)
     }
     
     func getEaliestSpecial(specials: NSSet) -> Special {
         
-        let specialArr: NSArray = sortSpecialsByTime(specials)
+        var specialArr: NSArray = sortSpecialsByTime(specials)
         
         var special = specialArr.firstObject as! Special
         
@@ -86,22 +88,22 @@ class AppViewModel: NSObject {
     }
     
     func stringForEarliestSpecial(dealDay: DealDay) -> String {
-        let sorted: NSArray = sortSpecialsByTime(dealDay.specials)
+        var sorted: NSArray = sortSpecialsByTime(dealDay.specials)
         
         return configureDateString(sorted.firstObject as! Special, dealDay: dealDay)
     }
     
     func configureDateString(special: Special, dealDay: DealDay) -> String {
         
-        let startDateComponents: NSDateComponents = NSDateComponents()
+        var startDateComponents: NSDateComponents = NSDateComponents()
         startDateComponents.hour = special.hourStart.integerValue
         startDateComponents.minute = special.minuteStart.integerValue
         startDateComponents.timeZone = NSTimeZone(abbreviation: "CT")
         
         let calendar: NSCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-        let startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
+        var startTime: NSDate = calendar.dateFromComponents(startDateComponents)!
         
-        let startDateFormatter: NSDateFormatter = NSDateFormatter()
+        var startDateFormatter: NSDateFormatter = NSDateFormatter()
         startDateFormatter.dateFormat = "h:mm"
         
         var returnString: String!

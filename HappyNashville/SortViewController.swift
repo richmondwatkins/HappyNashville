@@ -31,7 +31,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navHeight = navBottom
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -120,7 +120,7 @@ class SortViewController: UIViewController, UIGestureRecognizerDelegate {
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
         
-        if touch.view!.tag == 1 {
+        if touch.view.tag == 1 {
             return false
         } else {
             return true

@@ -27,7 +27,7 @@ class DetailViewModel: AppViewModel {
     init(dealDays: Array<DealDay>, selectedDate: DealDay?) {
         super.init()
         
-        self.dataSource = dealDays.sort({
+        self.dataSource = sorted(dealDays, {
             (day1: DealDay, day2: DealDay) -> Bool in
             return day1.day.integerValue < day2.day.integerValue
         })
@@ -49,7 +49,7 @@ class DetailViewModel: AppViewModel {
         
         dateComponents.day = dealDay.day.integerValue - getCurrentDay()
         
-        let dateForIndex: NSDate = self.calendar!.dateByAddingComponents(dateComponents, toDate: NSDate(), options: [])!
+        var dateForIndex: NSDate = self.calendar!.dateByAddingComponents(dateComponents, toDate: NSDate(), options: nil)!
         
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd";

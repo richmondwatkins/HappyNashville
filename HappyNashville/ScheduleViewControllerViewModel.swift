@@ -18,7 +18,7 @@ class ScheduleViewControllerViewModel: AppViewModel {
     func calculateDatePickerDate(dealDay: DealDay) -> NSDate {
         let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         let date: NSDate = NSDate()
-        let dateCompenents: NSDateComponents = gregorianCalendar.components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit, NSCalendarUnit.NSWeekCalendarUnit, NSCalendarUnit.NSWeekdayCalendarUnit, NSCalendarUnit.NSDayCalendarUnit],
+        let dateCompenents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: date)
         
         var daysToNextOccur = 0
@@ -41,11 +41,11 @@ class ScheduleViewControllerViewModel: AppViewModel {
         
         let toDate: NSDate = date.dateByAddingTimeInterval(NSTimeInterval(timeToDate))
         
-        let toDateComponents: NSDateComponents = gregorianCalendar.components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit, NSCalendarUnit.NSWeekCalendarUnit, NSCalendarUnit.NSWeekdayCalendarUnit, NSCalendarUnit.NSDayCalendarUnit],
+        let toDateComponents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: toDate)
         
         toDateComponents.hour = earliestSpecial.hourStart.integerValue - 1
- 
+        
         return gregorianCalendar.dateFromComponents(toDateComponents)!
     }
     
@@ -61,36 +61,38 @@ class ScheduleViewControllerViewModel: AppViewModel {
             self.dealDay = dealDay
             
             let notificationSetting = UIUserNotificationSettings(
-                forTypes: [UIUserNotificationType.Alert, UIUserNotificationType.Alert, UIUserNotificationType.Sound],
+                forTypes: UIUserNotificationType.Alert |
+                    UIUserNotificationType.Alert |
+                    UIUserNotificationType.Sound,
                 categories: nil
             )
             
             UIApplication.sharedApplication().registerUserNotificationSettings(notificationSetting)
         }
         
-        let notification = UILocalNotification()
+        var notification = UILocalNotification()
         notification.fireDate = date
-
-        let alertTimeString: String = self.stringForEarliestSpecial(dealDay)
+        
+        var alertTimeString: String = self.stringForEarliestSpecial(dealDay)
         var alertString: String!
-    
+        
         alertString = "\(dealDay.location.name) has specials\(alertTimeString)"
         
         notification.alertBody =  alertString // TODO: Add in special descriptions
         
         let notifId: String = randomString(10)
         notification.userInfo = ["notifId" : notifId, "day" : dealDay.day, "location" : dealDay.location.name]
-
-
+        
+        
         if isRecurring {
-            notification.repeatInterval = NSCalendarUnit.NSWeekCalendarUnit
+            notification.repeatInterval = NSCalendarUnit.WeekCalendarUnit
         }
         
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
-     
+        
         let appDelegate: AppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         
-        let notificationCD: Notification = NSEntityDescription.insertNewObjectForEntityForName("Notification", inManagedObjectContext: appDelegate.managedObjectContext!) as! Notification
+        var notificationCD: Notification = NSEntityDescription.insertNewObjectForEntityForName("Notification", inManagedObjectContext: appDelegate.managedObjectContext!) as! Notification
         
         notificationCD.text = notification.alertBody
         notificationCD.date = notification.fireDate
@@ -99,16 +101,13 @@ class ScheduleViewControllerViewModel: AppViewModel {
         notificationCD.locationName = dealDay.location.name
         dealDay.notification = notificationCD
         
-        do {
-            try appDelegate.managedObjectContext!.save()
-        } catch _ {
-        }
+        appDelegate.managedObjectContext!.save(nil)
     }
     
     func weekDayForTimePicker(date: NSDate) -> Int {
         let gregorianCalendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
         
-        let dateCompenents: NSDateComponents = gregorianCalendar.components([NSCalendarUnit.NSYearCalendarUnit, NSCalendarUnit.NSMonthCalendarUnit, NSCalendarUnit.NSWeekCalendarUnit, NSCalendarUnit.NSWeekdayCalendarUnit, NSCalendarUnit.NSDayCalendarUnit],
+        let dateCompenents: NSDateComponents = gregorianCalendar.components(NSCalendarUnit.YearCalendarUnit | NSCalendarUnit.MonthCalendarUnit | NSCalendarUnit.WeekCalendarUnit | NSCalendarUnit.WeekdayCalendarUnit | NSCalendarUnit.DayCalendarUnit,
             fromDate: date)
         
         return dateCompenents.weekday
@@ -121,8 +120,8 @@ class ScheduleViewControllerViewModel: AppViewModel {
         var randomString : Array<String> = []
         
         for (var i=0; i < len; i++){
-            let length = UInt32 (letters.length)
-            let rand = arc4random_uniform(length)
+            var length = UInt32 (letters.length)
+            var rand = arc4random_uniform(length)
             randomString.append("\(letters.characterAtIndex(Int(rand)))")
         }
         

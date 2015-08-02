@@ -28,8 +28,8 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
         self.top = top
         self.dealDay = dealDay
     }
-    
-    required init?(coder aDecoder: NSCoder) {
+
+    required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -38,7 +38,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
 
         self.dataSource = self.dealDay!.specials.allObjects as! Array<Special>
         
-        self.dataSource = self.dataSource.sort({
+        self.dataSource = sorted(self.dataSource, {
             (spec1: Special, spec2: Special) -> Bool in
             return spec1.specialItem < spec2.specialItem
         })
@@ -225,7 +225,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
     func hideAllSpecials() {
         for view in self.scrollView!.subviews {
             if view.tag == 1 {
-                view.alpha = 0
+                self.view.alpha = 0
             }
         }
     }
