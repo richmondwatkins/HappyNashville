@@ -1266,7 +1266,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cf20be3e-da05-410f-9073-4b21e19067c4";
+				PROVISIONING_PROFILE = "80bc24b8-0542-42b1-ada2-900c26773f42";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1291,7 +1291,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cf20be3e-da05-410f-9073-4b21e19067c4";
+				PROVISIONING_PROFILE = "80bc24b8-0542-42b1-ada2-900c26773f42";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
