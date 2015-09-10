@@ -14,8 +14,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     var viewModel: ViewControllerViewModel!
     var tableView: UITableView = UITableView()
-    var vcWithOutHeaders: ViewControllerWithoutHeadersViewController!
-    var foodDrinkVC: FoodDrinkViewController!
     var subView: UIView = UIView()
     var customTitleView: UILabel = UILabel()
     var customTitleViewBorder: CALayer = CALayer()
@@ -41,22 +39,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         self.viewModel =  ViewControllerViewModel()
         
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
-        
         self.subView.frame = self.view!.frame
-        
         self.subView.addSubview(self.tableView)
         
         self.view!.addSubview(self.subView)
         self.view!.backgroundColor = UIColor.whiteColor()
         
-        self.tableView.separatorColor = UIColor.clearColor()
-        self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
-        self.tableView.contentInset = UIEdgeInsetsZero
-        self.tableView.showsVerticalScrollIndicator = false
-        
-        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
+        setTableView()
         
         self.viewModel.delegate = self
         
@@ -68,22 +57,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 
         setUpMenuButton()
         setUpSortButton()
-        
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: StringConstants.primaryColor)
-        
-        self.customTitleView.backgroundColor = .clearColor()
-        self.customTitleView.textColor = UIColor(hexString: StringConstants.navBarTextColor)
-        self.customTitleView.textAlignment = .Center
-        
-        self.navigationItem.titleView = self.customTitleView
-        
-        self.activityIndicator.center = self.navigationItem.titleView!.center
-        self.navigationItem.titleView?.addSubview(self.activityIndicator);
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
-        self.tableView.addSubview(refreshControl)
-        
+        setTitleView()
+        setRefreshControl()
         addFooter()
         
         if self.viewModel.tableDataSource.count == 0 {
@@ -109,6 +84,35 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         if !userDefaults.boolForKey("Push") {
             askForPushRequest()
         }
+    }
+    
+    func setTableView() {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.separatorColor = UIColor.clearColor()
+        self.tableView.backgroundColor = UIColor(hexString: StringConstants.grayShade)
+        self.tableView.contentInset = UIEdgeInsetsZero
+        self.tableView.showsVerticalScrollIndicator = false
+        
+        self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "CELL")
+    }
+    
+    func setTitleView() {
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: StringConstants.primaryColor)
+        self.customTitleView.backgroundColor = .clearColor()
+        self.customTitleView.textColor = UIColor(hexString: StringConstants.navBarTextColor)
+        self.customTitleView.textAlignment = .Center
+        
+        self.navigationItem.titleView = self.customTitleView
+        
+        self.activityIndicator.center = self.navigationItem.titleView!.center
+        self.navigationItem.titleView?.addSubview(self.activityIndicator);
+    }
+    
+    func setRefreshControl() {
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl.addTarget(self, action: "refreshData", forControlEvents: UIControlEvents.ValueChanged)
+        self.tableView.addSubview(refreshControl)
     }
     
     func askForPushRequest() {

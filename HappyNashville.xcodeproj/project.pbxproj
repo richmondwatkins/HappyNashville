@@ -121,14 +121,12 @@
 		5DD531F41ACCE3C300AC76CE /* ViewControllerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */; };
 		5DDE4AD91AE5C72E00B5E85D /* SortViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */; };
 		5DDE4ADB1AE5C87D00B5E85D /* SortView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */; };
-		5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */; };
 		5DDE4ADF1AE6001900B5E85D /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */; };
 		5DDFB51C1AF9D0B700A9741F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51B1AF9D0B700A9741F /* Location.swift */; };
 		5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51D1AF9D2C000A9741F /* DealDay.swift */; };
 		5DDFB5201AF9D3C200A9741F /* Special.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51F1AF9D3C200A9741F /* Special.swift */; };
 		5DE43DDF1B6D203A0082DC45 /* PushRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */; };
 		5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262721AE881E0005EE2EA /* StringConstants.swift */; };
-		5DF2627A1AE9E9EC005EE2EA /* FoodDrinkViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262791AE9E9EC005EE2EA /* FoodDrinkViewController.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
 		5DF6B9501ACB5A7E007E852A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94F1ACB5A7E007E852A /* ViewController.swift */; };
@@ -335,14 +333,12 @@
 		5DD531F31ACCE3C300AC76CE /* ViewControllerViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerViewModel.swift; sourceTree = "<group>"; };
 		5DDE4AD81AE5C72E00B5E85D /* SortViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortViewController.swift; sourceTree = "<group>"; };
 		5DDE4ADA1AE5C87D00B5E85D /* SortView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SortView.swift; sourceTree = "<group>"; };
-		5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithoutHeadersViewController.swift; sourceTree = "<group>"; };
 		5DDE4ADE1AE6001900B5E85D /* MapViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		5DDFB51B1AF9D0B700A9741F /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		5DDFB51D1AF9D2C000A9741F /* DealDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDay.swift; sourceTree = "<group>"; };
 		5DDFB51F1AF9D3C200A9741F /* Special.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Special.swift; sourceTree = "<group>"; };
 		5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushRequestViewController.swift; sourceTree = "<group>"; };
 		5DF262721AE881E0005EE2EA /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
-		5DF262791AE9E9EC005EE2EA /* FoodDrinkViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodDrinkViewController.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -746,15 +742,6 @@
 			path = AWSSNS;
 			sourceTree = "<group>";
 		};
-		5DF262781AE9E9CC005EE2EA /* MainVCCHildVCs */ = {
-			isa = PBXGroup;
-			children = (
-				5DDE4ADC1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift */,
-				5DF262791AE9E9EC005EE2EA /* FoodDrinkViewController.swift */,
-			);
-			name = MainVCCHildVCs;
-			sourceTree = "<group>";
-		};
 		5DF6B93C1ACB5A7D007E852A = {
 			isa = PBXGroup;
 			children = (
@@ -797,7 +784,6 @@
 				5DB3EB461ADF629D0071396E /* NotificationsManagerViewController.swift */,
 				5DB3EB5E1AE44AEA0071396E /* DirectionsViewController.swift */,
 				5DF6B9511ACB5A7E007E852A /* Main.storyboard */,
-				5DF262781AE9E9CC005EE2EA /* MainVCCHildVCs */,
 				5DF6B9541ACB5A7E007E852A /* Images.xcassets */,
 				5DF6B9561ACB5A7E007E852A /* LaunchScreen.xib */,
 				5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */,
@@ -1108,7 +1094,6 @@
 				5DB3EB5B1AE373A20071396E /* AppViewModel.swift in Sources */,
 				5DD0486D1B60A5B90030BBA2 /* AWSGZIP.m in Sources */,
 				5DD048691B60A5B90030BBA2 /* AWSFMDatabaseQueue.m in Sources */,
-				5DF2627A1AE9E9EC005EE2EA /* FoodDrinkViewController.swift in Sources */,
 				5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */,
 				5DD048851B60A5B90030BBA2 /* AWSSerialization.m in Sources */,
 				5DD0488F1B60A5B90030BBA2 /* AWSTMCache.m in Sources */,
@@ -1120,7 +1105,6 @@
 				5DA048961B324C200006AC76 /* HappyNashvilleViewController.swift in Sources */,
 				5DD0487C1B60A5B90030BBA2 /* NSObject+AWSMTLComparisonAdditions.m in Sources */,
 				5D2D73771ACF3E4F002216CB /* ScheduleView.swift in Sources */,
-				5DDE4ADD1AE5EC3100B5E85D /* ViewControllerWithoutHeadersViewController.swift in Sources */,
 				5D3435611B168EA400F108A7 /* MenuViewController.swift in Sources */,
 				5DDFB51C1AF9D0B700A9741F /* Location.swift in Sources */,
 				5DD0485C1B60A5B90030BBA2 /* AWSCredentialsProvider.m in Sources */,
