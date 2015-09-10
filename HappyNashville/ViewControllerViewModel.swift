@@ -46,7 +46,7 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     let infoButtonsHeight: CGFloat = 40
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
-    let specialHeight: CGFloat = 17
+    let specialHeight: CGFloat = 18
     
     override init() {
         super.init()

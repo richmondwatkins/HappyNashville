@@ -178,7 +178,7 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
         let endTime: NSDate = calendar.dateFromComponents(endDateComponents)!
         
         let startDateFormatter: NSDateFormatter = NSDateFormatter()
-        startDateFormatter.dateFormat = "h:mm"
+        startDateFormatter.dateFormat = "h:mm a"
         
         let endDateFormatter: NSDateFormatter = NSDateFormatter()
         endDateFormatter.dateFormat = "h:mm a"

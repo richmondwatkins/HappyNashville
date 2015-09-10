@@ -118,7 +118,6 @@ class APIManger: NSObject {
     }
     
     class func returnDataPath() ->String {
-        let fileManger: NSFileManager = NSFileManager.defaultManager()
         let paths: NSArray = NSSearchPathForDirectoriesInDomains(NSSearchPathDirectory.DocumentDirectory, NSSearchPathDomainMask.UserDomainMask, true)
         let documentsDirectory: NSString = paths.objectAtIndex(0) as! NSString
         

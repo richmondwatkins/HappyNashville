@@ -14,7 +14,7 @@ protocol DetialViewModelProtocol {
 
 class DetailViewModel: AppViewModel {
     
-    var weekLookup: Array<String> = ["", "S", "M", "T", "W", "Th", "F", "S"]
+    var weekLookup: Array<String> = ["", "Su", "M", "T", "W", "Th", "F", "S"]
     var dataSource: Array<DealDay> = []
     var calendar = NSCalendar(identifier: NSCalendarIdentifierGregorian)
     var hasCurrentDay: Bool!

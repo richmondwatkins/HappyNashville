@@ -281,6 +281,24 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             buttonViewHeight - buttonPadding * 2
         )
         cell.scheduleButton.removeTarget(nil, action: nil, forControlEvents: UIControlEvents.AllEvents)
+        
+        if let uberButton = cell.uberButton {
+            uberButton.frame = CGRect(
+                x: cell.scheduleButton.left - buttonMeasurements.buttonPadding - buttonMeasurements.buttonWidth - 5,
+                y: buttonPadding,
+                width: buttonMeasurements.buttonWidth + 5,
+                height: buttonViewHeight - buttonPadding * 2
+            )
+            
+            cell.buttonView.layer.addSublayer(
+                getButtonDividerLayer(
+                    self.infoButtonsHeight,
+                    xValue:cell.uberButton!.left - ((cell.scheduleButton.left - cell.mapButton.right) / 2) + 5
+                )
+            )
+            
+            uberButton.addTarget(self, action: "openUberModel:", forControlEvents: .TouchUpInside)
+        }
 
         cell.buttonView.layer.addSublayer(
             getButtonDividerLayer(
@@ -296,8 +314,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         )
         
         let ratingViewWidth: CGFloat = 80
-        cell.ratingView.frame = CGRectMake(5, (cell.buttonView.height / 2) - (titleBottomPadding / 2), ratingViewWidth, titleBottomPadding)
         
+        if dealDay.location.distanceFromUser.doubleValue > 0 {
+            cell.ratingView.frame = CGRectMake(
+                5,
+                2,
+                ratingViewWidth,
+                titleBottomPadding
+            )
+        } else {
+            cell.ratingView.frame = CGRectMake(
+                5, (cell.buttonView.height / 2) - (titleBottomPadding / 2), ratingViewWidth, titleBottomPadding)
+        }
+
         if dealDay.location.rating != NSNull() {
             cell.ratingView.value = CGFloat(dealDay.location.rating.doubleValue)
         }
@@ -306,8 +335,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             cell.distanceLabel.text = String(format: "approx. %.2f mi", dealDay.location.distanceFromUser.doubleValue)
             cell.distanceLabel.sizeToFit()
             cell.distanceLabel.frame = CGRectMake(
-                cell.ratingView.right + 2,
-                cell.ratingView.top,
+                8,
+                cell.ratingView.bottom,
                 cell.distanceLabel.width,
                 cell.distanceLabel.height
             )
@@ -633,6 +662,16 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             
             self.presentViewController(detailViewController, animated: true, completion: nil)
         }
+    }
+    
+    func openUberModel(button: UIButton) {
+        button.highlighted = false
+        let dealDay: DealDay? = self.getDealDayForIndexPath(self.indexPathForSelectedRow(button))
+        let uberVC: UberViewController = UberViewController(dealDay: dealDay)
+        
+        self.addChildViewController(uberVC)
+        self.view.addSubview(uberVC.view)
+        uberVC.willMoveToParentViewController(self)
     }
     
     func activateView() {

@@ -22,6 +22,7 @@ class LocationTableViewCell: UITableViewCell {
     var containerView = UIView()
     var webSiteButton = UIButton()
     var mapButton = UIButton()
+    var uberButton: UIButton?
     var ratingView = HCSStarRatingView()
     var notifImageView: UIImageView = UIImageView()
     var distanceLabel: UILabel = UILabel()
@@ -40,6 +41,13 @@ class LocationTableViewCell: UITableViewCell {
         self.mapButton.setImage(UIImage(named: "map"), forState: .Normal)
         
         setUpButtons([self.webSiteButton, self.mapButton, self.scheduleButton])
+        
+//        if UIApplication.sharedApplication().canOpenURL(NSURL(string: "uber://")!) {
+            self.uberButton = UIButton()
+            self.uberButton?.setImage(UIImage(named: "uber"), forState: .Normal)
+            self.buttonView.addSubview(self.uberButton!)
+            self.uberButton!.adjustsImageWhenHighlighted = true
+//        }
         
         self.webSiteButton.addTarget(self, action: "websiteDelegate:", forControlEvents: UIControlEvents.TouchUpInside)
         self.mapButton.addTarget(self, action: "mapDelegate:", forControlEvents: UIControlEvents.TouchUpInside)

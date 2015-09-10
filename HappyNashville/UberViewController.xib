@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UberViewController" customModule="HappyNashville" customModuleProvider="target">
+            <connections>
+                <outlet property="fromMapView" destination="5Wj-kq-fmU" id="pyO-cv-pci"/>
+                <outlet property="fromTextField" destination="3eB-BC-Vkq" id="5E2-Ea-ePi"/>
+                <outlet property="popUp" destination="25I-Jz-TQf" id="q4c-Fn-KuQ"/>
+                <outlet property="toMapView" destination="zwf-4J-WnJ" id="rzd-dr-CZz"/>
+                <outlet property="toTextField" destination="cp8-RP-hl3" id="Qbp-RD-Nx2"/>
+                <outlet property="topConstraint" destination="AL7-iC-fbN" id="c7h-xW-LUt"/>
+                <outlet property="uberButton" destination="UhK-Uf-mZE" id="w6M-bs-ry8"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="25I-Jz-TQf" userLabel="PopUp View">
+                    <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pickup:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1PY-fq-7Sq" userLabel="From Label">
+                            <rect key="frame" x="131" y="8" width="58" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="Fqk-My-9s1"/>
+                                <constraint firstAttribute="width" constant="58" id="uVV-zR-uNz"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3eB-BC-Vkq" userLabel="From Text Field">
+                            <rect key="frame" x="16" y="38" width="288" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            <connections>
+                                <action selector="textFieldEditingEnded:" destination="-1" eventType="editingDidEnd" id="TIp-Yv-mOK"/>
+                                <outlet property="delegate" destination="-1" id="Sa7-B8-qCx"/>
+                            </connections>
+                        </textField>
+                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="cp8-RP-hl3">
+                            <rect key="frame" x="16" y="254" width="288" height="30"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                            <textInputTraits key="textInputTraits" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
+                            <connections>
+                                <action selector="toTextViewDidBeginEditing:" destination="-1" eventType="editingDidBegin" id="vOH-SZ-DHc"/>
+                                <outlet property="delegate" destination="-1" id="zqv-rG-m7g"/>
+                            </connections>
+                        </textField>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UhK-Uf-mZE">
+                            <rect key="frame" x="0.0" y="451" width="320" height="53"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="UhK-Uf-mZE" secondAttribute="height" multiplier="320:53" id="Ntv-Zj-HNG"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                            <state key="normal" title="Open in Uber">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="openInUber:" destination="-1" eventType="touchUpInside" id="P50-VA-VbA"/>
+                            </connections>
+                        </button>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="zwf-4J-WnJ" userLabel="Top Map View">
+                            <rect key="frame" x="16" y="297" width="288" height="146"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="zwf-4J-WnJ" secondAttribute="height" multiplier="144:73" id="wng-Q5-xTv"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="287-gU-CVn" appends="YES" id="DWe-8U-YsZ"/>
+                            </connections>
+                        </mapView>
+                        <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="5Wj-kq-fmU" userLabel="From Map View">
+                            <rect key="frame" x="16" y="76" width="288" height="146"/>
+                            <gestureRecognizers/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="5Wj-kq-fmU" secondAttribute="height" multiplier="144:73" id="KVm-61-46J"/>
+                            </constraints>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="m4E-UD-VoO" appends="YES" id="kFA-MW-HNC"/>
+                            </connections>
+                        </mapView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drop Off:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ocg-T0-a0n">
+                            <rect key="frame" x="125" y="225" width="70" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="v3K-z2-krg"/>
+                                <constraint firstAttribute="width" constant="70" id="xJL-mm-J2v"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EJr-qi-pXl">
+                            <rect key="frame" x="8" y="8" width="20" height="22"/>
+                            <state key="normal" image="close">
+                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                            </state>
+                            <connections>
+                                <action selector="dismissVC:" destination="-1" eventType="touchUpInside" id="xgh-bA-IIU"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <gestureRecognizers/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="UhK-Uf-mZE" secondAttribute="trailing" id="4nv-qj-lso"/>
+                        <constraint firstItem="UhK-Uf-mZE" firstAttribute="top" secondItem="zwf-4J-WnJ" secondAttribute="bottom" constant="8" id="6yc-sH-sG7"/>
+                        <constraint firstItem="Ocg-T0-a0n" firstAttribute="top" secondItem="5Wj-kq-fmU" secondAttribute="bottom" constant="3" id="8eV-96-Ngx"/>
+                        <constraint firstItem="UhK-Uf-mZE" firstAttribute="leading" secondItem="25I-Jz-TQf" secondAttribute="leading" id="ATP-Hr-awV"/>
+                        <constraint firstAttribute="trailing" secondItem="5Wj-kq-fmU" secondAttribute="trailing" constant="16" id="CRX-b4-8JZ"/>
+                        <constraint firstItem="1PY-fq-7Sq" firstAttribute="top" secondItem="25I-Jz-TQf" secondAttribute="top" constant="8" id="F8a-5l-8hf"/>
+                        <constraint firstItem="cp8-RP-hl3" firstAttribute="leading" secondItem="25I-Jz-TQf" secondAttribute="leading" constant="16" id="Nmu-3W-a6w"/>
+                        <constraint firstItem="zwf-4J-WnJ" firstAttribute="top" secondItem="cp8-RP-hl3" secondAttribute="bottom" constant="13" id="S4L-XI-soM"/>
+                        <constraint firstAttribute="trailing" secondItem="cp8-RP-hl3" secondAttribute="trailing" constant="16" id="Sfm-3a-QUy"/>
+                        <constraint firstAttribute="trailing" secondItem="3eB-BC-Vkq" secondAttribute="trailing" constant="16" id="dth-Zc-LTT"/>
+                        <constraint firstAttribute="trailing" secondItem="zwf-4J-WnJ" secondAttribute="trailing" constant="16" id="e1I-uT-MaS"/>
+                        <constraint firstItem="3eB-BC-Vkq" firstAttribute="leading" secondItem="25I-Jz-TQf" secondAttribute="leading" constant="16" id="ePy-o3-DIQ"/>
+                        <constraint firstItem="zwf-4J-WnJ" firstAttribute="leading" secondItem="25I-Jz-TQf" secondAttribute="leading" constant="16" id="idz-Bb-EHU"/>
+                        <constraint firstItem="5Wj-kq-fmU" firstAttribute="top" secondItem="3eB-BC-Vkq" secondAttribute="bottom" constant="8" id="lp0-fp-Z8g"/>
+                        <constraint firstItem="cp8-RP-hl3" firstAttribute="top" secondItem="Ocg-T0-a0n" secondAttribute="bottom" constant="8" id="mFW-hj-sQk"/>
+                        <constraint firstItem="3eB-BC-Vkq" firstAttribute="top" secondItem="1PY-fq-7Sq" secondAttribute="bottom" constant="9" id="rjn-ms-j5Y"/>
+                        <constraint firstAttribute="centerX" secondItem="Ocg-T0-a0n" secondAttribute="centerX" id="vcO-Qn-Rtb"/>
+                        <constraint firstAttribute="centerX" secondItem="1PY-fq-7Sq" secondAttribute="centerX" id="vv4-Wa-IYX"/>
+                        <constraint firstItem="5Wj-kq-fmU" firstAttribute="leading" secondItem="25I-Jz-TQf" secondAttribute="leading" constant="16" id="zIF-Fq-IKn"/>
+                    </constraints>
+                    <connections>
+                        <outletCollection property="gestureRecognizers" destination="LyJ-qz-GLp" appends="YES" id="NP4-It-NFD"/>
+                    </connections>
+                </view>
+            </subviews>
+            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstItem="25I-Jz-TQf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="999" constant="64" id="AL7-iC-fbN"/>
+                <constraint firstAttribute="bottom" secondItem="25I-Jz-TQf" secondAttribute="bottom" id="DuC-s1-pS5"/>
+                <constraint firstItem="25I-Jz-TQf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Vov-0H-Ito"/>
+                <constraint firstAttribute="trailing" secondItem="25I-Jz-TQf" secondAttribute="trailing" id="XZz-6f-jk8"/>
+            </constraints>
+            <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+            <point key="canvasLocation" x="356" y="342"/>
+        </view>
+        <tapGestureRecognizer id="LyJ-qz-GLp" userLabel="View Tap Gesture">
+            <connections>
+                <action selector="dismissKeyboard:" destination="-1" id="ccO-yt-cvj"/>
+            </connections>
+        </tapGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="m4E-UD-VoO" userLabel="From Pan Gesture">
+            <connections>
+                <action selector="fromMapDidPan:" destination="-1" id="A0D-fT-tsp"/>
+                <outlet property="delegate" destination="-1" id="9Yu-Yc-cXy"/>
+            </connections>
+        </panGestureRecognizer>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="287-gU-CVn" userLabel="To Pan Gesture">
+            <connections>
+                <action selector="toMapDidPan:" destination="-1" id="yiU-ig-A0h"/>
+                <outlet property="delegate" destination="-1" id="unD-WT-qMq"/>
+            </connections>
+        </panGestureRecognizer>
+    </objects>
+    <resources>
+        <image name="close" width="20" height="20"/>
+    </resources>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
+    </simulatedMetricsContainer>
+</document>
