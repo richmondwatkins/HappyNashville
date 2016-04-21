@@ -18,6 +18,7 @@
 		5D352D9C1B13A40300AA852B /* MapFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */; };
 		5D352D9E1B1548AB00AA852B /* MapFilterTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */; };
 		5D42F7C31B0BF84F00C0E949 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */; };
+		5D43E9231CC681AC00657BDC /* MPAdBrowserController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5D43E9221CC681AB00657BDC /* MPAdBrowserController.xib */; };
 		5D6F876B1B5716870089E45E /* data.json in Resources */ = {isa = PBXBuildFile; fileRef = 5D6F876A1B5716870089E45E /* data.json */; };
 		5D7505F41B0ED4E9003E7533 /* DowntownPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */; };
 		5D7505F71B0ED53C003E7533 /* TwelveSouthPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */; };
@@ -126,6 +127,10 @@
 		5DDFB51E1AF9D2C000A9741F /* DealDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51D1AF9D2C000A9741F /* DealDay.swift */; };
 		5DDFB5201AF9D3C200A9741F /* Special.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DDFB51F1AF9D3C200A9741F /* Special.swift */; };
 		5DE43DDF1B6D203A0082DC45 /* PushRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */; };
+		5DF139F31CB0BAEB0095B63A /* ACNativeAdCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF139F11CB0BAEB0095B63A /* ACNativeAdCell.swift */; };
+		5DF139F41CB0BAEB0095B63A /* ACNativeAdCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5DF139F21CB0BAEB0095B63A /* ACNativeAdCell.xib */; };
+		5DF13A171CB482830095B63A /* MoPub.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DF13A151CB482830095B63A /* MoPub.framework */; };
+		5DF13A181CB482830095B63A /* MoPub.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5DF13A161CB482830095B63A /* MoPub.bundle */; };
 		5DF262731AE881E0005EE2EA /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF262721AE881E0005EE2EA /* StringConstants.swift */; };
 		5DF6B94B1ACB5A7E007E852A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94A1ACB5A7E007E852A /* AppDelegate.swift */; };
 		5DF6B94E1ACB5A7E007E852A /* HappyNashville.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B94C1ACB5A7E007E852A /* HappyNashville.xcdatamodeld */; };
@@ -136,6 +141,7 @@
 		5DF6B96E1ACB5E03007E852A /* APIManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B96D1ACB5E03007E852A /* APIManger.swift */; };
 		5DF6B9811ACC9DB7007E852A /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */; };
 		5DF8B1651ADE14EE00AE2B25 /* Notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 5DF8B1641ADE14EE00AE2B25 /* Notification.m */; };
+		D9CAEECEC3787D026D1EBBE4 /* Pods_HappyNashville.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4854259B73F39708CAF8CB1E /* Pods_HappyNashville.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -149,6 +155,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A39E98F39FE19BD8F27D585 /* Pods-HappyNashville.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.debug.xcconfig"; sourceTree = "<group>"; };
+		4854259B73F39708CAF8CB1E /* Pods_HappyNashville.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HappyNashville.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5D02C2971B30EFA100BAA872 /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		5D2972E31B15605400291470 /* HillsboroVillagePolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HillsboroVillagePolygon.swift; sourceTree = "<group>"; };
 		5D2972E51B156E2B00291470 /* MidtownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MidtownPolygon.swift; sourceTree = "<group>"; };
@@ -160,6 +168,7 @@
 		5D352D9B1B13A40300AA852B /* MapFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterViewController.swift; sourceTree = "<group>"; };
 		5D352D9D1B1548AB00AA852B /* MapFilterTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapFilterTableViewCell.swift; sourceTree = "<group>"; };
 		5D42F7C21B0BF84F00C0E949 /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		5D43E9221CC681AB00657BDC /* MPAdBrowserController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MPAdBrowserController.xib; path = HappyNashville/MPAdBrowserController.xib; sourceTree = "<group>"; };
 		5D6F876A1B5716870089E45E /* data.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = data.json; sourceTree = "<group>"; };
 		5D7505F31B0ED4E9003E7533 /* DowntownPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DowntownPolygon.swift; sourceTree = "<group>"; };
 		5D7505F61B0ED53C003E7533 /* TwelveSouthPolygon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TwelveSouthPolygon.swift; sourceTree = "<group>"; };
@@ -338,6 +347,10 @@
 		5DDFB51D1AF9D2C000A9741F /* DealDay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DealDay.swift; sourceTree = "<group>"; };
 		5DDFB51F1AF9D3C200A9741F /* Special.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Special.swift; sourceTree = "<group>"; };
 		5DE43DDE1B6D203A0082DC45 /* PushRequestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PushRequestViewController.swift; sourceTree = "<group>"; };
+		5DF139F11CB0BAEB0095B63A /* ACNativeAdCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACNativeAdCell.swift; sourceTree = "<group>"; };
+		5DF139F21CB0BAEB0095B63A /* ACNativeAdCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACNativeAdCell.xib; sourceTree = "<group>"; };
+		5DF13A151CB482830095B63A /* MoPub.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MoPub.framework; sourceTree = "<group>"; };
+		5DF13A161CB482830095B63A /* MoPub.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = MoPub.bundle; path = MoPub.framework/Versions/A/Resources/MoPub.bundle; sourceTree = "<group>"; };
 		5DF262721AE881E0005EE2EA /* StringConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		5DF6B9451ACB5A7E007E852A /* HappyNashville.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HappyNashville.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DF6B9491ACB5A7E007E852A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -352,6 +365,7 @@
 		5DF6B9801ACC9DB7007E852A /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		5DF8B1631ADE14EE00AE2B25 /* Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = ../Notification.h; sourceTree = "<group>"; };
 		5DF8B1641ADE14EE00AE2B25 /* Notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Notification.m; path = ../Notification.m; sourceTree = "<group>"; };
+		C52C58DD13064AF34D51FF1D /* Pods-HappyNashville.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HappyNashville.release.xcconfig"; path = "Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville.release.xcconfig"; sourceTree = "<group>"; };
 		HYXIFWTDXJPPRRMDCEPMDTJH /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		QMNTBWVDMICWTEJGUAKXRYSM /* SparkInspector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SparkInspector.framework; path = "/Applications/Spark Inspector.app/Contents/Resources/Frameworks/SparkInspector.framework"; sourceTree = "<group>"; };
 		THBDITSPYVFDWQYYBDCIDIXG /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -367,6 +381,8 @@
 				5D02C2981B30EFA100BAA872 /* iAd.framework in Frameworks */,
 				5DA47E471B3BB7AA000403A4 /* Crashlytics.framework in Frameworks */,
 				5DA47E461B3BB7AA000403A4 /* Fabric.framework in Frameworks */,
+				D9CAEECEC3787D026D1EBBE4 /* Pods_HappyNashville.framework in Frameworks */,
+				5DF13A171CB482830095B63A /* MoPub.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -380,6 +396,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		52F736EF53CAE1900FBAF162 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2A39E98F39FE19BD8F27D585 /* Pods-HappyNashville.debug.xcconfig */,
+				C52C58DD13064AF34D51FF1D /* Pods-HappyNashville.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		5D34355F1B168E9200F108A7 /* MenuGroup */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,9 +770,15 @@
 		5DF6B93C1ACB5A7D007E852A = {
 			isa = PBXGroup;
 			children = (
+				5DF13A151CB482830095B63A /* MoPub.framework */,
+				5DF13A161CB482830095B63A /* MoPub.bundle */,
+				5DF139F11CB0BAEB0095B63A /* ACNativeAdCell.swift */,
+				5DF139F21CB0BAEB0095B63A /* ACNativeAdCell.xib */,
+				5D43E9221CC681AB00657BDC /* MPAdBrowserController.xib */,
 				5DF6B9471ACB5A7E007E852A /* HappyNashville */,
 				5DF6B9461ACB5A7E007E852A /* Products */,
 				9931C79474FA76ABBB754FDD /* Frameworks */,
+				52F736EF53CAE1900FBAF162 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -852,6 +883,7 @@
 				HYXIFWTDXJPPRRMDCEPMDTJH /* QuartzCore.framework */,
 				THBDITSPYVFDWQYYBDCIDIXG /* libz.dylib */,
 				QMNTBWVDMICWTEJGUAKXRYSM /* SparkInspector.framework */,
+				4854259B73F39708CAF8CB1E /* Pods_HappyNashville.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -863,11 +895,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5DF6B9671ACB5A7E007E852A /* Build configuration list for PBXNativeTarget "HappyNashville" */;
 			buildPhases = (
+				B72F702565C3A3D0F878C629 /* Check Pods Manifest.lock */,
 				5DF6B9411ACB5A7E007E852A /* Sources */,
 				5DF6B9431ACB5A7E007E852A /* Resources */,
 				5D25E03A1B02F57400366923 /* ShellScript */,
 				5D02C2961B30EF9A00BAA872 /* Frameworks */,
 				5DA47E431B3BB78A000403A4 /* Crashlytics */,
+				8369B3DF0530EDCA0DD46E8E /* Embed Pods Frameworks */,
+				5C27D4F419A419C3684002B8 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -949,6 +984,9 @@
 				5DA069F51B93646E00890EDC /* UberViewController.xib in Resources */,
 				5DF6B9531ACB5A7E007E852A /* Main.storyboard in Resources */,
 				5DF6B9581ACB5A7E007E852A /* LaunchScreen.xib in Resources */,
+				5DF139F41CB0BAEB0095B63A /* ACNativeAdCell.xib in Resources */,
+				5D43E9231CC681AC00657BDC /* MPAdBrowserController.xib in Resources */,
+				5DF13A181CB482830095B63A /* MoPub.bundle in Resources */,
 				5DF6B9551ACB5A7E007E852A /* Images.xcassets in Resources */,
 				5D6F876B1B5716870089E45E /* data.json in Resources */,
 			);
@@ -964,6 +1002,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		5C27D4F419A419C3684002B8 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		5D25E03A1B02F57400366923 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -990,6 +1043,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./Fabric.framework/run b2fa13da961943ada093ca86282c0717d8d6c662 7cad0ab1a6f39490fc1b7a2086c4b18cd46eab09c11125e6b936de9bc4dd93ee";
+		};
+		8369B3DF0530EDCA0DD46E8E /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HappyNashville/Pods-HappyNashville-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B72F702565C3A3D0F878C629 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1109,6 +1192,7 @@
 				5DDFB51C1AF9D0B700A9741F /* Location.swift in Sources */,
 				5DD0485C1B60A5B90030BBA2 /* AWSCredentialsProvider.m in Sources */,
 				5D9C5D631ACF5138006B5F7B /* ScheduleViewControllerViewModel.swift in Sources */,
+				5DF139F31CB0BAEB0095B63A /* ACNativeAdCell.swift in Sources */,
 				5DD048A71B60A5C80030BBA2 /* AWSSNSModel.m in Sources */,
 				5DD048971B60A5B90030BBA2 /* AWSCategory.m in Sources */,
 				5DD048601B60A5B90030BBA2 /* AWSExecutor.m in Sources */,
@@ -1244,12 +1328,12 @@
 		};
 		5DF6B9681ACB5A7E007E852A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A39E98F39FE19BD8F27D585 /* Pods-HappyNashville.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)";
 				INFOPLIST_FILE = HappyNashville/Info.plist;
@@ -1258,7 +1342,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "80bc24b8-0542-42b1-ada2-900c26773f42";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1267,11 +1351,11 @@
 		};
 		5DF6B9691ACB5A7E007E852A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C52C58DD13064AF34D51FF1D /* Pods-HappyNashville.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Richmond Watkins (TB5YKEAJ2S)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1283,7 +1367,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.richmondwatkins.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "80bc24b8-0542-42b1-ada2-900c26773f42";
+				PROVISIONING_PROFILE = "a74f3ca5-cad9-4b8c-ba84-62d6dfd75599";
 				SWIFT_OBJC_BRIDGING_HEADER = "HappyNashville/HappyNashville-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

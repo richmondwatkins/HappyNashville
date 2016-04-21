@@ -9,6 +9,14 @@
 import UIKit
 import CoreData
 import Foundation
+import mopub_ios_sdk
+
+let MoPubNativeAd = "b0f9ad30fcf14d44b52315c293e36a07"
+let MoPubFullScreenAd = "172f90070d4a4fc5be613a5cdce806ab"
+let MoPubMediuMad = "8fb71b3a1daf403a8d93f688d88851a8"
+let MoPubBannerId = "9b1babba42e54dd880eceb9a108b1064"
+let footerHeight: CGFloat = 60
+//8fb71b3a1daf403a8d93f688d88851a8
 
 class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, ViewModelProtocol, ScheduleProtocol, SortProtocol, LocationCellProtocol, SettingsProtocol, DaySelectionProtocol, MenuProtocol, UIScrollViewDelegate {
     
@@ -33,6 +41,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     let infoButtonsTopPadding: CGFloat = 10
     let titleLabelHeight: CGFloat = 30
     let specialHeight: CGFloat = 15
+    var placer: MPTableViewAdPlacer!
+    // TODO: Replace this test id with your personal ad unit id
+    var adView: MPAdView = MPAdView(adUnitId: MoPubBannerId, size: MOPUB_BANNER_SIZE)
+    var bannerAdDisplaying: Bool = false {
+        didSet {
+            self.view.setNeedsLayout()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,6 +81,50 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.activityIndicator.startAnimating()
             inactivateView()
         }
+        
+        setUpAds()
+    }
+    
+    func setUpAds() {
+        
+        self.adView.delegate = self
+        
+        // Positions the ad at the bottom, with the correct size
+        self.adView.frame = CGRectMake(0, self.view.bounds.size.height - MOPUB_BANNER_SIZE.height,
+            MOPUB_BANNER_SIZE.width, MOPUB_BANNER_SIZE.height)
+        self.view.addSubview(self.adView)
+        
+        // Loads the ad over the network
+        self.adView.loadAd()
+//        
+        // Create the Static Native Ad renderer configuration.
+        let staticSettings = MPStaticNativeAdRendererSettings()
+        staticSettings.renderingViewClass = ACNativeAdCell.self
+        staticSettings.viewSizeHandler = { (maxWidth: CGFloat) -> CGSize in
+            
+            return CGSizeMake(maxWidth, maxWidth)
+        }
+        
+        let staticConfiguration = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(staticSettings)
+        
+        // Create the Native Video Ad renderer configuration.
+        let videoSettings = MOPUBNativeVideoAdRendererSettings()
+        videoSettings.renderingViewClass = staticSettings.renderingViewClass
+        videoSettings.viewSizeHandler = staticSettings.viewSizeHandler
+        
+        let videoConfiguration = MOPUBNativeVideoAdRenderer.rendererConfigurationWithRendererSettings(videoSettings)
+                
+        placer = MPTableViewAdPlacer(tableView: self.tableView, viewController: self, rendererConfigurations: [staticConfiguration, videoConfiguration])
+        
+        placer.delegate = self
+        
+        // Add targeting parameters.
+        let targeting = MPNativeAdRequestTargeting()
+        
+        targeting.desiredAssets = Set([kAdIconImageKey, kAdMainImageKey, kAdCTATextKey, kAdTextKey, kAdTitleKey])
+        
+        // Begin loading ads and placing them into your feed, using the ad unit ID.
+        placer.loadAdsForAdUnitID(MoPubNativeAd)
     }
     
     override func viewWillLayoutSubviews() {
@@ -76,6 +136,19 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.view!.width,
             self.view!.height - self.footer.view.height
         )
+        
+        let bannerSize: CGFloat = bannerAdDisplaying ? MOPUB_BANNER_SIZE.height : 0
+        
+        self.footer.view.frame = CGRectMake(0, self.originalContentView!.bottom - footerHeight - bannerSize, self.view!.width, footerHeight)
+        
+        if bannerAdDisplaying {
+            self.tableView.contentInset = UIEdgeInsets(
+                top: self.footer.view.height,
+                left: 0,
+                bottom: self.footer.view.height,
+                right: 0
+            )
+        }
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -131,7 +204,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     func refreshData() {
         inactivateView()
         
-        self.viewModel.fetchData(shouldScrollToIndex: false)
+        self.viewModel.fetchData(false)
     }
     
     func setUpSortButton() {
@@ -149,10 +222,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func addFooter() {
-        let footerHeight: CGFloat = self.view!.height * 0.1
-        
         self.footer = FooterViewController(viewFrame:
-            CGRectMake(0, self.originalContentView!.bottom - footerHeight, self.view!.width, footerHeight))
+            CGRectMake(0, self.originalContentView!.bottom - footerHeight - MOPUB_BANNER_SIZE.height, self.view!.width, footerHeight))
         footer.delegate = self
         
         self.addChildViewController( self.footer)
@@ -673,6 +744,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let dealDay: DealDay? = self.getDealDayForIndexPath(self.indexPathForSelectedRow(button))
         let uberVC: UberViewController = UberViewController(dealDay: dealDay)
         
+        uberVC.view.frame = self.view.frame
+        
         self.addChildViewController(uberVC)
         self.view.addSubview(uberVC.view)
         uberVC.willMoveToParentViewController(self)
@@ -689,4 +762,28 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.navigationItem.leftBarButtonItem?.enabled = false
         self.navigationItem.rightBarButtonItem?.enabled = false
     }
+}
+
+extension ViewController: MPTableViewAdPlacerDelegate {
+    
+    func nativeAdWillBeInsertedAtIndex(indexPath: NSIndexPath!) {
+        
+    }
+}
+
+extension ViewController: MPAdViewDelegate {
+    func viewControllerForPresentingModalView() -> UIViewController {
+        return self
+    }
+    
+    func adViewDidLoadAd(view: MPAdView!) {
+        self.bannerAdDisplaying = true
+        self.adView.hidden = false
+    }
+    
+    func adViewDidFailToLoadAd(view: MPAdView!) {
+        self.bannerAdDisplaying = false
+        self.adView.hidden = true
+    }
+
 }

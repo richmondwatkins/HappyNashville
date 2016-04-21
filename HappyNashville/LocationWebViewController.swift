@@ -83,7 +83,7 @@ class LocationWebViewController: UIViewController, UIWebViewDelegate {
         self.loadingAnimator.stopAnimating()
     }
     
-    func webView(webView: UIWebView, didFailLoadWithError error: NSError) {
+    func webView(webView: UIWebView, didFailLoadWithError error: NSError?) {
         self.loadingAnimator.stopAnimating()
     }
     

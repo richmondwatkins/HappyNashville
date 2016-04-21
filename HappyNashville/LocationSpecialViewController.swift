@@ -38,10 +38,10 @@ class LocationSpecialViewController: UIViewController, UICollectionViewDataSourc
 
         self.dataSource = self.dealDay!.specials.allObjects as! Array<Special>
         
-        self.dataSource = sorted(self.dataSource, {
+        self.dataSource = self.dataSource.sort {
             (spec1: Special, spec2: Special) -> Bool in
             return spec1.specialItem < spec2.specialItem
-        })
+        }
         
         setUpCollectionView()
     }

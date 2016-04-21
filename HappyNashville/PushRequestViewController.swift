@@ -106,8 +106,7 @@ class PushRequestViewController: UIViewController {
     func okButtonSelected() {
         dismissVC()
         
-        var type = UIUserNotificationType.Badge | UIUserNotificationType.Alert | UIUserNotificationType.Sound;
-        var setting = UIUserNotificationSettings(forTypes: type, categories: nil);
+        let setting = UIUserNotificationSettings(forTypes: [UIUserNotificationType.Badge, UIUserNotificationType.Alert, UIUserNotificationType.Sound], categories: nil);
         UIApplication.sharedApplication().registerUserNotificationSettings(setting);
         UIApplication.sharedApplication().registerForRemoteNotifications();
     }

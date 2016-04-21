@@ -33,7 +33,7 @@ class FooterViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.frame = self.viewFrame
-        self.view!.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.2)
+        self.view!.backgroundColor = UIColor(hexString: StringConstants.primaryColor).colorWithAlphaComponent(0.7)
         
         let buttonMeasurements = self.viewModel.getButtonWidth(self.view!.width, numberOfButtons: 7, padding: 0)
         

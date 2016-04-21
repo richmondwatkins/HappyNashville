@@ -68,7 +68,7 @@ class UberViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     @IBAction func textFieldEditingEnded(textField: UITextField) {
         let isFromMap: Bool = (textField === self.fromTextField) ? true : false
         
-        self.coordinatesForAddress(textField.text, complete: { (coords: CLLocationCoordinate2D?) -> Void in
+        self.coordinatesForAddress(textField.text!, complete: { (coords: CLLocationCoordinate2D?) -> Void in
             if isFromMap {
                 self.setNewLocationFromMap(coords)
             } else {
@@ -109,7 +109,7 @@ class UberViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         
         let isFromMap: Bool = (textField === self.fromTextField) ? true : false
         
-        self.coordinatesForAddress(textField.text, complete: { (coords: CLLocationCoordinate2D?) -> Void in
+        self.coordinatesForAddress(textField.text!, complete: { (coords: CLLocationCoordinate2D?) -> Void in
             if isFromMap {
                self.setNewLocationFromMap(coords)
             } else {
@@ -147,20 +147,19 @@ class UberViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+                let locationArray = locations as NSArray
+                let locationObj = locationArray.lastObject as! CLLocation
+                let coords = locationObj.coordinate
         
-        var locationArray = locations as NSArray
-        var locationObj = locationArray.lastObject as! CLLocation
-        var coords = locationObj.coordinate
+                self.locationManager.stopUpdatingLocation()
         
-        self.locationManager.stopUpdatingLocation()
-        
-        reverseGeoCode(coords, forPickup: true)
-        setFromMap(coords)
-        
-        self.userCoordinates = coords
+                reverseGeoCode(coords, forPickup: true)
+                setFromMap(coords)
+                
+                self.userCoordinates = coords
     }
-    
+
     func reverseGeoCode(coords: CLLocationCoordinate2D, forPickup: Bool) {
         
         let location: CLLocation = CLLocation(latitude: coords.latitude, longitude: coords.longitude)
@@ -168,14 +167,14 @@ class UberViewController: UIViewController, CLLocationManagerDelegate, UITextFie
         CLGeocoder().reverseGeocodeLocation(location, completionHandler:
             {(placemarks, error) in
                 if (error == nil) {
-                    let placeMark: CLPlacemark = placemarks.first as! CLPlacemark
-                    let address: [String]? = placeMark.addressDictionary["FormattedAddressLines"] as? [String]
+                    let placeMark: CLPlacemark = placemarks!.first!
+                    let address: [String]? = placeMark.addressDictionary!["FormattedAddressLines"] as? [String]
                     
                     if let address = address {
                         if forPickup {
-                            self.fromTextField.text = " ".join(address)
+                            self.fromTextField.text = address.joinWithSeparator(" ")
                         } else {
-                            self.toTextField.text = " ".join(address)
+                            self.toTextField.text =  address.joinWithSeparator(" ")
                         }
                     }
                 }
@@ -186,10 +185,10 @@ class UberViewController: UIViewController, CLLocationManagerDelegate, UITextFie
     func coordinatesForAddress(address: String, complete:(CLLocationCoordinate2D?) -> Void) {
         CLGeocoder().geocodeAddressString(address, completionHandler: { (placemarks, error) -> Void in
             if (error == nil) {
-                let placeMark: CLPlacemark? = placemarks.first as? CLPlacemark
+                let placeMark: CLPlacemark? = placemarks!.first!
                 
                 if let placemark = placeMark {
-                    complete(placemark.location.coordinate)
+                    complete(placemark.location!.coordinate)
                 } else {
                     complete(nil)
                 }
@@ -289,15 +288,15 @@ extension UberViewController: MKMapViewDelegate {
     }
     
     func createAnnotation(coordinate: CLLocationCoordinate2D) -> MKPointAnnotation {
-        var locationAnnotation: MKPointAnnotation = MKPointAnnotation()
+        let locationAnnotation: MKPointAnnotation = MKPointAnnotation()
         locationAnnotation.coordinate = coordinate
         
         return locationAnnotation
     }
     
     func setMapCenter(coordinate: CLLocationCoordinate2D, mapView: MKMapView) {
-        var coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        var mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
+        let coordinateSpan: MKCoordinateSpan = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        let mapRegion: MKCoordinateRegion = MKCoordinateRegion(center: coordinate, span: coordinateSpan)
         mapView.region = mapRegion
     }
 }

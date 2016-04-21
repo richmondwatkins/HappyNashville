@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "57B65AF3368D6D4366A79F54773FB965F43B360A",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "57B65AF3368D6D4366A79F54773FB965F43B360A" : 0,
+    "FD8D2FDB7826A5A9B76B3714E2DF11DBD961EB94" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "2F2C9F3C-2CB0-4195-8F7A-A65909680716",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "57B65AF3368D6D4366A79F54773FB965F43B360A" : "HappyNashville",
+    "FD8D2FDB7826A5A9B76B3714E2DF11DBD961EB94" : "Apptly\/mopub-ios-sdk\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "HappyNashville",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "HappyNashville.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/richmondwatkins\/HappyNashville.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "57B65AF3368D6D4366A79F54773FB965F43B360A"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/richmondwatkins\/mopub-ios-sdk",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FD8D2FDB7826A5A9B76B3714E2DF11DBD961EB94"
+    }
+  ]
+}

@@ -59,7 +59,7 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     func updateFromNotif() {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "UpdatedData", object: nil)
         
-        fetchData(shouldScrollToIndex: false);
+        fetchData(false);
     }
     
     func fetchData(shouldScrollToIndex: Bool? = true) {
@@ -72,10 +72,10 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
                 self.requestUserLocation()
             }
             
-            let sortedByDistanceDealDay = sorted(dealDays, {
+            let sortedByDistanceDealDay = dealDays.sort {
                 (deal1: DealDay, deal2: DealDay) -> Bool in
                 return self.getEaliestSpecial(deal1.specials).hourStart.integerValue < self.getEaliestSpecial(deal2.specials).hourStart.integerValue
-            })
+            }
             
             self.sortData(sortedByDistanceDealDay)
             
@@ -197,23 +197,26 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
         
         self.tableSections =  [1,2,3,4,5,6,7]
         
-        self.tableSections.sort {
+        self.tableSections.sortInPlace {
             return $0 < $1
         }
     }
     
     func unscheduleNotification(dealDay: DealDay) {
         
-        var app: UIApplication = UIApplication.sharedApplication()
+        let app: UIApplication = UIApplication.sharedApplication()
         
-        for oneEvent in app.scheduledLocalNotifications as! [UILocalNotification] {
-            let userInfoCurrent = oneEvent.userInfo!
-            let day = userInfoCurrent["day"] as! NSNumber
-            let location = userInfoCurrent["location"] as! String
-            
-            if day == dealDay.day && location == dealDay.location.name {
-                app.cancelLocalNotification(oneEvent)
-                APIManger.deleteNotificationFromID(userInfoCurrent["notifId"] as! String)
+        if let notifs = app.scheduledLocalNotifications {
+         
+            for oneEvent in notifs {
+                let userInfoCurrent = oneEvent.userInfo!
+                let day = userInfoCurrent["day"] as! NSNumber
+                let location = userInfoCurrent["location"] as! String
+                
+                if day == dealDay.day && location == dealDay.location.name {
+                    app.cancelLocalNotification(oneEvent)
+                    APIManger.deleteNotificationFromID(userInfoCurrent["notifId"] as! String)
+                }
             }
         }
     }
@@ -231,11 +234,11 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
                 
                 var i: Int = 0
                 
-                var currentDealDay: DealDay = self.originalDataSource[key]![j]
+                let currentDealDay: DealDay = self.originalDataSource[key]![j]
                 var dealDaySpecials: Array<Special> = Array(currentDealDay.specials) as! Array<Special>
                 var hasSpecialOfType: Bool = false;
                 
-                var newDealDay: DealDay = DealDay()
+                let newDealDay: DealDay = DealDay()
                 
                 for special in Array(dealDay.specials) as! Array<Special> {
                     
@@ -247,7 +250,6 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
                             
                             let currentHeight: Int = dealDay.height.integerValue
                             
-                            var arr: Array<DealDay> = self.originalDataSource[key]!
                             currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
                         }
                     } else {
@@ -258,7 +260,6 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
                             
                             let currentHeight: Int = dealDay.height.integerValue
                             
-                            var arr: Array<DealDay> = self.originalDataSource[key]!
                             currentDealDay.height = NSNumber(float: Float32(currentHeight - 17))
                         }
                     }
@@ -300,20 +301,20 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         
-        var locationArray = locations as NSArray
-        var locationObj = locationArray.lastObject as! CLLocation
-        var coord = locationObj.coordinate
+        let locationArray = locations as NSArray
+        let locationObj = locationArray.lastObject as! CLLocation
+        let coord = locationObj.coordinate
         
         self.locationManager.stopUpdatingLocation()
         
         addDistanceToLocations(coord)
     }
-    
+
     func addDistanceToLocations(coords: CLLocationCoordinate2D) {
         for location in locations {
-            var newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
+            let newCoord: CLLocation = CLLocation(latitude: location.lat.doubleValue, longitude: location.lng.doubleValue)
             
             location.distanceFromUser = newCoord.distanceFromLocation(CLLocation(latitude: coords.latitude, longitude: coords.longitude)) /  1609.344
         }
@@ -326,16 +327,11 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     }
     
     func sortByVicinity(coords: CLLocationCoordinate2D) {
-        
-        let sortedByDistance = sorted(locations, {
-            (str1: Location, str2: Location) -> Bool in
-            return str1.distanceFromUser.doubleValue < str2.distanceFromUser.doubleValue
-        })
-        
-        let sortedByDistanceDealDay = sorted(self.unformattedData, {
+
+        let sortedByDistanceDealDay = self.unformattedData.sort {
             (str1: DealDay, str2: DealDay) -> Bool in
             return str1.location.distanceFromUser.doubleValue < str2.location.distanceFromUser.doubleValue
-        })
+        }
         
         sortData(sortedByDistanceDealDay)
         
@@ -345,11 +341,11 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     }
     
     func sortByRating() {
-        self.unformattedData = sorted(self.unformattedData) { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
+        self.unformattedData = self.unformattedData.sort { ($0.location.rating.integerValue as Int) > ($1.location.rating.integerValue as Int) }
     }
     
     func sortAlphabetically() {
-        self.unformattedData = sorted(self.unformattedData) { ($0.location.name as String) < ($1.location.name as String) }
+        self.unformattedData = self.unformattedData.sort { ($0.location.name as String) < ($1.location.name as String) }
     }
     
     func resetSort() {
@@ -369,7 +365,7 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
         var foodCount: Int = 0
         
         for special in Array(dealDay.specials) {
-            var spec: Special = special as! Special
+            let spec: Special = special as! Special
             if spec.type == 1 {
                 foodCount++
             }
@@ -382,7 +378,7 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
         var drinkCount: Int = 0
         
         for special in Array(dealDay.specials) {
-            var spec: Special = special as! Special
+            let spec: Special = special as! Special
             if spec.type == 0 {
                 drinkCount++
             }
@@ -393,10 +389,10 @@ class ViewControllerViewModel: AppViewModel, CLLocationManagerDelegate {
     
     func checkForNotification(dealDay: DealDay) -> Bool {
         
-        var app:UIApplication = UIApplication.sharedApplication()
+        let app:UIApplication = UIApplication.sharedApplication()
         
-        for oneEvent in app.scheduledLocalNotifications {
-            var localNotif = oneEvent as! UILocalNotification
+        for oneEvent in app.scheduledLocalNotifications! {
+            let localNotif = oneEvent
             let userInfoCurrent = localNotif.userInfo!
             let day = userInfoCurrent["day"] as! NSNumber
             let location = userInfoCurrent["location"] as! String

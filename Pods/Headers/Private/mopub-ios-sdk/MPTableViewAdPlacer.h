@@ -1,0 +1,1 @@
+../../../../../Apptly/mopub-ios-sdk/MoPubSDK/Native Ads/MPTableViewAdPlacer.h

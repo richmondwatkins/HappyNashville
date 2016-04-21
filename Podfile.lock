@@ -1,0 +1,16 @@
+PODS:
+  - mopub-ios-sdk (4.4.0):
+    - mopub-ios-sdk/MoPubSDK (= 4.4.0)
+  - mopub-ios-sdk/MoPubSDK (4.4.0)
+
+DEPENDENCIES:
+  - mopub-ios-sdk (from `/Users/richmondwatkins/Documents/Code/iOS/Apptly/mopub-ios-sdk`)
+
+EXTERNAL SOURCES:
+  mopub-ios-sdk:
+    :path: /Users/richmondwatkins/Documents/Code/iOS/Apptly/mopub-ios-sdk
+
+SPEC CHECKSUMS:
+  mopub-ios-sdk: 89e57bd4c0d4ba8159781e11961c5afce7c19efe
+
+COCOAPODS: 0.39.0

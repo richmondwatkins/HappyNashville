@@ -3,9 +3,9 @@
     {
       "orientation" : "portrait",
       "idiom" : "iphone",
+      "filename" : "happyNashvilleLaunch-960.png",
       "extent" : "full-screen",
       "minimum-system-version" : "7.0",
-      "filename" : "happyNashvilleLaunch-960.png",
       "scale" : "2x"
     },
     {

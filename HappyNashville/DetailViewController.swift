@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 import iAd
-
+import mopub_ios_sdk
 
 class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, DetialViewModelProtocol, PageScrollProtocol, UserLocationProtocol, ADBannerViewDelegate, UIAlertViewDelegate {
     
@@ -24,6 +24,9 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     var navBar: UIView!
     var directionsVC: DirectionsViewController?
     var dealDay: DealDay?
+    var interstitial: MPInterstitialAdController =
+    MPInterstitialAdController(forAdUnitId: MoPubFullScreenAd)
+
     
     init(location: Location, dealDay: DealDay?) {
         super.init(nibName: nil, bundle: nil)
@@ -37,6 +40,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
     }
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
                 
         self.view!.backgroundColor = UIColor.whiteColor()
@@ -58,8 +62,18 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
             setUpTabButtonView()
             setUpPageViewController()
         }
+        
+        self.interstitial.delegate = self
+        // Pre-fetch the ad up front
+        
+        
+        let rand = Int(arc4random_uniform(8))
+
+        if rand == 3 {
+            self.interstitial.loadAd()
+        }
     }
-    
+   
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
@@ -353,4 +367,16 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         self.mapView.setVisibleMapRect(unionRect, animated: true)
     }
 
+}
+
+extension DetailViewController: MPInterstitialAdControllerDelegate {
+    
+    func interstitialDidLoadAd(interstitial: MPInterstitialAdController) {
+        // This sample automatically shows the ad as soon as it's loaded, but
+        // you can move this showFromViewController call to a time more
+        // appropriate for your app.
+        if (interstitial.ready) {
+            interstitial.showFromViewController(self)
+        }
+    }
 }

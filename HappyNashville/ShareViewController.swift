@@ -183,7 +183,7 @@ class ShareViewController: UIViewController, MFMessageComposeViewControllerDeleg
     }
     
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-        if touch.view.tag == 1 {
+        if touch.view!.tag == 1 {
             return true
         } else {
             return false

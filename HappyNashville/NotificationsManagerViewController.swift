@@ -143,7 +143,7 @@ class NotificationsManagerViewController: UIViewController, UITableViewDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("CELLY") as? UITableViewCell
+        var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("CELLY")
         
         if (cell != nil) {
             cell = UITableViewCell(style: UITableViewCellStyle.Subtitle,

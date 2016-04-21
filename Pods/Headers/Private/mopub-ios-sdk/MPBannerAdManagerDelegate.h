@@ -1,0 +1,1 @@
+../../../../../Apptly/mopub-ios-sdk/MoPubSDK/Internal/Banners/MPBannerAdManagerDelegate.h
