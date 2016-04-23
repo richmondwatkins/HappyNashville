@@ -67,7 +67,7 @@ class DetailViewController: UIViewController, MKMapViewDelegate, UICollectionVie
         // Pre-fetch the ad up front
         
         
-        let rand = Int(arc4random_uniform(8))
+        let rand = Int(arc4random_uniform(4))
 
         if rand == 3 {
             self.interstitial.loadAd()

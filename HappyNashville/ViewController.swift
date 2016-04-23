@@ -90,8 +90,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.adView.delegate = self
         
         // Positions the ad at the bottom, with the correct size
-        self.adView.frame = CGRectMake(0, self.view.bounds.size.height - MOPUB_BANNER_SIZE.height,
-            MOPUB_BANNER_SIZE.width, MOPUB_BANNER_SIZE.height)
+        self.adView.frame = CGRect(x: (self.view.width / 2) - (MOPUB_BANNER_SIZE.width / 2), y: self.view.bounds.size.height - MOPUB_BANNER_SIZE.height, width:MOPUB_BANNER_SIZE.width, height: MOPUB_BANNER_SIZE.height)
         self.view.addSubview(self.adView)
         
         // Loads the ad over the network
@@ -102,7 +101,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         staticSettings.renderingViewClass = ACNativeAdCell.self
         staticSettings.viewSizeHandler = { (maxWidth: CGFloat) -> CGSize in
             
-            return CGSizeMake(maxWidth, maxWidth)
+            return CGSize(width: maxWidth, height: maxWidth * 1.1)
         }
         
         let staticConfiguration = MPStaticNativeAdRenderer.rendererConfigurationWithRendererSettings(staticSettings)
